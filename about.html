@@ -26,41 +26,37 @@
 
   .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 
-  /* ---------- page hero (paper, no video) ---------- */
+  /* ---------- page hero (paper, no video) ----------
+     Heroes are centered as a block (H1 is centered as a defining
+     property; the sub follows the same axis). Heroes don't have
+     eyebrows — eyebrows mark section labels above an H2, not heroes. */
   .page-hero{
     position:relative;
     isolation:isolate;
     overflow:hidden;
     padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
     background:var(--grad-paper);
-  }
-  .page-hero .eyebrow{
-    font-family:var(--font-mono);
-    font-size:var(--fs-eyebrow);
-    line-height:var(--lh-eyebrow);
-    letter-spacing:var(--xwide);
-    text-transform:uppercase;
-    color:var(--muted);
-    margin:0 0 18px;
+    text-align:center;
   }
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
-    font-weight:600;
+    font-weight:400;
     font-size:var(--fs-h1);
     line-height:var(--lh-h1);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0;
+    margin:0 auto;
     max-width:18ch;
   }
-  .page-hero .lead{
-    margin-top:24px;
+  /* Hero sub — mirrors `.hero .sub` on the homepage so all hero
+     subtitles read as one role across the site. */
+  .page-hero .sub{
+    margin:24px auto 0;
     font-family:var(--font-sans);
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:var(--ink);
-    opacity:.78;
+    font-size:var(--fs-body);
+    line-height:1.5;
+    color:rgba(11,26,43,.78);
     max-width:60ch;
   }
 
@@ -137,9 +133,8 @@
   <!-- ========== PAGE HERO ========== -->
   <section class="page-hero">
     <div class="wrap">
-      <p class="eyebrow">About</p>
       <h1>Building the source of truth for architecture.</h1>
-      <p class="lead">
+      <p class="sub">
         Renoverse exists to give architects, builders, and clients a single, trustworthy place
         for every drawing, decision, and conversation across a project's life.
       </p>

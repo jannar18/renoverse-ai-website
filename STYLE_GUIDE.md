@@ -230,6 +230,17 @@ Don't drift `data-cell`, `data-radius`, `data-contrast`, or `data-grain` — tho
 
 **One halftone-video per page, max.** It's heavy and visually loud.
 
+#### Hero anatomy — the rules
+
+Heroes are a fixed two-element composition. **H1 + `.sub`. Nothing else.**
+
+- **No eyebrow.** Eyebrows are the JetBrains Mono uppercase label that sits above an H2 *section header* — they mark sections, not heroes. A hero is the page-defining moment; it identifies itself through the H1, not through a label above it. If a non-technical user asks for "a tagline above the headline" or "a kicker," push back: that's an eyebrow, and it doesn't belong on a hero.
+- **H1** — Cormorant Garamond italic, weight 400, `--fs-h1`, **centered** (centering is part of the H1 role; see Type roles). Mirror the ICP carousel title-slide.
+- **`.sub`** — the canonical hero subtitle role. Defined as: Poppins 400 at `--fs-body` (16px), line-height 1.5, color `rgba(11, 26, 43, 0.78)` (i.e. `--ink` at 78%), centered to match its H1, max-width ~60ch on multi-line copy. **`.sub` is NOT `.lead`** — `.lead` is for an intro paragraph under a *section header* (`--fs-lead`, 17–20px, slightly larger). `.sub` is hero-specific and one step smaller. Don't substitute one for the other.
+- **Both elements share the same horizontal axis** — centered as a block. The hero is the only place on the site where multi-line centered body-size copy is sanctioned, because the hero is a single composition rather than a content section. Outside heroes, multi-line centered copy is push-back-worthy.
+
+This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`product.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + `.sub` rules are invariant.
+
 ### "Add a new page"
 
 Required scaffolding for any new HTML page:
@@ -562,15 +573,16 @@ The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment |
 |---|---|---|---|---|---|---|
-| H1 | Cormorant Garamond | italic 400 | `--fs-h1` | `--lh-h1` | `--ls-display` | **centered** (defining property) |
+| H1 | Cormorant Garamond | italic 400 | `--fs-h1` | `--lh-h1` | `--ls-display` | **centered** (defining property). Pairs only with `.sub` — never an eyebrow. |
 | H2 | Poppins | 500 | `--fs-h2` | `--lh-h2` | `--ls-display` | left |
 | H3 | Cormorant Garamond | italic 500 | `--fs-h3` | `--lh-h3` | `--ls-display` | left (centered allowed for short editorial moments) |
-| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left |
-| Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal | left |
+| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. **Section labels above an H2 only — not on heroes.** |
+| Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal | left. Intro paragraph under an H2. **Not the same as `.sub`** (hero subtitle, body-sized). |
+| `.sub` (hero subtitle) | Poppins | 400 | `--fs-body` (16px) | 1.5 | normal | centered (matches its H1). Hero-only. See "Hero anatomy". |
 | Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left |
 | Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left |
 
-Lead = one paragraph per section, max. Sits between the H2 and the body, slightly larger and slightly muted.
+Lead = one paragraph per section, max. Sits between the H2 and the body, slightly larger and slightly muted. **Distinct from `.sub`** — `.sub` is the hero-specific subtitle (one step smaller, body-sized, centered).
 
 ### Color tokens
 

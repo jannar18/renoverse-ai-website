@@ -28,43 +28,38 @@
   .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 
   /* ---------- page hero (paper, no video) ----------
-     Solid-mode nav covers ~96px; pad the hero so the eyebrow clears
-     the floating frosted bar without overlap. */
+     Solid-mode nav covers ~96px; pad the hero so the H1 clears the
+     floating frosted bar without overlap. Heroes are centered as a
+     block (H1 is centered as a defining property; the lead under it
+     follows the same axis to read as one composition). */
   .page-hero{
     position:relative;
     isolation:isolate;
     overflow:hidden;
     padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
     background:var(--grad-paper);
-  }
-  .page-hero .grain{ /* .fx-grain--ink slot */ }
-  .page-hero .eyebrow{
-    font-family:var(--font-mono);
-    font-size:var(--fs-eyebrow);
-    line-height:var(--lh-eyebrow);
-    letter-spacing:var(--xwide);
-    text-transform:uppercase;
-    color:var(--muted);
-    margin:0 0 18px;
+    text-align:center;
   }
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
-    font-weight:600;
+    font-weight:400;
     font-size:var(--fs-h1);
     line-height:var(--lh-h1);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0;
+    margin:0 auto;
     max-width:18ch;
   }
-  .page-hero .lead{
-    margin-top:24px;
+  /* Hero sub — mirrors `.hero .sub` on the homepage so all hero
+     subtitles read as one role across the site. Body-size Poppins,
+     ink at 78% opacity, single-axis line-height 1.5. */
+  .page-hero .sub{
+    margin:24px auto 0;
     font-family:var(--font-sans);
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:var(--ink);
-    opacity:.78;
+    font-size:var(--fs-body);
+    line-height:1.5;
+    color:rgba(11,26,43,.78);
     max-width:60ch;
   }
 
@@ -132,9 +127,8 @@
   <!-- ========== PAGE HERO ========== -->
   <section class="page-hero">
     <div class="wrap">
-      <p class="eyebrow">Product</p>
       <h1>One workspace. Every drawing, decision, and detail.</h1>
-      <p class="lead">
+      <p class="sub">
         Renoverse is the AI-native communication platform for architecture project collaboration —
         a single source of truth where drawings, decisions, and your entire team stay in sync.
       </p>
