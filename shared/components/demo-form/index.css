@@ -1,0 +1,151 @@
+/* Renoverse — Demo request form.
+   The component is built with Tailwind utility classes (loaded via the
+   Play CDN with the @tailwindcss/forms plugin); this stylesheet only
+   carries the few things utilities can't easily express:
+
+     1. Layered halftone-paper background treatment (.demo-form__bg*)
+     2. The demo-form root's positioning + scoped CSS-var fallback for
+        hosts that don't render Tailwind
+     3. The intl-tel-input reskin so the phone widget matches the
+        Tailwind form aesthetic
+*/
+
+/* Restore the [hidden] attribute as the source of truth — Tailwind's
+   `flex` / `grid` / `block` utilities otherwise override its
+   display:none. We apply it scoped so it can't bleed beyond the
+   component. */
+.demo-form [hidden] { display: none !important; }
+
+.demo-form {
+  /* Scoped fallbacks — used by the background layers and iti reskin
+     so the component looks correct even if the host page hasn't
+     loaded shared/tokens.css. */
+  --df-ink: var(--ink, #0B1A2B);
+  --df-bg: var(--bg, #FAFAF7);
+  --df-cream: var(--cream, #F2EBD8);
+  --df-ice: var(--ice, #E5F4F1);
+  --df-aqua: var(--aqua, #5EC9B7);
+  --df-azure: var(--azure, #7FE3CB);
+  --df-teal: var(--teal, #2D6F75);
+  --df-blue: var(--blue, #5BA7C9);
+  --df-line: var(--line, rgba(11,26,43,.14));
+  --df-line-soft: var(--line-soft, rgba(11,26,43,.08));
+  --df-muted: var(--muted, rgba(11,26,43,.55));
+
+  position: relative;
+  display: block;
+  isolation: isolate;
+  padding: clamp(56px, 9vw, 128px) clamp(20px, 4vw, 56px);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--df-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Background treatment ---------- */
+
+.demo-form__bg {
+  background:
+    radial-gradient(120% 80% at 50% 0%,
+      rgba(229,244,241,1) 0%,
+      rgba(242,235,216,.85) 45%,
+      var(--df-bg) 100%);
+}
+
+.demo-form__bg-halftone {
+  position: absolute;
+  inset: -10%;
+  background-image:
+    radial-gradient(rgba(11,26,43,.18) 22%, transparent 23%),
+    radial-gradient(rgba(11,26,43,.18) 22%, transparent 23%);
+  background-size: 14px 14px, 14px 14px;
+  background-position: 0 0, 7px 7px;
+  -webkit-mask-image: radial-gradient(120% 80% at 50% 30%, #000 0%, transparent 70%);
+          mask-image: radial-gradient(120% 80% at 50% 30%, #000 0%, transparent 70%);
+  opacity: .35;
+  mix-blend-mode: multiply;
+}
+
+.demo-form__bg-grain {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-conic-gradient(rgba(11,26,43,.06) 0deg 1deg, transparent 1deg 3deg);
+  opacity: .25;
+  mix-blend-mode: overlay;
+}
+
+.demo-form__bg-glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 720px;
+  max-height: 720px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .55;
+  pointer-events: none;
+}
+.demo-form__bg-glow--a {
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(127,227,203,.55), transparent 65%);
+}
+.demo-form__bg-glow--b {
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(91,167,201,.45), transparent 65%);
+}
+
+/* ---------- intl-tel-input reskin ----------
+   Matches the Tailwind input look: rounded-lg corners, ring-line
+   border, ice-tinted dial-code chunk, focus ring in teal. */
+
+.demo-form .iti {
+  width: 100%;
+  display: block;
+}
+
+.demo-form .iti--separate-dial-code .iti__selected-flag {
+  background: var(--df-ice);
+  border-right: 1px solid var(--df-line);
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  padding: 0 12px;
+}
+
+.demo-form .iti--separate-dial-code .iti__selected-dial-code {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--df-ink);
+}
+
+.demo-form .iti__country-list {
+  border-radius: 0.5rem;
+  border: 1px solid var(--df-line);
+  box-shadow:
+    0 18px 36px -10px rgba(11,26,43,.18),
+    0 6px 14px -4px rgba(11,26,43,.08);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 14px;
+  padding: 4px;
+}
+
+.demo-form .iti__country {
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.demo-form .iti__country.iti__highlight {
+  background: var(--df-ice);
+}
+
+.demo-form .iti__dial-code { color: var(--df-muted); }
+
+.demo-form .iti__search-input {
+  font: inherit;
+  font-size: 14px;
+  border: 0;
+  border-bottom: 1px solid var(--df-line);
+  padding: 10px 12px;
+}

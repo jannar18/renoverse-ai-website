@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>team-section — isolated test host</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index.css">
+<style>
+  body { margin: 0; background: #FAFAF7; font-family: 'Poppins', system-ui, sans-serif; }
+  h2.hd { margin: 32px 24px 8px; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: #5a5a5a; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<h2 class="hd">Default — origin story, no name, placeholder portrait</h2>
+<div data-team-section></div>
+
+<h2 class="hd">With named attribution</h2>
+<div data-team-section
+     data-names="Jane Doe"
+     data-role="Founder &amp; CEO, Renoverse"></div>
+
+<h2 class="hd">Heading-only (no body, no attribution)</h2>
+<div data-team-section
+     data-eyebrow="The team"
+     data-heading="Built by people who lived the renovation chaos firsthand."
+     data-body=""
+     data-role=""></div>
+
+<script src="index.js"></script>
+</body>
+</html>

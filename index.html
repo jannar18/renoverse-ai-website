@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Renoverse — The source of truth for architects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@1,400;1,600;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/tokens.css">
+<link rel="stylesheet" href="shared/button.css">
+<link rel="stylesheet" href="shared/components/site-nav/index.css">
+<link rel="stylesheet" href="shared/components/stack-animation/index.css">
+<link rel="stylesheet" href="shared/components/halftone-video/index.css">
+<link rel="stylesheet" href="shared/components/icp-carousel/index.css">
+<link rel="stylesheet" href="shared/components/feature-highlights/index.css">
+<link rel="stylesheet" href="shared/components/team-section/index.css">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --ink-2:#1a1a1a;
+    --paper:#ffffff;
+    --paper-warm:#f5f1ec;
+    --paper-lavender:#ece7e1;
+    --text:#111;
+    --muted:#5a5a5a;
+    --line:rgba(0,0,0,.12);
+    --gray-card:#3a3a3a;
+    --azure:#7FE3CB;
+    --azure-deep:#5EC9B7;
+    --max:1240px;
+    --gutter:clamp(20px,4vw,48px);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- placeholder util ---------- */
+  .ph{
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,.03) 0 12px,
+        rgba(255,255,255,.06) 12px 24px
+      ),
+      #2a2a2a;
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    border:1px dashed rgba(255,255,255,.25);
+    padding:24px;
+  }
+  .ph.light{
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(0,0,0,.02) 0 12px,
+        rgba(0,0,0,.05) 12px 24px
+      ),
+      #e9e6e1;
+    color:rgba(0,0,0,.45);
+    border:1px dashed rgba(0,0,0,.2);
+  }
+  .ph small{display:block;font-weight:500;opacity:.85}
+  .ph .tag{
+    font-size:10px;letter-spacing:.3em;opacity:.55;margin-bottom:6px;
+  }
+
+  /* ---------- .btn lives in button.css (component) ---------- */
+
+  /* ---------- nav lives in shared/components/site-nav/ ---------- */
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    color:#0a0a0a;
+    overflow:hidden;
+    background:#ffffff;
+  }
+  .hero .scrim{
+    position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,0) 28%, rgba(255,255,255,0) 70%, rgba(255,255,255,.5) 100%);
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:calc(80rem + 2 * clamp(20px,4vw,56px));
+    margin:0 auto;
+    padding:0 clamp(20px,4vw,56px);
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(48px, 7vw, 96px);
+    line-height:1.02;
+    letter-spacing:-.01em;
+    margin:0;
+    max-width:16ch;
+    color:#0a0a0a;
+  }
+  .hero .sub{
+    margin-top:24px;
+    font-size:16px;
+    color:rgba(10,10,10,.78);
+    max-width:none;
+    white-space:nowrap;
+    line-height:1.5;
+  }
+
+  /* ---------- generic section ---------- */
+  section{padding:96px 0}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  h2{
+    font-weight:600;
+    font-size:clamp(28px, 3.4vw, 44px);
+    letter-spacing:-.015em;
+    line-height:1.1;
+    margin:0 0 16px;
+  }
+  p.lead{font-size:18px;line-height:1.55;color:#222;max-width:46ch;margin:0}
+
+  .intro{text-align:center;padding-top:32px}
+  .intro .lead{max-width:72ch;margin:0 auto}
+  .intro .lead + .lead{margin-top:20px}
+
+  /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
+
+  /* ---------- typology (homepage solution pillars — deck slide 6) ---------- */
+  .typology{background:var(--paper);padding:80px 0}
+  .typology .head{
+    margin:0 auto clamp(48px,6vw,72px);
+    max-width:60ch;
+    text-align:center;
+  }
+  .typology .head h2{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(32px,4vw,52px);
+    line-height:1.1;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    margin:0;
+  }
+  .typology .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,32px);align-items:stretch}
+  .ty-card{
+    display:flex;flex-direction:column;
+    border-radius:14px;
+    overflow:hidden;
+    isolation:isolate;
+    background:#ece7e1;
+    box-shadow:0 1px 0 rgba(11,26,43,.06), 0 18px 40px -22px rgba(11,26,43,.22);
+    color:var(--ink);
+  }
+  .ty-card .shot{
+    position:relative;
+    aspect-ratio:1280/832;
+    background:#fff;
+    overflow:hidden;
+  }
+  .ty-card .shot img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .ty-card .meta{
+    position:relative;
+    flex:1;
+    padding:24px 22px 26px;
+    text-align:center;
+    color:var(--ink);
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-top:1px solid rgba(255,255,255,.6);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .ty-card h4{font-size:17px;font-weight:600;margin:0 0 8px;letter-spacing:-.005em;color:var(--ink)}
+  .ty-card .meta p{font-size:14px;line-height:1.55;color:rgba(11,26,43,.78);margin:0}
+  .typology .closer{
+    margin:clamp(56px,7vw,88px) auto 0;
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(22px,2.4vw,30px);
+    line-height:1.2;
+    letter-spacing:-.005em;
+    color:#2D6F75;
+  }
+
+  /* ---------- quote ---------- */
+  .quote-section{background:var(--paper);padding:72px 0 96px}
+  .quote{
+    position:relative;
+    color:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    isolation:isolate;
+    min-height:440px;
+    background:linear-gradient(in oklab 160deg, #0B1A2B 0%, #2D6F75 62%, #C9D8C5 100%);
+  }
+  /* Paper grain — same SVG turbulence as the ICP carousel */
+  .quote::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.93 0 0 0 0 0.85 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:320px 320px;
+    mix-blend-mode:overlay;
+    opacity:.28;
+    z-index:2;
+  }
+  .quote .text{
+    position:relative;z-index:3;
+    height:100%;
+    padding:var(--gutter);
+    display:flex;flex-direction:column;justify-content:space-between;
+    max-width:680px;
+  }
+  .quote .logo{
+    width:auto;height:48px;
+    align-self:flex-start;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+    opacity:.95;
+  }
+  .quote blockquote{
+    font-family:'Poppins',sans-serif;
+    font-weight:400;
+    font-size:clamp(15px,1.2vw,17px);
+    line-height:1.65;
+    color:rgba(255,255,255,.9);
+    margin:clamp(40px,6vw,64px) 0 0;
+    max-width:42ch;
+  }
+  .quote .attrib{margin-top:clamp(32px,4vw,48px)}
+  .quote .who{font-size:15px;font-weight:600;margin:0;color:#fff}
+  .quote .who-meta{font-size:13px;color:rgba(255,255,255,.78);margin:4px 0 0;font-weight:400}
+
+  /* ---------- stats ---------- */
+  .stats{background:var(--paper-warm);padding:80px 0}
+  .stats .row{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+  .stats .label{font-size:16px;color:#222;margin:0;max-width:24ch}
+  .stats .table{display:flex;flex-direction:column;gap:0}
+  .stats .item{
+    display:grid;grid-template-columns:1fr auto;align-items:center;
+    padding:22px 0;border-top:1px solid var(--line);
+    gap:24px;
+  }
+  .stats .item:last-child{border-bottom:1px solid var(--line)}
+  .stats .item span{font-size:14px;color:#222}
+  .stats .num{font-size:clamp(28px,3.4vw,44px);font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+
+  /* ---------- founders/team lives in shared/components/team-section/ ---------- */
+
+  /* ---------- paper zone (team + cta + footer share one paper backdrop) ---------- */
+  .paper-zone{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    color:#0a0a0a;
+    background:
+      radial-gradient(120% 80% at 50% 0%,
+        rgba(229,244,241,1) 0%,
+        rgba(242,235,216,.85) 45%,
+        #f5f1ec 100%);
+  }
+  /* SVG turbulence paper grain */
+  .paper-zone::before{
+    content:"";
+    position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:320px 320px;
+    mix-blend-mode:multiply;
+    opacity:.35;
+    z-index:0;
+  }
+  /* Halftone-dot bloom masked behind the CTA headline */
+  .paper-zone::after{
+    content:"";
+    position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(rgba(11,26,43,.16) 22%, transparent 23%),
+      radial-gradient(rgba(11,26,43,.16) 22%, transparent 23%);
+    background-size:14px 14px, 14px 14px;
+    background-position:0 0, 7px 7px;
+    -webkit-mask-image:radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%);
+            mask-image:radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%);
+    opacity:.25;
+    mix-blend-mode:multiply;
+    z-index:0;
+  }
+  .paper-zone > *{position:relative;z-index:1}
+
+  /* ---------- final cta ---------- */
+  .cta{
+    position:relative;
+    color:#0a0a0a;
+    padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
+  }
+  .cta .row{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .cta h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,3.6vw,52px);font-weight:400;line-height:1.05;margin:0;letter-spacing:-.01em;max-width:30ch;color:#0a0a0a}
+
+  /* ---------- footer ---------- */
+  footer.site{background:transparent;color:#0a0a0a;padding:48px 0 56px;border-top:1px solid rgba(11,26,43,.12)}
+  footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+  footer.site .brand img{height:30px;width:auto}
+  footer.site .tagline{margin-top:12px;font-size:13px;color:rgba(11,26,43,.6);max-width:32ch;line-height:1.55}
+  footer.site .socials{display:flex;gap:18px;margin-top:20px}
+  footer.site .socials a{
+    display:inline-flex;align-items:center;justify-content:center;
+    color:var(--azure-deep);
+    transition:color .15s ease, transform .15s ease;
+  }
+  footer.site .socials a:hover{color:var(--azure)}
+  footer.site .socials svg{width:22px;height:22px;display:block}
+  footer.site .legal{display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;font-size:12px}
+  footer.site .legal a{color:rgba(11,26,43,.62);text-decoration:none}
+  footer.site .legal a:hover{color:var(--azure-deep)}
+  footer.site .copyright{margin-top:14px;font-size:12px;color:rgba(11,26,43,.5)}
+  footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
+  footer.site .newsletter h5{
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:rgba(11,26,43,.55);margin:0 0 10px;font-weight:500;
+  }
+  footer.site .newsletter p{
+    font-size:13px;color:rgba(11,26,43,.7);margin:0 0 16px;line-height:1.5;
+  }
+  footer.site .newsletter form{
+    display:flex;flex-direction:column;align-items:flex-start;
+  }
+  footer.site .newsletter input[type="email"]{
+    width:100%;
+    padding:10px 14px;
+    font:inherit;font-size:14px;
+    color:#0a0a0a;
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(11,26,43,.18);
+    border-radius:8px;
+    outline:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  footer.site .newsletter input[type="email"]:focus{
+    border-color:var(--azure-deep);background:#fff;
+  }
+  /* Subscribe uses the canonical .btn .btn--filled (azure). The .btn default
+     24px all-around margin is too much here. Inset by the tick length (9px)
+     on the left so the TL/BL ticks land exactly on the column-content left
+     edge — visually aligning the ticks with the input/heading/text edge.
+     Top: 18px gap so hover tick clears the input. */
+  footer.site .newsletter .btn{
+    --btn-clearance: 0;
+    margin: 18px 0 0 9px;
+  }
+  footer.site .newsletter .nl-status{
+    font-size:12px;color:rgba(11,26,43,.6);margin-top:6px;min-height:1.2em;
+  }
+  footer.site .newsletter .nl-fineprint{
+    font-size:11px;color:rgba(11,26,43,.55);margin:14px 0 0;line-height:1.5;
+  }
+  footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:960px){
+    .hero h1{font-size:48px}
+    .features .grid{grid-template-columns:repeat(2,1fr)}
+    .typology .grid{grid-template-columns:1fr}
+    .stats .row{grid-template-columns:1fr}
+    footer.site .row{grid-template-columns:1fr;gap:40px}
+    footer.site .newsletter{justify-self:start;max-width:none}
+  }
+  @media (max-width:540px){
+    .features .grid{grid-template-columns:1fr}
+    .cta .row{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV (shared component) ========== -->
+<nav data-site-nav></nav>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div data-halftone-video data-src="assets/hero.mp4" data-front="#2C6F75" data-invert="1" data-cell="0.0028" data-radius="0.8" data-contrast="-0.15" data-grain="0.15"></div>
+  <div class="scrim"></div>
+  <div class="hero-inner">
+    <h1>Drawings, decisions, and your team — all in one place.</h1>
+    <p class="sub">AI-native communication platform for architecture project collaboration.</p>
+  </div>
+</header>
+
+<!-- ========== PRODUCT FEATURE: stack-and-collapse animation ========== -->
+<div data-stack-animation></div>
+<div style="height:100vh;background:#fff"></div>
+
+<!-- ========== INTRO ========== -->
+<section class="intro">
+  <div class="wrap">
+    <p class="lead">
+      Stop wasting hours navigating hundreds of endless emails during home construction projects.
+    </p>
+    <p class="lead">
+      Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
+    </p>
+  </div>
+</section>
+
+<!-- ========== 4 FEATURES (shared component) ========== -->
+<div data-feature-highlights data-cta-href="#"></div>
+
+<!-- ========== TYPOLOGY (Solution pillars — deck slide 6) ========== -->
+<section class="typology">
+  <div class="wrap">
+    <div class="head">
+      <h2>Facilitating a unified system of record for architectural projects.</h2>
+    </div>
+    <div class="grid">
+      <div class="ty-card">
+        <div class="shot">
+          <img src="assets/pillar-comments.png" alt="Threaded comments pinned to a design drawing in Renoverse" />
+        </div>
+        <div class="meta">
+          <h4>Centralized Project Intelligence</h4>
+          <p>Frictionless collaboration across comment threads &amp; tasks tied to specific design drawings, topics, and issues.</p>
+        </div>
+      </div>
+      <div class="ty-card">
+        <div class="shot">
+          <img src="assets/pillar-tasks.png" alt="Renoverse tasks view with AI-generated activity summary tracking decisions and assignments" />
+        </div>
+        <div class="meta">
+          <h4>Automated Admin &amp; Decision Tracking</h4>
+          <p>AI assistant queries documents, fields client questions, and tracks decisions &amp; tasks.</p>
+        </div>
+      </div>
+      <div class="ty-card">
+        <div class="shot">
+          <img src="assets/pillar-decisions.png" alt="Renoverse decisions log — timestamped audit trail of selections and approvals across the project" />
+        </div>
+        <div class="meta">
+          <h4>Accountability Across Stakeholders</h4>
+          <p>Transparent, timestamped audit log of all decisions, approvals, and changes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ICP CAROUSEL ========== -->
+<div data-icp-carousel></div>
+
+<!-- ========== QUOTE ========== -->
+<section class="quote-section">
+  <div class="wrap">
+    <div class="quote">
+      <div class="text">
+        <img class="logo" src="assets/slc-logo.webp" alt="SLC Architect" />
+        <blockquote>
+          Renoverse has proven to be an invaluable organizational tool for the entire team — client, builder, designer, and architect alike. Having a single, up-to-date set of drawings to reference, along with the ability to log decisions and selections in a searchable format, is incredibly powerful.
+        </blockquote>
+        <div class="attrib">
+          <p class="who">Sabrina Vogel</p>
+          <p class="who-meta">Owner &amp; Principal</p>
+          <p class="who-meta">SLC Architect</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PAPER ZONE — team + cta + footer share one paper backdrop ========== -->
+<div class="paper-zone">
+
+<!-- ========== TEAM (shared component) ========== -->
+<div data-team-section data-theme="paper"></div>
+
+<!-- ========== FINAL CTA ========== -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="row">
+      <h3>Bring order into complexity.</h3>
+      <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand">
+        <img src="assets/logo-mark.png" alt="Renoverse" />
+        <p class="tagline">The source of truth for architects. Drawings, decisions, and your entire team — all in one place.</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/company/renoverse-ai/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.02h4.56V24H.22V8.02zM8.34 8.02h4.37v2.18h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.55c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.9 1.96-2.9 3.99V24H8.34V8.02z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/renoverse.ai" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+        </div>
+        <div class="legal">
+          <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="assets/legal/cookie-policy.pdf" target="_blank" rel="noopener">Cookie Policy</a>
+          <a href="assets/legal/terms-conditions.pdf" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+        </div>
+        <div class="copyright">© 2026 Renoverse AI. All rights reserved.</div>
+      </div>
+      <div class="newsletter">
+        <h5>Newsletter</h5>
+        <p>Subscribe to our newsletter for company updates, news, and customer stories.</p>
+        <!-- TODO: wire to real newsletter service (Buttondown / Substack / Mailchimp / etc.). See NOTES.md. -->
+        <form data-newsletter-signup novalidate>
+          <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--filled">
+            <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
+            Subscribe
+          </button>
+        </form>
+        <div class="nl-status" data-nl-status aria-live="polite"></div>
+        <p class="nl-fineprint">By subscribing, you agree to our <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">privacy policy</a> and to receive email updates from us.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.paper-zone -->
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="shared/components/site-nav/index.js"></script>
+<script src="shared/components/stack-animation/index.js"></script>
+<script src="shared/components/halftone-video/index.js"></script>
+<script src="shared/components/icp-carousel/index.js"></script>
+<script src="shared/components/feature-highlights/index.js"></script>
+<script src="shared/components/team-section/index.js"></script>
+
+<script>
+  // Newsletter signup — placeholder handler. No backing service wired yet (see NOTES.md);
+  // intercepts submit, validates email format, and shows a confirmation message so users
+  // get visible feedback. Replace with real service integration when chosen.
+  (function () {
+    document.querySelectorAll('[data-newsletter-signup]').forEach(function (form) {
+      var status = form.parentElement.querySelector('[data-nl-status]');
+      var input = form.querySelector('input[type="email"]');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = (input.value || '').trim();
+        var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!ok) {
+          if (status) status.textContent = 'Please enter a valid email.';
+          return;
+        }
+        if (status) status.textContent = 'Thanks — we’ll be in touch.';
+        form.reset();
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

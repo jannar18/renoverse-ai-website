@@ -1,0 +1,86 @@
+/* Renoverse — site-nav.
+   Single source of truth for the top navigation across pages. All
+   selectors are scoped under the .site-nav root class so the
+   component can't be outranked by host-page styles.
+
+   Layout: max-width is calc(80rem + 2 * outer-padding) so the nav's
+   inner content edges line up with the demo-form's max-w-7xl content
+   container. Edit padding/max-width here once and every page picks
+   it up. */
+
+.site-nav{
+  position:absolute;top:0;left:0;right:0;z-index:50;
+  background:transparent;
+}
+.site-nav .nav-inner{
+  max-width:calc(80rem + 2 * clamp(20px,4vw,56px));
+  margin:0 auto;
+  padding:14px clamp(20px,4vw,56px);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;
+}
+.site-nav .nav-brand img{
+  height:24px;width:auto;max-width:none;object-fit:contain;
+  display:block;flex-shrink:0;
+}
+.site-nav .nav-right{display:flex;align-items:center;gap:32px;margin-left:auto}
+.site-nav .nav-links{
+  display:flex;gap:28px;align-items:center;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:#222;
+}
+.site-nav .nav-links > a,
+.site-nav .nav-links > .dropdown > .dt{
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+}
+.site-nav .nav-links a:hover,
+.site-nav .nav-links .dt:hover{opacity:.65}
+
+.site-nav .dropdown{position:relative}
+.site-nav .dropdown .dt::after{
+  content:"";display:inline-block;
+  width:6px;height:6px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);
+  transition:transform .25s ease;
+}
+.site-nav .dropdown:hover .dt::after,
+.site-nav .dropdown:focus-within .dt::after{
+  transform:translateY(1px) rotate(225deg);
+}
+.site-nav .dropdown-menu{
+  position:absolute;top:calc(100% + 14px);left:50%;
+  transform:translateX(-50%) translateY(6px);
+  min-width:220px;
+  background:#fff;
+  border:1px solid rgba(0,0,0,.12);
+  border-radius:10px;
+  padding:8px;
+  box-shadow:0 12px 32px rgba(0,0,0,.08);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease, visibility .2s;
+  z-index:60;
+}
+.site-nav .dropdown:hover .dropdown-menu,
+.site-nav .dropdown:focus-within .dropdown-menu{
+  opacity:1;visibility:visible;pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.site-nav .dropdown-menu a{
+  display:block;padding:10px 14px;border-radius:6px;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:#222;
+  transition:background .15s ease, color .15s ease;
+}
+.site-nav .dropdown-menu a:hover{background:#f5f1ec;color:#5EC9B7}
+/* invisible hover bridge so the menu doesn't disappear in the gap */
+.site-nav .dropdown::after{
+  content:"";position:absolute;left:0;right:0;top:100%;height:14px;
+}
+
+@media (max-width:880px){
+  .site-nav .nav-links{display:none}
+}

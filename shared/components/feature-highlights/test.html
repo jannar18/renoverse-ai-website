@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>feature-highlights — isolated test host</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../button.css">
+<link rel="stylesheet" href="index.css">
+<style>
+  body { margin: 0; background: #fff; font-family: 'Poppins', system-ui, sans-serif; }
+  h2.hd { margin: 32px 24px 8px; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: #5a5a5a; }
+</style>
+</head>
+<body>
+
+<h2 class="hd">Default</h2>
+<div data-feature-highlights></div>
+
+<h2 class="hd">Overridden items + CTA</h2>
+<div data-feature-highlights
+     data-cta-label="Learn more"
+     data-cta-href="#"
+     data-items='[
+       {"title":"Live drawings","copy":"Mark up, compare, version — without leaving the file."},
+       {"title":"Decision log","copy":"Every choice, captured in context."},
+       {"title":"Team rooms","copy":"Architects, consultants, contractors, clients."}
+     ]'></div>
+
+<script src="index.js"></script>
+</body>
+</html>

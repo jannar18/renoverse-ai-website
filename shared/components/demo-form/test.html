@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>demo-form — isolated test host</title>
+
+<!-- Tailwind Play CDN with @tailwindcss/forms plugin.
+     The component will inject this if it's missing, but loading it
+     ahead of time avoids the first-render flash of unstyled markup. -->
+<script>
+  window.tailwind = window.tailwind || {};
+  window.tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:        '#0B1A2B',
+          paper:      '#FAFAF7',
+          surface:    '#FFFFFF',
+          cream:      '#F2EBD8',
+          ice:        '#E5F4F1',
+          azure:      '#7FE3CB',
+          aqua:       '#5EC9B7',
+          teal:       '#2D6F75',
+          oxford:     '#5D6FB8',
+          'brand-blue': '#5BA7C9',
+          line:       'rgba(11,26,43,.14)',
+          'line-soft':'rgba(11,26,43,.08)',
+          muted:      'rgba(11,26,43,.55)',
+        },
+        fontFamily: { sans: ['Poppins','system-ui','sans-serif'] },
+        boxShadow: {
+          card: '0 30px 60px -30px rgba(11,26,43,.18), 0 8px 20px -10px rgba(11,26,43,.08)',
+          cta:  '0 1px 0 rgba(255,255,255,.6) inset, 0 14px 30px -10px rgba(45,111,117,.45), 0 4px 10px -4px rgba(45,111,117,.35)',
+        },
+      },
+    },
+  };
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="index.css">
+
+<style>
+  html, body {
+    background: #FAFAF7;
+    color: #0B1A2B;
+    font: 15px/1.6 'Poppins', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .test-spacer {
+    height: 30vh;
+    display: grid;
+    place-items: center;
+    color: rgba(11,26,43,.4);
+    font-size: 11px;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="test-spacer">↓ demo-form component ↓</div>
+
+<div data-demo-form></div>
+
+<div class="test-spacer">↑ component ends above ↑</div>
+
+<script src="index.js"></script>
+<script>
+  document.addEventListener('demo-form:submit', (e) => {
+    console.log('demo-form:submit', e.detail.values);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+/* Renoverse — Team section.
+   Quiet "our story / meet the team" block: heading + body + optional
+   attribution on the left, founder portrait on the right. Background
+   matches the surrounding ink surface so the block reads as one continuous
+   panel with the CTA/footer below.
+
+   All styles are scoped under `.team-section`. Hosts can repaint by setting
+   `--ts-ink` / `--ts-paper` on the mount element; defaults match the
+   `#0a0a0a` ink used in renoverse.
+*/
+
+.team-section {
+  --ts-ink: #0a0a0a;
+  --ts-paper: #ffffff;
+  --ts-text: rgba(255, 255, 255, .82);
+  --ts-muted: rgba(255, 255, 255, .55);
+  --ts-media-fill: #1a1a1a;
+  --ts-media-stripe-a: rgba(255, 255, 255, .03);
+  --ts-media-stripe-b: rgba(255, 255, 255, .06);
+  --ts-media-ph-bg: #2a2a2a;
+  --ts-max: 1240px;
+  --ts-gutter: clamp(20px, 4vw, 48px);
+
+  background: var(--ts-ink);
+  color: var(--ts-paper);
+  padding: clamp(80px, 9vw, 128px) 0;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 300;
+}
+
+/* Paper variant — for hosts where the surrounding zone is the warm-paper
+   gradient. Flips foreground tones and lightens the placeholder slot so the
+   component reads as part of the paper backdrop. */
+.team-section--paper {
+  --ts-ink: transparent;
+  --ts-paper: #0a0a0a;
+  --ts-text: rgba(11, 26, 43, .82);
+  --ts-muted: rgba(11, 26, 43, .55);
+  --ts-media-fill: rgba(11, 26, 43, .04);
+  --ts-media-stripe-a: rgba(11, 26, 43, .03);
+  --ts-media-stripe-b: rgba(11, 26, 43, .06);
+  --ts-media-ph-bg: #ece7e1;
+}
+
+.team-section__wrap {
+  max-width: var(--ts-max);
+  margin: 0 auto;
+  padding: 0 var(--ts-gutter);
+}
+
+.team-section__row {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+
+.team-section__copy {
+  max-width: 46ch;
+}
+
+.team-section__eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--ts-muted);
+  margin: 0 0 24px;
+}
+
+.team-section__heading {
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -.01em;
+  margin: 0 0 24px;
+  color: var(--ts-paper);
+}
+
+.team-section__body {
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.65;
+  font-weight: 400;
+  margin: 0;
+  color: var(--ts-text);
+}
+
+.team-section__attribution {
+  margin-top: 32px;
+}
+
+.team-section__names {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ts-paper);
+  line-height: 1.55;
+}
+
+.team-section__role {
+  font-size: 13px;
+  font-weight: 400;
+  margin: 4px 0 0;
+  color: var(--ts-text);
+}
+
+.team-section__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--ts-media-fill);
+}
+
+.team-section__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team-section__media-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--ts-media-stripe-a) 0 12px,
+      var(--ts-media-stripe-b) 12px 24px
+    ),
+    var(--ts-media-ph-bg);
+  color: var(--ts-muted);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.team-section__media-ph .tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .3em;
+  opacity: .55;
+  margin-bottom: 6px;
+}
+
+.team-section__media-ph small {
+  display: block;
+  font-weight: 500;
+  opacity: .85;
+}
+
+@media (max-width: 860px) {
+  .team-section__row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .team-section__copy {
+    max-width: none;
+    order: 2;
+  }
+
+  .team-section__media {
+    order: 1;
+    aspect-ratio: 4 / 3;
+  }
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>stack-animation — isolated test host</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #fff;
+    color: #161616;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .test-spacer { height: 60vh; display: grid; place-items: center; color: #999; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; }
+</style>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="test-spacer">↓ scroll into the stack-animation component ↓</div>
+
+<div data-stack-animation></div>
+
+<div class="test-spacer">↑ component ends above ↑</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

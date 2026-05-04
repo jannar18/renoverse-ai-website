@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book a demo — Renoverse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Preload Tailwind config + Play CDN so the demo-form's utility
+     classes are ready before the component mounts. (The component
+     would auto-inject these, but doing it here avoids the first-paint
+     race that left the form card unstyled.) -->
+<script>
+  window.tailwind = window.tailwind || {};
+  window.tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:        '#0B1A2B',
+          paper:      '#FAFAF7',
+          surface:    '#FFFFFF',
+          cream:      '#F2EBD8',
+          ice:        '#E5F4F1',
+          azure:      '#7FE3CB',
+          aqua:       '#5EC9B7',
+          teal:       '#2D6F75',
+          oxford:     '#5D6FB8',
+          'brand-blue': '#5BA7C9',
+          line:       'rgba(11,26,43,.14)',
+          'line-soft':'rgba(11,26,43,.08)',
+          muted:      'rgba(11,26,43,.55)',
+        },
+        fontFamily: { sans: ['Poppins','system-ui','sans-serif'] },
+        boxShadow: {
+          card: '0 30px 60px -30px rgba(11,26,43,.18), 0 8px 20px -10px rgba(11,26,43,.08)',
+          cta:  '0 1px 0 rgba(255,255,255,.6) inset, 0 14px 30px -10px rgba(45,111,117,.45), 0 4px 10px -4px rgba(45,111,117,.35)',
+        },
+      },
+    },
+  };
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+
+<link rel="stylesheet" href="shared/tokens.css">
+<link rel="stylesheet" href="shared/button.css">
+<link rel="stylesheet" href="shared/components/site-nav/index.css">
+<link rel="stylesheet" href="shared/components/demo-form/index.css">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --paper:#ffffff;
+    --paper-warm:#f5f1ec;
+    --text:#111;
+    --line:rgba(0,0,0,.12);
+    --azure:#7FE3CB;
+    --azure-deep:#5EC9B7;
+    --max:1240px;
+    --gutter:clamp(20px,4vw,48px);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  /* ---------- demo page shell ---------- */
+  /* The form already has ~56–128px of internal top padding, which is
+     plenty of clearance for the absolute nav — so we don't add any
+     padding here. Adding padding leaves a plain-white strip above the
+     form's gradient that the transparent nav sits on, which reads as
+     a header bug. */
+  .demo-page{ position:relative; background:var(--paper) }
+
+  /* ---------- footer (matches index.html) ---------- */
+  footer.site{background:#0a0a0a;color:#fff;padding:48px 0 56px;border-top:1px solid rgba(255,255,255,.12)}
+  footer.site .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  footer.site .row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;align-items:start}
+  footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
+  footer.site .tagline{margin-top:12px;font-size:13px;color:rgba(255,255,255,.55);max-width:32ch;line-height:1.55}
+  footer.site .col h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 14px;font-weight:500}
+  footer.site .col a{display:block;font-size:14px;color:rgba(255,255,255,.85);margin-bottom:8px}
+  footer.site .col a:hover{color:var(--azure)}
+  footer.site .copyright{margin-top:48px;font-size:12px;color:rgba(255,255,255,.45)}
+
+  @media (max-width:960px){
+    footer.site .row{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== NAV (shared component) ========== -->
+<nav data-site-nav></nav>
+
+<!-- ========== DEMO FORM ========== -->
+<main class="demo-page">
+  <div id="demo-form" data-demo-form></div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand">
+        <img src="assets/logo-mark.png" alt="Renoverse" />
+        <p class="tagline">The source of truth for architects. Drawings, decisions, and your entire team — all in one place.</p>
+      </div>
+      <div class="col">
+        <h5>Product</h5>
+        <a href="index.html">Overview</a>
+        <a href="index.html#typology">For Architects</a>
+        <a href="demo.html">Book a demo</a>
+      </div>
+      <div class="col">
+        <h5>Company</h5>
+        <a href="index.html#founders">The Team</a>
+        <a href="index.html">Our Story</a>
+        <a href="mailto:hello@renoverse.ai">Contact</a>
+      </div>
+      <div class="col">
+        <h5>Follow</h5>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:hello@renoverse.ai">hello@renoverse.ai</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Renoverse AI. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="shared/components/site-nav/index.js"></script>
+<script src="shared/components/demo-form/index.js"></script>
+<script>
+  // Hook submission for now — log to console. Swap for a real backend
+  // once the endpoint is decided (see NOTES.md → Demo flow).
+  document.addEventListener('demo-form:submit', (e) => {
+    console.log('[demo] submission:', e.detail.values);
+  });
+</script>
+
+</body>
+</html>

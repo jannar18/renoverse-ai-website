@@ -1,0 +1,137 @@
+/* ============================================================
+   .btn — Renoverse bracket-corner button component
+   ============================================================
+   VARIANTS
+     .btn--primary  — white fill, azure outline + text, hover fills azure
+     .btn--filled   — pre-filled azure with white text, hover swaps to white
+     .btn--frosted  — frosted glass + paper-grain shader, white text (dark surfaces)
+
+   MARKUP
+     <a class="btn btn--primary" href="#">
+       <span class="tk tl"></span>
+       <span class="tk tr"></span>
+       <span class="tk br"></span>
+       <span class="tk bl"></span>
+       Label
+     </a>
+
+   TOKENS (with fallbacks — define on :root to override)
+     --azure       (#7FE3CB)
+     --azure-deep  (#5EC9B7)
+     --ink         (#0a0a0a)
+
+   ⚠️  SPACING RULE — REQUIRED MARGIN
+   The corner ticks extend OUTWARD by --t-clearance (default 18px) on hover.
+   To prevent the ticks from visually colliding with adjacent elements
+   (text, dividers, other buttons, container edges), keep at least:
+
+       margin: var(--btn-clearance, 24px);     ← around every .btn
+
+   …or guarantee 24px of breathing room on all four sides via the parent's
+   padding / gap. If two .btn sit side-by-side, the gap between them must
+   be ≥ 36px (2 × 18px ticks) to avoid overlap.
+   ============================================================ */
+
+.btn{
+  --t: 9px;                       /* tick length */
+  --t-clearance: 18px;            /* hover-state tick reach (informational) */
+  --tick: var(--ink, #0a0a0a);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 22px;
+  border: 1px solid rgba(0,0,0,.55);
+  background: rgba(255,255,255,.32);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: var(--ink, #0a0a0a);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+
+  /* Reserve clearance space so ticks can grow outward without clipping
+     or overlapping sibling content. Override per-instance if needed. */
+  margin: var(--btn-clearance, 24px);
+}
+
+/* ----------- corner ticks (4 child spans) ----------- */
+.btn .tk{
+  position: absolute;
+  background: var(--tick);
+  pointer-events: none;
+  transition: top    .45s cubic-bezier(.22,.8,.2,1),
+              right  .45s cubic-bezier(.22,.8,.2,1),
+              bottom .45s cubic-bezier(.22,.8,.2,1),
+              left   .45s cubic-bezier(.22,.8,.2,1),
+              width  .45s cubic-bezier(.22,.8,.2,1),
+              height .45s cubic-bezier(.22,.8,.2,1);
+}
+
+/* TL — rest: horizontal LEFT  · hover: vertical UP    */
+.btn .tk.tl       { top: -1px;                  left:  calc(-1 * var(--t)); width: var(--t); height: 1px;       }
+.btn:hover .tk.tl { top:  calc(-1 * var(--t));  left:  -1px;                width: 1px;      height: var(--t);  }
+
+/* TR — rest: vertical UP      · hover: horizontal RIGHT */
+.btn .tk.tr       { top:  calc(-1 * var(--t));  right: -1px;                width: 1px;      height: var(--t);  }
+.btn:hover .tk.tr { top: -1px;                  right: calc(-1 * var(--t)); width: var(--t); height: 1px;       }
+
+/* BR — rest: horizontal RIGHT · hover: vertical DOWN  */
+.btn .tk.br       { bottom: -1px;               right: calc(-1 * var(--t)); width: var(--t); height: 1px;       }
+.btn:hover .tk.br { bottom: calc(-1 * var(--t));right: -1px;                width: 1px;      height: var(--t);  }
+
+/* BL — rest: vertical DOWN    · hover: horizontal LEFT */
+.btn .tk.bl       { bottom: calc(-1 * var(--t));left:  -1px;                width: 1px;      height: var(--t);  }
+.btn:hover .tk.bl { bottom: -1px;               left:  calc(-1 * var(--t)); width: var(--t); height: 1px;       }
+
+/* ----------- variants ----------- */
+
+/* PRIMARY — azure outline, white fill, azure text → hover fills azure */
+.btn--primary{
+  --tick: var(--azure-deep, #5EC9B7);
+  background: #fff;
+  border-color: var(--azure-deep, #5EC9B7);
+  color: var(--azure-deep, #5EC9B7);
+}
+.btn--primary:hover{
+  background: var(--azure-deep, #5EC9B7);
+  border-color: var(--azure-deep, #5EC9B7);
+  color: #fff;
+}
+
+/* FILLED — pre-filled azure with white text → hover swaps to white fill */
+.btn--filled{
+  --tick: var(--azure-deep, #5EC9B7);
+  background: var(--azure-deep, #5EC9B7);
+  border-color: var(--azure-deep, #5EC9B7);
+  color: #fff;
+}
+.btn--filled:hover{
+  background: #fff;
+  border-color: var(--azure-deep, #5EC9B7);
+  color: var(--azure-deep, #5EC9B7);
+}
+
+/* FROSTED — cream-tinted glass for dark surfaces.
+   Light cream backdrop + blur reads cleanly on photo / gradient backgrounds
+   without competing with the azure text. */
+.btn--frosted{
+  --tick: var(--azure-deep, #5EC9B7);
+  background: rgba(242,234,216,.08);
+  border-color: var(--azure-deep, #5EC9B7);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.btn--frosted:hover{
+  background: rgba(242,234,216,.16);
+  border-color: var(--azure-deep, #5EC9B7);
+  color: #fff;
+}

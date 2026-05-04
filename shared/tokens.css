@@ -1,0 +1,35 @@
+/* Renoverse design tokens — shared across all prototypes.
+   Source of truth: ../STYLE_GUIDE.md (extracted from rendering/). */
+
+:root {
+  /* brand */
+  --ink: #0B1A2B;
+  --bg: #FAFAF7;
+  --surface: #FFFFFF;
+  --cream: #F2EBD8;
+  --ice: #E5F4F1;
+
+  /* aqua/teal */
+  --azure: #7FE3CB;
+  --aqua: #5EC9B7;
+  --teal: #2D6F75;
+
+  /* blue */
+  --blue: #5BA7C9;
+  --oxford: #5D6FB8;
+
+  /* utility */
+  --muted: rgba(11, 26, 43, 0.55);
+  --line: rgba(11, 26, 43, 0.14);
+  --line-soft: rgba(11, 26, 43, 0.08);
+
+  /* signature gradient */
+  --grad: linear-gradient(90deg, var(--blue) 0%, var(--aqua) 50%, var(--teal) 100%);
+
+  /* type / spacing */
+  --tight: 0.02em;
+  --wide: 0.18em;
+  --xwide: 0.32em;
+  --container: 1440px;
+  --gutter: clamp(20px, 4vw, 56px);
+}
