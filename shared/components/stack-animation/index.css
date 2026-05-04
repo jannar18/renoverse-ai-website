@@ -1266,13 +1266,15 @@
 
   /* (legacy event/media styles removed — replaced by dashboard abstractions above) */
 
-  /* Caption */
+  /* Caption — visible throughout the pinned scroll. The caption grounds
+     the concept (storyboard intent) so it sits in viewport with the
+     animation, not as a late reveal. */
   .stack-section .caption {
     position: absolute;
     bottom: 6vh; left: 50%; transform: translateX(-50%);
     text-align: center;
     color: #161616;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
   }
   .stack-section .caption h1 {

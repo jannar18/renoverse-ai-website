@@ -398,11 +398,13 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to main content</a>
+
 <!-- ========== NAV (shared component) ========== -->
 <nav data-site-nav></nav>
 
 <!-- ========== HERO ========== -->
-<header class="hero">
+<header class="hero" id="main">
   <div data-halftone-video data-src="assets/hero.mp4" data-front="#2C6F75" data-invert="1" data-cell="0.0028" data-radius="0.8" data-contrast="-0.15" data-grain="0.15"></div>
   <div class="scrim"></div>
   <div class="hero-inner">
@@ -469,12 +471,12 @@
 </section>
 
 <!-- ========== ICP CAROUSEL ========== -->
-<div data-icp-carousel></div>
+<div data-icp-carousel data-nav-tone="dark"></div>
 
 <!-- ========== QUOTE ========== -->
 <section class="quote-section">
   <div class="wrap">
-    <div class="quote">
+    <div class="quote" data-nav-tone="dark">
       <div class="text">
         <img class="logo" src="assets/slc-logo.webp" alt="SLC Architect" />
         <blockquote>
