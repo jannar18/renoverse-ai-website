@@ -1145,13 +1145,8 @@
       ease: 'back.out(1.6)',
     }, 1.45);
 
-    /* Caption rides in last */
-    tl.to('#caption', {
-      opacity: 1,
-      y: -10,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, 1.95);
+    /* Caption is visible throughout the pinned scroll (set in CSS) —
+       it grounds the concept while the morph plays underneath. */
 
   }
 
