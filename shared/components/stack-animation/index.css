@@ -1277,19 +1277,26 @@
     opacity: 1;
     pointer-events: none;
   }
-  /* H3 role per STYLE_GUIDE.md — Cormorant italic, slightly smaller than H2.
-     The whole caption now reads as one editorial sub-header sentence; the
-     `.muted` span keeps its color treatment but no longer overrides the
-     family (parent is already serif italic). */
-  .stack-section .caption h1 {
-    font-family: 'Cormorant Garamond', serif;
+  /* "One workspace." is the H2 declarative (Poppins per STYLE_GUIDE).
+     "Every detail." is the H3 italic kicker — Cormorant italic, muted —
+     so the caption reads as a section header followed by an editorial
+     sub-line, matching the type system's H2 + H3 pairing. */
+  .stack-section .caption h2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-h2);
+    margin: 0;
+    color: #161616;
+  }
+  .stack-section .caption h2 .muted {
+    display: block;
+    font-family: var(--font-serif);
     font-style: italic;
     font-weight: 500;
     font-size: var(--fs-h3);
-    letter-spacing: var(--ls-display);
     line-height: var(--lh-h3);
-  }
-  .stack-section .caption h1 .muted {
     color: rgba(0,0,0,0.55);
   }
 

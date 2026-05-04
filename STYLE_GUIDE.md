@@ -554,7 +554,7 @@ Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-a
 **Push back on body and H2.** Body copy and H2 section headers are left-aligned, always. The exceptions are baked into specific roles, not granted ad-hoc:
 
 - **H1 is centered as a defining property** — hero headlines, page-defining moments. (Mirrors the ICP carousel title-slide.)
-- **H3 may be centered** when used as a short, single-sentence editorial moment — the stack-animation caption, the typology heading, an italic Cormorant closer line.
+- **H3 may be centered** when used as a short, single-sentence editorial moment — the typology heading, an italic Cormorant closer line, the italic kicker ("Every detail.") under the stack-animation H2.
 - Everything else stays left-aligned. Multi-line centered body copy doesn't belong on this site.
 
 ### "Add navigation / change the nav"

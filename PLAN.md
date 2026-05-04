@@ -29,7 +29,7 @@ The ICP carousel is the size reference for H1 + H2: H1 mirrors `.icp-carousel__t
 |---|---|---|---|
 | **H1** | Cormorant Garamond italic | **centered** | Hero headlines, page-defining moments. Mirrors the ICP carousel title-slide. |
 | **H2** | Poppins, ~24–36px, weight 500 | left | Section headers. Mirrors the ICP carousel lead. |
-| **H3** | Cormorant Garamond italic, slightly smaller than H2 | left (or centered for a short editorial sentence) | Sub-header role — the stack-animation caption, the typology heading, editorial closers. |
+| **H3** | Cormorant Garamond italic, slightly smaller than H2 | left (or centered for a short editorial sentence) | Sub-header role — the typology heading, editorial closers, the italic kicker line ("Every detail.") under the stack-animation H2. |
 | **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | left | Section index/label above a heading |
 | **Lead** | Poppins, ~18–20px, line-height ~1.5, softer color | left | Intro paragraph under a heading; one per section max |
 | **Body** | Poppins, 16px | left | Default paragraph copy |
@@ -39,7 +39,7 @@ The ICP carousel is the size reference for H1 + H2: H1 mirrors `.icp-carousel__t
 
 - All body copy **left-aligned**. Centered text is hard to read across multiple lines.
 - **H1 is the deliberate exception** — centered as part of its role definition.
-- H3 may be centered when used as a short editorial sentence (stack caption, typology head, italic closer).
+- H3 may be centered when used as a short editorial sentence (typology head, italic closer, the kicker under the stack-animation H2).
 - H2 + eyebrows default left-aligned.
 
 ### Color / spacing / tokens

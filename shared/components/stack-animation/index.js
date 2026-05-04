@@ -1016,7 +1016,7 @@
       </div>
 
       <div class="caption" id="caption">
-        <h1>One workspace.<br/><span class="muted">Every detail.</span></h1>
+        <h2>One workspace.<br/><span class="muted">Every detail.</span></h2>
       </div>
     </div>
   </section>
