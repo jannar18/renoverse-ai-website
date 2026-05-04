@@ -35,7 +35,7 @@
     }
   ];
 
-  const DEFAULT_CTA = { label: 'See the product', href: '#' };
+  const DEFAULT_CTA = { label: 'See the product', href: 'product.html' };
 
   function escape(s) {
     return String(s)

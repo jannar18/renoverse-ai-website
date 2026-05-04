@@ -211,3 +211,17 @@
   outline:2px solid var(--azure-deep, #5EC9B7);
   outline-offset:2px;
 }
+
+/* ─────────── Visually-hidden a11y helper ───────────
+   Standard sr-only recipe (Bootstrap/Tailwind-equivalent). Used for
+   labels that screen readers need but the visual design doesn't show
+   (e.g. the newsletter input's label). */
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}

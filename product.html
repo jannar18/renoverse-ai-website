@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product — Renoverse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/tokens.css">
+<link rel="stylesheet" href="shared/effects.css">
+<link rel="stylesheet" href="shared/button.css">
+<link rel="stylesheet" href="shared/components/site-nav/index.css">
+<link rel="stylesheet" href="shared/components/feature-highlights/index.css">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+
+  /* ---------- page hero (paper, no video) ----------
+     Solid-mode nav covers ~96px; pad the hero so the eyebrow clears
+     the floating frosted bar without overlap. */
+  .page-hero{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
+    background:var(--grad-paper);
+  }
+  .page-hero .grain{ /* .fx-grain--ink slot */ }
+  .page-hero .eyebrow{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    line-height:var(--lh-eyebrow);
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 18px;
+  }
+  .page-hero h1{
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:600;
+    font-size:var(--fs-h1);
+    line-height:var(--lh-h1);
+    letter-spacing:var(--ls-display);
+    color:var(--ink);
+    margin:0;
+    max-width:18ch;
+  }
+  .page-hero .lead{
+    margin-top:24px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
+    color:var(--ink);
+    opacity:.78;
+    max-width:60ch;
+  }
+
+  /* ---------- final cta (mirrors index.html .cta) ---------- */
+  .cta{
+    position:relative;
+    color:var(--ink);
+    padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
+  }
+  .cta .row{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .cta h3{
+    font-family:var(--font-serif);font-style:italic;font-weight:400;
+    font-size:var(--fs-h2);line-height:1.05;letter-spacing:var(--ls-display);
+    margin:0;max-width:30ch;color:var(--ink);
+  }
+
+  /* ---------- footer (mirrors index.html light footer) ---------- */
+  footer.site{background:transparent;color:var(--ink);padding:48px 0 56px;border-top:1px solid var(--line)}
+  footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+  footer.site .brand img{height:30px;width:auto}
+  footer.site .tagline{margin-top:12px;font-size:13px;color:var(--muted);max-width:32ch;line-height:1.55}
+  footer.site .socials{display:flex;gap:18px;margin-top:20px}
+  footer.site .socials a{display:inline-flex;align-items:center;justify-content:center;color:var(--azure-deep);transition:color .15s ease, transform .15s ease}
+  footer.site .socials a:hover{color:var(--azure)}
+  footer.site .socials svg{width:22px;height:22px;display:block}
+  footer.site .legal{display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;font-size:12px}
+  footer.site .legal a{color:var(--muted)}
+  footer.site .legal a:hover{color:var(--azure-deep)}
+  footer.site .copyright{margin-top:14px;font-size:12px;color:rgba(11,26,43,.5)}
+  footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
+  footer.site .newsletter h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(11,26,43,.55);margin:0 0 10px;font-weight:500}
+  footer.site .newsletter p{font-size:13px;color:rgba(11,26,43,.7);margin:0 0 16px;line-height:1.5}
+  footer.site .newsletter form{display:flex;flex-direction:column;align-items:flex-start}
+  footer.site .newsletter input[type="email"]{
+    width:100%;padding:10px 14px;font:inherit;font-size:14px;color:var(--ink);
+    background:rgba(255,255,255,.6);border:1px solid rgba(11,26,43,.18);
+    border-radius:8px;outline:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  footer.site .newsletter input[type="email"]:focus{border-color:var(--azure-deep);background:#fff}
+  footer.site .newsletter .btn{--btn-clearance:0;margin:18px 0 0 9px}
+  footer.site .newsletter .nl-status{font-size:12px;color:rgba(11,26,43,.6);margin-top:6px;min-height:1.2em}
+  footer.site .newsletter .nl-fineprint{font-size:11px;color:rgba(11,26,43,.55);margin:14px 0 0;line-height:1.5}
+  footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
+
+  @media (max-width:960px){
+    footer.site .row{grid-template-columns:1fr;gap:40px}
+    footer.site .newsletter{justify-self:start;max-width:none}
+  }
+  @media (max-width:540px){
+    .cta .row{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ========== NAV (shared component) ========== -->
+<nav data-site-nav data-mode="solid"></nav>
+
+<main id="main">
+
+  <!-- ========== PAGE HERO ========== -->
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Product</p>
+      <h1>One workspace. Every drawing, decision, and detail.</h1>
+      <p class="lead">
+        Renoverse is the AI-native communication platform for architecture project collaboration —
+        a single source of truth where drawings, decisions, and your entire team stay in sync.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES (placeholder for the merged Phase 3 content) ========== -->
+  <!-- Phase 3 will replace this 4-up strip with a fuller, copy-rich section
+       sourced from Nola's docs. For now, the existing teaser stands in as
+       the canonical "all features" surface so the link targets are stable. -->
+  <div data-feature-highlights data-cta-label="Book a demo" data-cta-href="demo.html"></div>
+
+  <!-- ========== FINAL CTA ========== -->
+  <section class="cta">
+    <div class="wrap">
+      <div class="row">
+        <h3>Ready to see Renoverse in action?</h3>
+        <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div class="brand">
+        <img src="assets/logo-mark.png" alt="Renoverse" />
+        <p class="tagline">The source of truth for architects. Drawings, decisions, and your entire team — all in one place.</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/company/renoverse-ai/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.02h4.56V24H.22V8.02zM8.34 8.02h4.37v2.18h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V24h-4.56v-7.55c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.9 1.96-2.9 3.99V24H8.34V8.02z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/renoverse.ai" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+        </div>
+        <div class="legal">
+          <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy</a>
+          <a href="assets/legal/cookie-policy.pdf" target="_blank" rel="noopener">Cookie Policy</a>
+          <a href="assets/legal/terms-conditions.pdf" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+        </div>
+        <div class="copyright">© 2026 Renoverse AI. All rights reserved.</div>
+      </div>
+      <div class="newsletter">
+        <h5>Newsletter</h5>
+        <p>Subscribe to our newsletter for company updates, news, and customer stories.</p>
+        <form data-newsletter-signup novalidate>
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--filled">
+            <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
+            Subscribe
+          </button>
+        </form>
+        <div class="nl-status" data-nl-status aria-live="polite"></div>
+        <p class="nl-fineprint">By subscribing, you agree to our <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">privacy policy</a> and to receive email updates from us.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="shared/components/site-nav/index.js"></script>
+<script src="shared/components/feature-highlights/index.js"></script>
+<script>
+  // Newsletter signup — placeholder handler (no backing service yet).
+  (function () {
+    document.querySelectorAll('[data-newsletter-signup]').forEach(function (form) {
+      var status = form.parentElement.querySelector('[data-nl-status]');
+      var input = form.querySelector('input[type="email"]');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = (input.value || '').trim();
+        var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!ok) { if (status) status.textContent = 'Please enter a valid email.'; return; }
+        if (status) status.textContent = 'Thanks — we’ll be in touch.';
+        form.reset();
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
