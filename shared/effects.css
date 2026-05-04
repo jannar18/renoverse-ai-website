@@ -1,0 +1,143 @@
+/* ============================================================
+   Renoverse — Effects kit
+   ============================================================
+   Source of truth: STYLE_GUIDE.md (Part I "Section signatures" + Part II "Effects kit").
+
+   These utilities are the canonical implementations of the
+   brand's recurring surface treatments. They were lifted
+   directly out of the ICP carousel (which is the reference
+   composition — see `shared/components/icp-carousel/index.css`)
+   so any new section, page, or component can compose the same
+   visual world without re-deriving the parameters.
+
+   COMPOSITION ORDER (bottom → top), as used in the carousel:
+     1. base color / gradient        (.fx-grad-*)
+     2. dither dot-mask              (.fx-dither, on art/photo)
+     3. halftone-dot bloom           (.fx-halftone-bloom)
+     4. paper grain                  (.fx-grain--warm | --ink)
+     5. content (text, buttons, …)
+
+   Stacking rules:
+     - Host element: position:relative; isolation:isolate;
+       overflow:hidden (so blends and masks don't leak).
+     - Each overlay is positioned absolute, pointer-events:none,
+       and inset:0 — drop them in as siblings, no extra wrapping.
+     - Order in DOM = z-stack; later siblings render on top.
+   ============================================================ */
+
+
+/* ---------- 1. Gradients ---------- */
+/* Utility wrappers around the named gradient tokens. Each gradient is
+   exposed under two class names — the technical name (describes the
+   stops) and a plain-language alias (how a human would request it).
+   Both classes do the same thing; use whichever reads more clearly at
+   the call-site. */
+
+/* Brand sweep — horizontal signature */
+.fx-grad,
+.fx-grad-brand-sweep         { background: var(--grad); }
+
+/* The four DARK panel gradients (ink-anchored, vertical) */
+.fx-grad-ink-teal-cream,
+.fx-grad-dark-teal           { background: var(--grad-ink-teal-cream); }
+
+.fx-grad-ink-oxford-ice,
+.fx-grad-cool-oxford         { background: var(--grad-ink-oxford-ice); }
+
+.fx-grad-ink-oxford-blue,
+.fx-grad-deep-oxford-blue,
+.fx-grad-dark-oxford-blue    { background: var(--grad-ink-oxford-blue); }
+
+.fx-grad-ink-blue-cream,
+.fx-grad-deep-blue,
+.fx-grad-dark-blue           { background: var(--grad-ink-blue-cream); }
+
+/* The five LIGHT gradients (tint-anchored).
+   Four vertical brand-color variants + paper, the most neutral light
+   backdrop (warm radial, no strong brand color — used wherever a section
+   wants to feel open without leaning aqua/blue/oxford). */
+.fx-grad-light-teal          { background: var(--grad-light-teal); }
+.fx-grad-light-azure         { background: var(--grad-light-azure); }
+.fx-grad-light-blue          { background: var(--grad-light-blue); }
+.fx-grad-light-oxford        { background: var(--grad-light-oxford); }
+
+.fx-grad-paper-zone,
+.fx-grad-paper               { background: var(--grad-paper-zone); }
+
+
+/* ---------- 2. Dither dot-mask ---------- */
+/* Apply to the art element itself (img, svg, or a div with a
+   background-image). Canonical 4×4px cell, 0.5px solid dot,
+   1.6px soft fade. Don't drift these values — they're what
+   keeps every dithered surface in the brand reading as one
+   system. */
+.fx-dither {
+  -webkit-mask-image: radial-gradient(circle, #000 0.5px, transparent 1.6px);
+          mask-image: radial-gradient(circle, #000 0.5px, transparent 1.6px);
+  -webkit-mask-size: 4px 4px;
+          mask-size: 4px 4px;
+  -webkit-mask-repeat: repeat;
+          mask-repeat: repeat;
+}
+
+/* Pre-mask filter + blend used by the ICP carousel architecture
+   photo. Apply alongside .fx-dither on photos so the dithered
+   layer sits behind the panel content the same way it does in
+   the carousel. Tune `opacity` per surface — .05 over a
+   saturated gradient, up to ~.18 over flat color. */
+.fx-dither--photo {
+  filter: contrast(1.05) brightness(0.95) saturate(0.3);
+  mix-blend-mode: multiply;
+  opacity: 0.05;
+}
+
+
+/* ---------- 3. Halftone-dot bloom ---------- */
+/* Decorative dot grid masked to a focal point. Used to bring
+   life under a heading or CTA without competing with content.
+   Override `--fx-bloom-mask` per call-site to move the focal
+   point — the dot size, color, and opacity stay constant
+   across the brand. */
+.fx-halftone-bloom {
+  --fx-bloom-mask: radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%);
+
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(11, 26, 43, 0.16) 22%, transparent 23%),
+    radial-gradient(rgba(11, 26, 43, 0.16) 22%, transparent 23%);
+  background-size: 14px 14px, 14px 14px;
+  background-position: 0 0, 7px 7px;
+  -webkit-mask-image: var(--fx-bloom-mask);
+          mask-image: var(--fx-bloom-mask);
+  mix-blend-mode: multiply;
+  opacity: 0.25;
+}
+
+
+/* ---------- 4. Paper grain ---------- */
+/* Tiled 320×320 SVG fractal-noise overlay. Two tints, paired
+   with the blend-mode that reads correctly on the surface
+   they're meant for:
+     --warm  : cream cast, overlay  → use over dark/saturated
+     --ink   : dark cast,  multiply → use over light/paper
+   Don't drift baseFrequency='0.9' / numOctaves='2' / seed='7'
+   — those values are the brand fingerprint. */
+.fx-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 320px 320px;
+  opacity: 0.35;
+}
+.fx-grain--warm {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.93 0 0 0 0 0.85 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.35;     /* matches the ICP carousel — the canonical reference. Override per-call-site if a surface needs less grain (e.g. the quote card uses .28). */
+}
+.fx-grain--ink {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}

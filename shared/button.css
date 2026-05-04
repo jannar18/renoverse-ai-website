@@ -2,12 +2,12 @@
    .btn — Renoverse bracket-corner button component
    ============================================================
    VARIANTS
-     .btn--primary  — white fill, azure outline + text, hover fills azure
      .btn--filled   — pre-filled azure with white text, hover swaps to white
+     .btn--white    — white fill, azure outline + text, hover fills azure
      .btn--frosted  — frosted glass + paper-grain shader, white text (dark surfaces)
 
    MARKUP
-     <a class="btn btn--primary" href="#">
+     <a class="btn btn--filled" href="#">
        <span class="tk tl"></span>
        <span class="tk tr"></span>
        <span class="tk br"></span>
@@ -93,14 +93,14 @@
 
 /* ----------- variants ----------- */
 
-/* PRIMARY — azure outline, white fill, azure text → hover fills azure */
-.btn--primary{
+/* WHITE — white fill, azure outline + text → hover fills azure */
+.btn--white{
   --tick: var(--azure-deep, #5EC9B7);
   background: #fff;
   border-color: var(--azure-deep, #5EC9B7);
   color: var(--azure-deep, #5EC9B7);
 }
-.btn--primary:hover{
+.btn--white:hover{
   background: var(--azure-deep, #5EC9B7);
   border-color: var(--azure-deep, #5EC9B7);
   color: #fff;
