@@ -530,16 +530,21 @@ Every brand gradient has a **plain-language name** the human will use, plus a te
 
 ### "Make this heading bigger / smaller / different"
 
-Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-author a new size. The role determines the family:
+Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-author a new size. The role determines the family + alignment:
 
-- Hero or section header → Cormorant Garamond italic
-- Subhead, card title → Poppins
+- Hero / page-defining moment (H1) → Cormorant Garamond italic, **centered**
+- Section header (H2) → Poppins 500, left-aligned, ~24–36px
+- Sub-header / editorial sentence (H3) → Cormorant Garamond italic, slightly smaller than H2 (~22–30px)
 - Eyebrow above a header → JetBrains Mono uppercase, `letter-spacing: var(--xwide)`
-- Body, lead, small → Poppins
+- Body, lead, small → Poppins, left-aligned
 
 ### "Make this section centered" / "Center the copy"
 
-**Push back.** Body copy is left-aligned, always. Center is reserved for single-line editorial moments (italic Cormorant manifesto closer at the end of a section). Multi-line centered text doesn't belong on this site.
+**Push back on body and H2.** Body copy and H2 section headers are left-aligned, always. The exceptions are baked into specific roles, not granted ad-hoc:
+
+- **H1 is centered as a defining property** — hero headlines, page-defining moments. (Mirrors the ICP carousel title-slide.)
+- **H3 may be centered** when used as a short, single-sentence editorial moment — the stack-animation caption, the typology heading, an italic Cormorant closer line.
+- Everything else stays left-aligned. Multi-line centered body copy doesn't belong on this site.
 
 ### "Add navigation / change the nav"
 
@@ -553,15 +558,17 @@ When implementing, these are the canonical specs.
 
 ### Type scale
 
-| Role | Family | Style | Size token | Line-height | Letter-spacing |
-|---|---|---|---|---|---|
-| H1 | Cormorant Garamond | italic 600 | `--fs-h1` | `--lh-h1` | `--ls-display` |
-| H2 | Cormorant Garamond | italic 600 | `--fs-h2` | `--lh-h2` | `--ls-display` |
-| H3 | Poppins | 500–600 | `--fs-h3` | `--lh-h3` | normal |
-| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` |
-| Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal |
-| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal |
-| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal |
+The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but slightly smaller than H2.
+
+| Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment |
+|---|---|---|---|---|---|---|
+| H1 | Cormorant Garamond | italic 400 | `--fs-h1` | `--lh-h1` | `--ls-display` | **centered** (defining property) |
+| H2 | Poppins | 500 | `--fs-h2` | `--lh-h2` | `--ls-display` | left |
+| H3 | Cormorant Garamond | italic 500 | `--fs-h3` | `--lh-h3` | `--ls-display` | left (centered allowed for short editorial moments) |
+| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left |
+| Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal | left |
+| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left |
+| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left |
 
 Lead = one paragraph per section, max. Sits between the H2 and the body, slightly larger and slightly muted.
 

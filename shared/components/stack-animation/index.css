@@ -1277,18 +1277,19 @@
     opacity: 1;
     pointer-events: none;
   }
+  /* H3 role per STYLE_GUIDE.md — Cormorant italic, slightly smaller than H2.
+     The whole caption now reads as one editorial sub-header sentence; the
+     `.muted` span keeps its color treatment but no longer overrides the
+     family (parent is already serif italic). */
   .stack-section .caption h1 {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    font-size: clamp(28px, 4.4vw, 56px);
-    font-weight: 600;
-    font-style: normal;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-  }
-  .stack-section .caption h1 .muted {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-weight: 500;
+    font-size: var(--fs-h3);
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-h3);
+  }
+  .stack-section .caption h1 .muted {
     color: rgba(0,0,0,0.55);
   }
 

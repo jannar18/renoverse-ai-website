@@ -23,22 +23,24 @@ Lock the type system before any other UI work so we don't drift later.
 
 ### Type roles
 
-| Role | Font | Use |
-|---|---|---|
-| **H1** | Cormorant Garamond italic | Hero headlines, page-defining moments |
-| **H2** | Cormorant Garamond italic | Section headers |
-| **H3** | Poppins | Subsection headers |
-| **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | Section index/label above a heading |
-| **Lead** | Poppins, ~18–20px, line-height ~1.5, softer color | Intro paragraph under a heading; one per section max |
-| **Body** | Poppins, 16px | Default paragraph copy |
-| **Small** | Poppins, ~12–13px, muted color | Fine print, captions, footer legal, helper text |
+The ICP carousel is the size reference for H1 + H2: H1 mirrors `.icp-carousel__title-slide` (Cormorant italic, centered, hero-sized); H2 mirrors `.icp-carousel__lead` (Poppins 500). H3 is the same family as H1, dropped a step below H2.
 
-(Mirror approach is the same family Shinkei.systems uses: editorial serif italic for H1/H2, sans for utility, mono eyebrow.)
+| Role | Font | Alignment | Use |
+|---|---|---|---|
+| **H1** | Cormorant Garamond italic | **centered** | Hero headlines, page-defining moments. Mirrors the ICP carousel title-slide. |
+| **H2** | Poppins, ~24–36px, weight 500 | left | Section headers. Mirrors the ICP carousel lead. |
+| **H3** | Cormorant Garamond italic, slightly smaller than H2 | left (or centered for a short editorial sentence) | Sub-header role — the stack-animation caption, the typology heading, editorial closers. |
+| **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | left | Section index/label above a heading |
+| **Lead** | Poppins, ~18–20px, line-height ~1.5, softer color | left | Intro paragraph under a heading; one per section max |
+| **Body** | Poppins, 16px | left | Default paragraph copy |
+| **Small** | Poppins, ~12–13px, muted color | left | Fine print, captions, footer legal, helper text |
 
 ### Alignment
 
 - All body copy **left-aligned**. Centered text is hard to read across multiple lines.
-- Eyebrows + section headers default left-aligned. Centered only as a deliberate exception.
+- **H1 is the deliberate exception** — centered as part of its role definition.
+- H3 may be centered when used as a short editorial sentence (stack caption, typology head, italic closer).
+- H2 + eyebrows default left-aligned.
 
 ### Color / spacing / tokens
 

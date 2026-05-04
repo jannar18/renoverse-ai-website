@@ -103,15 +103,16 @@
     margin:0 auto;
     padding:0 clamp(20px,4vw,56px);
     min-height:100vh;
-    display:flex;flex-direction:column;justify-content:center;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
   }
   .hero h1{
     font-family:'Cormorant Garamond',serif;
     font-style:italic;
-    font-weight:600;
-    font-size:clamp(48px, 7vw, 96px);
-    line-height:1.02;
-    letter-spacing:-.01em;
+    font-weight:400;
+    font-size:var(--fs-h1);
+    line-height:var(--lh-h1);
+    letter-spacing:var(--ls-display);
     margin:0;
     max-width:16ch;
     color:#0a0a0a;
@@ -121,7 +122,6 @@
     font-size:16px;
     color:rgba(10,10,10,.78);
     max-width:none;
-    white-space:nowrap;
     line-height:1.5;
   }
 
@@ -150,13 +150,15 @@
     max-width:60ch;
     text-align:center;
   }
+  /* H3 role per STYLE_GUIDE.md — Cormorant italic, slightly smaller than H2.
+     Centered allowed because it's a single editorial sentence. */
   .typology .head h2{
     font-family:'Cormorant Garamond',serif;
     font-style:italic;
-    font-weight:600;
-    font-size:clamp(32px,4vw,52px);
-    line-height:1.1;
-    letter-spacing:-.01em;
+    font-weight:500;
+    font-size:var(--fs-h3);
+    line-height:var(--lh-h3);
+    letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
   }
