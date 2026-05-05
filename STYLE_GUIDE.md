@@ -235,7 +235,7 @@ Don't drift `data-cell`, `data-radius`, `data-contrast`, or `data-grain` — tho
 Heroes are a fixed two-element composition. **H1 + `.lead`. Nothing else.**
 
 - **No eyebrow.** Eyebrows are the JetBrains Mono uppercase label that sits above an H2 *section header* — they mark sections, not heroes. A hero is the page-defining moment; it identifies itself through the H1, not through a label above it. If a non-technical user asks for "a tagline above the headline" or "a kicker," push back: that's an eyebrow, and it doesn't belong on a hero.
-- **H1** — Cormorant Garamond italic, weight 400, `--fs-h1`. Alignment is contextual (left or centered per page); not a defining property of the role. The homepage hero is centered; future ICP-themed heroes may be left-aligned to suit the composition. Mirror the ICP carousel title-slide for size.
+- **H1** — Cormorant Garamond italic, weight 600, `--fs-h1`. Alignment is contextual (left or centered per page); not a defining property of the role. The homepage hero is centered; future ICP-themed heroes may be left-aligned to suit the composition. Mirror the ICP carousel title-slide for size.
 - **`.lead`** — the hero subtitle. Same role as the section Lead: Poppins 400 at `--fs-lead` (17–20px), line-height 1.55, ink at ~78% opacity. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. (Outside heroes, the same `.lead` lives left-aligned under a section H3 — see Type scale.)
 - **Both elements share the same horizontal axis** — they're one composition. When the H1 is centered, this is the only place on the site where multi-line centered body copy is sanctioned. Outside the hero, multi-line centered copy is push-back-worthy.
 
@@ -576,7 +576,7 @@ The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment | Color |
 |---|---|---|---|---|---|---|---|
-| H1 | Cormorant Garamond | italic 400 | `--fs-h1` (48–96px) | `--lh-h1` (1.10) | `--ls-display` | left or centered (per page) | `--ink` |
+| H1 | Cormorant Garamond | italic 600 | `--fs-h1` (48–96px) | `--lh-h1` (1.10) | `--ls-display` | left or centered (per page) | `--ink` |
 | H2 | Cormorant Garamond | italic 500 | `--fs-h2` (32–52px) | `--lh-h2` (1.10) | `--ls-display` | left (centered ok for a single editorial sentence) | `--ink` |
 | H3 | Poppins | 500 | `--fs-h3` (24–36px) | `--lh-h3` (1.28) | `--ls-display` | left | `--ink` |
 | Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--muted` |

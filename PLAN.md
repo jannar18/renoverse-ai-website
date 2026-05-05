@@ -27,7 +27,7 @@ The heading hierarchy reads by voice rather than depth: **H1 + H2 are Cormorant 
 
 | Role | Font | Alignment | Use |
 |---|---|---|---|
-| **H1** | Cormorant Garamond italic, ~48–96px, weight 400 | left or centered (per page) | Hero headlines, page-defining moments. Mirrors the ICP carousel title-slide. |
+| **H1** | Cormorant Garamond italic, ~48–96px, weight 600 | left or centered (per page) | Hero headlines, page-defining moments. Mirrors the ICP carousel title-slide. |
 | **H2** | Cormorant Garamond italic, ~32–52px, weight 500 | left (or centered for a single editorial sentence) | Editorial moments — final-CTA closer, typology heading, page-section moments that aren't quite hero-scale. |
 | **H3** | Poppins 500, ~24–36px | left | Section headers. Mirrors the ICP carousel lead. |
 | **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | left | Section index/label above an H3 (section header). **Not used on heroes.** |
