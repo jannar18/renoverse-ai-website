@@ -1016,8 +1016,7 @@
       </div>
 
       <div class="caption" id="caption">
-        <h2>One workspace.</h2>
-        <h3>Every detail.</h3>
+        <h2>One workspace. Every detail.</h2>
       </div>
     </div>
   </section>
@@ -1101,26 +1100,26 @@
       }
     });
 
-    /* All three motions run on overlapping windows so the reveal feels
-       continuous — there's no discrete "snap" moment, just a steady
-       morph: sources fly in & fade, calendar emerges through them. */
-
-    /* Sources converge — gentle inOut, no late-stage rush. They also
-       drop to 0.4 opacity by the end of convergence (start of dissolve). */
+    /* Single continuous morph — sources converge AND fade to 0 in one
+       motion (one tween per source, no separate dissolve), so opacity
+       can't rebound. The previous version split this into a converge
+       tween (→ 0.4) + a dissolve tween (→ 0) that ended 50ms apart;
+       the converge tail pulled opacity back up to 0.4 right as the
+       callouts tried to pop in, which read as "screens layering back
+       on top." Calendar emerges through them; callouts arrive once
+       sources are fully gone. */
     sources.forEach((el, i) => {
       const stagger = (sources.length - 1 - i) * 0.05;
       tl.to(el, {
         x: 0, y: 0, z: 30 + i * 5,
         rotateX: 0, rotateY: 0, rotateZ: 0,
-        opacity: 0.4,
+        scale: 1.04,
+        opacity: 0,
         duration: 1.0,
         ease: 'power2.inOut',
       }, stagger);
     });
 
-    /* Calendar emerges DURING the convergence — starts almost immediately
-       so visible motion is up by the time the user has scrolled a few px.
-       Runs longer than the convergence so its tail extends past the dissolve. */
     tl.to(cal, {
       z: 0,
       scale: 1,
@@ -1130,26 +1129,15 @@
       ease: 'power2.inOut',
     }, 0.10);
 
-    /* Sources dissolve — starts mid-convergence, finishes with the calendar.
-       Overlapping windows make the crossfade feel like one continuous beat. */
-    tl.to(sources, {
-      opacity: 0,
-      scale: 1.04,
-      duration: 0.85,
-      ease: 'power2.inOut',
-    }, 0.30);
-
-    /* Callouts animate in around the main panel — staggered, like the
-       Google hero animations: features popping in one by one. */
     tl.to('#callouts .callout', {
       opacity: 1,
       scale: 1,
       x: 0,
       y: 0,
-      duration: 0.6,
-      stagger: 0.08,
+      duration: 0.55,
+      stagger: 0.07,
       ease: 'back.out(1.6)',
-    }, 1.20);
+    }, 1.25);
 
     /* Caption is visible throughout the pinned scroll (set in CSS) —
        it grounds the concept while the morph plays underneath. */
