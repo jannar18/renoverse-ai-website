@@ -1,8 +1,9 @@
   .stack-section {
-    /* tall, scroll-pin window. Explicit zero-out of margin/padding so a host
-       page's bare `section { ... }` rule can't fight the sticky child's
-       top:0 / ScrollTrigger pin measurements. */
-    height: 300vh;
+    /* Scroll-pin window. ScrollTrigger wraps .stack-stage in a pin-spacer
+       sized as (stage height + pin distance). Setting section height to
+       match (100vh stage + 100vh pin) keeps the pin scroll range tightly
+       contained — no trailing white space, no overlap into next section. */
+    height: 200vh;
     position: relative;
     background: #fff;
     margin: 0;
@@ -25,6 +26,11 @@
     width: min(680px, 80vw);
     height: min(440px, 55vw);
     transform-style: preserve-3d;
+    /* Shift the whole scene (panel + popovers) down so it sits below the
+       caption, and scale it overall so the exploded stack doesn't crowd
+       the title on entry. Transforming the scene container keeps every
+       callout's offset relative to the central panel intact. */
+    transform: translateY(6vh) scale(0.9);
   }
 
   .stack-section .panel {
@@ -997,6 +1003,10 @@
     inset: 0;
     pointer-events: none;
     z-index: 5;
+    /* Match the scene transform so popovers scale + shift together with
+       the central panel — preserving their overlap relationship. */
+    transform: translateY(6vh) scale(0.9);
+    transform-origin: 50% 50%;
   }
   .stack-section .callout {
     position: absolute;
@@ -1271,27 +1281,36 @@
      animation, not as a late reveal. */
   .stack-section .caption {
     position: absolute;
-    bottom: 6vh; left: 50%; transform: translateX(-50%);
+    top: calc(var(--nav-height) + 32px);
+    left: 50%; transform: translateX(-50%);
     text-align: center;
     color: #161616;
     opacity: 1;
     pointer-events: none;
+    /* Sit above the 3D scene so positive-z panels never render in front of
+       the caption text. */
+    z-index: 5;
   }
-  /* Both halves of the caption are H3 (Poppins, not italic per
-     STYLE_GUIDE). The `.muted` span is just a color treatment — the
-     family + size match the parent H3 exactly, so the two lines read
-     as one declarative pair, with the second line tonally softer. */
+  /* Caption pair per type system v3: H2 = Cormorant italic editorial
+     moment ("One workspace."), H3 = Poppins kicker beneath it
+     ("Every detail."), tonally softer. */
   .stack-section .caption h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-h2);
+    margin: 0;
+    color: #161616;
+  }
+  .stack-section .caption h3 {
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: var(--fs-h3);
     letter-spacing: var(--ls-display);
     line-height: var(--lh-h3);
     margin: 0;
-    color: #161616;
-  }
-  .stack-section .caption h2 .muted {
-    display: block;
     color: rgba(0,0,0,0.55);
   }
 
