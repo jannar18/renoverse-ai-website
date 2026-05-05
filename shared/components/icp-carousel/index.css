@@ -29,7 +29,7 @@
   color: #fff;
   user-select: none;
   background: var(--ink);
-  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
 }
@@ -147,9 +147,12 @@
   gap: clamp(20px, 3vh, 36px);
   pointer-events: none;
 }
+/* Eyebrow role per STYLE_GUIDE — JetBrains Mono uppercase, --xwide. */
 .icp-carousel__overline {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-eyebrow);
+  font-weight: 500;
   letter-spacing: var(--xwide);
   text-transform: uppercase;
   color: rgba(255,255,255,.85);
@@ -171,17 +174,20 @@
   will-change: transform;
   pointer-events: auto;
 }
+/* H1 role per STYLE_GUIDE — this slide is the canonical H1 size reference
+   for the rest of the site. Cormorant italic, --fs-h1, centered. */
 .icp-carousel__title-slide {
   appearance: none;
   background: transparent;
   border: 0;
   padding: 0 8px;
   margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(48px, 7vw, 96px);
-  line-height: 1.1;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-display);
   color: rgba(255,255,255,.28);
   white-space: nowrap;
   cursor: pointer;
@@ -198,17 +204,22 @@
   flex-direction: column;
   gap: 14px;
 }
+/* H2 role per STYLE_GUIDE — this lead is the canonical H2 size reference
+   for the rest of the site. Poppins 500, --fs-h2, --lh-h2. */
 .icp-carousel__lead {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 500;
-  font-size: clamp(24px, 2.6vw, 36px);
-  line-height: 1.28;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-display);
   color: #fff;
   margin: 0;
-  letter-spacing: -0.01em;
 }
+/* Lead role per STYLE_GUIDE — Poppins, softened ink. The clamp here
+   is tightened (15–17px vs canonical 17–20px) so the body fits inside
+   the carousel panel; treat as the panel-scoped Lead variant. */
 .icp-carousel__copy {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-sans);
   font-weight: 400;
   font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.65;
