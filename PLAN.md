@@ -176,58 +176,159 @@ Repurpose `shared/components/icp-carousel` for three Architect sub-personas. **R
 
 Stubs shipped, nav links updated. See Phases 9b + 10 for the build-out passes.
 
-### Phase 9b — Build out `product.html` (revised 2026-05-05)
+### Phase 9b — Build out `product.html` ⚠️ SUPERSEDED by Round-2 feedback
 
-`product.html` currently exists as a stub. This phase builds it into the canonical "all features" page.
+See **Phase 13** below — `product.html` becomes `solutions.html` (URL + nav label change), and the spine is now Capture/Track/Connect (deep-dive) → Controlled Stakeholder Access → 3 minor features (Frictionless Collab / Version Control / AI Assistant). The earlier plan to reuse the alternating spine still holds; the content sources and structure have been re-specced.
 
-**Content + structure:**
-- Reuse the **alternating-features** component pattern from the homepage (the one shipped in PR #5) as the spine of the page.
-- Each feature gets a fuller treatment than the homepage teaser — longer copy, more breathing room, supporting visual.
-- Hero per the style guide (H1 + Lead, no eyebrow). Pick alignment per page.
-- Editorial closer (H2) at the bottom mirroring the homepage closer pattern, into a final CTA.
+### Phase 10 — Build out `about.html` ⚠️ SUPERSEDED by Round-2 feedback
 
-**Open content questions:**
-- Real long-form copy for each feature — pull from Nola's docs or draft from the homepage teasers and have Julianna edit.
-- Do we need any product-page-only sections (security, integrations, pricing teaser) or is the alternating-features spine enough for v1?
-
-**Re-point existing references to `product.html`** (most done in Phase 9; verify these still resolve):
-- Nav "Product" link
-- Feature highlights "See the product" CTA (`shared/components/feature-highlights/index.js:38`)
-- ICP carousel sub-persona panel CTAs (Phase 5 — three panels)
-- Footer "Product · Overview" in `demo.html:118`
-
-### Phase 10 — Build out `about.html` (added 2026-05-05)
-
-`about.html` currently exists as a stub. This phase replaces the placeholder hero/copy with real content.
-
-**Open content questions:**
-- Real about copy — mission, team backgrounds, founding story. Need from Julianna.
-- Team photos / founder photos — do we have brand-treatment-ready imagery, or use silhouettes/initials for v1?
-- Press / investor section — in scope for v1 or defer?
-
-**Treatment notes:**
-- Hero per style guide (Cormorant H1 + Lead).
-- Use the paper-zone pattern at the bottom (team + closer + footer) per `STYLE_GUIDE.md:458` for visual continuity with the homepage.
-- Editorial H2 closer mirroring homepage register.
+See **Phase 14** below — same intent (real backstory + team), but the new homepage structure adds an "About the company" teaser block on the homepage that links here, so About becomes the destination for that link as well as a standalone page.
 
 ---
 
-## Execution order
+## Round 2 feedback (2026-05-05) — manager review
 
-**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 8, 9 (stubs + nav).
+Direct notes from Julianna's manager. These changes take priority over earlier remaining-phase scope. The agreed final IA:
 
-**Remaining (any order, recommend the order below):**
-1. **Phase 9b** — Build out `product.html` (depends on long-form feature copy)
-2. **Phase 10** — Build out `about.html` (depends on about copy)
-3. **Phase 5** — ICP carousel rework (copy + arrows + tap zones; content fully locked, see above)
+- **Homepage** — Hero → One workspace (animation + sales copy) → Core capabilities (2×2 teaser) → Testimonials → Team / About-the-company beat → Footer
+- **Solutions** (was Product, URL flips to `solutions.html`) — Hero → Core capabilities deep dive → Additional capabilities → Footer
+- **About** — Hero → Backstory → Meet the team → Footer
+
+> Note on the homepage "About the company" beat: the existing `[data-team-section]` shared component already plays this role today (team grid inside the paper-zone). Treat it as the home-page about-the-company beat — *no separate teaser block needed* — and keep the team component as-is. The standalone About page (Phase 16) is the deeper destination.
+
+### Phase 11 — Nav rework + mobile menu ✅ DONE
+
+- Nav links now read **Home · Solutions · About · [Book A Demo]** (`shared/components/site-nav/index.js`).
+- `product.html` renamed → `solutions.html`. References updated in `shared/components/site-nav/index.js`, `shared/components/features-alternating/index.js` (DEFAULT_CTA), `shared/components/feature-highlights/index.js` (DEFAULT_CTA), `demo.html` footer column, `index.html` comments, `STYLE_GUIDE.md`.
+- Mobile (≤880px): inline links + Book-a-demo CTA hide; a hamburger toggle takes their place. Tap opens a full-screen frosted sheet (cream tint at 0.88 opacity + 24px backdrop-blur) with Home / Solutions / About links (Cormorant italic, scaled) + a Book-a-demo CTA. Sheet closes on link-tap, Esc, or viewport resize past 880px. Body scroll locks while open. Bar's frosted state is forced on so the X stays legible above the sheet; dark-tone is suppressed while open.
+
+### Phase 12 — Stack animation fixes ("One workspace" section)
+
+- **Sequencing bug** (confirmed by Julianna 2026-05-05): the animation never fully completes — the other screens layer back on top before the popups appear, which makes it look broken *and* extends total length. Re-tune the GSAP timeline in `shared/components/stack-animation/index.js` so the morph completes cleanly into the popup beat without re-stacking the prior screens. Diagnose: check (a) whether earlier-screen opacity/translate is being reset late in the timeline, (b) whether the popup-in tween is fighting an unfinished screen-in tween, (c) whether the bug is scroll-speed sensitive (scrub vs. catch-up). Memory note: the sticky-nav vs stack-pin conflict is a known hazard — verify both still play together.
+- **Caption typography**: "One workspace. Every detail." currently mixes sans + serif. Conform to the **H2 style** used elsewhere (Cormorant italic 500, per STYLE_GUIDE) — single voice, not mixed.
+
+### Phase 13 — Homepage section ordering + layout fixes
+
+Below the stack animation section, re-flow the page:
+
+- **"Stop wasting hours..." copy** — right-align, max-width ~60ch for readability.
+- **"Built for firms managing complex processes and workflows"** H2 — move it *up* to sit immediately after the "Stop wasting hours..." block as the **header** for the next section. **Remove** the "Book a demo" link currently under it.
+- **Section background** — make the new-section bg full-width so the visual break from the section above is unambiguous.
+- **ICP carousel** ("One space" section) — manager flagged that the arrows aren't visible. Julianna's call: **keep the section, fix it** (one more pass at the Architects-personas idea with working arrows). This pulls **Phase 5** back into v1 — see Phase 5 for the spec (sub-personas + frosted prev/next arrows + tap zones).
+- **Cut the "Bring order into complexity" final CTA** before the footer.
+- **Footer** — give it a distinct style/color from the company-zone section above, so it reads as a separate region rather than blending in.
+
+### Phase 14 — Homepage core capabilities 2×2 grid
+
+Replace the current `[data-features-alternating]` row stack on the homepage with a **2×2 card grid** (4 cards, equal weight):
+
+1. **Email Triage & Auto-Capture**
+2. **Decision Log & Audit Trail**
+3. **Intelligence Layer on Existing Stack**
+4. **Controlled Stakeholder Access** *(new — copy source: page 8 of the Renoverse AI platform doc)*
+
+**Body copy (locked — Renoverse AI Platform Overview, page 4):**
+
+| Card | Body |
+|---|---|
+| Email Triage & Auto-Capture | The decisions buried in a 40-message chain don't disappear. Ella AI automatically surfaces what matters — organized by project, ready to act on, with the information provenance one click away. |
+| Decision Log & Audit Trail | Know who decided what, when, and why — without anyone having to write it down. Every decision is captured, timestamped, and traceable back to its source from first log through final approval. |
+| Intelligence Layer on Existing Stack | Nothing gets replaced. Renoverse connects to Microsoft 365 tools and acts as the intelligent coordination layer on top so information flows between systems seamlessly. |
+| Controlled Stakeholder Access | Control visibility with three access tiers: internal team, professional collaborators, and client — so private work stays private, and stakeholders and clients see exactly what they need, nothing more. |
+
+**Rules:**
+- **No eyebrow** on cards (drop "Capture / Track / Connect" — those stay on Solutions only).
+- Card headers use **H3** (Poppins 500 per style guide). H2 is reserved for the section header above the grid.
+- Reuse the existing feature images (`assets/feature-email-triage.png`, `assets/feature-decision-log.png`, `assets/feature-intelligence-layer.png`) + a placeholder for Controlled Stakeholder Access.
+- Below the grid: **"See all product features →"** CTA → `solutions.html`.
+
+This replaces `data-features-alternating` on `index.html` only — the alternating component is *kept* and reused on the Solutions page (Phase 15).
+
+### Phase 15 — Build out Solutions page (was Phase 9b)
+
+`solutions.html` (renamed from `product.html` in Phase 11). New structure:
+
+1. **Hero** (existing — keep H1 + Lead).
+2. **Core capabilities deep dive** — duplicate the homepage's Capture/Track/Connect alternating-features section *as designed*. Each row replaces today's body copy + "See product" CTA with three sub-bullets per feature (label + body) from the platform doc. Eyebrows ("Capture / Track / Connect") **stay** on this page only.
+
+   **Locked copy (Renoverse AI Platform Overview, pages 5–7):**
+
+   - **Email Triage & Auto-Capture** *(pg 5)*
+     - **Automated Information Capture** — Connect email to automatically surface decisions, action items, and open questions — organized by project and prepped for human review.
+     - **Human-in-the-Loop Controls** — You stay in control of what gets logged — review the triage queue and approve, edit, or skip anything Ella AI surfaces.
+     - **Comprehensive Organization** — Ensure essential information is organized and easily accessible, preventing valuable insights from being lost amidst the clutter of fragmented communications.
+
+   - **Decision Log & Audit Trail** *(pg 6)*
+     - **Tracked Approvals** — Every decision made within Renoverse is meticulously tracked, ensuring all approvals are logged and easily accessible for review, enhancing transparency among team members.
+     - **Timestamped Decisions** — With each decision timestamped, users can effortlessly identify when decisions were made, providing an accurate historical record that supports accountability and informed decision-making.
+     - **Comprehensive Audit Trail** — The digital audit trail captures all changes, creating a detailed history of project decisions that helps teams understand the context and reasoning behind each action taken.
+
+   - **Intelligence Layer on Existing Stack** *(pg 7)*
+     - **Existing Stack** — Renoverse integrates with your current software tools, ensuring minimal lift to improved project coordination without overhauling existing workflows.
+     - **Microsoft Integrations** — Integrates natively with Microsoft email & tools, so critical information is captured automatically, ensuring project context doesn't slip through the cracks.
+     - **Coordination Layer** — Enhances your existing infrastructure with a smart coordination layer, promoting collaborative projects while centralizing decision tracking and communication across various teams and tools.
+
+3. **Controlled Stakeholder Access** — new alternating row, placeholder image, three sub-bullets from the platform doc:
+
+   **Locked copy (page 8):**
+   - **Private Workspace** — Protect sensitive information with a dedicated team space, ensuring only authorized members can access critical project details and discussions pertinent to their roles.
+   - **Professional Layer (Pro-to-Pro)** — Collaborators can engage with relevant project information, allowing for streamlined interactions without overwhelming them with unnecessary data or access to restricted content.
+   - **Client-Facing View (Client)** — Share tailored insights with clients, offering them visibility into the project's progress while maintaining control over the sensitive internal discussions and decisions made by the team.
+
+4. **Additional capabilities** — replace the older `feature-highlights` 4-up strip with a more visual representation of the **3** minor features (same sub-copy as today, supporting imagery from existing site):
+   - Frictionless Collaboration
+   - Version Control
+   - AI Assistant
+
+   Composition: 3 cards / rows with more visual weight than today's strip but less than the 4 major capabilities above. Goal — clear "4 main, 3 additional" hierarchy.
+5. **Footer** (no editorial closer / final CTA on this page per the new IA).
+
+### Phase 16 — Build out About page
+
+Final structure (locked by Derek): **Hero → Backstory → Meet the team → Footer**. No editorial closer / final CTA.
+
+- **Hero** — H1 + Lead (style guide).
+- **Backstory** — long-form mission / founding story (copy needed from Julianna or Nola).
+- **Meet the team** — reuse the existing `[data-team-section]` shared component (already used on the homepage). Theme to match page background.
+- **Footer** — distinct style/color per Phase 13 footer treatment.
+
+### Phase 17 — Deploy preview + content handoff
+
+Once Phases 11–16 land:
+- Deploy a preview build.
+- Send the updated site to **Julianna + Nola** for final content / copy review against the new structure.
 
 ---
 
-## Open questions
+## Execution order (revised)
 
-- [ ] Long-form feature copy for `product.html` (Phase 9b).
-- [ ] About copy + team imagery for `about.html` (Phase 10).
-- [ ] Phase 5 Paper redesign — deferred to v2 (v1 reuses existing visuals).
+**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 8, 9 (stubs + nav), 11.
+
+**Remaining — recommended order:**
+1. **Phase 12** — Stack animation fixes + caption typography.
+2. **Phase 13** — Homepage section ordering / alignment / cut ICP carousel + "Bring order" CTA / footer style.
+3. **Phase 14** — Homepage 2×2 core-capabilities grid.
+4. **Phase 15** — Solutions page build-out (depends on platform-doc copy).
+5. **Phase 16** — About page build-out (depends on about copy).
+6. **Phase 17** — Deploy preview + send to Julianna + Nola.
+
+**Deferred / changed status:**
+- **Phase 5** (ICP carousel rework) — **back in v1**. Julianna's call: keep the section on the homepage, do one more pass at the Architects sub-personas idea with working prev/next arrows + tap zones (per the original Phase 5 spec). Slot after Phase 13.
+- **Phase 9b / Phase 10** — superseded by Phase 15 / Phase 16 (same intent, new spec).
+
+---
+
+## Open questions / blockers
+
+- [x] **Renoverse AI platform doc** — received 2026-05-05. Pages 4–8 copy locked into Phase 14 / Phase 15.
+- [x] **ICP carousel decision** — keep + retry Architects spec (see Phase 5).
+- [x] **Mobile menu pattern** — hamburger → frosted full-screen sheet (Phase 11).
+- [x] **Solutions URL** — rename `product.html` → `solutions.html`.
+- [x] **About page structure** — locked by Derek: Hero → Backstory → Meet the team → Footer.
+- [x] **Homepage "About the company" beat** — covered by the existing team-section component; no new teaser block needed.
+- [x] **Stack animation bug** — confirmed by Julianna; not a one-off. Phase 12 includes a deeper diagnostic pass (timeline order, screen-fade-in vs popup-in beats, scroll-speed sensitivity).
+- [x] **Backstory copy** for Phase 16 — use **lorem ipsum placeholder** for v1; replace when real copy lands.
+- [x] **Controlled Stakeholder Access image** — use the **same placeholder hash** as the team-section photo placeholder for v1. Drop the platform-doc 3-avatar idea.
 
 ---
 
