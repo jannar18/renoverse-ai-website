@@ -53,7 +53,7 @@ This guide describes the **intended end-state** of the site — the rules new wo
 
 | Rule (intended state) | Live-page state today | Cleanup phase |
 |---|---|---|
-| Every page has a `skip-nav` link as the first focusable element + `id="main"` on the main content target | Neither page has either | Phase 1 |
+| Every page has a `skip-link` as the first focusable element + `id="main"` on the main content target | Neither page has either | Phase 1 |
 | Sticky nav with backdrop blur over hero + pinned scrolls | Currently absolute-positioned | Phase 1 |
 | Body copy is left-aligned; centered multi-line copy is push-back-worthy | `.intro` and `.typology .head` in `index.html` are still centered | Phase 4 |
 | In-card form submit uses `.btn .btn--filled` without corner ticks | Demo-form uses a Tailwind gradient pill, bypassing the `.btn` system entirely | Phase 8 |
@@ -219,7 +219,7 @@ The homepage hero uses the WebGL halftone-video shader. **Reuse its exact config
   <div class="scrim"></div>
   <div class="hero-inner">
     <h1>…</h1>
-    <p class="sub">…</p>
+    <p class="lead">…</p>
   </div>
 </header>
 ```
@@ -255,7 +255,7 @@ Required scaffolding for any new HTML page:
   <!-- + any component CSS the page uses -->
 </head>
 <body>
-  <a class="skip-nav" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <nav data-site-nav></nav>
   <main id="main"> … </main>
   <footer class="site"> … </footer>

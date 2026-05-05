@@ -147,12 +147,14 @@
   gap: clamp(20px, 3vh, 36px);
   pointer-events: none;
 }
-/* Eyebrow role per STYLE_GUIDE — JetBrains Mono uppercase, --xwide. */
+/* Eyebrow role per STYLE_GUIDE — JetBrains Mono uppercase, --xwide.
+   Note: font-size + weight are intentionally untokenized to preserve
+   the carousel's exact pre-audit rendering (the carousel is the
+   canonical brand reference; flat 13px + inherited 300 weight from
+   the .icp-carousel base is the deliberate look). */
 .icp-carousel__overline {
   font-family: var(--font-mono);
-  font-size: var(--fs-eyebrow);
-  line-height: var(--lh-eyebrow);
-  font-weight: 500;
+  font-size: 13px;
   letter-spacing: var(--xwide);
   text-transform: uppercase;
   color: rgba(255,255,255,.85);
@@ -175,7 +177,9 @@
   pointer-events: auto;
 }
 /* H1 role per STYLE_GUIDE — this slide is the canonical H1 size reference
-   for the rest of the site. Cormorant italic, --fs-h1, centered. */
+   for the rest of the site. Cormorant italic, --fs-h1, centered.
+   Note: no letter-spacing override — the carousel pre-dates --ls-display
+   and renders at the browser default. Preserve the canonical look. */
 .icp-carousel__title-slide {
   appearance: none;
   background: transparent;
@@ -187,7 +191,6 @@
   font-weight: 400;
   font-size: var(--fs-h1);
   line-height: var(--lh-h1);
-  letter-spacing: var(--ls-display);
   color: rgba(255,255,255,.28);
   white-space: nowrap;
   cursor: pointer;

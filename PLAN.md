@@ -184,7 +184,7 @@ Phase 0 first (style guide governs the rest). Then Phase 1 + Phase 2 together (t
 Phase 5 deferred to later this week pending Paper designs.
 
 1. **Phase 0** — Style guide + token audit
-2. **Phase 1 + Phase 2** — Sticky nav + skip-nav + stack-animation header (tested together)
+2. **Phase 1 + Phase 2** — Sticky nav + skip-link + stack-animation header (tested together)
 3. **Phase 9** — `product.html`, `about.html` stubs + nav link updates
 4. **Phase 3** — Merge features (depends on Nola's content)
 5. **Phase 4** — Header + alignment cleanup
