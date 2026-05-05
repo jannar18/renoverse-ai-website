@@ -71,11 +71,15 @@
   margin: 0 0 24px;
 }
 
-/* H3 role — Poppins 500, --fs-h3 (section header). */
+/* H2 role — Cormorant italic 500, --fs-h2 (editorial moment).
+   The team heading is editorial in voice ("Built by a team who
+   understands.") so it pairs with the brand's italic moment register
+   rather than the utility section-header role. */
 .team-section__heading {
-  font-family: var(--font-sans);
-  font-size: var(--fs-h3);
-  line-height: var(--lh-h3);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
   font-weight: 500;
   letter-spacing: var(--ls-display);
   margin: 0 0 24px;
