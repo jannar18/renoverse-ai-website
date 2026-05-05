@@ -1016,7 +1016,8 @@
       </div>
 
       <div class="caption" id="caption">
-        <h2>One workspace.<br/><span class="muted">Every detail.</span></h2>
+        <h2>One workspace.</h2>
+        <h3>Every detail.</h3>
       </div>
     </div>
   </section>
@@ -1084,14 +1085,18 @@
       });
     });
 
-    /* Pin + drive with scroll */
+    /* Pin + drive with scroll. pinSpacing:false (no extra spacer) +
+       end: 'bottom top' means the stage stays fixed for the section's
+       full 200vh of scroll and unpins the moment the next section
+       reaches the viewport top — no trailing white space. */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#stackSection',
         start: 'top top',
-        end: '+=300%',                        /* longer — leaves room for callouts beat */
+        end: 'bottom top',
         pin: '.stack-stage',
-        scrub: 0.6,
+        pinSpacing: false,
+        scrub: 0.2,
         anticipatePin: 1,
       }
     });
@@ -1113,8 +1118,9 @@
       }, stagger);
     });
 
-    /* Calendar emerges DURING the convergence — starts at 35% in,
-       runs longer than the convergence so its tail extends past the dissolve. */
+    /* Calendar emerges DURING the convergence — starts almost immediately
+       so visible motion is up by the time the user has scrolled a few px.
+       Runs longer than the convergence so its tail extends past the dissolve. */
     tl.to(cal, {
       z: 0,
       scale: 1,
@@ -1122,7 +1128,7 @@
       filter: 'blur(0px)',
       duration: 1.1,
       ease: 'power2.inOut',
-    }, 0.35);
+    }, 0.10);
 
     /* Sources dissolve — starts mid-convergence, finishes with the calendar.
        Overlapping windows make the crossfade feel like one continuous beat. */
@@ -1131,7 +1137,7 @@
       scale: 1.04,
       duration: 0.85,
       ease: 'power2.inOut',
-    }, 0.55);
+    }, 0.30);
 
     /* Callouts animate in around the main panel — staggered, like the
        Google hero animations: features popping in one by one. */
@@ -1143,7 +1149,7 @@
       duration: 0.6,
       stagger: 0.08,
       ease: 'back.out(1.6)',
-    }, 1.45);
+    }, 1.20);
 
     /* Caption is visible throughout the pinned scroll (set in CSS) —
        it grounds the concept while the morph plays underneath. */
