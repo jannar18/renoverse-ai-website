@@ -1,5 +1,10 @@
 /* Renoverse — ICP feature carousel.
-   Mounts a four-panel carousel into every [data-icp-carousel] on the page.
+   Mounts a three-panel carousel into every [data-icp-carousel] on the page.
+
+   Phase 13 update: panels are now three Architect sub-personas (Principal
+   Architects / Project Managers / Junior Designers). The existing SVG visuals
+   + tints from the original four-ICP set (architects / builders / interior)
+   are reused as-is — Paper redesign deferred to v2 when more ICPs ship.
 
    The halftone PNG is loaded relative to this script file, so the component
    can be dropped into any host page regardless of where the host is served.
@@ -13,17 +18,16 @@
     ? new URL('halftone-source.png', SCRIPT_SRC).href
     : 'halftone-source.png';
 
-  const DEMO_HREF = 'demo.html';
-  const ARCHITECTS_HREF = 'for-architects.html';
+  const SOLUTIONS_HREF = 'solutions.html';
 
   const PANELS = [
     {
-      id: 'architects',
-      title: 'For Architects',
-      lead: 'Less context switching.<br/>More time on projects.',
-      copy: 'Stop chasing design revisions across different platforms. Every mark-up, change request, and consultant note lives on the drawing, and all your drawings are in one place. No need to spend your time updating your team or clients — instead stay focused on designing.',
+      id: 'principal-architects',
+      title: 'For Principal Architects',
+      lead: 'Reclaim time to take on more projects and grow your business.',
+      quote: 'I feel like I’m putting out fires all day and don’t have any time to design anymore.',
       cta: 'Learn more',
-      href: ARCHITECTS_HREF,
+      href: SOLUTIONS_HREF,
       object: { cls: 'obj--compass', svg: `
         <svg viewBox="0 0 1080 880" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -45,12 +49,12 @@
         </svg>` }
     },
     {
-      id: 'builders',
-      title: 'For Contractors',
-      lead: 'From punch list<br/>to closeout, on schedule.',
-      copy: 'Track sequences, RFIs, and field changes in one place. Every measurement marked, every pour logged — paper trail intact long after the dust settles.',
-      cta: 'Book a Demo',
-      href: DEMO_HREF,
+      id: 'project-managers',
+      title: 'For Project Managers',
+      lead: 'Reclaim time to do more of the work you want to do — not the work you have to do.',
+      quote: 'I miss the days when I used to be drafting and doing redlines. Now I’m constantly in meetings and reading 100 emails every day.',
+      cta: 'Learn more',
+      href: SOLUTIONS_HREF,
       objects: [
         { cls: 'obj--tools-l', svg: `
           <svg viewBox="0 0 760 760" xmlns="http://www.w3.org/2000/svg">
@@ -88,12 +92,12 @@
       ]
     },
     {
-      id: 'interior',
-      title: 'For Interior Designers',
-      lead: 'Mood, material, mark-up —<br/>all on one page.',
-      copy: 'Sketch the room, swatch the palette, and tag the source — every spec stays with the drawing so the install team builds what you actually drew.',
-      cta: 'Book a Demo',
-      href: DEMO_HREF,
+      id: 'junior-designers',
+      title: 'For Junior Designers',
+      lead: 'Reclaim time and energy to jump into new projects — without long onboarding or waiting on your manager’s calendar.',
+      quote: 'Seniors are directly notified of design changes from clients, but they’re usually so slammed they forget to tell me — so I often spend extra days drafting against an old design intent.',
+      cta: 'Learn more',
+      href: SOLUTIONS_HREF,
       object: { cls: 'obj--sketch', svg: `
         <svg viewBox="0 0 1080 800" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -123,49 +127,28 @@
           </g>
         </svg>` }
     },
-    {
-      id: 'clients',
-      title: 'For Clients',
-      lead: 'See it before<br/>you live in it.',
-      copy: 'Walk the rooms before the slab is poured. Approve a finish, flag a wall, sign off a corner — every decision routed back to your architect, on the same page.',
-      cta: 'Book a Demo',
-      href: DEMO_HREF,
-      object: { cls: 'obj--floorplan', svg: `
-        <svg viewBox="0 0 1080 800" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="d-cli-a" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="currentColor"/><rect x="4" y="4" width="4" height="4" fill="currentColor"/></pattern>
-            <linearGradient id="d-cli-fade" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".5" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity=".45"/></linearGradient>
-            <mask id="m-cli"><rect width="1080" height="800" fill="url(#d-cli-fade)"/></mask>
-          </defs>
-          <g mask="url(#m-cli)">
-            <rect x="120" y="160" width="840" height="540" fill="none" stroke="url(#d-cli-a)" stroke-width="22"/>
-            <rect x="120" y="380" width="500" height="22" fill="url(#d-cli-a)"/>
-            <rect x="500" y="160" width="22" height="240" fill="url(#d-cli-a)"/>
-            <rect x="700" y="160" width="22" height="540" fill="url(#d-cli-a)"/>
-            <rect x="500" y="540" width="220" height="22" fill="url(#d-cli-a)"/>
-            <g stroke="currentColor" stroke-width="2" opacity=".5">
-              <path d="M 280 391 Q 280 421 310 421" fill="none"/>
-              <path d="M 720 251 Q 750 251 750 281" fill="none"/>
-              <path d="M 600 551 Q 600 581 630 581" fill="none"/>
-            </g>
-          </g>
-        </svg>` }
-    },
   ];
 
   const ARROW_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"><path d="M3 8h9M8 4l4 4-4 4"/></svg>`;
+  /* Nav-button arrows are larger than the CTA puck (24x24) so they read as
+     primary controls — same chevron geometry, drawn at 24px stroke for the
+     bigger frame. */
+  const NAV_ARROW_LEFT_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" stroke="currentColor" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>`;
+  const NAV_ARROW_RIGHT_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" stroke="currentColor" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
 
   /* ===== WebGL halftone shader =====
      Samples the source PNG per dot-cell, computes luminance, emits a dark
      dot whose radius scales with darkness — classic halftone print.
      Composited over the gradient via mix-blend-mode: overlay. */
+  /* Tints reuse the original four-ICP palette: principal-architects keeps
+     the "architects" oxford tint, project-managers keeps the "builders"
+     warm teal tint, junior-designers keeps the "interior" oxford tint. */
   const TINTS = {
-    architects: [0.043, 0.102, 0.169],
-    builders:   [0.227, 0.122, 0.071],
-    interior:   [0.106, 0.122, 0.306],
-    clients:    [0.063, 0.165, 0.322]
+    'principal-architects': [0.043, 0.102, 0.169],
+    'project-managers':     [0.227, 0.122, 0.071],
+    'junior-designers':     [0.106, 0.122, 0.306]
   };
-  const PANEL_ORDER = ['architects', 'builders', 'interior', 'clients'];
+  const PANEL_ORDER = ['principal-architects', 'project-managers', 'junior-designers'];
 
   function setupShader(canvas) {
     const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true })
@@ -246,7 +229,7 @@
     const uCell = gl.getUniformLocation(prog, 'u_cell');
     const uTint = gl.getUniformLocation(prog, 'u_tint');
 
-    let curTint    = TINTS.architects.slice();
+    let curTint    = TINTS[PANEL_ORDER[0]].slice();
     let startTint  = curTint.slice();
     let targetTint = curTint.slice();
     let tintT = 1, tintStart = 0;
@@ -415,6 +398,18 @@
       goTo(Number(slide.dataset.i));
     });
 
+    /* Visible prev/next nav buttons + invisible side tap zones — both routed
+       through the same `go()` step so the title carousel, the panel slide,
+       the tint, and the keyboard nav stay in sync. */
+    const navPrev = root.querySelector('.icp-carousel__nav--prev');
+    const navNext = root.querySelector('.icp-carousel__nav--next');
+    const tapPrev = root.querySelector('.icp-carousel__tap-zone--prev');
+    const tapNext = root.querySelector('.icp-carousel__tap-zone--next');
+    if (navPrev) navPrev.addEventListener('click', () => go(-1));
+    if (navNext) navNext.addEventListener('click', () => go(1));
+    if (tapPrev) tapPrev.addEventListener('click', () => go(-1));
+    if (tapNext) tapNext.addEventListener('click', () => go(1));
+
     root.tabIndex = 0;
     root.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
@@ -453,6 +448,13 @@
     const objHTML = objects.map(o => `
       <div class="icp-carousel__object ${o.cls}" aria-hidden="true">${o.svg}</div>
     `).join('');
+    /* Phase 13: panels render the in-role voice as a styled italic blockquote
+       (left-rule + italic) so it reads as the persona speaking, not marketing
+       copy. Older `copy` field is still accepted as a fallback for any host
+       page that hasn't migrated. */
+    const bodyHTML = p.quote
+      ? `<blockquote class="icp-carousel__quote">${p.quote}</blockquote>`
+      : `<p class="icp-carousel__copy">${p.copy}</p>`;
     return `
       <article class="icp-carousel__panel" data-id="${p.id}">
         ${objHTML}
@@ -461,7 +463,7 @@
         <div class="icp-carousel__content">
           <div class="icp-carousel__body">
             <p class="icp-carousel__lead">${p.lead}</p>
-            <p class="icp-carousel__copy">${p.copy}</p>
+            ${bodyHTML}
           </div>
           <a href="${p.href || '#'}" class="btn btn--frosted icp-carousel__cta">
             <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
@@ -488,6 +490,14 @@
       <div class="icp-carousel__viewport">
         <div class="icp-carousel__track">${panels}</div>
       </div>
+      <button type="button" class="icp-carousel__tap-zone icp-carousel__tap-zone--prev" tabindex="-1" aria-hidden="true"></button>
+      <button type="button" class="icp-carousel__tap-zone icp-carousel__tap-zone--next" tabindex="-1" aria-hidden="true"></button>
+      <button type="button" class="icp-carousel__nav icp-carousel__nav--prev" aria-label="Previous slide">
+        ${NAV_ARROW_LEFT_SVG}
+      </button>
+      <button type="button" class="icp-carousel__nav icp-carousel__nav--next" aria-label="Next slide">
+        ${NAV_ARROW_RIGHT_SVG}
+      </button>
       <div class="icp-carousel__heading">
         <div class="icp-carousel__overline">One Space</div>
         <div class="icp-carousel__titles">
