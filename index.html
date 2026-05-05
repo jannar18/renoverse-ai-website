@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
 <link rel="stylesheet" href="shared/components/icp-carousel/index.css">
 <link rel="stylesheet" href="shared/components/feature-highlights/index.css">
+<link rel="stylesheet" href="shared/components/features-alternating/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <style>
   :root{
@@ -159,6 +160,35 @@
   .intro{text-align:center;padding-top:32px}
   .intro .lead{max-width:72ch;margin:0 auto}
   .intro .lead + .lead{margin-top:20px}
+
+  /* ---------- features closer (editorial H2 between features and ICP carousel) ---------- */
+  .features-closer{
+    background:#fff;
+    padding:clamp(96px,12vw,160px) var(--gutter) clamp(120px,14vw,176px);
+  }
+  .features-closer__wrap{
+    max-width:60ch;
+    margin:0 auto;
+    text-align:center;
+  }
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
+     Centered: pattern-specific override for editorial closer. */
+  .features-closer h2{
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
+    letter-spacing:var(--ls-display);
+    color:var(--ink);
+    margin:0;
+  }
+  /* CTA below the closer headline. Tick-inset on the left so TL/BL ticks
+     land on the centered headline's optical center isn't a thing — center
+     the button instead with margin auto + display block. */
+  .features-closer .closer-cta{
+    margin:clamp(32px,4vw,48px) auto 0;
+  }
 
   /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
 
@@ -561,44 +591,18 @@
   </div>
 </section>
 
-<!-- ========== 4 FEATURES (shared component) ========== -->
-<div data-feature-highlights data-cta-href="product.html"></div>
+<!-- ========== FEATURES (alternating — Variation 4 per STYLE_GUIDE) ========== -->
+<!-- Replaces the prior 4-up `data-feature-highlights` strip + 3-card .typology
+     section. Three core capabilities, alternating paper ↔ dark teal rows, with
+     a single "See all features →" CTA pointing to product.html. Stakeholder
+     Access (the deferred 4th feature) lives on product.html. -->
+<div data-features-alternating></div>
 
-<!-- ========== TYPOLOGY (Solution pillars — deck slide 6) ========== -->
-<section class="typology">
-  <div class="wrap">
-    <div class="head">
-      <h2>Facilitating a unified system of record for architectural projects.</h2>
-    </div>
-    <div class="grid">
-      <div class="ty-card">
-        <div class="shot">
-          <img src="assets/pillar-comments.png" alt="Threaded comments pinned to a design drawing in Renoverse" />
-        </div>
-        <div class="meta">
-          <h4>Centralized Project Intelligence</h4>
-          <p>Frictionless collaboration across comment threads &amp; tasks tied to specific design drawings, topics, and issues.</p>
-        </div>
-      </div>
-      <div class="ty-card">
-        <div class="shot">
-          <img src="assets/pillar-tasks.png" alt="Renoverse tasks view with AI-generated activity summary tracking decisions and assignments" />
-        </div>
-        <div class="meta">
-          <h4>Automated Admin &amp; Decision Tracking</h4>
-          <p>AI assistant queries documents, fields client questions, and tracks decisions &amp; tasks.</p>
-        </div>
-      </div>
-      <div class="ty-card">
-        <div class="shot">
-          <img src="assets/pillar-decisions.png" alt="Renoverse decisions log — timestamped audit trail of selections and approvals across the project" />
-        </div>
-        <div class="meta">
-          <h4>Accountability Across Stakeholders</h4>
-          <p>Transparent, timestamped audit log of all decisions, approvals, and changes.</p>
-        </div>
-      </div>
-    </div>
+<!-- ========== FEATURES CLOSER (editorial H2) ========== -->
+<section class="features-closer">
+  <div class="features-closer__wrap">
+    <h2>Built for firms managing complex processes and workflows.</h2>
+    <a class="btn btn--filled closer-cta" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
   </div>
 </section>
 
@@ -696,6 +700,7 @@
 <script src="shared/components/halftone-video/index.js"></script>
 <script src="shared/components/icp-carousel/index.js"></script>
 <script src="shared/components/feature-highlights/index.js"></script>
+<script src="shared/components/features-alternating/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 
 <script>

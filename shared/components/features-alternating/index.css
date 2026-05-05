@@ -1,0 +1,288 @@
+/* Renoverse — Features (alternating).
+   Hybrid of STYLE_GUIDE Variation 4 (alternating blurb + product highlight)
+   and Variation 6 (2-up split): each row is split horizontally — text sits
+   on the white half, the image side has a dark-teal gradient panel that
+   bleeds to the viewport edge. Side flips per row for rhythm.
+
+   All styles scoped under `.features-alt` so the component is safe to mount
+   into any host page.
+*/
+
+.features-alt {
+  position: relative;
+  /* Hard-clip the gradient strip + halftone + shader to the section's
+     vertical bounds. Without this, the cream top-stop of --grad-light-teal
+     blends into the white above so subtly that it reads as the gradient
+     bleeding above the section; overflow:hidden makes the boundary sharp. */
+  overflow: hidden;
+  /* Section-level stacking context so the row-level content composites
+     correctly over the section-level halftone/shader/strip. */
+  isolation: isolate;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: #fff;
+}
+
+/* Unified gradient strip + halftone + shader — all three sit at the section
+   level and share the same positioning (right 50%, full section height) so
+   the gradient, the CSS halftone, and the WebGL shader all span identically:
+   one continuous treatment from the top of row 1 through the bottom of the
+   last row. Matches the ICP carousel's halftone signature, scaled to the
+   whole section. */
+.features-alt__panel-strip,
+.features-alt__halftone,
+.features-alt__shader {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  pointer-events: none;
+}
+.features-alt__panel-strip {
+  background: var(--grad-light-teal);
+  z-index: 0;
+}
+
+/* ---------- row ---------- */
+
+.features-alt__row {
+  position: relative;
+  /* No isolation — halftone + shader at the section level need to render
+     under the row's content, not be trapped inside per-row contexts. */
+  overflow: hidden;
+  /* Fill exactly the visible viewport area beneath the sticky nav. When a
+     row pins to the top of the viewport, the gradient + halftone + shader
+     occupy the full visible region without overflowing below the fold. */
+  min-height: calc(100vh - var(--nav-height, 72px));
+  display: grid;
+  /* Vertical centering only. Horizontal alignment is per-item:
+       - Blurb sets its own `justify-self: center` (within max-width 46ch)
+       - Media stays `justify-self: stretch` (default) so it fills the
+         column, giving its inner flex `justify-content: flex-start` space
+         to push the content-sized frame flush to the column's left edge. */
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+  padding-block: clamp(56px, 8vw, 96px);
+  padding-inline: var(--gutter);
+  /* No solid white background here — the section's white shows through
+     on the left; the panel-strip + halftone + shader cover the right. */
+  color: var(--ink);
+}
+
+/* image-left → media wider on the left, blurb on the right
+   image-right → blurb on the left, media wider on the right
+   The DOM order matches the visual order (no `order:` reshuffling). */
+.features-alt__row[data-row-side="image-left"]  { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.features-alt__row[data-row-side="image-right"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+
+/* Last row: content-sized (drop the 100vh min). The gradient strip + halftone
+   span the section, so a full-height final row leaves an empty gradient tail
+   below the content; trimming the row trims the gradient. Bottom padding
+   trimmed further so visual-to-gradient-bottom mirrors row 1's nav-to-visual
+   breathing room (small breathing band, not a full padding-block). */
+.features-alt__row:last-child {
+  min-height: 0;
+  padding-bottom: clamp(24px, 3vw, 40px);
+}
+/* Soften the media-frame shadow on the last row only. The default shadow
+   (40px y, 100px blur) is sized for a row with ~200px of breathing room
+   below the visual. With the trimmed bottom padding above, the section's
+   `overflow: hidden` clips that shadow into a hard horizontal band that
+   bleeds visibly across the white half — leaks as a misaligned grey smear.
+   A tighter shadow fades fully within the new bottom padding. */
+.features-alt__row:last-child .features-alt__media-frame {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .12),
+    0 14px 36px -12px rgba(0, 0, 0, .38);
+}
+
+/* CSS halftone — exact ICP carousel parameters: source image masked by the
+   canonical 0.5px dot in a 4×4px tile, contrast/brightness/saturate filter,
+   multiply blend, .05 opacity. Intentionally subtle on its own; the visible
+   halftone pattern comes from the WebGL shader on top. */
+.features-alt__halftone {
+  background-size: cover;
+  background-position: center;
+  filter: contrast(1.05) brightness(0.95) saturate(0.3);
+  -webkit-mask-image: radial-gradient(circle, #000 0.5px, transparent 1.6px);
+          mask-image: radial-gradient(circle, #000 0.5px, transparent 1.6px);
+  -webkit-mask-size: 4px 4px;
+          mask-size: 4px 4px;
+  -webkit-mask-repeat: repeat;
+          mask-repeat: repeat;
+  mix-blend-mode: multiply;
+  opacity: .05;
+}
+
+/* WebGL halftone shader — same recipe as the ICP carousel: per-cell sampling
+   of the source image, dot radius scales with darkness, tinted, blended via
+   overlay at .15 opacity. This is the layer that actually makes the halftone
+   read visually. */
+.features-alt__shader {
+  display: block;
+  mix-blend-mode: overlay;
+  opacity: .15;
+}
+
+/* Single grain layer over the whole row, low opacity so it reads on
+   both halves without fighting the white side. */
+.features-alt__grain { z-index: 0; opacity: 0.18; }
+
+/* ---------- blurb ---------- */
+
+.features-alt__blurb {
+  position: relative;
+  z-index: 1;
+  max-width: 46ch;
+  justify-self: center;
+  align-self: center;          /* lock vertical center alignment with media */
+  width: 100%;
+}
+
+.features-alt__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--xwide);
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 16px;
+}
+
+/* H2 role — Cormorant Garamond italic 500, --fs-h2. Editorial moment per
+   STYLE_GUIDE: each row is a page-section moment (full 100vh), so H2 voice
+   reads as the right register here over Poppins H3. */
+.features-alt__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-display);
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+
+/* Lead role — Poppins, --fs-lead, softened ink. */
+.features-alt__body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  font-weight: 400;
+  margin: 0;
+  color: rgba(11, 26, 43, .78);
+}
+
+/* ---------- media ---------- */
+
+.features-alt__media {
+  position: relative;
+  z-index: 1;
+  align-self: center;          /* lock vertical center alignment with blurb */
+  display: flex;
+  align-items: center;
+}
+/* Push media to the side that pops onto the white half — for image-right
+   rows that's flex-start (image's left edge sits at column-left, popping
+   left into white). For image-left rows it'd be flex-end. Without this,
+   portrait images get extra column whitespace on their popout side and
+   visually fail to align with the landscape images' left edges. */
+.features-alt__row[data-row-side="image-right"] .features-alt__media { justify-content: flex-start; }
+.features-alt__row[data-row-side="image-left"]  .features-alt__media { justify-content: flex-end; }
+
+/* Frame holds the screenshot — a white card floating on the dark teal panel.
+   Strong shadow grounds it against the gradient. Frame sizes to the image's
+   rendered dimensions (NOT 100% of the column) so the media's
+   justify-content can position it flush against the popout edge. */
+.features-alt__media-frame {
+  position: relative;
+  display: inline-block;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .12),
+    0 40px 100px -30px rgba(0, 0, 0, .55);
+}
+
+.features-alt__media-frame img {
+  display: block;
+  max-width: 100%;
+  max-height: clamp(380px, 60vh, 640px);
+  height: auto;
+  width: auto;
+  background: #fff;
+}
+
+/* ---------- per-row CTA ----------
+   Mirrors the ICP carousel CTA: bracket-corner button (.btn) + aqua arrow
+   puck. All blurbs sit on the white half of the split row, so a single
+   .btn--white variant reads consistently. The .btn keeps its built-in 24px
+   clearance margin for the corner ticks; we only override gap/padding for
+   the puck. */
+
+.features-alt__cta {
+  /* Override .btn's default `margin: 24px` (all sides). Top: 32px to
+     separate from body copy. Right/bottom/left: 0 — there's no adjacent
+     content for the tick-clearance margin to protect, and a non-zero
+     bottom margin would extend the blurb's box and bias its visible
+     center upward relative to the media. */
+  margin: 32px 0 0 0;
+  gap: 14px;
+  padding-right: 13px;
+}
+.features-alt__cta-arrow {
+  width: 24px; height: 24px;
+  border-radius: 999px;
+  background: var(--aqua);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.features-alt__cta-arrow svg { width: 12px; height: 12px; stroke: #fff; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 860px) {
+  .features-alt__row,
+  .features-alt__row[data-row-side="image-left"],
+  .features-alt__row[data-row-side="image-right"] {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding:
+      calc(var(--nav-height, 72px) + clamp(40px, 8vw, 64px))
+      var(--gutter)
+      clamp(48px, 10vw, 72px);
+    gap: clamp(28px, 6vw, 48px);
+  }
+  /* On mobile, image always sits above blurb regardless of row side
+     (override DOM order via grid-row). */
+  .features-alt__media  { grid-row: 1; }
+  .features-alt__blurb  { grid-row: 2; max-width: none; }
+  .features-alt__media-frame { max-width: 560px; margin: 0 auto; }
+
+  /* Hide the section-level colored layers on mobile — the desktop right-50%
+     positioning doesn't translate cleanly to a single-column stack. Mobile
+     gets a simpler white treatment per row. Refine if a mobile design
+     specifies otherwise. */
+  .features-alt__panel-strip,
+  .features-alt__halftone,
+  .features-alt__shader {
+    display: none;
+  }
+}
+
+/* ---------- entrance animation ----------
+   Default state when JS hasn't run / reduced motion: visible. JS sets the
+   pre-animation hidden state inline, then plays the entrance via GSAP. */
+@media (prefers-reduced-motion: reduce) {
+  .features-alt__media,
+  .features-alt__blurb {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
