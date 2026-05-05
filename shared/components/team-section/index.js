@@ -14,10 +14,18 @@
           data-names=""
           data-role="Founder, Renoverse"
           data-image="assets/founder.jpg"
-          data-image-alt="Renoverse founder"></div>
+          data-image-alt="Renoverse founder"
+          data-link-href="about.html"
+          data-link-label="Learn more"></div>
 
    Empty data-names suppresses the names line. Omit data-image and the slot
-   renders a labeled placeholder.
+   renders a labeled placeholder. Both data-link-href and data-link-label must
+   be set together for the optional CTA to render.
+
+   The CTA reuses the .btn primitive from shared/button.css with the same
+   markup as the ICP carousel CTA (4x .tk corner ticks + aqua arrow puck),
+   variant .btn--white (white fill + azure-deep text) for the paper-zone
+   backdrop. Swap to .btn--frosted on dark surfaces.
 */
 (function () {
   const MOUNT = '[data-team-section]';
@@ -29,8 +37,14 @@
     names: 'Nola Solamon',
     role: 'Founder of Renoverse',
     image: '',
-    imageAlt: 'Nola Solamon, founder of Renoverse'
+    imageAlt: 'Nola Solamon, founder of Renoverse',
+    linkHref: '',
+    linkLabel: ''
   };
+
+  /* Same chevron used by the ICP carousel + features-alternating CTAs —
+     keeps arrow language consistent across components. */
+  const ARROW_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"><path d="M3 8h9M8 4l4 4-4 4"/></svg>`;
 
   function escape(s) {
     return String(s)
@@ -53,7 +67,9 @@
       names: readAttr(host, 'data-names', DEFAULTS.names),
       role: readAttr(host, 'data-role', DEFAULTS.role),
       image: readAttr(host, 'data-image', DEFAULTS.image),
-      imageAlt: readAttr(host, 'data-image-alt', DEFAULTS.imageAlt)
+      imageAlt: readAttr(host, 'data-image-alt', DEFAULTS.imageAlt),
+      linkHref: readAttr(host, 'data-link-href', DEFAULTS.linkHref),
+      linkLabel: readAttr(host, 'data-link-label', DEFAULTS.linkLabel)
     };
   }
 
@@ -83,6 +99,16 @@
       ? `<p class="team-section__role">${escape(cfg.role)}</p>` : '';
     const attribution = (names || role)
       ? `<div class="team-section__attribution">${names}${role}</div>` : '';
+    /* Reuses the .btn primitive (4x .tk corner ticks + aqua arrow puck) from
+       the ICP carousel CTA, but swaps to .btn--white for the paper-zone
+       backdrop: white fill, azure-deep text/border/ticks. */
+    const link = (cfg.linkHref && cfg.linkLabel)
+      ? `<a class="btn btn--white team-section__cta" href="${escape(cfg.linkHref)}">
+           <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
+           ${escape(cfg.linkLabel)}
+           <span class="team-section__cta-arrow">${ARROW_SVG}</span>
+         </a>`
+      : '';
     const themeClass = theme === 'paper' ? ' team-section--paper' : '';
 
     return `
@@ -94,6 +120,7 @@
               ${heading}
               ${body}
               ${attribution}
+              ${link}
             </div>
             <div class="team-section__media">
               ${buildMedia(cfg)}

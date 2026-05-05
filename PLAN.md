@@ -72,7 +72,9 @@ The heading hierarchy reads by voice rather than depth: **H1 + H2 are Cormorant 
 
 ## Phases
 
-### Phase 1 — Sticky nav + accessibility primitives
+### Phase 0 — Style guide + token audit ✅ DONE
+
+### Phase 1 — Sticky nav + accessibility primitives ✅ DONE
 
 ⚠️ **Risk**: Sticky nav has historically conflicted with the stack-animation pin (see `~/.claude/projects/-Users-fractalos-Dev-renoverse-ai-website/memory/sticky-nav-stack-animation-conflict.md`). Test together with Phase 2.
 
@@ -93,7 +95,7 @@ The heading hierarchy reads by voice rather than depth: **H1 + H2 are Cormorant 
 - Backdrop-blur nav during animation.
 - Last resort: `position:fixed` with manual offsets, or hide nav specifically during the pinned section.
 
-### Phase 2 — Stack animation header re-order
+### Phase 2 — Stack animation header re-order ✅ DONE
 
 Currently the caption "One workspace. Every detail." animates in *after* the morph completes. Storyboard from Julianna shows it should be in the viewport with the animation while scroll is locked, grounding the concept.
 
@@ -101,7 +103,7 @@ Currently the caption "One workspace. Every detail." animates in *after* the mor
 - Re-tune the GSAP timeline so the morph plays *underneath/below* the visible caption.
 - Test together with Phase 1 (both touch the pinned scroll region).
 
-### Phase 3 — Merge feature sections
+### Phase 3 — Merge feature sections ✅ DONE (PR #5)
 
 Two sections currently list features differently:
 - 4-up `data-feature-highlights` strip (Frictionless collaboration / Version control / AI assistant / Accountability trail)
@@ -115,91 +117,119 @@ Two sections currently list features differently:
 
 `product.html` becomes the canonical "all features" page; homepage holds a condensed teaser.
 
-### Phase 4 — Headers + alignment cleanup
+### Phase 4 — Headers + alignment cleanup ✅ DONE
 
 - Audit every `<h1>/<h2>/<h3>/<h4>` in `index.html`, `demo.html`, all components → conform to style guide.
 - Convert centered copy to left-aligned: `.intro`, `.typology .head`, `.feature-highlights__grid` text-align, etc.
 - Re-check for any leftover one-off font sizes/weights.
 
-### Phase 5 — For Architects carousel (deferred — design in Paper first)
+### Phase 5 — For Architects carousel (revised 2026-05-05 — copy + controls only, no Paper redesign)
 
-Repurpose `shared/components/icp-carousel` for three Architect sub-personas:
+Repurpose `shared/components/icp-carousel` for three Architect sub-personas. **Reuse the existing SVG visuals + tints** for v1 — Paper redesign is deferred. Drop the Clients panel.
 
-- **Principal** — firm-wide oversight, accountability trail, client confidence
-- **Project Manager** — RFI tracking, decision logging, version control, fewer escalations
-- **Junior / Associate** — faster onboarding, AI assistant for context, no chasing decisions
+**Panel content (final, locked):**
 
-**Don't reuse existing SVG objects.** Design net-new visuals in Paper specific to each sub-persona's tools/workflows. Use Paper's `code-to-design` skill (Renoverse tokens as context), then drop SVGs into the carousel.
+1. **For Principal Architects** *(reuse Architects visual + tint)*
+   - Lead: "Reclaim time to take on more projects and grow your business."
+   - Quote (body copy, italic blockquote treatment): *"I feel like I'm putting out fires all day and don't have any time to design anymore."*
+   - CTA: "Learn more" → `product.html`
 
-**Implementation steps**:
-1. Comment out the four current ICP panels in `shared/components/icp-carousel/index.js` (preserve for v2).
-2. Design three new panels in Paper.
-3. Drop SVGs into the carousel as new panels.
-4. Each panel CTA → `product.html`.
+2. **For Project Managers** *(reuse Contractors visual + tint)*
+   - Lead: "Reclaim time to do more of the work you want to do — not the work you have to do."
+   - Quote: *"I miss the days when I used to be drafting and doing redlines. Now I'm constantly in meetings and reading 100 emails every day."*
+   - CTA: "Learn more" → `product.html`
 
-**Phase 5 lands later this week** — design dependency.
+3. **For Junior Designers** *(reuse Interior visual + tint)*
+   - Lead: "Reclaim time and energy to jump into new projects — without long onboarding or waiting on your manager's calendar."
+   - Quote: *"Seniors are directly notified of design changes from clients, but they're usually so slammed they forget to tell me — so I often spend extra days drafting against an old design intent."*
+   - CTA: "Learn more" → `product.html`
 
-### Phase 6 — Accessibility audit
+**Drop:** the Clients panel (id, tint, SVG, panel order).
 
-- Skip-nav link (covered in Phase 1).
-- Tab-order audit: open every page, tab through, fix out-of-order focus traps. Likely culprits: ICP carousel, dropdown nav.
-- Newsletter input: add `<label for="newsletter-email" class="sr-only">Email address</label>` in `index.html` footer (`index.html:541`).
-- `:focus-visible` rings everywhere interactive (currently inconsistent).
-- Verify demo form labels exist (they do — `shared/components/demo-form/index.js:189`).
+**Controls to add:**
+- Prev/next arrow buttons (frosted style — match `.btn--frosted` per memory: copy color, opacity, blur, saturate, border, shadow).
+- Left/right full-height tap zones for slide toggle. Position behind text/CTA so clicks on copy still work.
+- Verify existing ←/→ keyboard nav still works after the reduction from 4 → 3 panels.
 
-### Phase 7 — Team → About link
+**Body-copy treatment:** render the quote as a styled blockquote (italic, with an open-quote glyph or left rule) so it reads as a voice from the role rather than marketing copy. Pick the register that matches the panel's existing visual weight.
 
-- `shared/components/team-section/index.js`: add optional `data-link-href` + `data-link-label` attrs.
-- In `index.html`, set `data-link-href="about.html"` with label like "Learn about Renoverse →".
+**Implementation notes:**
+- File: `shared/components/icp-carousel/index.js` — `PANELS` array, `TINTS` map, `PANEL_ORDER` array. Drop the `clients` entry from all three.
+- The current panel `copy` field becomes the quote body. Add a `quote: true` flag (or similar) so the renderer knows to wrap it in `<blockquote>`.
+- All CTAs point to `product.html` (was `for-architects.html` / `demo.html`).
+
+**Paper redesign deferred to v2** when more ICPs ship.
+
+### Phase 6 — Accessibility audit ✅ DONE
+
+### Phase 7 — Team → About link ✅ DONE
+
+- `shared/components/team-section/index.js`: optional `data-link-href` + `data-link-label` attrs render a `.btn .btn--white` CTA reusing the ICP carousel CTA recipe (4x .tk corner ticks + aqua arrow puck). Variant is `.btn--white` (azure text on white) rather than `.btn--frosted` because the team block sits on the paper-zone backdrop where white-on-cream wouldn't read.
+- `index.html` sets `data-link-href="about.html"` + `data-link-label="Learn more"`.
 
 ### Phase 8 — Demo form button refresh
 
 - `shared/components/demo-form/index.js` (lines 346-350): replace gradient pill button with `.btn .btn--filled` style (azure rectangle, white text). **No corner ticks** (in-card variant per style guide).
 - Strip Tailwind `rounded-full bg-gradient-to-br` classes; align with site button system.
 
-### Phase 9 — Page stubs + nav link updates
+### Phase 9 — Page stubs + nav link updates ✅ DONE
 
-**Nav** (`shared/components/site-nav/index.js`):
-- Product → `product.html`
-- ~~Solutions ▾~~ (remove for v1)
-- **About** → `about.html` (new link)
-- Book a demo (CTA — keep)
+Stubs shipped, nav links updated. See Phases 9b + 10 for the build-out passes.
 
-**Stub pages**:
-- `product.html` — shared nav + footer + features section (lifted from Phase 3 merged section).
-- `about.html` — shared nav + footer + placeholder hero/copy. Real content TBD.
+### Phase 9b — Build out `product.html` (revised 2026-05-05)
 
-**Re-point existing references** away from `index.html#features`:
+`product.html` currently exists as a stub. This phase builds it into the canonical "all features" page.
+
+**Content + structure:**
+- Reuse the **alternating-features** component pattern from the homepage (the one shipped in PR #5) as the spine of the page.
+- Each feature gets a fuller treatment than the homepage teaser — longer copy, more breathing room, supporting visual.
+- Hero per the style guide (H1 + Lead, no eyebrow). Pick alignment per page.
+- Editorial closer (H2) at the bottom mirroring the homepage closer pattern, into a final CTA.
+
+**Open content questions:**
+- Real long-form copy for each feature — pull from Nola's docs or draft from the homepage teasers and have Julianna edit.
+- Do we need any product-page-only sections (security, integrations, pricing teaser) or is the alternating-features spine enough for v1?
+
+**Re-point existing references to `product.html`** (most done in Phase 9; verify these still resolve):
 - Nav "Product" link
 - Feature highlights "See the product" CTA (`shared/components/feature-highlights/index.js:38`)
-- ICP carousel sub-persona panel CTAs (Phase 5)
+- ICP carousel sub-persona panel CTAs (Phase 5 — three panels)
 - Footer "Product · Overview" in `demo.html:118`
+
+### Phase 10 — Build out `about.html` (added 2026-05-05)
+
+`about.html` currently exists as a stub. This phase replaces the placeholder hero/copy with real content.
+
+**Open content questions:**
+- Real about copy — mission, team backgrounds, founding story. Need from Julianna.
+- Team photos / founder photos — do we have brand-treatment-ready imagery, or use silhouettes/initials for v1?
+- Press / investor section — in scope for v1 or defer?
+
+**Treatment notes:**
+- Hero per style guide (Cormorant H1 + Lead).
+- Use the paper-zone pattern at the bottom (team + closer + footer) per `STYLE_GUIDE.md:458` for visual continuity with the homepage.
+- Editorial H2 closer mirroring homepage register.
 
 ---
 
-## Execution order for today
+## Execution order
 
-Phase 0 first (style guide governs the rest). Then Phase 1 + Phase 2 together (touching the same scroll region). Then Phase 9 (stub pages + nav). Then 3, 4, 6, 7, 8 in any order.
+**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 9 (stubs + nav).
 
-Phase 5 deferred to later this week pending Paper designs.
-
-1. **Phase 0** — Style guide + token audit
-2. **Phase 1 + Phase 2** — Sticky nav + skip-link + stack-animation header (tested together)
-3. **Phase 9** — `product.html`, `about.html` stubs + nav link updates
-4. **Phase 3** — Merge features (depends on Nola's content)
-5. **Phase 4** — Header + alignment cleanup
-6. **Phase 7** — Team About link
-7. **Phase 8** — Demo form button
-8. **Phase 6** — Accessibility audit / final pass
+**Remaining (any order, recommend the order below):**
+1. **Phase 8** — Demo form button refresh
+2. **Phase 9b** — Build out `product.html` (depends on long-form feature copy)
+3. **Phase 10** — Build out `about.html` (depends on about copy)
+4. **Phase 5** — ICP carousel rework (copy + arrows + tap zones; content fully locked, see above)
 
 ---
 
 ## Open questions
 
-- [ ] Content from Nola for merged features section (Phase 3) and product page features detail (Phase 9 / `product.html`).
-- [ ] About page copy (Phase 9 / `about.html`) — stub for now or real content available?
+- [ ] Long-form feature copy for `product.html` (Phase 9b).
+- [ ] About copy + team imagery for `about.html` (Phase 10).
 - [ ] Demo form CTA — confirmed: azure rectangle, **no** corner ticks.
-- [ ] Phase 5 visuals — Paper design timeline.
+- [ ] Phase 5 Paper redesign — deferred to v2 (v1 reuses existing visuals).
 
 ---
 
