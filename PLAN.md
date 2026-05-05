@@ -23,22 +23,30 @@ Lock the type system before any other UI work so we don't drift later.
 
 ### Type roles
 
-| Role | Font | Use |
-|---|---|---|
-| **H1** | Cormorant Garamond italic | Hero headlines, page-defining moments |
-| **H2** | Cormorant Garamond italic | Section headers |
-| **H3** | Poppins | Subsection headers |
-| **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | Section index/label above a heading |
-| **Lead** | Poppins, ~18–20px, line-height ~1.5, softer color | Intro paragraph under a heading; one per section max |
-| **Body** | Poppins, 16px | Default paragraph copy |
-| **Small** | Poppins, ~12–13px, muted color | Fine print, captions, footer legal, helper text |
+The heading hierarchy reads by voice rather than depth: **H1 + H2 are Cormorant italic** (editorial — hero, big editorial moments, closers); **H3 is Poppins** (utility — section headers). The ICP carousel is the size reference: H1 mirrors `.icp-carousel__title-slide`; H3 mirrors `.icp-carousel__lead`. H2 sits between them at clamp(32–52px) for the editorial-moment register.
 
-(Mirror approach is the same family Shinkei.systems uses: editorial serif italic for H1/H2, sans for utility, mono eyebrow.)
+| Role | Font | Alignment | Use |
+|---|---|---|---|
+| **H1** | Cormorant Garamond italic, ~48–96px, weight 600 | left or centered (per page) | Hero headlines, page-defining moments. Mirrors the ICP carousel title-slide. |
+| **H2** | Cormorant Garamond italic, ~32–52px, weight 500 | left (or centered for a single editorial sentence) | Editorial moments — final-CTA closer, typology heading, page-section moments that aren't quite hero-scale. |
+| **H3** | Poppins 500, ~24–36px | left | Section headers. Mirrors the ICP carousel lead. |
+| **Eyebrow** | JetBrains Mono, uppercase, wide letter-spacing | left | Section index/label above an H3 (section header). **Not used on heroes.** |
+| **Lead** | Poppins, ~17–20px, weight 400, softened ink | left in sections; centered when used as a hero subtitle (matches its H1) | Intro paragraph under an H3 (one per section max), or the subtitle under a hero H1. |
+| **Body** | Poppins, 16px | left | Default paragraph copy |
+| **Small** | Poppins, ~12–13px, muted color | left | Fine print, captions, footer legal, helper text |
+
+### Anatomies
+
+- **Hero** = H1 + Lead. Centered as a block (homepage default) or left-aligned (per-page choice). No eyebrow.
+- **Section (typical)** = optional Eyebrow → H3 → optional Lead → Body. H2 lives between or alongside sections as a standalone editorial moment (closer, typology heading) — it's not part of the typical section anatomy.
 
 ### Alignment
 
-- All body copy **left-aligned**. Centered text is hard to read across multiple lines.
-- Eyebrows + section headers default left-aligned. Centered only as a deliberate exception.
+- All body copy and H3 **left-aligned**. Centered text is hard to read across multiple lines.
+- **H1 alignment is contextual** — picked per page. Heroes are the only composition that authorizes centered multi-line copy (because H1 + Lead read as one unit).
+- **H2 may be centered** when used as a single editorial sentence (typology head, italic closer, final-CTA closer).
+- **Lead** is centered when it's the hero subtitle (matches the H1 axis); left otherwise.
+- Eyebrows always left-aligned.
 
 ### Color / spacing / tokens
 
@@ -176,7 +184,7 @@ Phase 0 first (style guide governs the rest). Then Phase 1 + Phase 2 together (t
 Phase 5 deferred to later this week pending Paper designs.
 
 1. **Phase 0** — Style guide + token audit
-2. **Phase 1 + Phase 2** — Sticky nav + skip-nav + stack-animation header (tested together)
+2. **Phase 1 + Phase 2** — Sticky nav + skip-link + stack-animation header (tested together)
 3. **Phase 9** — `product.html`, `about.html` stubs + nav link updates
 4. **Phase 3** — Merge features (depends on Nola's content)
 5. **Phase 4** — Header + alignment cleanup

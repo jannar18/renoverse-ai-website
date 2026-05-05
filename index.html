@@ -36,10 +36,10 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
   body{
-    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-family:var(--font-sans);
     font-weight:400;
-    font-size:16px;
-    line-height:1.55;
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
     -webkit-font-smoothing:antialiased;
   }
   img{display:block;max-width:100%}
@@ -103,39 +103,58 @@
     margin:0 auto;
     padding:0 clamp(20px,4vw,56px);
     min-height:100vh;
-    display:flex;flex-direction:column;justify-content:center;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
   }
   .hero h1{
-    font-family:'Cormorant Garamond',serif;
+    font-family:var(--font-serif);
     font-style:italic;
     font-weight:600;
-    font-size:clamp(48px, 7vw, 96px);
-    line-height:1.02;
-    letter-spacing:-.01em;
+    font-size:var(--fs-h1);
+    line-height:var(--lh-h1);
+    letter-spacing:var(--ls-display);
     margin:0;
     max-width:16ch;
-    color:#0a0a0a;
+    color:var(--ink);
   }
-  .hero .sub{
+  /* Hero subtitle — Lead role per STYLE_GUIDE. In a hero, alignment
+     follows the H1 axis (centered here). */
+  .hero .lead{
     margin-top:24px;
-    font-size:16px;
-    color:rgba(10,10,10,.78);
-    max-width:none;
-    white-space:nowrap;
-    line-height:1.5;
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
+    color:rgba(11,26,43,.78);
+    max-width:60ch;
   }
 
   /* ---------- generic section ---------- */
   section{padding:96px 0}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  /* Default H2 = Cormorant italic 500, --fs-h2 (editorial moment register).
+     Per STYLE_GUIDE: H1 + H2 are editorial Cormorant italic; H3 is the
+     utility Poppins section-header role. */
   h2{
-    font-weight:600;
-    font-size:clamp(28px, 3.4vw, 44px);
-    letter-spacing:-.015em;
-    line-height:1.1;
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
+    letter-spacing:var(--ls-display);
     margin:0 0 16px;
   }
-  p.lead{font-size:18px;line-height:1.55;color:#222;max-width:46ch;margin:0}
+  /* Lead role — Poppins 17–20px, softened ink. Used as section intro
+     paragraph (left-aligned) or hero subtitle (alignment follows H1). */
+  p.lead{
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
+    color:rgba(11,26,43,.78);
+    max-width:46ch;
+    margin:0;
+  }
 
   .intro{text-align:center;padding-top:32px}
   .intro .lead{max-width:72ch;margin:0 auto}
@@ -150,13 +169,15 @@
     max-width:60ch;
     text-align:center;
   }
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
+     Centered allowed because it's a single editorial sentence. */
   .typology .head h2{
-    font-family:'Cormorant Garamond',serif;
+    font-family:var(--font-serif);
     font-style:italic;
-    font-weight:600;
-    font-size:clamp(32px,4vw,52px);
-    line-height:1.1;
-    letter-spacing:-.01em;
+    font-weight:500;
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
+    letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
   }
@@ -194,18 +215,37 @@
     border-top:1px solid rgba(255,255,255,.6);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
   }
-  .ty-card h4{font-size:17px;font-weight:600;margin:0 0 8px;letter-spacing:-.005em;color:var(--ink)}
-  .ty-card .meta p{font-size:14px;line-height:1.55;color:rgba(11,26,43,.78);margin:0}
-  .typology .closer{
-    margin:clamp(56px,7vw,88px) auto 0;
-    text-align:center;
-    font-family:'Cormorant Garamond',serif;
-    font-style:italic;
+  /* Card title — Body role with 600 weight emphasis (no dedicated card-title role). */
+  .ty-card h4{
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
     font-weight:600;
-    font-size:clamp(22px,2.4vw,30px);
-    line-height:1.2;
     letter-spacing:-.005em;
-    color:#2D6F75;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  /* Card body text — Small role (compact paragraph inside a card). */
+  .ty-card .meta p{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.78);
+    margin:0;
+  }
+  /* Editorial closer — H2 styling (Cormorant italic 500, --fs-h2) with
+     two pattern-specific overrides per STYLE_GUIDE: teal color + center. */
+  .typology .closer{
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
+    letter-spacing:var(--ls-display);
+    color:var(--teal);
+    text-align:center;
+    max-width:60ch;
+    margin:clamp(56px,7vw,88px) auto 0;
   }
 
   /* ---------- quote ---------- */
@@ -242,23 +282,47 @@
     filter:brightness(0) invert(1);
     opacity:.95;
   }
+  /* Quote text — Lead role (white on dark surface). */
   .quote blockquote{
-    font-family:'Poppins',sans-serif;
+    font-family:var(--font-sans);
     font-weight:400;
-    font-size:clamp(15px,1.2vw,17px);
-    line-height:1.65;
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
     color:rgba(255,255,255,.9);
     margin:clamp(40px,6vw,64px) 0 0;
     max-width:42ch;
   }
   .quote .attrib{margin-top:clamp(32px,4vw,48px)}
-  .quote .who{font-size:15px;font-weight:600;margin:0;color:#fff}
-  .quote .who-meta{font-size:13px;color:rgba(255,255,255,.78);margin:4px 0 0;font-weight:400}
+  /* Attribution name — Body with 600 weight emphasis. */
+  .quote .who{
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    font-weight:600;
+    margin:0;
+    color:#fff;
+  }
+  /* Role/company line — Small role on dark surface. */
+  .quote .who-meta{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    font-weight:400;
+    color:rgba(255,255,255,.78);
+    margin:4px 0 0;
+  }
 
   /* ---------- stats ---------- */
   .stats{background:var(--paper-warm);padding:80px 0}
   .stats .row{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
-  .stats .label{font-size:16px;color:#222;margin:0;max-width:24ch}
+  /* Section label — Body. */
+  .stats .label{
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
+    margin:0;max-width:24ch;
+  }
   .stats .table{display:flex;flex-direction:column;gap:0}
   .stats .item{
     display:grid;grid-template-columns:1fr auto;align-items:center;
@@ -266,8 +330,23 @@
     gap:24px;
   }
   .stats .item:last-child{border-bottom:1px solid var(--line)}
-  .stats .item span{font-size:14px;color:#222}
-  .stats .num{font-size:clamp(28px,3.4vw,44px);font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+  /* Row label — Small. */
+  .stats .item span{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:var(--ink);
+  }
+  /* Big number — H3 styling (Poppins 500 24-36) with weight 600 + ls
+     override (display number; sans-utility, not editorial). */
+  .stats .num{
+    font-family:var(--font-sans);
+    font-size:var(--fs-h3);
+    line-height:var(--lh-h3);
+    font-weight:600;
+    letter-spacing:-.02em;
+    white-space:nowrap;
+  }
 
   /* ---------- founders/team lives in shared/components/team-section/ ---------- */
 
@@ -319,13 +398,33 @@
   .cta .row{
     display:flex;align-items:center;justify-content:space-between;gap:24px;
   }
-  .cta h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(32px,3.6vw,52px);font-weight:400;line-height:1.05;margin:0;letter-spacing:-.01em;max-width:30ch;color:#0a0a0a}
+  /* Final CTA closer — H2 styling per STYLE_GUIDE recipe (Cormorant
+     italic 500, --fs-h2). Single-sentence editorial closer. */
+  .cta h3{
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
+    letter-spacing:var(--ls-display);
+    color:var(--ink);
+    margin:0;
+    max-width:30ch;
+  }
 
   /* ---------- footer ---------- */
   footer.site{background:transparent;color:#0a0a0a;padding:48px 0 56px;border-top:1px solid rgba(11,26,43,.12)}
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
   footer.site .brand img{height:30px;width:auto}
-  footer.site .tagline{margin-top:12px;font-size:13px;color:rgba(11,26,43,.6);max-width:32ch;line-height:1.55}
+  /* Tagline — Small role. */
+  footer.site .tagline{
+    margin-top:12px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.6);
+    max-width:32ch;
+  }
   footer.site .socials{display:flex;gap:18px;margin-top:20px}
   footer.site .socials a{
     display:inline-flex;align-items:center;justify-content:center;
@@ -334,17 +433,41 @@
   }
   footer.site .socials a:hover{color:var(--azure)}
   footer.site .socials svg{width:22px;height:22px;display:block}
-  footer.site .legal{display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;font-size:12px}
+  /* Legal links + copyright — Small role. */
+  footer.site .legal{
+    display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+  }
   footer.site .legal a{color:rgba(11,26,43,.62);text-decoration:none}
   footer.site .legal a:hover{color:var(--azure-deep)}
-  footer.site .copyright{margin-top:14px;font-size:12px;color:rgba(11,26,43,.5)}
-  footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
-  footer.site .newsletter h5{
-    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
-    color:rgba(11,26,43,.55);margin:0 0 10px;font-weight:500;
+  footer.site .copyright{
+    margin-top:14px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.5);
   }
+  footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
+  /* Newsletter heading — Eyebrow role. */
+  footer.site .newsletter h5{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    line-height:var(--lh-eyebrow);
+    font-weight:500;
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:rgba(11,26,43,.55);
+    margin:0 0 10px;
+  }
+  /* Newsletter intro paragraph — Small role. */
   footer.site .newsletter p{
-    font-size:13px;color:rgba(11,26,43,.7);margin:0 0 16px;line-height:1.5;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.7);
+    margin:0 0 16px;
   }
   footer.site .newsletter form{
     display:flex;flex-direction:column;align-items:flex-start;
@@ -372,11 +495,20 @@
     --btn-clearance: 0;
     margin: 18px 0 0 9px;
   }
+  /* Status + fineprint — Small role. */
   footer.site .newsletter .nl-status{
-    font-size:12px;color:rgba(11,26,43,.6);margin-top:6px;min-height:1.2em;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.6);
+    margin-top:6px;min-height:1.2em;
   }
   footer.site .newsletter .nl-fineprint{
-    font-size:11px;color:rgba(11,26,43,.55);margin:14px 0 0;line-height:1.5;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.55);
+    margin:14px 0 0;
   }
   footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
@@ -409,7 +541,7 @@
   <div class="scrim"></div>
   <div class="hero-inner">
     <h1>Drawings, decisions, and your team — all in one place.</h1>
-    <p class="sub">AI-native communication platform for architecture project collaboration.</p>
+    <p class="lead">AI-native communication platform for architecture project collaboration.</p>
   </div>
 </header>
 
@@ -430,7 +562,7 @@
 </section>
 
 <!-- ========== 4 FEATURES (shared component) ========== -->
-<div data-feature-highlights data-cta-href="#"></div>
+<div data-feature-highlights data-cta-href="product.html"></div>
 
 <!-- ========== TYPOLOGY (Solution pillars — deck slide 6) ========== -->
 <section class="typology">
@@ -541,7 +673,8 @@
         <p>Subscribe to our newsletter for company updates, news, and customer stories.</p>
         <!-- TODO: wire to real newsletter service (Buttondown / Substack / Mailchimp / etc.). See NOTES.md. -->
         <form data-newsletter-signup novalidate>
-          <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
           <button type="submit" class="btn btn--filled">
             <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
             Subscribe

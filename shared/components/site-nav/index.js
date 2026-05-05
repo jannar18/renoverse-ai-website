@@ -29,13 +29,8 @@
         <a class="nav-brand" href="index.html"><img src="${logoSrc}" alt="Renoverse" /></a>
         <div class="nav-right">
           <div class="nav-links">
-            <a href="index.html#features">Product</a>
-            <div class="dropdown" tabindex="0">
-              <span class="dt">Solutions</span>
-              <div class="dropdown-menu">
-                <a href="index.html#typology">For Architects</a>
-              </div>
-            </div>
+            <a href="product.html">Product</a>
+            <a href="about.html">About</a>
           </div>
           <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
         </div>

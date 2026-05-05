@@ -1277,18 +1277,21 @@
     opacity: 1;
     pointer-events: none;
   }
-  .stack-section .caption h1 {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    font-size: clamp(28px, 4.4vw, 56px);
-    font-weight: 600;
-    font-style: normal;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-  }
-  .stack-section .caption h1 .muted {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
+  /* Both halves of the caption are H3 (Poppins, not italic per
+     STYLE_GUIDE). The `.muted` span is just a color treatment — the
+     family + size match the parent H3 exactly, so the two lines read
+     as one declarative pair, with the second line tonally softer. */
+  .stack-section .caption h2 {
+    font-family: var(--font-sans);
     font-weight: 500;
+    font-size: var(--fs-h3);
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-h3);
+    margin: 0;
+    color: #161616;
+  }
+  .stack-section .caption h2 .muted {
+    display: block;
     color: rgba(0,0,0,0.55);
   }
 
