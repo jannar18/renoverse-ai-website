@@ -1,12 +1,12 @@
 # icp-carousel
 
-A four-panel "for whom" carousel: For Architects / For Builders /
-For Interior Designers / For Clients. Each panel layers a per-audience
-gradient, a dithered architectural object SVG, a CSS halftone overlay
-of `halftone-source.png`, and a WebGL halftone shader composited via
-`mix-blend-mode: overlay`. The header runs a horizontal title carousel
-that drives panel selection; arrow keys, touch swipe, and click on a
-title also navigate.
+A three-panel "for whom" carousel of Architect sub-personas: For Principal
+Architects / For Project Managers / For Junior Designers. Each panel layers
+a per-audience gradient, a dithered architectural object SVG, a CSS halftone
+overlay of `halftone-source.png`, and a WebGL halftone shader composited via
+`mix-blend-mode: overlay`. The header runs a horizontal title carousel that
+drives panel selection; prev/next nav buttons, full-height side tap zones,
+arrow keys, touch swipe, and click on a title all navigate.
 
 ## Mount
 
@@ -38,10 +38,11 @@ script URL — the component is portable across host paths.
 Direct edits to `index.js` / `index.css`:
 
 - **Panel content** — `PANELS` array near the top of `index.js`:
-  `id`, `title`, `lead`, `copy`, `cta`, plus an `object` (or `objects`)
-  with a `cls` and `svg`. The `id` must be one of
-  `architects | builders | interior | clients` because the per-panel
-  gradient and shader tint are matched by that key.
+  `id`, `title`, `lead`, `quote` (italic blockquote, preferred) or
+  `copy` (legacy plain-paragraph fallback), `cta`, `href`, plus an
+  `object` (or `objects`) with a `cls` and `svg`. The `id` must be one of
+  `principal-architects | project-managers | junior-designers` because the
+  per-panel gradient and shader tint are matched by that key.
 - **Section height** — `.icp-carousel { height: 100vh; min-height: 720px }`.
 - **Per-panel gradient** — `.icp-carousel__panel[data-id="..."]` rules.
 - **Shader tint** — `TINTS` map in `index.js` (RGB 0..1 per panel id).

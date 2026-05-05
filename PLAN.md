@@ -207,16 +207,16 @@ Direct notes from Julianna's manager. These changes take priority over earlier r
 - **Sequencing bug** (confirmed by Julianna 2026-05-05): the animation never fully completes — the other screens layer back on top before the popups appear, which makes it look broken *and* extends total length. Re-tune the GSAP timeline in `shared/components/stack-animation/index.js` so the morph completes cleanly into the popup beat without re-stacking the prior screens. Diagnose: check (a) whether earlier-screen opacity/translate is being reset late in the timeline, (b) whether the popup-in tween is fighting an unfinished screen-in tween, (c) whether the bug is scroll-speed sensitive (scrub vs. catch-up). Memory note: the sticky-nav vs stack-pin conflict is a known hazard — verify both still play together.
 - **Caption typography**: "One workspace. Every detail." currently mixes sans + serif. Conform to the **H2 style** used elsewhere (Cormorant italic 500, per STYLE_GUIDE) — single voice, not mixed.
 
-### Phase 13 — Homepage section ordering + layout fixes
+### Phase 13 — Homepage section ordering + layout fixes ✅ DONE
 
-Below the stack animation section, re-flow the page:
+Below the stack animation section, re-flowed the page:
 
-- **"Stop wasting hours..." copy** — right-align, max-width ~60ch for readability.
-- **"Built for firms managing complex processes and workflows"** H2 — move it *up* to sit immediately after the "Stop wasting hours..." block as the **header** for the next section. **Remove** the "Book a demo" link currently under it.
-- **Section background** — make the new-section bg full-width so the visual break from the section above is unambiguous.
-- **ICP carousel** ("One space" section) — manager flagged that the arrows aren't visible. Julianna's call: **keep the section, fix it** (one more pass at the Architects-personas idea with working arrows). This pulls **Phase 5** back into v1 — see Phase 5 for the spec (sub-personas + frosted prev/next arrows + tap zones).
-- **Cut the "Bring order into complexity" final CTA** before the footer.
-- **Footer** — give it a distinct style/color from the company-zone section above, so it reads as a separate region rather than blending in.
+- **"Stop wasting hours..." copy** — `.intro` flipped to `text-align: right`, max-width 60ch with `margin-left: auto`.
+- **"Built for firms..."** H2 — moved up into a new `<section class="capabilities-section">` wrapper that also contains `[data-features-alternating]`. The "Book a demo" CTA was dropped.
+- **Section background** — `.capabilities-section { background: var(--paper-warm); }` carries edge-to-edge across the H2 + the alternating rows; the inner `[data-features-alternating]` is overridden to `transparent` *only inside `.capabilities-section`* so the component's #fff default still applies on `solutions.html`.
+- **ICP carousel** rebuilt to the **Phase 5 spec** — three Architect sub-personas (Principal Architects / Project Managers / Junior Designers), reusing the existing SVG visuals + tints (compass / tools / sketch). Clients panel + floorplan SVG dropped. The `copy` field is now a `quote` rendered as italic Cormorant blockquote with a centered open-quote glyph. CTAs all point to `solutions.html`. Added visible frosted prev/next nav buttons (`.icp-carousel__nav`, recipe matched to `.btn--frosted` per memory rule) and full-height invisible side tap zones (`.icp-carousel__tap-zone`, capped width so the centered body+CTA stay click-through). Keyboard ←/→ and touch swipe still work; `tabindex="-1"` on tap zones keeps them out of the keyboard tab order.
+- **"Bring order into complexity" final CTA** — section deleted entirely.
+- **Footer** — lifted out of `.paper-zone` and given a dark slab (`#0a0a0a` bg, white text, azure accents, white-inverted logo, dark newsletter input) to mirror demo.html's treatment so the footer reads as its own region. Solutions/About will follow this treatment in Phase 15/16.
 
 ### Phase 14 — Homepage core capabilities 2×2 grid
 
@@ -302,15 +302,13 @@ Once Phases 11–16 land:
 
 ## Execution order (revised)
 
-**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 8, 9 (stubs + nav), 11.
+**Done:** Phase 0, 1, 2, 3, 4, 5 (rolled into 13), 6, 7, 8, 9 (stubs + nav), 11, 12, 13.
 
 **Remaining — recommended order:**
-1. **Phase 12** — Stack animation fixes + caption typography.
-2. **Phase 13** — Homepage section ordering / alignment / cut ICP carousel + "Bring order" CTA / footer style.
-3. **Phase 14** — Homepage 2×2 core-capabilities grid.
-4. **Phase 15** — Solutions page build-out (depends on platform-doc copy).
-5. **Phase 16** — About page build-out (depends on about copy).
-6. **Phase 17** — Deploy preview + send to Julianna + Nola.
+1. **Phase 14** — Homepage 2×2 core-capabilities grid.
+2. **Phase 15** — Solutions page build-out (depends on platform-doc copy).
+3. **Phase 16** — About page build-out (depends on about copy).
+4. **Phase 17** — Deploy preview + send to Julianna + Nola.
 
 **Deferred / changed status:**
 - **Phase 5** (ICP carousel rework) — **back in v1**. Julianna's call: keep the section on the homepage, do one more pass at the Architects sub-personas idea with working prev/next arrows + tap zones (per the original Phase 5 spec). Slot after Phase 13.

@@ -1,8 +1,11 @@
 /* Renoverse — ICP feature carousel.
-   A four-panel "for whom" carousel (Architects / Builders / Interior Designers / Clients)
-   with a per-panel gradient background, a dithered architectural object,
-   a CSS halftone overlay (mask of a dot grid over the source PNG) and a
-   WebGL halftone shader composited via mix-blend-mode: overlay.
+   Phase 13: a three-panel "for whom" carousel of Architect sub-personas
+   (Principal Architects / Project Managers / Junior Designers) with a
+   per-panel gradient background, a dithered architectural object, a CSS
+   halftone overlay (mask of a dot grid over the source PNG) and a WebGL
+   halftone shader composited via mix-blend-mode: overlay. Visuals + tints
+   are reused from the original four-ICP set (architects / builders /
+   interior) — Paper redesign deferred to v2.
 
    All selectors are scoped under .icp-carousel so the component is safe to
    drop into any host page without leaking variables or resets. */
@@ -54,18 +57,18 @@
 
 /* ===== Per-panel gradients =====
    Pure gradient panel background — the architecture render shows up
-   through the .icp-carousel__halftone overlay (photo masked by a dot pattern). */
-.icp-carousel__panel[data-id="architects"] {
+   through the .icp-carousel__halftone overlay (photo masked by a dot pattern).
+   Phase 13: ids changed to architect sub-personas; gradients reused as-is from
+   the prior architects / builders / interior set so the visual signature is
+   preserved. */
+.icp-carousel__panel[data-id="principal-architects"] {
   background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 72%, var(--ice) 100%);
 }
-.icp-carousel__panel[data-id="builders"] {
+.icp-carousel__panel[data-id="project-managers"] {
   background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--teal) 70%, var(--cream) 100%);
 }
-.icp-carousel__panel[data-id="interior"] {
+.icp-carousel__panel[data-id="junior-designers"] {
   background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 75%, var(--blue) 100%);
-}
-.icp-carousel__panel[data-id="clients"] {
-  background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--blue) 70%, var(--cream) 100%);
 }
 
 /* ===== Texture overlays ===== */
@@ -113,12 +116,13 @@
   color: var(--paper);
 }
 .icp-carousel__object svg { display: block; width: 100%; height: 100%; }
-/* per-panel object placement */
+/* per-panel object placement (compass = principal-architects, tools-l/r =
+   project-managers, sketch = junior-designers; floorplan dropped with the
+   former Clients panel) */
 .icp-carousel .obj--compass   { right: -4%; bottom: -3%; width: 70%; height: 95%; opacity: .42; }
 .icp-carousel .obj--tools-l   { left: -8%; bottom: -5%; width: 50%; height: 80%; opacity: .4; }
 .icp-carousel .obj--tools-r   { right: -7%; top: 9%; width: 48%; height: 80%; opacity: .38; }
 .icp-carousel .obj--sketch    { right: -8%; bottom: -7%; width: 70%; height: 86%; opacity: .42; transform: rotate(-6deg); }
-.icp-carousel .obj--floorplan { left: -6%; bottom: -7%; width: 70%; height: 86%; opacity: .42; transform: rotate(-3deg); }
 
 /* ===== Content ===== */
 .icp-carousel__content {
@@ -229,6 +233,35 @@
   color: rgba(255,255,255,.9);
   margin: 0;
 }
+/* Persona-voice blockquote (Phase 13) — Cormorant italic with a decorative
+   open-quote glyph above. Editorial register signals "this is a voice from
+   the role" rather than marketing copy. Keeps the centered alignment of the
+   panel content so it sits on the same vertical axis as the lead + CTA. */
+.icp-carousel__quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.5;
+  color: rgba(255,255,255,.92);
+  margin: 0;
+  position: relative;
+  padding-top: 28px;
+}
+.icp-carousel__quote::before {
+  content: "\201C";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  color: rgba(255,255,255,.55);
+  pointer-events: none;
+}
 
 /* CTA — uses shared .btn .btn--frosted; we just append the arrow puck. */
 .icp-carousel__cta { gap: 14px; padding-right: 13px; }
@@ -239,3 +272,71 @@
   flex-shrink: 0;
 }
 .icp-carousel__cta-arrow svg { width: 12px; height: 12px; stroke: #fff; }
+
+/* ===== Prev/next nav buttons (Phase 13) =====
+   Frosted icon buttons on the side edges, vertically centered. The recipe
+   matches `.btn--frosted` per the brand memory note: same color, opacity,
+   blur, border, no shadow — copied verbatim so the controls read as the
+   same surface family as the CTA below. */
+.icp-carousel__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--azure-deep, #5EC9B7);
+  background: rgba(242, 234, 216, .08);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, color .25s ease;
+}
+.icp-carousel__nav:hover {
+  background: rgba(242, 234, 216, .16);
+}
+.icp-carousel__nav:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 4px;
+}
+.icp-carousel__nav--prev { left: clamp(16px, 3vw, 40px); }
+.icp-carousel__nav--next { right: clamp(16px, 3vw, 40px); }
+.icp-carousel__nav svg { width: 22px; height: 22px; }
+
+/* ===== Full-height side tap zones =====
+   Invisible click targets covering the left/right edge bands so a casual
+   click anywhere on the side advances the carousel. Width is capped so
+   the center column where the body+CTA live stays click-through to the
+   actual CTA — clicks on copy don't toggle the slide. tabindex=-1 keeps
+   them out of the keyboard-tab order; the visible nav buttons handle that. */
+.icp-carousel__tap-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  max-width: 280px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  appearance: none;
+  cursor: pointer;
+  z-index: 3;
+}
+.icp-carousel__tap-zone--prev { left: 0; }
+.icp-carousel__tap-zone--next { right: 0; }
+
+@media (max-width: 700px) {
+  /* Tighten the controls on small screens so they don't compete with copy. */
+  .icp-carousel__nav { width: 44px; height: 44px; }
+  .icp-carousel__nav svg { width: 18px; height: 18px; }
+  .icp-carousel__nav--prev { left: 12px; }
+  .icp-carousel__nav--next { right: 12px; }
+  /* Shrink tap zones so they don't crowd the body copy on phones. */
+  .icp-carousel__tap-zone { width: 18%; }
+}

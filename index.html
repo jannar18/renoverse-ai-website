@@ -157,23 +157,32 @@
     margin:0;
   }
 
-  .intro{text-align:center;padding-top:32px}
-  .intro .lead{max-width:72ch;margin:0 auto}
+  /* Intro sits flush-right per Phase 13 — short stack of two leads pushed
+     to the page's right edge, max 60ch for readability. */
+  .intro{text-align:right;padding-top:32px}
+  .intro .lead{max-width:60ch;margin-left:auto;margin-right:0}
   .intro .lead + .lead{margin-top:20px}
 
-  /* ---------- features closer (editorial H2 between features and ICP carousel) ---------- */
-  .features-closer{
-    background:#fff;
-    padding:clamp(96px,12vw,160px) var(--gutter) clamp(120px,14vw,176px);
+  /* ---------- capabilities section (H2 header + alternating feature rows) ----------
+     Phase 13: the editorial H2 moved up to head this section. The wrapper
+     paints a full-width warm-paper bg so the visual break from the white
+     intro section above is unambiguous. The features-alternating component
+     drops its own white bg inside this wrapper so the warm tone carries
+     edge-to-edge across the H2 + the rows. */
+  .capabilities-section{
+    background:var(--paper-warm);
   }
-  .features-closer__wrap{
+  .capabilities-section__header{
+    padding:clamp(80px,10vw,120px) var(--gutter) clamp(8px,1.5vw,16px);
+  }
+  .capabilities-section__header-wrap{
     max-width:60ch;
     margin:0 auto;
     text-align:center;
   }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
-     Centered: pattern-specific override for editorial closer. */
-  .features-closer h2{
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment, centered
+     because this is a single editorial sentence acting as the section header. */
+  .capabilities-section h2{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
@@ -183,11 +192,12 @@
     color:var(--ink);
     margin:0;
   }
-  /* CTA below the closer headline. Tick-inset on the left so TL/BL ticks
-     land on the centered headline's optical center isn't a thing — center
-     the button instead with margin auto + display block. */
-  .features-closer .closer-cta{
-    margin:clamp(32px,4vw,48px) auto 0;
+  /* Inherit the wrapper's warm-paper bg into the alternating-features block
+     so the left (white-by-default) half of each row picks up the new tone.
+     Scoped to .capabilities-section so the component default (#fff) stays
+     intact when reused on solutions.html. */
+  .capabilities-section [data-features-alternating]{
+    background:transparent;
   }
 
   /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
@@ -419,68 +429,53 @@
   }
   .paper-zone > *{position:relative;z-index:1}
 
-  /* ---------- final cta ---------- */
-  .cta{
-    position:relative;
-    color:#0a0a0a;
-    padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
+  /* ---------- footer ----------
+     Phase 13: footer lifts out of the warm paper-zone above and gets a
+     dark ink slab so it reads as its own region. Mirrors demo.html's
+     dark-footer treatment for cross-page consistency. */
+  footer.site{
+    background:#0a0a0a;
+    color:#fff;
+    padding:64px 0 56px;
+    border-top:1px solid rgba(255,255,255,.08);
   }
-  .cta .row{
-    display:flex;align-items:center;justify-content:space-between;gap:24px;
-  }
-  /* Final CTA closer — H2 styling per STYLE_GUIDE recipe (Cormorant
-     italic 500, --fs-h2). Single-sentence editorial closer. */
-  .cta h3{
-    font-family:var(--font-serif);
-    font-style:italic;
-    font-weight:500;
-    font-size:var(--fs-h2);
-    line-height:var(--lh-h2);
-    letter-spacing:var(--ls-display);
-    color:var(--ink);
-    margin:0;
-    max-width:30ch;
-  }
-
-  /* ---------- footer ---------- */
-  footer.site{background:transparent;color:#0a0a0a;padding:48px 0 56px;border-top:1px solid rgba(11,26,43,.12)}
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
-  footer.site .brand img{height:30px;width:auto}
-  /* Tagline — Small role. */
+  footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
+  /* Tagline — Small role on dark surface. */
   footer.site .tagline{
     margin-top:12px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.6);
+    color:rgba(255,255,255,.7);
     max-width:32ch;
   }
   footer.site .socials{display:flex;gap:18px;margin-top:20px}
   footer.site .socials a{
     display:inline-flex;align-items:center;justify-content:center;
-    color:var(--azure-deep);
+    color:var(--azure);
     transition:color .15s ease, transform .15s ease;
   }
-  footer.site .socials a:hover{color:var(--azure)}
+  footer.site .socials a:hover{color:#fff}
   footer.site .socials svg{width:22px;height:22px;display:block}
-  /* Legal links + copyright — Small role. */
+  /* Legal links + copyright — Small role on dark surface. */
   footer.site .legal{
     display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
   }
-  footer.site .legal a{color:rgba(11,26,43,.62);text-decoration:none}
-  footer.site .legal a:hover{color:var(--azure-deep)}
+  footer.site .legal a{color:rgba(255,255,255,.7);text-decoration:none}
+  footer.site .legal a:hover{color:var(--azure)}
   footer.site .copyright{
     margin-top:14px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.5);
+    color:rgba(255,255,255,.5);
   }
   footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
-  /* Newsletter heading — Eyebrow role. */
+  /* Newsletter heading — Eyebrow role on dark surface. */
   footer.site .newsletter h5{
     font-family:var(--font-mono);
     font-size:var(--fs-eyebrow);
@@ -488,15 +483,15 @@
     font-weight:500;
     letter-spacing:var(--xwide);
     text-transform:uppercase;
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.6);
     margin:0 0 10px;
   }
-  /* Newsletter intro paragraph — Small role. */
+  /* Newsletter intro paragraph — Small role on dark surface. */
   footer.site .newsletter p{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.7);
+    color:rgba(255,255,255,.75);
     margin:0 0 16px;
   }
   footer.site .newsletter form{
@@ -506,42 +501,43 @@
     width:100%;
     padding:10px 14px;
     font:inherit;font-size:14px;
-    color:#0a0a0a;
-    background:rgba(255,255,255,.6);
-    border:1px solid rgba(11,26,43,.18);
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.18);
     border-radius:8px;
     outline:none;
     transition:border-color .15s ease, background .15s ease;
   }
+  footer.site .newsletter input[type="email"]::placeholder{color:rgba(255,255,255,.4)}
   footer.site .newsletter input[type="email"]:focus{
-    border-color:var(--azure-deep);background:#fff;
+    border-color:var(--azure);
+    background:rgba(255,255,255,.1);
   }
   /* Subscribe uses the canonical .btn .btn--filled (azure). The .btn default
      24px all-around margin is too much here. Inset by the tick length (9px)
      on the left so the TL/BL ticks land exactly on the column-content left
-     edge — visually aligning the ticks with the input/heading/text edge.
-     Top: 18px gap so hover tick clears the input. */
+     edge. Top: 18px gap so hover tick clears the input. */
   footer.site .newsletter .btn{
     --btn-clearance: 0;
     margin: 18px 0 0 9px;
   }
-  /* Status + fineprint — Small role. */
+  /* Status + fineprint — Small role on dark surface. */
   footer.site .newsletter .nl-status{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.6);
+    color:rgba(255,255,255,.7);
     margin-top:6px;min-height:1.2em;
   }
   footer.site .newsletter .nl-fineprint{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.55);
     margin:14px 0 0;
   }
-  footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
+  footer.site .newsletter .nl-fineprint a{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:2px}
+  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure)}
 
   /* ---------- responsive ---------- */
   @media (max-width:960px){
@@ -554,7 +550,6 @@
   }
   @media (max-width:540px){
     .features .grid{grid-template-columns:1fr}
-    .cta .row{flex-direction:column;align-items:flex-start}
   }
 </style>
 </head>
@@ -591,19 +586,18 @@
   </div>
 </section>
 
-<!-- ========== FEATURES (alternating — Variation 4 per STYLE_GUIDE) ========== -->
-<!-- Replaces the prior 4-up `data-feature-highlights` strip + 3-card .typology
-     section. Three core capabilities, alternating paper ↔ dark teal rows, with
-     a single "See all features →" CTA pointing to solutions.html. Stakeholder
-     Access (the deferred 4th feature) lives on solutions.html. -->
-<div data-features-alternating></div>
-
-<!-- ========== FEATURES CLOSER (editorial H2) ========== -->
-<section class="features-closer">
-  <div class="features-closer__wrap">
-    <h2>Built for firms managing complex processes and workflows.</h2>
-    <a class="btn btn--filled closer-cta" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
+<!-- ========== CAPABILITIES (Phase 13: editorial H2 header → features-alternating rows) ==========
+     Wrapper section gives the H2 + the alternating feature rows a single warm-paper
+     bg, full-width, so the visual break from the white intro above is clear.
+     Three core capabilities, alternating paper ↔ dark teal rows. Stakeholder Access
+     (the deferred 4th feature) lives on solutions.html. -->
+<section class="capabilities-section">
+  <div class="capabilities-section__header">
+    <div class="capabilities-section__header-wrap">
+      <h2>Built for firms managing complex processes and workflows.</h2>
+    </div>
   </div>
+  <div data-features-alternating></div>
 </section>
 
 <!-- ========== ICP CAROUSEL ========== -->
@@ -637,15 +631,7 @@
      data-link-href="about.html"
      data-link-label="Learn more"></div>
 
-<!-- ========== FINAL CTA ========== -->
-<section class="cta" id="cta">
-  <div class="wrap">
-    <div class="row">
-      <h3>Bring order into complexity.</h3>
-      <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
-    </div>
-  </div>
-</section>
+</div><!-- /.paper-zone -->
 
 <!-- ========== FOOTER ========== -->
 <footer class="site">
@@ -693,8 +679,6 @@
     </div>
   </div>
 </footer>
-
-</div><!-- /.paper-zone -->
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
