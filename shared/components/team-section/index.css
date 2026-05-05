@@ -100,6 +100,34 @@
   margin-top: 32px;
 }
 
+/* Optional CTA — reuses the .btn .btn--frosted primitive from the ICP
+   carousel CTA. Local overrides only:
+     - Override .btn's default 24px all-sides margin: top 32px to separate
+       from attribution; right/bottom/left 0 (no adjacent content needs
+       tick-clearance protection on this side of the row).
+     - Tighten gap + right padding to seat the arrow puck snugly, matching
+       .icp-carousel__cta exactly.
+   The .team-section__cta-arrow recipe (24px aqua circle, 12x12 white svg)
+   mirrors .icp-carousel__cta-arrow verbatim. */
+.team-section__cta {
+  margin: 32px 0 0 0;
+  gap: 14px;
+  padding-right: 13px;
+}
+
+.team-section__cta-arrow {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--aqua);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.team-section__cta-arrow svg { width: 12px; height: 12px; stroke: #fff; }
+
 /* Names — Body with 600 weight emphasis. */
 .team-section__names {
   font-family: var(--font-sans);
