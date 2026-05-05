@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
 <link rel="stylesheet" href="shared/components/icp-carousel/index.css">
 <link rel="stylesheet" href="shared/components/feature-highlights/index.css">
-<link rel="stylesheet" href="shared/components/features-alternating/index.css">
+<link rel="stylesheet" href="shared/components/core-capabilities/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <style>
   :root{
@@ -163,12 +163,12 @@
   .intro .lead{max-width:60ch;margin-left:auto;margin-right:0}
   .intro .lead + .lead{margin-top:20px}
 
-  /* ---------- capabilities section (H2 header + alternating feature rows) ----------
+  /* ---------- capabilities section (H2 header + 2×2 core-capabilities grid) ----------
      Phase 13: the editorial H2 moved up to head this section. The wrapper
      paints a full-width warm-paper bg so the visual break from the white
-     intro section above is unambiguous. The features-alternating component
-     drops its own white bg inside this wrapper so the warm tone carries
-     edge-to-edge across the H2 + the rows. */
+     intro section above is unambiguous. Phase 14: the alternating rows are
+     replaced with a 2×2 card grid (`core-capabilities`); the cards' own white
+     surface contrasts cleanly against the warm-paper section bg. */
   .capabilities-section{
     background:var(--paper-warm);
   }
@@ -191,13 +191,6 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
-  }
-  /* Inherit the wrapper's warm-paper bg into the alternating-features block
-     so the left (white-by-default) half of each row picks up the new tone.
-     Scoped to .capabilities-section so the component default (#fff) stays
-     intact when reused on solutions.html. */
-  .capabilities-section [data-features-alternating]{
-    background:transparent;
   }
 
   /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
@@ -586,18 +579,18 @@
   </div>
 </section>
 
-<!-- ========== CAPABILITIES (Phase 13: editorial H2 header → features-alternating rows) ==========
-     Wrapper section gives the H2 + the alternating feature rows a single warm-paper
-     bg, full-width, so the visual break from the white intro above is clear.
-     Three core capabilities, alternating paper ↔ dark teal rows. Stakeholder Access
-     (the deferred 4th feature) lives on solutions.html. -->
+<!-- ========== CAPABILITIES (Phase 14: editorial H2 header → 2×2 core-capabilities grid) ==========
+     Wrapper section gives the H2 + the card grid a single warm-paper bg,
+     full-width, so the visual break from the white intro above is clear.
+     Four core capabilities as equal-weight cards (homepage teaser); the
+     alternating-features deep-dive variant lives on solutions.html. -->
 <section class="capabilities-section">
   <div class="capabilities-section__header">
     <div class="capabilities-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
     </div>
   </div>
-  <div data-features-alternating></div>
+  <div data-core-capabilities></div>
 </section>
 
 <!-- ========== ICP CAROUSEL ========== -->
@@ -687,7 +680,7 @@
 <script src="shared/components/halftone-video/index.js"></script>
 <script src="shared/components/icp-carousel/index.js"></script>
 <script src="shared/components/feature-highlights/index.js"></script>
-<script src="shared/components/features-alternating/index.js"></script>
+<script src="shared/components/core-capabilities/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 
 <script>
