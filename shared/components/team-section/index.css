@@ -24,7 +24,7 @@
   background: var(--ts-ink);
   color: var(--ts-paper);
   padding: clamp(80px, 9vw, 128px) 0;
-  font-family: 'Poppins', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 300;
 }
 
@@ -77,9 +77,11 @@
   color: var(--ts-paper);
 }
 
+/* Body paragraph — Lead role (intro paragraph under the section H2). */
 .team-section__body {
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.65;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
   font-weight: 400;
   margin: 0;
   color: var(--ts-text);
@@ -89,16 +91,21 @@
   margin-top: 32px;
 }
 
+/* Names — Body with 600 weight emphasis. */
 .team-section__names {
-  font-size: 15px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 600;
   margin: 0;
   color: var(--ts-paper);
-  line-height: 1.55;
 }
 
+/* Role/title line — Small role. */
 .team-section__role {
-  font-size: 13px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
   font-weight: 400;
   margin: 4px 0 0;
   color: var(--ts-text);
@@ -121,6 +128,9 @@
   display: block;
 }
 
+/* Placeholder text — Eyebrow styling (mono uppercase --xwide).
+   Placeholder boxes only render when the team-section image asset is
+   missing; the eyebrow look matches the brand's "label" voice. */
 .team-section__media-ph {
   position: absolute;
   inset: 0;
@@ -137,15 +147,17 @@
     ),
     var(--ts-media-ph-bg);
   color: var(--ts-muted);
-  font-size: 12px;
-  letter-spacing: .18em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--xwide);
   text-transform: uppercase;
 }
 
 .team-section__media-ph .tag {
   display: block;
   font-size: 10px;
-  letter-spacing: .3em;
+  letter-spacing: var(--xwide);
   opacity: .55;
   margin-bottom: 6px;
 }

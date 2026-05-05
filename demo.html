@@ -63,10 +63,10 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
   body{
-    font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-family:var(--font-sans);
     font-weight:400;
-    font-size:16px;
-    line-height:1.55;
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
     -webkit-font-smoothing:antialiased;
   }
   img{display:block;max-width:100%}
@@ -85,11 +85,43 @@
   footer.site .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;align-items:start}
   footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
-  footer.site .tagline{margin-top:12px;font-size:13px;color:rgba(255,255,255,.55);max-width:32ch;line-height:1.55}
-  footer.site .col h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 14px;font-weight:500}
-  footer.site .col a{display:block;font-size:14px;color:rgba(255,255,255,.85);margin-bottom:8px}
+  footer.site .tagline{
+    margin-top:12px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(255,255,255,.55);
+    max-width:32ch;
+  }
+  /* Footer column heading — Eyebrow role. */
+  footer.site .col h5{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    line-height:var(--lh-eyebrow);
+    font-weight:500;
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:rgba(255,255,255,.55);
+    margin:0 0 14px;
+  }
+  /* Footer column link — Small role. */
+  footer.site .col a{
+    display:block;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(255,255,255,.85);
+    margin-bottom:8px;
+  }
   footer.site .col a:hover{color:var(--azure)}
-  footer.site .copyright{margin-top:48px;font-size:12px;color:rgba(255,255,255,.45)}
+  /* Copyright — Small role. */
+  footer.site .copyright{
+    margin-top:48px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(255,255,255,.45);
+  }
 
   @media (max-width:960px){
     footer.site .row{grid-template-columns:1fr 1fr}

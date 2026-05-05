@@ -49,13 +49,14 @@
     margin:0 auto;
     max-width:18ch;
   }
-  /* Hero sub — mirrors `.hero .sub` on the homepage so all hero
-     subtitles read as one role across the site. */
-  .page-hero .sub{
+  /* Hero subtitle — Lead role per STYLE_GUIDE. Centered to match the
+     centered H1 (one composition). */
+  .page-hero .lead{
     margin:24px auto 0;
     font-family:var(--font-sans);
-    font-size:var(--fs-body);
-    line-height:1.5;
+    font-weight:400;
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
     color:rgba(11,26,43,.78);
     max-width:60ch;
   }
@@ -66,8 +67,21 @@
      architecture is visible while we wait for content. */
   .about-body{padding:var(--section-y) 0}
   .about-body .stack{display:flex;flex-direction:column;gap:32px;max-width:64ch}
-  .about-body p{margin:0;font-size:var(--fs-body);line-height:var(--lh-body);color:var(--ink)}
-  .about-body p.lead{font-size:var(--fs-lead);line-height:var(--lh-lead);opacity:.78}
+  /* Body role. */
+  .about-body p{
+    margin:0;
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
+  }
+  /* Lead role (in-section, left-aligned). */
+  .about-body p.lead{
+    font-family:var(--font-sans);
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
+    color:rgba(11,26,43,.78);
+  }
 
   /* ---------- final cta ---------- */
   .cta{
@@ -76,28 +90,69 @@
     padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
   }
   .cta .row{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  /* Final CTA closer — H3 styling per STYLE_GUIDE (Cormorant italic 500). */
   .cta h3{
-    font-family:var(--font-serif);font-style:italic;font-weight:400;
-    font-size:var(--fs-h2);line-height:1.05;letter-spacing:var(--ls-display);
-    margin:0;max-width:30ch;color:var(--ink);
+    font-family:var(--font-serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:var(--fs-h3);
+    line-height:var(--lh-h3);
+    letter-spacing:var(--ls-display);
+    color:var(--ink);
+    margin:0;
+    max-width:30ch;
   }
 
   /* ---------- footer (mirrors index.html light footer) ---------- */
   footer.site{background:transparent;color:var(--ink);padding:48px 0 56px;border-top:1px solid var(--line)}
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
   footer.site .brand img{height:30px;width:auto}
-  footer.site .tagline{margin-top:12px;font-size:13px;color:var(--muted);max-width:32ch;line-height:1.55}
+  footer.site .tagline{
+    margin-top:12px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:var(--muted);
+    max-width:32ch;
+  }
   footer.site .socials{display:flex;gap:18px;margin-top:20px}
   footer.site .socials a{display:inline-flex;align-items:center;justify-content:center;color:var(--azure-deep);transition:color .15s ease, transform .15s ease}
   footer.site .socials a:hover{color:var(--azure)}
   footer.site .socials svg{width:22px;height:22px;display:block}
-  footer.site .legal{display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;font-size:12px}
+  footer.site .legal{
+    display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+  }
   footer.site .legal a{color:var(--muted)}
   footer.site .legal a:hover{color:var(--azure-deep)}
-  footer.site .copyright{margin-top:14px;font-size:12px;color:rgba(11,26,43,.5)}
+  footer.site .copyright{
+    margin-top:14px;
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.5);
+  }
   footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
-  footer.site .newsletter h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(11,26,43,.55);margin:0 0 10px;font-weight:500}
-  footer.site .newsletter p{font-size:13px;color:rgba(11,26,43,.7);margin:0 0 16px;line-height:1.5}
+  /* Eyebrow + Small per type system. */
+  footer.site .newsletter h5{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    line-height:var(--lh-eyebrow);
+    font-weight:500;
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:rgba(11,26,43,.55);
+    margin:0 0 10px;
+  }
+  footer.site .newsletter p{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.7);
+    margin:0 0 16px;
+  }
   footer.site .newsletter form{display:flex;flex-direction:column;align-items:flex-start}
   footer.site .newsletter input[type="email"]{
     width:100%;padding:10px 14px;font:inherit;font-size:14px;color:var(--ink);
@@ -107,8 +162,20 @@
   }
   footer.site .newsletter input[type="email"]:focus{border-color:var(--azure-deep);background:#fff}
   footer.site .newsletter .btn{--btn-clearance:0;margin:18px 0 0 9px}
-  footer.site .newsletter .nl-status{font-size:12px;color:rgba(11,26,43,.6);margin-top:6px;min-height:1.2em}
-  footer.site .newsletter .nl-fineprint{font-size:11px;color:rgba(11,26,43,.55);margin:14px 0 0;line-height:1.5}
+  footer.site .newsletter .nl-status{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.6);
+    margin-top:6px;min-height:1.2em;
+  }
+  footer.site .newsletter .nl-fineprint{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.55);
+    margin:14px 0 0;
+  }
   footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
 
@@ -134,7 +201,7 @@
   <section class="page-hero">
     <div class="wrap">
       <h1>Building the source of truth for architecture.</h1>
-      <p class="sub">
+      <p class="lead">
         Renoverse exists to give architects, builders, and clients a single, trustworthy place
         for every drawing, decision, and conversation across a project's life.
       </p>

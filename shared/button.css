@@ -48,10 +48,12 @@
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   color: var(--ink, #0a0a0a);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 12px;
+  /* Mono uppercase per type system. Buttons are UI controls (not eyebrows
+     above content), so they use --wide letter-spacing rather than --xwide. */
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: var(--fs-eyebrow, 12px);
   font-weight: 500;
-  letter-spacing: .22em;
+  letter-spacing: var(--wide, .18em);
   text-transform: uppercase;
   cursor: pointer;
   white-space: nowrap;
