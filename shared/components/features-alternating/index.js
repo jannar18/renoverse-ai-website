@@ -51,7 +51,7 @@
     }
   ];
 
-  const DEFAULT_CTA = { label: 'See product', href: 'product.html' };
+  const DEFAULT_CTA = { label: 'See solutions', href: 'solutions.html' };
 
   /* Same arrow used by the ICP carousel CTA — keeps the puck visually
      identical across the two components. */

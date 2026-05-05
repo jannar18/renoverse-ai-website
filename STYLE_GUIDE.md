@@ -238,7 +238,7 @@ Heroes are a fixed two-element composition. **H1 + `.lead`. Nothing else.**
 - **`.lead`** — the hero subtitle. Same role as the section Lead: Poppins 400 at `--fs-lead` (17–20px), line-height 1.55, ink at ~78% opacity. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. (Outside heroes, the same `.lead` lives left-aligned under a section H3 — see Type scale.)
 - **Both elements share the same horizontal axis** — they're one composition. When the H1 is centered, this is the only place on the site where multi-line centered body copy is sanctioned. Outside the hero, multi-line centered copy is push-back-worthy.
 
-This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`product.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + `.lead` rules are invariant.
+This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`solutions.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + `.lead` rules are invariant.
 
 ### "Add a new page"
 

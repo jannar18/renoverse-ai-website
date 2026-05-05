@@ -192,14 +192,130 @@
   content:"";position:absolute;left:0;right:0;top:100%;height:14px;
 }
 
+/* ─────────── Mobile menu ───────────
+   Hamburger toggle in the bar + a full-screen frosted sheet that opens
+   when tapped. The toggle replaces the inline links + Book-a-demo CTA
+   on viewports ≤880px (the same breakpoint where .nav-links was already
+   hidden). The sheet matches the floating-frosted bar's material —
+   cream tint + heavy backdrop blur — but at higher opacity so its
+   contents stay legible over arbitrary page content behind it. */
+
+/* Hamburger toggle — hidden on desktop, shown ≤880px. Animates into an
+   X when the sheet is open. Inherits its color from currentColor so the
+   .is-dark variant flips it white over dark hero backdrops. */
+.site-nav .nav-toggle{
+  display:none;
+  position:relative;
+  width:36px;height:36px;
+  background:transparent;border:0;padding:0;margin:0 0 0 4px;
+  cursor:pointer;color:#222;
+  /* Sit above the sheet inside the .site-nav stacking context so the
+     X icon stays tappable when the sheet is open. */
+  z-index:2;
+}
+.site-nav .nav-toggle:focus-visible{
+  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline-offset:3px;
+  border-radius:4px;
+}
+.site-nav .nav-toggle__bar{
+  position:absolute;left:8px;right:8px;height:2px;
+  background:currentColor;border-radius:2px;
+  transition:transform .25s ease, opacity .2s ease, top .25s ease;
+}
+.site-nav .nav-toggle__bar:nth-child(1){top:11px}
+.site-nav .nav-toggle__bar:nth-child(2){top:17px}
+.site-nav .nav-toggle__bar:nth-child(3){top:23px}
+
+.site-nav.is-menu-open .nav-toggle__bar:nth-child(1){top:17px;transform:rotate(45deg)}
+.site-nav.is-menu-open .nav-toggle__bar:nth-child(2){opacity:0}
+.site-nav.is-menu-open .nav-toggle__bar:nth-child(3){top:17px;transform:rotate(-45deg)}
+
+/* Force the bar's frosted state while the menu is open so the X icon
+   reads cleanly above the sheet — even on hero pages where the bar
+   would otherwise still be transparent. */
+.site-nav.is-menu-open .nav-inner{
+  background:rgba(242,234,216,.08);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border-color:rgba(255,255,255,.55);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.5) inset,
+    0 8px 24px -12px rgba(11,26,43,.18);
+  padding:10px;
+  /* nav-inner sits above the sheet inside the .site-nav stacking
+     context, so the logo + X stay interactive. */
+  position:relative;
+  z-index:2;
+}
+
+/* Full-screen sheet — appears below the nav-inner in stacking order
+   but above the page. Opacity-driven enter/exit so the transition is
+   compatible with backdrop-filter (which would flicker on visibility). */
+.site-nav .nav-sheet{
+  position:fixed;inset:0;z-index:1;
+  background:rgba(242,234,216,.88);
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  /* Top padding clears the floating bar so the first link doesn't sit
+     under it visually. */
+  padding:clamp(96px,18vw,140px) var(--gutter, 24px) clamp(40px,8vw,64px);
+  pointer-events:none;
+  opacity:0;visibility:hidden;
+  transition:opacity .25s ease, visibility .25s;
+}
+.site-nav.is-menu-open .nav-sheet{
+  pointer-events:auto;opacity:1;visibility:visible;
+}
+.site-nav .nav-sheet__inner{
+  width:100%;max-width:28rem;
+  display:flex;flex-direction:column;align-items:center;gap:36px;
+}
+/* Sheet links — Cormorant italic, scaled down from H1 so the menu
+   reads as a single editorial moment rather than a utility list. */
+.site-nav .nav-sheet__links{
+  display:flex;flex-direction:column;align-items:center;gap:24px;
+}
+.site-nav .nav-sheet__links a{
+  font-family:var(--font-serif);
+  font-style:italic;
+  font-weight:500;
+  font-size:clamp(28px, 8vw, 40px);
+  line-height:1.1;
+  letter-spacing:var(--ls-display, -0.01em);
+  color:var(--ink, #0B1A2B);
+  text-decoration:none;
+  transition:opacity .15s ease;
+}
+.site-nav .nav-sheet__links a:hover{opacity:.65}
+.site-nav .nav-sheet__links a:focus-visible,
+.site-nav .nav-sheet a.btn:focus-visible{
+  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline-offset:4px;
+  border-radius:4px;
+}
+
+/* Keep the bar's brand logo in its default ink color while the sheet
+   is open, even if a [data-nav-tone="dark"] section is behind the
+   sheet — the cream sheet is what's actually behind the bar then. */
+.site-nav.is-menu-open.is-dark .nav-brand img{filter:none}
+.site-nav.is-menu-open.is-dark .nav-toggle{color:#222}
+
 @media (max-width:880px){
   .site-nav .nav-links{display:none}
+  .site-nav .nav-toggle{display:inline-block}
+  /* The desktop CTA is exposed inside the sheet on mobile, so hide
+     the inline one to keep the bar uncluttered. */
+  .site-nav .nav-right .nav-cta{display:none}
 }
 
 @media (prefers-reduced-motion: reduce){
   .site-nav,
   .site-nav .nav-inner,
-  .site-nav .nav-brand img{transition:none}
+  .site-nav .nav-brand img,
+  .site-nav .nav-toggle__bar,
+  .site-nav .nav-sheet{transition:none}
 }
 
 /* ─────────── Skip-to-main link ───────────

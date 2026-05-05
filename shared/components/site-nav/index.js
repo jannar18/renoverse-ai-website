@@ -21,6 +21,11 @@
   // to the frosted state. Small enough that the change registers as
   // soon as they leave the hero landing position.
   const SCROLL_THRESHOLD = 50;
+  // Mobile breakpoint — mirrors the CSS @media (max-width: 880px) rule
+  // that hides .nav-links and shows the hamburger toggle.
+  const MOBILE_MAX = 880;
+
+  const TICKS = '<span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>';
 
   function template(opts) {
     const logoSrc = opts.logoSrc || 'assets/logo-black.png';
@@ -29,10 +34,26 @@
         <a class="nav-brand" href="index.html"><img src="${logoSrc}" alt="Renoverse" /></a>
         <div class="nav-right">
           <div class="nav-links">
-            <a href="product.html">Product</a>
+            <a href="index.html">Home</a>
+            <a href="solutions.html">Solutions</a>
             <a href="about.html">About</a>
           </div>
-          <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
+          <a class="btn btn--filled nav-cta" href="demo.html">${TICKS}Book a demo</a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-sheet" aria-label="Open menu">
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-sheet" id="nav-sheet" aria-hidden="true">
+        <div class="nav-sheet__inner">
+          <nav class="nav-sheet__links" aria-label="Mobile menu">
+            <a href="index.html">Home</a>
+            <a href="solutions.html">Solutions</a>
+            <a href="about.html">About</a>
+          </nav>
+          <a class="btn btn--filled" href="demo.html">${TICKS}Book a demo</a>
         </div>
       </div>`;
   }
@@ -66,7 +87,14 @@
         const scrolled = (window.scrollY || window.pageYOffset || 0) > SCROLL_THRESHOLD;
         target.classList.toggle('is-scrolled', scrolled);
       }
-      target.classList.toggle('is-dark', detectDarkTone(target));
+      // Skip dark-tone detection while the mobile sheet is open — the
+      // sheet's cream backdrop is what's behind the bar then, not the
+      // page sections.
+      if (target.classList.contains('is-menu-open')) {
+        target.classList.remove('is-dark');
+      } else {
+        target.classList.toggle('is-dark', detectDarkTone(target));
+      }
     };
     const onScroll = () => {
       if (ticking) return;
@@ -78,6 +106,69 @@
     // Initial sync — handles the case where the page loads scrolled
     // (e.g. anchor link, refresh mid-page).
     update();
+    // Expose so the menu controller can re-sync the dark-tone class
+    // when the sheet closes.
+    target._navResync = update;
+  }
+
+  function attachMobileMenu(target) {
+    const toggle = target.querySelector('.nav-toggle');
+    const sheet = target.querySelector('.nav-sheet');
+    if (!toggle || !sheet) return;
+
+    let lastFocused = null;
+
+    function open() {
+      target.classList.add('is-menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      sheet.setAttribute('aria-hidden', 'false');
+      // Lock scroll behind the sheet.
+      document.body.style.overflow = 'hidden';
+      lastFocused = document.activeElement;
+      const first = sheet.querySelector('a');
+      if (first) requestAnimationFrame(() => first.focus());
+      if (typeof target._navResync === 'function') target._navResync();
+    }
+
+    function close() {
+      target.classList.remove('is-menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      sheet.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      } else {
+        toggle.focus();
+      }
+      if (typeof target._navResync === 'function') target._navResync();
+    }
+
+    toggle.addEventListener('click', () => {
+      if (target.classList.contains('is-menu-open')) close();
+      else open();
+    });
+
+    // Tapping a link inside the sheet should close the menu — same-page
+    // anchor links wouldn't navigate away, so the user would otherwise
+    // be stuck behind a still-open sheet.
+    sheet.addEventListener('click', (e) => {
+      if (e.target.closest('a')) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && target.classList.contains('is-menu-open')) close();
+    });
+
+    // Auto-close when viewport widens past the mobile breakpoint so the
+    // user doesn't end up with a stuck full-screen sheet on resize.
+    const mq = window.matchMedia('(min-width: ' + (MOBILE_MAX + 1) + 'px)');
+    const handleMQ = (e) => {
+      if (e.matches && target.classList.contains('is-menu-open')) close();
+    };
+    if (mq.addEventListener) mq.addEventListener('change', handleMQ);
+    else mq.addListener(handleMQ);
   }
 
   function mount(target) {
@@ -86,6 +177,7 @@
     target.classList.add('site-nav');
     target.innerHTML = template({ logoSrc: target.dataset.logoSrc });
     attachScrollState(target);
+    attachMobileMenu(target);
   }
 
   function init() {

@@ -3,12 +3,12 @@
    [data-feature-highlights] on the page.
 
    Defaults to the canonical homepage 4 highlights (Frictionless collaboration,
-   Version control, AI assistant, Accountability trail) and a "See the product"
+   Version control, AI assistant, Accountability trail) and a "See solutions"
    CTA. Hosts can override either via data-attributes:
 
      <div data-feature-highlights
           data-cta-label="Learn more"
-          data-cta-href="/product"
+          data-cta-href="/solutions"
           data-items='[{"title":"...","copy":"..."}, ...]'></div>
 
    `data-items` must be a JSON array. Invalid JSON falls back to defaults.
@@ -35,7 +35,7 @@
     }
   ];
 
-  const DEFAULT_CTA = { label: 'See the product', href: 'product.html' };
+  const DEFAULT_CTA = { label: 'See solutions', href: 'solutions.html' };
 
   function escape(s) {
     return String(s)
