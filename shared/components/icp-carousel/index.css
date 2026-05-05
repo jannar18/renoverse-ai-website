@@ -207,13 +207,13 @@
   flex-direction: column;
   gap: 14px;
 }
-/* H2 role per STYLE_GUIDE — this lead is the canonical H2 size reference
-   for the rest of the site. Poppins 500, --fs-h2, --lh-h2. */
+/* H3 role per STYLE_GUIDE — the carousel lead is the canonical H3 size
+   reference (section header) for the rest of the site. Poppins 500. */
 .icp-carousel__lead {
   font-family: var(--font-sans);
   font-weight: 500;
-  font-size: var(--fs-h2);
-  line-height: var(--lh-h2);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
   letter-spacing: var(--ls-display);
   color: #fff;
   margin: 0;

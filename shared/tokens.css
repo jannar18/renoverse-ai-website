@@ -74,16 +74,17 @@
   --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ---------- type scale ----------
-     Each role pairs a clamp() size with a line-height. H1 + H3 use the
-     serif italic (H1 = hero/page-defining moments, centered; H3 = sub-
-     header / editorial sentence, slightly smaller than H2). H2 + lead +
-     body + small use the sans (H2 = section header, Poppins). Eyebrow
-     uses the mono. The H1 + H2 sizes are anchored to the ICP carousel
-     (`__title-slide` and `__lead`) so any new section reads as the
-     same type system as the carousel. */
-  --fs-h1: clamp(48px, 7vw, 96px);   --lh-h1: 1.10;   /* Cormorant italic, centered */
-  --fs-h2: clamp(24px, 2.6vw, 36px); --lh-h2: 1.28;   /* Poppins 500 */
-  --fs-h3: clamp(22px, 2.2vw, 30px); --lh-h3: 1.20;   /* Cormorant italic, sub-header */
+     Three heading levels, with families chosen by voice rather than depth:
+       H1 + H2 are Cormorant italic (editorial voice — hero + big moments);
+       H3 is Poppins (utility voice — section headers).
+     The size reference for H1 is the ICP carousel `__title-slide`; for H3
+     it's the carousel `__lead`. H2 sits between them at clamp(32-52px),
+     used for editorial closers, typology heads, and any "between-hero
+     and section-header" moment.
+     Lead/Body/Small + Eyebrow are utility roles with their own families. */
+  --fs-h1: clamp(48px, 7vw, 96px);   --lh-h1: 1.10;   /* Cormorant italic */
+  --fs-h2: clamp(32px, 4vw, 52px);   --lh-h2: 1.10;   /* Cormorant italic, editorial */
+  --fs-h3: clamp(24px, 2.6vw, 36px); --lh-h3: 1.28;   /* Poppins 500, section header */
   --fs-eyebrow: clamp(11px, 0.9vw, 13px); --lh-eyebrow: 1.20;
   --fs-lead:    clamp(17px, 1.4vw, 20px); --lh-lead:    1.55;
   --fs-body:    16px;                     --lh-body:    1.55;

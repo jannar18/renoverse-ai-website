@@ -132,9 +132,12 @@
   /* ---------- generic section ---------- */
   section{padding:96px 0}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
-  /* Default H2 = Poppins 500, --fs-h2 per STYLE_GUIDE type system. */
+  /* Default H2 = Cormorant italic 500, --fs-h2 (editorial moment register).
+     Per STYLE_GUIDE: H1 + H2 are editorial Cormorant italic; H3 is the
+     utility Poppins section-header role. */
   h2{
-    font-family:var(--font-sans);
+    font-family:var(--font-serif);
+    font-style:italic;
     font-weight:500;
     font-size:var(--fs-h2);
     line-height:var(--lh-h2);
@@ -166,14 +169,14 @@
     max-width:60ch;
     text-align:center;
   }
-  /* H3 role per STYLE_GUIDE.md — Cormorant italic, slightly smaller than H2.
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
      Centered allowed because it's a single editorial sentence. */
   .typology .head h2{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
-    font-size:var(--fs-h3);
-    line-height:var(--lh-h3);
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
@@ -230,14 +233,14 @@
     color:rgba(11,26,43,.78);
     margin:0;
   }
-  /* Editorial closer — H3 styling (Cormorant italic 500, --fs-h3) with
+  /* Editorial closer — H2 styling (Cormorant italic 500, --fs-h2) with
      two pattern-specific overrides per STYLE_GUIDE: teal color + center. */
   .typology .closer{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
-    font-size:var(--fs-h3);
-    line-height:var(--lh-h3);
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
     letter-spacing:var(--ls-display);
     color:var(--teal);
     text-align:center;
@@ -334,11 +337,12 @@
     line-height:var(--lh-small);
     color:var(--ink);
   }
-  /* Big number — H2 styling with weight 600 + ls override (display number). */
+  /* Big number — H3 styling (Poppins 500 24-36) with weight 600 + ls
+     override (display number; sans-utility, not editorial). */
   .stats .num{
     font-family:var(--font-sans);
-    font-size:var(--fs-h2);
-    line-height:var(--lh-h2);
+    font-size:var(--fs-h3);
+    line-height:var(--lh-h3);
     font-weight:600;
     letter-spacing:-.02em;
     white-space:nowrap;
@@ -394,14 +398,14 @@
   .cta .row{
     display:flex;align-items:center;justify-content:space-between;gap:24px;
   }
-  /* Final CTA closer — H3 styling per STYLE_GUIDE recipe (Cormorant
-     italic 500, --fs-h3). Single-sentence editorial closer. */
+  /* Final CTA closer — H2 styling per STYLE_GUIDE recipe (Cormorant
+     italic 500, --fs-h2). Single-sentence editorial closer. */
   .cta h3{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
-    font-size:var(--fs-h3);
-    line-height:var(--lh-h3);
+    font-size:var(--fs-h2);
+    line-height:var(--lh-h2);
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;

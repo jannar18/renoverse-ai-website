@@ -1277,16 +1277,17 @@
     opacity: 1;
     pointer-events: none;
   }
-  /* "One workspace." is the H2 declarative (Poppins per STYLE_GUIDE).
-     "Every detail." is the H3 italic kicker — Cormorant italic, muted —
-     so the caption reads as a section header followed by an editorial
-     sub-line, matching the type system's H2 + H3 pairing. */
+  /* "One workspace." is the H3 section-header declarative (Poppins per
+     STYLE_GUIDE). "Every detail." is a small italic kicker — Cormorant
+     italic at clamp(22-30px), one step below H3. The kicker is a
+     pattern, not a top-level role; sized inline so it stays smaller
+     than the H3 above it. */
   .stack-section .caption h2 {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: var(--fs-h2);
+    font-size: var(--fs-h3);
     letter-spacing: var(--ls-display);
-    line-height: var(--lh-h2);
+    line-height: var(--lh-h3);
     margin: 0;
     color: #161616;
   }
@@ -1295,8 +1296,8 @@
     font-family: var(--font-serif);
     font-style: italic;
     font-weight: 500;
-    font-size: var(--fs-h3);
-    line-height: var(--lh-h3);
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.20;
     color: rgba(0,0,0,0.55);
   }
 

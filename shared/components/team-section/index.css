@@ -71,11 +71,11 @@
   margin: 0 0 24px;
 }
 
-/* H2 role — Poppins 500, --fs-h2. */
+/* H3 role — Poppins 500, --fs-h3 (section header). */
 .team-section__heading {
   font-family: var(--font-sans);
-  font-size: var(--fs-h2);
-  line-height: var(--lh-h2);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
   font-weight: 500;
   letter-spacing: var(--ls-display);
   margin: 0 0 24px;

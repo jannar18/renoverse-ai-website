@@ -163,7 +163,7 @@ This is the **Editorial signature** — the full layer stack. The carousel is th
 3. **Dithered photo** — positioned `<div>` with the photo as `background-image`, classes `.fx-dither.fx-dither--photo`. Tune opacity per surface (~0.05 over saturated gradients, up to ~0.18 over flat color).
 4. **Halftone bloom** — `.fx-halftone-bloom` as a positioned child to draw the eye to the heading or CTA. Override `--fx-bloom-mask` to move the focal point if needed.
 5. **Paper grain** — `.fx-grain--warm` as a positioned child (warm tint pairs with dark/saturated surfaces).
-6. **Content** — JetBrains Mono eyebrow above, **Poppins H2**, optional Cormorant italic H3 sub-line, Poppins body, `.btn .btn--filled` CTA.
+6. **Content** — JetBrains Mono eyebrow above, **Poppins H3** (section header), optional Cormorant italic H2 above or beside it for an editorial moment, Poppins body, `.btn .btn--filled` CTA.
 
 Don't re-derive the gradient stops, dither parameters, or grain SVG. The kit *is* those values.
 
@@ -236,7 +236,7 @@ Heroes are a fixed two-element composition. **H1 + `.lead`. Nothing else.**
 
 - **No eyebrow.** Eyebrows are the JetBrains Mono uppercase label that sits above an H2 *section header* — they mark sections, not heroes. A hero is the page-defining moment; it identifies itself through the H1, not through a label above it. If a non-technical user asks for "a tagline above the headline" or "a kicker," push back: that's an eyebrow, and it doesn't belong on a hero.
 - **H1** — Cormorant Garamond italic, weight 400, `--fs-h1`. Alignment is contextual (left or centered per page); not a defining property of the role. The homepage hero is centered; future ICP-themed heroes may be left-aligned to suit the composition. Mirror the ICP carousel title-slide for size.
-- **`.lead`** — the hero subtitle. Same role as the section Lead: Poppins 400 at `--fs-lead` (17–20px), line-height 1.55, ink at ~78% opacity. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. (Outside heroes, the same `.lead` lives left-aligned under a section H2 — see Type scale.)
+- **`.lead`** — the hero subtitle. Same role as the section Lead: Poppins 400 at `--fs-lead` (17–20px), line-height 1.55, ink at ~78% opacity. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. (Outside heroes, the same `.lead` lives left-aligned under a section H3 — see Type scale.)
 - **Both elements share the same horizontal axis** — they're one composition. When the H1 is centered, this is the only place on the site where multi-line centered body copy is sanctioned. Outside the hero, multi-line centered copy is push-back-worthy.
 
 This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`product.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + `.lead` rules are invariant.
@@ -305,7 +305,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 **Use when:** the user wants a "feature spotlight" rhythm — full-width product moments where each feature gets its own visual centerpiece, alternating left/right to create scroll-driven movement.
 
 - Each feature is a near-full-vw row: blurb on one side (~40% width) + product highlight on the other (~60% width — large screenshot, illustration, or short looping video). Alternate which side the blurb sits on per row.
-- Blurb: eyebrow (JetBrains Mono) + H2 (Poppins) + optional H3 (Cormorant italic) + lead paragraph + optional `.btn .btn--filled` or `.btn .btn--white` CTA.
+- Blurb: eyebrow (JetBrains Mono) + H3 (Poppins section header) + optional H2 (Cormorant italic editorial moment) + lead paragraph + optional `.btn .btn--filled` or `.btn .btn--white` CTA.
 - Product highlight: large media block, dithered if photo (`.fx-dither.fx-dither--photo`), unfiltered if product UI. Can include a short autoplay-loop muted video for animated UI demos.
 - Surface: alternates per row between `.fx-grad-paper` (Quiet, blurb-only side) and a dark panel gradient (`.fx-grad-dark-teal` or `.fx-grad-cool-oxford` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
 - Spacing: each row is min `80vh` so each gets its own scroll moment without being pinned.
@@ -340,7 +340,7 @@ A reusable text block used inside *any* of the above variations:
 
 ```
 [eyebrow]                 ← JetBrains Mono uppercase, --xwide letter-spacing
-H3 / Cormorant or Poppins ← depending on visual weight (italic Cormorant for moments, Poppins 600 for utility)
+H3 / Poppins 500           ← section header (utility); reach for H2 (Cormorant italic) when the line is an editorial moment, not a label
 2–4 line body in Poppins  ← --fs-body or --fs-lead
 optional [link →] or .btn ← inline link in --azure-deep, or full button for CTAs
 ```
@@ -403,7 +403,7 @@ The brand's go-to "and now do this" moment. Mirror `.cta` in `index.html`.
 
 **Layout:** `display: flex; align-items: center; justify-content: space-between; gap: 24px;` — italic Cormorant H3 on the left, `.btn .btn--filled` on the right. Stack to column at ≤540px.
 
-**Heading:** **H3** — Cormorant Garamond italic, weight 500, `--fs-h3` size, max ~30ch. Examples: *"Bring order into complexity."* — short, declarative, sits as a sentence rather than a label. Don't load it down with sub-copy. (H3 is the right role here because the closer is a single editorial sentence, italic in voice — not a top-level section header.)
+**Heading:** **H2** — Cormorant Garamond italic, weight 500, `--fs-h2` size (32–52px), max ~30ch. Examples: *"Bring order into complexity."* — short, declarative, sits as a sentence rather than a label. Don't load it down with sub-copy. (H2 is the right role here because the closer is an editorial moment — bigger than a section header, italic in voice.)
 
 **Button:** always `.btn .btn--filled` (primary), pointing at `demo.html` or whatever the primary conversion goal is.
 
@@ -413,7 +413,7 @@ The brand's go-to "and now do this" moment. Mirror `.cta` in `index.html`.
 
 A small but recognizable brand pattern: a single italic Cormorant line at the bottom of a section, centered, in `--teal`. Used as a one-line sign-off after a list of cards or a section's main content. Mirror `.typology .closer` in `index.html` ("More than tools — a single source of truth.").
 
-**Recipe:** **H3** styling (Cormorant Garamond italic, weight 500, `--fs-h3`, `--lh-h3`, `--ls-display`), but with two overrides specific to this pattern: `color: var(--teal)` (the editorial accent color, not `--ink`) and `text-align: center`, max ~60ch, `margin: clamp(56px, 7vw, 88px) auto 0` to give it air above. The closer is the canonical "H3 used as a centered editorial sentence" — see the H3 alignment rule.
+**Recipe:** **H2** styling (Cormorant Garamond italic, weight 500, `--fs-h2`, `--lh-h2`, `--ls-display`), with two overrides specific to this pattern: `color: var(--teal)` (the editorial accent color, not `--ink`) and `text-align: center`, max ~60ch, `margin: clamp(56px, 7vw, 88px) auto 0` to give it air above. The closer is the canonical "H2 used as a centered editorial sentence" — see the H2 alignment rule.
 
 This is one of the **rare exceptions to "no centered copy"** (see Part III) — it's a single line, deliberately, for editorial weight. Multi-line centered closers are not allowed.
 
@@ -429,7 +429,7 @@ Three cards in a row, each with a photo on top and a frosted-glass caption below
 
 **Grid:** `display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(20px, 2.4vw, 32px); align-items: stretch;` — collapse to 1-column at ≤960px.
 
-**Heading above the grid:** **H3** (Cormorant italic, `--fs-h3`), centered, max ~60ch. (Centered is the **deliberate exception** for these cards — the section's centered editorial framing is part of the pattern. H3 is the right role here because the heading is a single editorial sentence, not a top-level section header. If the section also needs a Poppins H2 above it, add the eyebrow + H2 + H3 stack per the section anatomy.)
+**Heading above the grid:** **H2** (Cormorant italic, `--fs-h2`), centered, max ~60ch. (Centered is the **deliberate exception** for these cards — the section's centered editorial framing is part of the pattern. H2 is the right role here because the heading is an editorial moment, italic in voice — not a section-header label. If the section also needs a Poppins H3 above it, add the eyebrow + H3 + H2 stack per the section anatomy.)
 
 ### "Add a frosted-glass caption" / "Add a caption over a photo"
 
@@ -544,19 +544,19 @@ Every brand gradient has a **plain-language name** the human will use, plus a te
 Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-author a new size. The role determines the family + alignment:
 
 - Hero / page-defining moment (H1) → Cormorant Garamond italic, ~48–96px, alignment per page
-- Section header (H2) → Poppins 500, left, ~24–36px
-- Sub-header / editorial sentence (H3) → Cormorant Garamond italic, ~22–30px (left, or centered for a single-sentence editorial moment)
-- Eyebrow above a header → JetBrains Mono uppercase, `letter-spacing: var(--xwide)`, only above an H2
+- Editorial moment / closer (H2) → Cormorant Garamond italic, ~32–52px (left, or centered for a single-sentence editorial moment)
+- Section header (H3) → Poppins 500, left, ~24–36px
+- Eyebrow above a section header → JetBrains Mono uppercase, `letter-spacing: var(--xwide)`, only above an H3
 - Lead → Poppins ~17–20px, softened color. Section intro paragraph (left) or hero subtitle (centered when the H1 is centered)
 - Body → Poppins 16px, left
 - Small → Poppins ~12.5px, muted, left
 
 ### "Make this section centered" / "Center the copy"
 
-**Push back on body and H2.** Body copy and H2 section headers are left-aligned, always. The exceptions are baked into specific roles, not granted ad-hoc:
+**Push back on body and H3.** Body copy and H3 section headers are left-aligned, always. The exceptions are baked into specific roles, not granted ad-hoc:
 
 - **H1 alignment is contextual** — left or centered, picked per page. The hero is the only composition that authorizes centered multi-line copy, because H1 + Lead read as a single unit. Outside heroes, an H1 stays in whatever alignment its surrounding composition uses.
-- **H3 may be centered** when used as a short, single-sentence editorial moment — the typology heading, an italic Cormorant closer line, the italic kicker ("Every detail.") under the stack-animation H2.
+- **H2 may be centered** when used as a single editorial sentence — the typology heading, the final-CTA closer, an italic Cormorant closer line.
 - **Lead in a hero** is centered when the H1 is centered (matches the H1 axis). In a section, Lead is left-aligned.
 - Everything else stays left-aligned. Multi-line centered body copy outside a hero doesn't belong on this site.
 
@@ -576,15 +576,17 @@ The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment | Color |
 |---|---|---|---|---|---|---|---|
-| H1 | Cormorant Garamond | italic 400 | `--fs-h1` | `--lh-h1` | `--ls-display` | left or centered (per page) | `--ink` |
-| H2 | Poppins | 500 | `--fs-h2` | `--lh-h2` | `--ls-display` | left | `--ink` |
-| H3 | Cormorant Garamond | italic 500 | `--fs-h3` | `--lh-h3` | `--ls-display` | left (centered ok for a short editorial sentence) | `--ink` |
-| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H2 only — not on heroes. | `--muted` |
+| H1 | Cormorant Garamond | italic 400 | `--fs-h1` (48–96px) | `--lh-h1` (1.10) | `--ls-display` | left or centered (per page) | `--ink` |
+| H2 | Cormorant Garamond | italic 500 | `--fs-h2` (32–52px) | `--lh-h2` (1.10) | `--ls-display` | left (centered ok for a single editorial sentence) | `--ink` |
+| H3 | Poppins | 500 | `--fs-h3` (24–36px) | `--lh-h3` (1.28) | `--ls-display` | left | `--ink` |
+| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--muted` |
 | Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal | left in sections; centered when used as a hero subtitle (matches its H1) | softened ink (`rgba(11,26,43,.78)`) |
 | Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left | `--ink` |
 | Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left | `--muted` |
 
-Lead doubles as **section-intro paragraph** (one per section, max — sits between an H2 and the body) and as **hero subtitle** (under an H1). The role is the same — only its alignment shifts to match the H1 when used in a hero.
+**Heading hierarchy reads by voice, not just depth:** H1 + H2 share the editorial Cormorant italic family (hero + page-defining moments + closers); H3 is the utility Poppins family (functional section header). Eyebrows label section headers, so they sit above H3.
+
+Lead doubles as **section-intro paragraph** (one per section, max — sits between an H3 and the body) and as **hero subtitle** (under an H1). The role is the same — only its alignment shifts to match the H1 when used in a hero.
 
 ### Color tokens
 
