@@ -167,10 +167,10 @@ Repurpose `shared/components/icp-carousel` for three Architect sub-personas. **R
 - `shared/components/team-section/index.js`: optional `data-link-href` + `data-link-label` attrs render a `.btn .btn--white` CTA reusing the ICP carousel CTA recipe (4x .tk corner ticks + aqua arrow puck). Variant is `.btn--white` (azure text on white) rather than `.btn--frosted` because the team block sits on the paper-zone backdrop where white-on-cream wouldn't read.
 - `index.html` sets `data-link-href="about.html"` + `data-link-label="Learn more"`.
 
-### Phase 8 — Demo form button refresh
+### Phase 8 — Demo form button refresh ✅ DONE
 
-- `shared/components/demo-form/index.js` (lines 346-350): replace gradient pill button with `.btn .btn--filled` style (azure rectangle, white text). **No corner ticks** (in-card variant per style guide).
-- Strip Tailwind `rounded-full bg-gradient-to-br` classes; align with site button system.
+- `shared/components/demo-form/index.js`: gradient pill replaced with the `.btn .btn--filled` recipe rendered via Tailwind utilities (azure rect, white text, JetBrains Mono uppercase, square corners, no ticks). The component stays drop-in (no `button.css` dependency) since the form auto-loads Tailwind into hosts that may not include the site stylesheet.
+- Removed dead `ARROW` SVG and the now-unused `shadow-cta` token from `demo-form/index.js`, `demo-form/test.html`, and `demo.html`.
 
 ### Phase 9 — Page stubs + nav link updates ✅ DONE
 
@@ -214,13 +214,12 @@ Stubs shipped, nav links updated. See Phases 9b + 10 for the build-out passes.
 
 ## Execution order
 
-**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 9 (stubs + nav).
+**Done:** Phase 0, 1, 2, 3, 4, 6, 7, 8, 9 (stubs + nav).
 
 **Remaining (any order, recommend the order below):**
-1. **Phase 8** — Demo form button refresh
-2. **Phase 9b** — Build out `product.html` (depends on long-form feature copy)
-3. **Phase 10** — Build out `about.html` (depends on about copy)
-4. **Phase 5** — ICP carousel rework (copy + arrows + tap zones; content fully locked, see above)
+1. **Phase 9b** — Build out `product.html` (depends on long-form feature copy)
+2. **Phase 10** — Build out `about.html` (depends on about copy)
+3. **Phase 5** — ICP carousel rework (copy + arrows + tap zones; content fully locked, see above)
 
 ---
 
@@ -228,7 +227,6 @@ Stubs shipped, nav links updated. See Phases 9b + 10 for the build-out passes.
 
 - [ ] Long-form feature copy for `product.html` (Phase 9b).
 - [ ] About copy + team imagery for `about.html` (Phase 10).
-- [ ] Demo form CTA — confirmed: azure rectangle, **no** corner ticks.
 - [ ] Phase 5 Paper redesign — deferred to v2 (v1 reuses existing visuals).
 
 ---

@@ -56,7 +56,6 @@ This guide describes the **intended end-state** of the site — the rules new wo
 | Every page has a `skip-link` as the first focusable element + `id="main"` on the main content target | Neither page has either | Phase 1 |
 | Sticky nav with backdrop blur over hero + pinned scrolls | Currently absolute-positioned | Phase 1 |
 | Body copy is left-aligned; centered multi-line copy is push-back-worthy | `.intro` and `.typology .head` in `index.html` are still centered | Phase 4 |
-| In-card form submit uses `.btn .btn--filled` without corner ticks | Demo-form uses a Tailwind gradient pill, bypassing the `.btn` system entirely | Phase 8 |
 | Components reference `--fs-*` and `--ink` tokens, not local copies | `index.html`/`demo.html` `:root` redeclare `--ink` as `#0a0a0a`; hero `h1`/`h2` hand-author sizes; `feature-highlights` and `demo-form` use local `--fh-*` / `--df-*` namespaces | Phase 4 |
 
 **Rule of thumb:** when a non-technical user asks for new work, this guide is the source of truth. When the live pages disagree with the guide, the live pages are drift, not precedent. Don't propagate drift forward.
@@ -178,7 +177,7 @@ Default to `.btn .btn--filled` — azure rectangle, white text, four corner tick
 | Primary CTA on any light surface | `.btn .btn--filled` | Default. Always include the four `<span class="tk tl/tr/br/bl">` corner ticks. Reserve 24px clearance around it (the ticks animate outward on hover). |
 | Over a photo / dark surface (e.g. nav over hero, ICP carousel CTA) | `.btn .btn--frosted` | Frosted glass + grain. Used on the carousel CTAs and the nav button over the hero video — anywhere the background is dark or media. |
 | Secondary action on a light/paper surface | `.btn .btn--white` | Azure outline + text on white fill, hover swaps to filled azure. |
-| Inside a card or form | *Phase 8 target*: `.btn .btn--filled` without `.tk` corner spans | The intended in-card variant. **Currently** the demo-form (`shared/components/demo-form/`) does *not* use this — it uses a Tailwind gradient pill, which is drift to be cleaned up in Phase 8 of `PLAN.md`. **Don't mirror the existing demo-form button** — build the in-card variant fresh from `.btn--filled` with the corner ticks omitted. |
+| Inside a card or form | `.btn .btn--filled` without `.tk` corner spans | The in-card variant — same azure fill, white text, mono uppercase, square corners, just no ticks. The demo-form (`shared/components/demo-form/`) ships this as Tailwind utilities (the form auto-loads Tailwind into hosts that may not include `button.css`); the visual recipe matches `.btn--filled` exactly. |
 
 Never invent a new button silhouette. If a request implies one, push back and ask which existing variant fits.
 
@@ -664,7 +663,7 @@ The **WebGL halftone-video shader** ([`shared/components/halftone-video/`](./sha
 | `.btn .btn--filled` | Azure rect, white text, corner ticks | **Default CTA on light surfaces.** Hero, final-CTA, footer subscribe |
 | `.btn .btn--frosted` | Frosted glass + grain | **CTA on dark / photo surfaces.** ICP carousel CTAs, nav button over hero video |
 | `.btn .btn--white` | White fill, azure outline + text | Secondary action on light surfaces |
-| `.btn .btn--filled` (no `.tk` spans) | Same azure fill, no corner ticks | *Phase 8 target* — in-card variant for forms. Demo-form currently bypasses the `.btn` system; do not mirror its current implementation. |
+| `.btn .btn--filled` (no `.tk` spans) | Same azure fill, no corner ticks | In-card variant for forms. Used by the demo-form (rendered via Tailwind utilities so the drop-in component doesn't depend on `button.css`). |
 
 Every `.btn` reserves 24px clearance around itself for the hover-state ticks. Two side-by-side need ≥ 36px gap.
 

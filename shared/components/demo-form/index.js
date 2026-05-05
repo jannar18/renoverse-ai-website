@@ -83,14 +83,12 @@
         },
         boxShadow: {
           card: '0 30px 60px -30px rgba(11,26,43,.18), 0 8px 20px -10px rgba(11,26,43,.08)',
-          cta:  '0 1px 0 rgba(255,255,255,.6) inset, 0 14px 30px -10px rgba(45,111,117,.45), 0 4px 10px -4px rgba(45,111,117,.35)',
         },
       },
     },
   };
 
   // ---------- Icons ----------
-  const ARROW = `<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>`;
   const CHECK = `<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
   const CHECK_LG = `<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
   const CHEVRON = `<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-muted" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`;
@@ -344,9 +342,9 @@
 
               <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
                 <button type="submit"
-                        class="group inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-azure via-aqua to-teal px-5 py-3 text-[15px] font-medium text-[#082226] shadow-cta transition-all duration-150 hover:-translate-y-px hover:saturate-105 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-aqua/40">
-                  <span>${cta}</span>
-                  <span class="inline-grid place-items-center transition-transform duration-150 group-hover:translate-x-0.5">${ARROW}</span>
+                        class="inline-flex items-center justify-center border border-aqua bg-aqua px-[22px] py-[9px] text-[12px] font-medium uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-white hover:text-aqua focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-aqua/40"
+                        style="font-family:'JetBrains Mono',ui-monospace,monospace;">
+                  ${cta}
                 </button>
                 <p class="ml-auto max-w-[260px] text-right text-xs text-muted">
                   By submitting, you agree to our <a href="#" class="text-teal underline underline-offset-2">privacy policy</a>.
