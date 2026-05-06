@@ -76,27 +76,6 @@
 .features-alt__row[data-row-side="image-left"]  { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
 .features-alt__row[data-row-side="image-right"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
 
-/* Last row: content-sized (drop the 100vh min). The gradient strip + halftone
-   span the section, so a full-height final row leaves an empty gradient tail
-   below the content; trimming the row trims the gradient. Bottom padding
-   trimmed further so visual-to-gradient-bottom mirrors row 1's nav-to-visual
-   breathing room (small breathing band, not a full padding-block). */
-.features-alt__row:last-child {
-  min-height: 0;
-  padding-bottom: clamp(24px, 3vw, 40px);
-}
-/* Soften the media-frame shadow on the last row only. The default shadow
-   (40px y, 100px blur) is sized for a row with ~200px of breathing room
-   below the visual. With the trimmed bottom padding above, the section's
-   `overflow: hidden` clips that shadow into a hard horizontal band that
-   bleeds visibly across the white half — leaks as a misaligned grey smear.
-   A tighter shadow fades fully within the new bottom padding. */
-.features-alt__row:last-child .features-alt__media-frame {
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, .12),
-    0 14px 36px -12px rgba(0, 0, 0, .38);
-}
-
 /* CSS halftone — exact ICP carousel parameters: source image masked by the
    canonical 0.5px dot in a 4×4px tile, contrast/brightness/saturate filter,
    multiply blend, .05 opacity. Intentionally subtle on its own; the visible
