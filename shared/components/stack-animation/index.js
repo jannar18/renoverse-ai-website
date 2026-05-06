@@ -1020,6 +1020,7 @@
       </div>
     </div>
   </section>
+  <div class="stack-section__pin-tail" aria-hidden="true"></div>
 `;
 
   function mount(target) {
@@ -1042,8 +1043,8 @@
     ];
 
     const allPanels = gsap.utils.toArray('#stackScene .panel');
-    const sources = allPanels.slice(0, -1);   // the 4 source apps
-    const cal = allPanels[allPanels.length - 1]; // the new combined app
+    const sources = allPanels.slice(0, -1);   // the 5 legacy app panels
+    const cal = allPanels[allPanels.length - 1]; // the Renoverse panel that materializes at the snap
 
     /* Initial state — sources exploded, calendar absent */
     sources.forEach((el, i) => {

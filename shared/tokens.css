@@ -3,12 +3,17 @@
    this file is a drift bug — fix it by adding the token here first. */
 
 :root {
-  /* ---------- brand color ---------- */
-  --ink: #0B1A2B;
+  /* ---------- brand color ----------
+     Two font colors only: --ink for text on light surfaces, #fff for text
+     on dark surfaces. Hierarchy comes from type (family / size / weight /
+     italic), never from opacity-softened ink. --azure is the highlight
+     accent for links and button fills. */
+  --ink: #0a0a0a;
   --bg: #FAFAF7;
   --surface: #FFFFFF;
   --cream: #F2EBD8;
   --ice: #E5F4F1;
+  --paper-warm: #F5F1EC;   /* warm-paper backdrop terminus stop; consumed by features-editorial + solutions.html .additional + the homepage capabilities/typology lineage */
 
   /* aqua/teal */
   --azure: #7FE3CB;
@@ -20,10 +25,8 @@
   --blue: #5BA7C9;
   --oxford: #5D6FB8;
 
-  /* utility */
-  --muted: rgba(11, 26, 43, 0.55);
-  --line: rgba(11, 26, 43, 0.14);
-  --line-soft: rgba(11, 26, 43, 0.08);
+  /* utility — single hairline tier (light grey, surface effect not font color) */
+  --line: rgba(0, 0, 0, 0.10);
 
   /* ---------- gradients ----------
      Named two ways:
@@ -91,9 +94,8 @@
   --fs-h2: clamp(32px, 4vw, 52px);   --lh-h2: 1.10;   /* Cormorant italic, editorial */
   --fs-h3: clamp(20px, 2vw, 28px); --lh-h3: 1.30;   /* Poppins 500, section header */
   --fs-eyebrow: clamp(11px, 0.9vw, 13px); --lh-eyebrow: 1.20;
-  --fs-lead:    clamp(15px, 1.1vw, 17px); --lh-lead:    1.55;
   --fs-body:    16px;                     --lh-body:    1.55;
-  --fs-small:   12.5px;                   --lh-small:   1.5;
+  --fs-small:   12.5px;                   --lh-small:   1.5;   /* fine print, captions, role-under-name, footer legal — handles the secondary register that opacity-softened ink used to */
 
   /* letter-spacing */
   --tight: 0.02em;

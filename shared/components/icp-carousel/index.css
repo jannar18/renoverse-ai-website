@@ -112,7 +112,7 @@
 .icp-carousel__object {
   position: absolute;
   pointer-events: none;
-  color: var(--paper);
+  color: var(--surface);
 }
 .icp-carousel__object svg { display: block; width: 100%; height: 100%; }
 /* per-panel object placement (compass = principal-architects, tools-l/r =
@@ -160,7 +160,7 @@
   font-size: 13px;
   letter-spacing: var(--xwide);
   text-transform: uppercase;
-  color: rgba(255,255,255,.85);
+  color: #fff;
 }
 .icp-carousel__titles {
   position: relative;
@@ -221,15 +221,15 @@
   color: #fff;
   margin: 0;
 }
-/* Lead role per STYLE_GUIDE — Poppins, softened ink. The clamp here
-   is tightened (15–17px vs canonical 17–20px) so the body fits inside
-   the carousel panel; treat as the panel-scoped Lead variant. */
+/* Body register on the dark panel — Poppins, white. Clamp tightened to
+   15–17px (vs canonical 16) so the multi-line quote fits the panel
+   without crowding the CTA below. */
 .icp-carousel__copy {
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.65;
-  color: rgba(255,255,255,.9);
+  color: #fff;
   margin: 0;
 }
 /* CTA — uses shared .btn .btn--frosted; we just append the arrow puck. */

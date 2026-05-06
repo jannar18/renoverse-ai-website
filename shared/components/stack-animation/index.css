@@ -10,6 +10,18 @@
     padding: 0;
   }
 
+  /* Tail spacer — sibling of .stack-section, rendered immediately after it.
+     ScrollTrigger needs ~100vh of scrollable runway *after* the pinned
+     section's end so the unpin completes cleanly before the next section
+     enters the viewport. Without this, the next section visually "snaps"
+     in over the released stage. Transparent on purpose: inherits whatever
+     surface the host page uses, so it never paints a hard-edged block.
+     Don't delete without verifying the pin still releases cleanly. */
+  .stack-section__pin-tail {
+    height: 100vh;
+    pointer-events: none;
+  }
+
   .stack-section .stack-stage {
     position: sticky;
     top: 0;
@@ -1284,7 +1296,7 @@
     top: calc(var(--nav-height) + 32px);
     left: 50%; transform: translateX(-50%);
     text-align: center;
-    color: #161616;
+    color: var(--ink);
     opacity: 1;
     pointer-events: none;
     /* Sit above the 3D scene so positive-z panels never render in front of
@@ -1304,7 +1316,7 @@
     letter-spacing: var(--ls-display);
     line-height: 1.05;
     margin: 0;
-    color: #161616;
+    color: var(--ink);
   }
 
   /* ── OUTRO ───────────────────────────────────────── */

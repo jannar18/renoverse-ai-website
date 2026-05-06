@@ -28,9 +28,7 @@
   --df-azure: var(--azure, #7FE3CB);
   --df-teal: var(--teal, #2D6F75);
   --df-blue: var(--blue, #5BA7C9);
-  --df-line: var(--line, rgba(11,26,43,.14));
-  --df-line-soft: var(--line-soft, rgba(11,26,43,.08));
-  --df-muted: var(--muted, rgba(11,26,43,.55));
+  --df-line: var(--line, rgba(0,0,0,.10));
 
   position: relative;
   display: block;
@@ -140,7 +138,7 @@
   background: var(--df-ice);
 }
 
-.demo-form .iti__dial-code { color: var(--df-muted); }
+.demo-form .iti__dial-code { color: var(--df-ink); }
 
 .demo-form .iti__search-input {
   font: inherit;

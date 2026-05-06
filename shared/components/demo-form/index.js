@@ -74,9 +74,7 @@
           teal:       '#2D6F75',
           oxford:     '#5D6FB8',
           'brand-blue': '#5BA7C9',
-          line:       'rgba(11,26,43,.14)',
-          'line-soft':'rgba(11,26,43,.08)',
-          muted:      'rgba(11,26,43,.55)',
+          line:       'rgba(0,0,0,.10)',
         },
         fontFamily: {
           sans: ['Poppins', 'system-ui', 'sans-serif'],
@@ -91,7 +89,7 @@
   // ---------- Icons ----------
   const CHECK = `<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
   const CHECK_LG = `<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
-  const CHEVRON = `<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-muted" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`;
+  const CHEVRON = `<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-ink" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`;
 
   // ---------- Tailwind class building blocks ----------
   // Centralized so input/select look identical and so error styling
@@ -114,7 +112,7 @@
   ].join(' ');
 
   const LABEL_CLS = 'block text-sm font-medium text-ink';
-  const HINT_CLS  = 'mt-1.5 text-xs leading-snug text-muted data-[error=true]:text-rose-600';
+  const HINT_CLS  = 'mt-1.5 text-xs leading-snug text-ink data-[error=true]:text-rose-600';
   const FIELD_CLS = 'min-w-0';
 
   // ---------- Loaders ----------
@@ -306,7 +304,7 @@
         <aside class="space-y-5 lg:col-span-5 lg:sticky lg:top-24">
           <p class="uppercase tracking-[0.32em] text-teal" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:clamp(13px,1vw,15px);">${eyebrow}</p>
           <h2 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h2>
-          <p class="max-w-[46ch] text-[clamp(15px,1.1vw,17px)] leading-relaxed text-ink/[0.78]">${lead}</p>
+          <p class="max-w-[46ch] text-base leading-relaxed text-ink">${lead}</p>
           <ul role="list" class="mt-2 space-y-3.5">
             ${[
               '30-minute walk-through, tailored to your stack.',
@@ -321,7 +319,7 @@
         </aside>
 
         <section class="relative lg:col-span-7" aria-label="Demo request form">
-          <div class="rounded-3xl bg-white p-6 ring-1 ring-line-soft shadow-card sm:p-10">
+          <div class="rounded-3xl bg-white p-6 ring-1 ring-line shadow-card sm:p-10">
             <div data-form-notice
                  role="alert"
                  hidden
@@ -346,7 +344,7 @@
                         style="font-family:'JetBrains Mono',ui-monospace,monospace;">
                   ${cta}
                 </button>
-                <p class="ml-auto max-w-[260px] text-right text-xs text-muted">
+                <p class="ml-auto max-w-[260px] text-right text-xs text-ink">
                   By submitting, you agree to our <a href="#" class="text-teal underline underline-offset-2">privacy policy</a>.
                 </p>
               </div>
@@ -355,7 +353,7 @@
             <div class="grid justify-items-start gap-3 px-1 py-2" role="status" aria-live="polite" data-success hidden>
               <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-aqua text-white">${CHECK_LG}</span>
               <h3 class="text-[clamp(22px,2.2vw,30px)] text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;line-height:1.1;letter-spacing:-.005em;">Thanks — we'll be in touch.</h3>
-              <p class="max-w-[48ch] text-[15px] leading-relaxed text-muted">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
+              <p class="max-w-[48ch] text-[15px] leading-relaxed text-ink">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
             </div>
           </div>
         </section>

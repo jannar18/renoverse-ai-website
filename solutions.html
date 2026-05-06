@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Solutions — Renoverse</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -60,15 +63,15 @@
     margin:0;
     max-width:16ch;
   }
-  /* Hero subtitle — Lead role per STYLE_GUIDE. Alignment follows the H1
-     axis (left here), matching the homepage hero. */
-  .page-hero .lead{
+  /* Hero subtitle — plain Body register (no opacity-softened lead). Hierarchy
+     is carried by the H1 above, not by color softening. */
+  .page-hero p{
     margin:24px 0 0;
     font-family:var(--font-sans);
     font-weight:400;
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:rgba(11,26,43,.78);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
     max-width:60ch;
   }
 
@@ -157,7 +160,7 @@
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.78);
+    color:var(--ink);
     margin:0;
   }
 
@@ -179,7 +182,7 @@
   <section class="page-hero">
     <div class="wrap">
       <h1>One workspace.</h1>
-      <p class="lead">
+      <p>
         Renoverse AI is the intelligent information management &amp; coordination layer
         centralizing fragmented workflows so everyone knows where things stand.
       </p>

@@ -12,8 +12,8 @@
 .team-section {
   --ts-ink: #0a0a0a;
   --ts-paper: #ffffff;
-  --ts-text: rgba(255, 255, 255, .82);
-  --ts-muted: rgba(255, 255, 255, .55);
+  --ts-text: #ffffff;
+  --ts-muted: #ffffff;
   --ts-media-fill: #1a1a1a;
   --ts-media-stripe-a: rgba(255, 255, 255, .03);
   --ts-media-stripe-b: rgba(255, 255, 255, .06);
@@ -34,8 +34,8 @@
 .team-section--paper {
   --ts-ink: transparent;
   --ts-paper: #0a0a0a;
-  --ts-text: rgba(11, 26, 43, .82);
-  --ts-muted: rgba(11, 26, 43, .55);
+  --ts-text: #0a0a0a;
+  --ts-muted: #0a0a0a;
   --ts-media-fill: rgba(11, 26, 43, .04);
   --ts-media-stripe-a: rgba(11, 26, 43, .03);
   --ts-media-stripe-b: rgba(11, 26, 43, .06);
@@ -86,11 +86,11 @@
   color: var(--ts-paper);
 }
 
-/* Body paragraph — Lead role (intro paragraph under the section H2). */
+/* Body paragraph — intro paragraph under the section H2 (Body register). */
 .team-section__body {
   font-family: var(--font-sans);
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 400;
   margin: 0;
   color: var(--ts-text);

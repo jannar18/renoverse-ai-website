@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Renoverse — The source of truth for architects</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,29 +17,12 @@
 <link rel="stylesheet" href="shared/components/stack-animation/index.css">
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
 <link rel="stylesheet" href="shared/components/icp-carousel/index.css">
-<link rel="stylesheet" href="shared/components/feature-highlights/index.css">
 <link rel="stylesheet" href="shared/components/features-editorial/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
-  :root{
-    --ink:#0a0a0a;
-    --ink-2:#1a1a1a;
-    --paper:#ffffff;
-    --paper-warm:#f5f1ec;
-    --paper-lavender:#ece7e1;
-    --text:#111;
-    --muted:#5a5a5a;
-    --line:rgba(0,0,0,.12);
-    --gray-card:#3a3a3a;
-    --azure:#7FE3CB;
-    --azure-deep:#5EC9B7;
-    --max:1240px;
-    --gutter:clamp(20px,4vw,48px);
-  }
-
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
+  html,body{margin:0;padding:0;background:var(--surface);color:var(--ink)}
   body{
     font-family:var(--font-sans);
     font-weight:400;
@@ -47,40 +33,6 @@
   img{display:block;max-width:100%}
   a{color:inherit;text-decoration:none}
 
-  /* ---------- placeholder util ---------- */
-  .ph{
-    display:flex;align-items:center;justify-content:center;
-    text-align:center;
-    background:
-      repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,.03) 0 12px,
-        rgba(255,255,255,.06) 12px 24px
-      ),
-      #2a2a2a;
-    color:rgba(255,255,255,.55);
-    font-size:12px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    border:1px dashed rgba(255,255,255,.25);
-    padding:24px;
-  }
-  .ph.light{
-    background:
-      repeating-linear-gradient(
-        45deg,
-        rgba(0,0,0,.02) 0 12px,
-        rgba(0,0,0,.05) 12px 24px
-      ),
-      #e9e6e1;
-    color:rgba(0,0,0,.45);
-    border:1px dashed rgba(0,0,0,.2);
-  }
-  .ph small{display:block;font-weight:500;opacity:.85}
-  .ph .tag{
-    font-size:10px;letter-spacing:.3em;opacity:.55;margin-bottom:6px;
-  }
-
   /* ---------- .btn lives in button.css (component) ---------- */
 
   /* ---------- nav lives in shared/components/site-nav/ ---------- */
@@ -89,9 +41,9 @@
   .hero{
     position:relative;
     min-height:100vh;
-    color:#0a0a0a;
+    color:var(--ink);
     overflow:hidden;
-    background:#ffffff;
+    background:var(--surface);
   }
   .hero .scrim{
     position:absolute;inset:0;z-index:1;
@@ -119,21 +71,22 @@
     max-width:16ch;
     color:var(--ink);
   }
-  /* Hero subtitle — Lead role per STYLE_GUIDE. In a hero, alignment
-     follows the H1 axis (left here). */
-  .hero .lead{
+  /* Hero subtitle — plain Body register (Poppins 400, --fs-body). Hierarchy
+     reads from the H1 above (Cormorant italic, ~7× larger), not from any
+     opacity softening. */
+  .hero p{
     margin-top:24px;
     font-family:var(--font-sans);
     font-weight:400;
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:rgba(11,26,43,.78);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
     max-width:60ch;
   }
 
   /* ---------- generic section ---------- */
   section{padding:96px 0}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
   /* Default H2 = Cormorant italic 500, --fs-h2 (editorial moment register).
      Per STYLE_GUIDE: H1 + H2 are editorial Cormorant italic; H3 is the
      utility Poppins section-header role. */
@@ -146,18 +99,6 @@
     letter-spacing:var(--ls-display);
     margin:0 0 16px;
   }
-  /* Lead role — Poppins 17–20px, softened ink. Used as section intro
-     paragraph (left-aligned) or hero subtitle (alignment follows H1). */
-  p.lead{
-    font-family:var(--font-sans);
-    font-weight:400;
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:rgba(11,26,43,.78);
-    max-width:46ch;
-    margin:0;
-  }
-
   /* ---------- capabilities section (H2 header + editorial-strip rows) ----------
      Two-column header: editorial H2 on the left, the two intro leads on the
      right (formerly the standalone `.intro` section above this one). The
@@ -192,15 +133,19 @@
     color:var(--ink);
     margin:0;
   }
-  /* Right-column lead stack — vertically anchored at the top of the row so
-     the first lead's baseline sits near the H2's first line. Body register
-     matches the rest of the page (Poppins, --fs-lead). The intro and its
-     leads fill the full column width so their right edge aligns with the
-     right edge of the strip-row content below — overrides the global
-     `p.lead { max-width: 46ch }` rule for this scope only. */
-  .capabilities-section__intro{max-width:none}
-  .capabilities-section__intro .lead{max-width:none}
-  .capabilities-section__intro .lead + .lead{margin-top:16px}
+  /* Right-column intro stack — vertically anchored at the top of the row so
+     the first paragraph's baseline sits near the H2's first line. Body
+     register (Poppins 400, --fs-body). Stack the two paragraphs with a
+     gap that matches the H3 → body rhythm used elsewhere on the page. */
+  .capabilities-section__intro{
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
+  }
+  .capabilities-section__intro p{margin:0}
+  .capabilities-section__intro p + p{margin-top:16px}
 
   @media (max-width:860px){
     .capabilities-section__header-wrap{
@@ -209,96 +154,11 @@
     }
   }
 
-  /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
-
-  /* ---------- typology (homepage solution pillars — deck slide 6) ---------- */
-  .typology{background:var(--paper);padding:80px 0}
-  .typology .head{
-    margin:0 auto clamp(48px,6vw,72px);
-    max-width:60ch;
-    text-align:center;
-  }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
-     Centered allowed because it's a single editorial sentence. */
-  .typology .head h2{
-    font-family:var(--font-serif);
-    font-style:italic;
-    font-weight:500;
-    font-size:var(--fs-h2);
-    line-height:var(--lh-h2);
-    letter-spacing:var(--ls-display);
-    color:var(--ink);
-    margin:0;
-  }
-  .typology .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2.4vw,32px);align-items:stretch}
-  .ty-card{
-    display:flex;flex-direction:column;
-    border-radius:14px;
-    overflow:hidden;
-    isolation:isolate;
-    background:#ece7e1;
-    box-shadow:0 1px 0 rgba(11,26,43,.06), 0 18px 40px -22px rgba(11,26,43,.22);
-    color:var(--ink);
-  }
-  .ty-card .shot{
-    position:relative;
-    aspect-ratio:1280/832;
-    background:#fff;
-    overflow:hidden;
-  }
-  .ty-card .shot img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .ty-card .meta{
-    position:relative;
-    flex:1;
-    padding:24px 22px 26px;
-    text-align:center;
-    color:var(--ink);
-    background:rgba(255,255,255,.55);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-top:1px solid rgba(255,255,255,.6);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
-  }
-  /* Card title — Body role with 600 weight emphasis (no dedicated card-title role). */
-  .ty-card h4{
-    font-family:var(--font-sans);
-    font-size:var(--fs-body);
-    line-height:var(--lh-body);
-    font-weight:600;
-    letter-spacing:-.005em;
-    color:var(--ink);
-    margin:0 0 8px;
-  }
-  /* Card body text — Small role (compact paragraph inside a card). */
-  .ty-card .meta p{
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:rgba(11,26,43,.78);
-    margin:0;
-  }
-  /* Editorial closer — H2 styling (Cormorant italic 500, --fs-h2) with
-     two pattern-specific overrides per STYLE_GUIDE: teal color + center. */
-  .typology .closer{
-    font-family:var(--font-serif);
-    font-style:italic;
-    font-weight:500;
-    font-size:var(--fs-h2);
-    line-height:var(--lh-h2);
-    letter-spacing:var(--ls-display);
-    color:var(--teal);
-    text-align:center;
-    max-width:60ch;
-    margin:clamp(56px,7vw,88px) auto 0;
-  }
-
-  /* ---------- quote ---------- */
-  .quote-section{background:var(--paper);padding:72px 0 96px}
+  /* ---------- quote ----------
+     Card surface comes from `.fx-grad-dark-teal` + `.fx-grain--warm` (effects
+     kit canonicals). Spotlight signature per STYLE_GUIDE — gradient + grain;
+     no halftone bloom (keeps the card quieter than the ICP panels above). */
+  .quote-section{background:var(--surface);padding:72px 0 96px}
   .quote{
     position:relative;
     color:#fff;
@@ -306,17 +166,10 @@
     overflow:hidden;
     isolation:isolate;
     min-height:440px;
-    background:linear-gradient(in oklab 160deg, #0B1A2B 0%, #2D6F75 62%, #C9D8C5 100%);
   }
-  /* Paper grain — same SVG turbulence as the ICP carousel */
-  .quote::after{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.93 0 0 0 0 0.85 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:320px 320px;
-    mix-blend-mode:overlay;
-    opacity:.28;
-    z-index:2;
-  }
+  /* Slightly lighter grain than the canonical .fx-grain--warm default (.35)
+     so the testimonial card doesn't read as noisy as the ICP panels. */
+  .quote > .fx-grain--warm{ opacity:.28 }
   .quote .text{
     position:relative;z-index:3;
     height:100%;
@@ -331,13 +184,13 @@
     filter:brightness(0) invert(1);
     opacity:.95;
   }
-  /* Quote text — Lead role (white on dark surface). */
+  /* Quote text — Body register on dark surface. Type does the work, not opacity. */
   .quote blockquote{
     font-family:var(--font-sans);
     font-weight:400;
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:rgba(255,255,255,.9);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:#fff;
     margin:clamp(40px,6vw,64px) 0 0;
     max-width:42ch;
   }
@@ -351,102 +204,35 @@
     margin:0;
     color:#fff;
   }
-  /* Role/company line — Small role on dark surface. */
+  /* Role/company line — Small role on dark surface (size differentiates from name). */
   .quote .who-meta{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
     font-weight:400;
-    color:rgba(255,255,255,.78);
+    color:#fff;
     margin:4px 0 0;
-  }
-
-  /* ---------- stats ---------- */
-  .stats{background:var(--paper-warm);padding:80px 0}
-  .stats .row{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
-  /* Section label — Body. */
-  .stats .label{
-    font-family:var(--font-sans);
-    font-size:var(--fs-body);
-    line-height:var(--lh-body);
-    color:var(--ink);
-    margin:0;max-width:24ch;
-  }
-  .stats .table{display:flex;flex-direction:column;gap:0}
-  .stats .item{
-    display:grid;grid-template-columns:1fr auto;align-items:center;
-    padding:22px 0;border-top:1px solid var(--line);
-    gap:24px;
-  }
-  .stats .item:last-child{border-bottom:1px solid var(--line)}
-  /* Row label — Small. */
-  .stats .item span{
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:var(--ink);
-  }
-  /* Big number — H3 styling (Poppins 500 24-36) with weight 600 + ls
-     override (display number; sans-utility, not editorial). */
-  .stats .num{
-    font-family:var(--font-sans);
-    font-size:var(--fs-h3);
-    line-height:var(--lh-h3);
-    font-weight:600;
-    letter-spacing:-.02em;
-    white-space:nowrap;
   }
 
   /* ---------- founders/team lives in shared/components/team-section/ ---------- */
 
-  /* ---------- paper zone (team + cta + footer share one paper backdrop) ---------- */
+  /* ---------- paper zone (team + cta + footer share one paper backdrop) ----------
+     Surface composed from effects-kit utilities: `.fx-grad-paper` (warm radial),
+     `.fx-grain--ink` (multiply grain), `.fx-halftone-bloom` (default mask focal
+     point, 50% 78% — sits behind a centered CTA below the team grid). */
   .paper-zone{
     position:relative;
     isolation:isolate;
     overflow:hidden;
-    color:#0a0a0a;
-    background:
-      radial-gradient(120% 80% at 50% 0%,
-        rgba(229,244,241,1) 0%,
-        rgba(242,235,216,.85) 45%,
-        #f5f1ec 100%);
+    color:var(--ink);
   }
-  /* SVG turbulence paper grain */
-  .paper-zone::before{
-    content:"";
-    position:absolute;inset:0;pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:320px 320px;
-    mix-blend-mode:multiply;
-    opacity:.35;
-    z-index:0;
-  }
-  /* Halftone-dot bloom masked behind the CTA headline */
-  .paper-zone::after{
-    content:"";
-    position:absolute;inset:0;pointer-events:none;
-    background-image:
-      radial-gradient(rgba(11,26,43,.16) 22%, transparent 23%),
-      radial-gradient(rgba(11,26,43,.16) 22%, transparent 23%);
-    background-size:14px 14px, 14px 14px;
-    background-position:0 0, 7px 7px;
-    -webkit-mask-image:radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%);
-            mask-image:radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%);
-    opacity:.25;
-    mix-blend-mode:multiply;
-    z-index:0;
-  }
-  .paper-zone > *{position:relative;z-index:1}
+  /* Promote real content children above the .fx-* effect overlays. The fx
+     layers keep their own absolute positioning (not caught by this rule). */
+  .paper-zone > :not([class*="fx-"]){position:relative;z-index:1}
 
   /* ---------- responsive ---------- */
   @media (max-width:960px){
     .hero h1{font-size:48px}
-    .features .grid{grid-template-columns:repeat(2,1fr)}
-    .typology .grid{grid-template-columns:1fr}
-    .stats .row{grid-template-columns:1fr}
-  }
-  @media (max-width:540px){
-    .features .grid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -463,13 +249,17 @@
   <div class="scrim"></div>
   <div class="hero-inner">
     <h1>Drawings, decisions, and your team — all in one place.</h1>
-    <p class="lead">AI-native communication platform for architecture project collaboration.</p>
+    <p>AI-native communication platform for architecture project collaboration.</p>
   </div>
 </header>
 
-<!-- ========== PRODUCT FEATURE: stack-and-collapse animation ========== -->
+<!-- ========== PRODUCT FEATURE: stack-and-collapse animation ==========
+     The component renders the pinned 200vh stage *plus* a 100vh tail spacer
+     (`.stack-section__pin-tail`) so the ScrollTrigger pin has the runway it
+     needs to release cleanly before the next section enters. Tail spacer is
+     transparent — inherits the page surface — so don't paint anything onto
+     [data-stack-animation] from the host page. -->
 <div data-stack-animation></div>
-<div style="height:100vh;background:#fff"></div>
 
 <!-- ========== CAPABILITIES (editorial-strip variant) ==========
      Two-column header: H2 left + intro leads right. The warm-paper bg
@@ -481,10 +271,10 @@
     <div class="capabilities-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
       <div class="capabilities-section__intro">
-        <p class="lead">
+        <p>
           Stop wasting hours navigating hundreds of endless emails during home construction projects.
         </p>
-        <p class="lead">
+        <p>
           Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
         </p>
       </div>
@@ -499,7 +289,8 @@
 <!-- ========== QUOTE ========== -->
 <section class="quote-section">
   <div class="wrap">
-    <div class="quote" data-nav-tone="dark">
+    <div class="quote fx-grad-dark-teal" data-nav-tone="dark">
+      <div class="fx-grain fx-grain--warm"></div>
       <div class="text">
         <img class="logo" src="assets/slc-logo.webp" alt="SLC Architect" />
         <blockquote>
@@ -516,13 +307,15 @@
 </section>
 
 <!-- ========== PAPER ZONE — team + cta + footer share one paper backdrop ========== -->
-<div class="paper-zone">
+<div class="paper-zone fx-grad-paper">
+  <div class="fx-grain fx-grain--ink"></div>
+  <div class="fx-halftone-bloom"></div>
 
-<!-- ========== TEAM (shared component) ========== -->
-<div data-team-section
-     data-theme="paper"
-     data-link-href="about.html"
-     data-link-label="Learn more"></div>
+  <!-- ========== TEAM (shared component) ========== -->
+  <div data-team-section
+       data-theme="paper"
+       data-link-href="about.html"
+       data-link-label="Learn more"></div>
 
 </div><!-- /.paper-zone -->
 
@@ -535,7 +328,6 @@
 <script src="shared/components/stack-animation/index.js"></script>
 <script src="shared/components/halftone-video/index.js"></script>
 <script src="shared/components/icp-carousel/index.js"></script>
-<script src="shared/components/feature-highlights/index.js"></script>
 <script src="shared/components/features-editorial/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 

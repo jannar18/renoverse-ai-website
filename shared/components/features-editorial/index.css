@@ -73,10 +73,10 @@
 
 .features-editorial__body {
   font-family: var(--font-sans);
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 400;
-  color: rgba(11, 26, 43, 0.72);
+  color: var(--ink);
   margin: 0;
 }
 

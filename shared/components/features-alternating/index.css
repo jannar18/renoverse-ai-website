@@ -144,14 +144,14 @@
   margin: 0 0 24px;
 }
 
-/* Lead role — Poppins, --fs-lead, softened ink. */
+/* Body paragraph under the row's H2/H3 — plain Body register. */
 .features-alt__body {
   font-family: var(--font-sans);
-  font-size: var(--fs-lead);
-  line-height: var(--lh-lead);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-weight: 400;
   margin: 0;
-  color: rgba(11, 26, 43, .78);
+  color: var(--ink);
 }
 
 /* ---------- bullets (Solutions deep-dive mode) ----------
@@ -178,13 +178,13 @@
   color: var(--ink);
   margin: 0 0 4px;
 }
-/* Bullet body — Small role, softened ink. */
+/* Bullet body — Small role; size differentiates from the bold label above. */
 .features-alt__bullet-body {
   font-family: var(--font-sans);
   font-size: var(--fs-small);
   line-height: var(--lh-small);
   font-weight: 400;
-  color: rgba(11, 26, 43, .78);
+  color: var(--ink);
   margin: 0;
 }
 
@@ -261,7 +261,7 @@
       rgba(0, 0, 0, .05) 12px 24px
     ),
     #ece7e1;
-  color: rgba(11, 26, 43, .55);
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: var(--fs-eyebrow);
   font-weight: 500;

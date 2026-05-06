@@ -107,7 +107,7 @@ Until a live mirror exists, build Imagery sections from this skeleton. It's the 
   <div class="imagery-content">
     <p class="eyebrow">Eyebrow</p>
     <h2>Section heading.</h2>
-    <p class="lead">Lead paragraph that introduces the section.</p>
+    <p>Body paragraph that introduces the section.</p>
     <p>Body copy continues here, left-aligned.</p>
   </div>
 </section>
@@ -196,10 +196,8 @@ Mirror `.quote-section` in `index.html`. The recipe:
 4. **Paper grain** — `.fx-grain--warm`.
 5. **Content** — left-aligned, on top of all overlays:
    - Customer logo top-left (filtered to white if needed), max ~48px tall.
-   - Blockquote in Poppins regular, ~15–17px, line-height 1.65, white at 90% opacity, max-width ~42ch.
-   - Attribution at the bottom: name in Poppins 600 white, role/company in 78% white at ~13px.
-
-**Note:** the existing `.quote-section` is currently *partial Spotlight* — it has gradient + grain but no halftone bloom yet, and inlines its own one-off diagonal gradient. Phase 4 cleanup will switch it to a panel gradient and add the bloom so it matches the signature exactly.
+   - Blockquote in Poppins regular at Body size, white, max-width ~42ch.
+   - Attribution at the bottom: name in Poppins 600 white, role/company in Poppins 400 white at Small size (~13px). Hierarchy from size + weight, not opacity.
 
 ### "Add a hero video to a new page" / "Add a hero like the homepage"
 
@@ -218,7 +216,7 @@ The homepage hero uses the WebGL halftone-video shader. **Reuse its exact config
   <div class="scrim"></div>
   <div class="hero-inner">
     <h1>…</h1>
-    <p class="lead">…</p>
+    <p>…</p>
   </div>
 </header>
 ```
@@ -231,14 +229,14 @@ Don't drift `data-cell`, `data-radius`, `data-contrast`, or `data-grain` — tho
 
 #### Hero anatomy — the rules
 
-Heroes are a fixed two-element composition. **H1 + `.lead`. Nothing else.**
+Heroes are a fixed two-element composition. **H1 + Body subtitle. Nothing else.**
 
-- **No eyebrow.** Eyebrows are the JetBrains Mono uppercase label that sits above an H2 *section header* — they mark sections, not heroes. A hero is the page-defining moment; it identifies itself through the H1, not through a label above it. If a non-technical user asks for "a tagline above the headline" or "a kicker," push back: that's an eyebrow, and it doesn't belong on a hero.
+- **No eyebrow.** Eyebrows are the JetBrains Mono uppercase label that sits above an H3 *section header* — they mark sections, not heroes. A hero is the page-defining moment; it identifies itself through the H1, not through a label above it. If a non-technical user asks for "a tagline above the headline" or "a kicker," push back: that's an eyebrow, and it doesn't belong on a hero.
 - **H1** — Cormorant Garamond italic, weight 600, `--fs-h1`. Alignment is contextual (left or centered per page); not a defining property of the role. The homepage hero is centered; future ICP-themed heroes may be left-aligned to suit the composition. Mirror the ICP carousel title-slide for size.
-- **`.lead`** — the hero subtitle. Same role as the section Lead: Poppins 400 at `--fs-lead` (17–20px), line-height 1.55, ink at ~78% opacity. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. (Outside heroes, the same `.lead` lives left-aligned under a section H3 — see Type scale.)
+- **Subtitle** — a plain `<p>` in Body register: Poppins 400 at `--fs-body` (16px), `--lh-body` line-height, full `--ink`. **In a hero**, alignment matches the H1 (centered when the H1 is centered, left when left). Max-width ~60ch on multi-line copy. The H1's massive Cormorant italic above (≥48px) is what carries the hierarchy; the subtitle is just paragraph copy.
 - **Both elements share the same horizontal axis** — they're one composition. When the H1 is centered, this is the only place on the site where multi-line centered body copy is sanctioned. Outside the hero, multi-line centered copy is push-back-worthy.
 
-This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`solutions.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + `.lead` rules are invariant.
+This composition applies to **every** hero variant — halftone-video heroes (homepage), paper heroes without media (`solutions.html`, `about.html`), and any future ICP-themed hero. The variant chooses the *background treatment*; the H1 + Body-subtitle rules are invariant.
 
 ### "Add a new page"
 
@@ -340,7 +338,7 @@ A reusable text block used inside *any* of the above variations:
 ```
 [eyebrow]                 ← JetBrains Mono uppercase, --xwide letter-spacing
 H3 / Poppins 500           ← section header (utility); reach for H2 (Cormorant italic) when the line is an editorial moment, not a label
-2–4 line body in Poppins  ← --fs-body or --fs-lead
+2–4 line body in Poppins  ← --fs-body
 optional [link →] or .btn ← inline link in --azure-deep, or full button for CTAs
 ```
 
@@ -493,7 +491,7 @@ This is the small inline-form pattern — distinct from the demo-form's full car
 
 ### "Add a product feature scroll moment" / "Add something like the stack animation"
 
-The site already has one big pinned-scroll product moment — the **stack-animation** component (`shared/components/stack-animation/`). It's a 300vh tall sticky-pinned section with a 3D stack of six competitor app panels (Excel, AutoCAD, Bluebeam, Finder, Gmail, Calendar) collapsing into a single Renoverse panel.
+The site already has one big pinned-scroll product moment — the **stack-animation** component (`shared/components/stack-animation/`). It's a 200vh tall sticky-pinned section with a 3D stack of five legacy app panels (Excel, AutoCAD, Bluebeam, Finder, Gmail) collapsing into a single Renoverse panel.
 
 **Use sparingly — one per page, max.** Pinned scrolls dominate the page rhythm; two on one page exhausts the reader.
 
@@ -544,19 +542,18 @@ Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-a
 
 - Hero / page-defining moment (H1) → Cormorant Garamond italic, ~48–96px, alignment per page
 - Editorial moment / closer (H2) → Cormorant Garamond italic, ~32–52px (left, or centered for a single-sentence editorial moment)
-- Section header (H3) → Poppins 500, left, ~24–36px
+- Section header (H3) → Poppins 500, left, ~20–28px
 - Eyebrow above a section header → JetBrains Mono uppercase, `letter-spacing: var(--xwide)`, only above an H3
-- Lead → Poppins ~17–20px, softened color. Section intro paragraph (left) or hero subtitle (centered when the H1 is centered)
-- Body → Poppins 16px, left
-- Small → Poppins ~12.5px, muted, left
+- Body → Poppins 16px, left. Section intro paragraphs and hero subtitles are also Body (no separate `.lead` class — hierarchy carried by H1/H2 above).
+- Small → Poppins ~12.5px, left. Fine print, captions, role-under-name, footer legal.
 
 ### "Make this section centered" / "Center the copy"
 
 **Push back on body and H3.** Body copy and H3 section headers are left-aligned, always. The exceptions are baked into specific roles, not granted ad-hoc:
 
-- **H1 alignment is contextual** — left or centered, picked per page. The hero is the only composition that authorizes centered multi-line copy, because H1 + Lead read as a single unit. Outside heroes, an H1 stays in whatever alignment its surrounding composition uses.
-- **H2 may be centered** when used as a single editorial sentence — the typology heading, the final-CTA closer, an italic Cormorant closer line.
-- **Lead in a hero** is centered when the H1 is centered (matches the H1 axis). In a section, Lead is left-aligned.
+- **H1 alignment is contextual** — left or centered, picked per page. The hero is the only composition that authorizes centered multi-line copy, because H1 + subtitle read as a single unit. Outside heroes, an H1 stays in whatever alignment its surrounding composition uses.
+- **H2 may be centered** when used as a single editorial sentence — the final-CTA closer, an italic Cormorant closer line.
+- **Hero subtitle** (Body register under the H1) is centered when the H1 is centered (matches the H1 axis). In a section, Body paragraphs are left-aligned.
 - Everything else stays left-aligned. Multi-line centered body copy outside a hero doesn't belong on this site.
 
 ### "Add navigation / change the nav"
@@ -571,40 +568,42 @@ When implementing, these are the canonical specs.
 
 ### Type scale
 
-The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but slightly smaller than H2.
+Six roles. Hierarchy comes from **type** (family / size / weight / italic), not from color or opacity. The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but smaller than H2.
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment | Color |
 |---|---|---|---|---|---|---|---|
 | H1 | Cormorant Garamond | italic 600 | `--fs-h1` (48–96px) | `--lh-h1` (1.10) | `--ls-display` | left or centered (per page) | `--ink` |
 | H2 | Cormorant Garamond | italic 500 | `--fs-h2` (32–52px) | `--lh-h2` (1.10) | `--ls-display` | left (centered ok for a single editorial sentence) | `--ink` |
-| H3 | Poppins | 500 | `--fs-h3` (24–36px) | `--lh-h3` (1.28) | `--ls-display` | left | `--ink` |
-| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--muted` |
-| Lead | Poppins | 400 | `--fs-lead` | `--lh-lead` | normal | left in sections; centered when used as a hero subtitle (matches its H1) | softened ink (`rgba(11,26,43,.78)`) |
-| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left | `--ink` |
-| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left | `--muted` |
+| H3 | Poppins | 500 | `--fs-h3` (20–28px) | `--lh-h3` (1.30) | `--ls-display` | left | `--ink` |
+| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--ink` |
+| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left in sections; centered when used as a hero subtitle (matches its H1) | `--ink` |
+| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left | `--ink` |
 
 **Heading hierarchy reads by voice, not just depth:** H1 + H2 share the editorial Cormorant italic family (hero + page-defining moments + closers); H3 is the utility Poppins family (functional section header). Eyebrows label section headers, so they sit above H3.
 
-Lead doubles as **section-intro paragraph** (one per section, max — sits between an H3 and the body) and as **hero subtitle** (under an H1). The role is the same — only its alignment shifts to match the H1 when used in a hero.
+Body doubles as **section-intro paragraph**, **hero subtitle** (under an H1), and default paragraph copy. Same register everywhere; alignment shifts to match the H1 when used in a hero. Small handles the secondary register that opacity-softened ink used to carry — fine print, captions, role-under-name, footer legal. Hierarchy from size, never from color.
 
 ### Color tokens
 
+The brand has **two font colors** plus `--azure` for highlights. No opacity-softened ink tier — secondary register comes from font/size/weight, not color.
+
 | Token | What it's for |
 |---|---|
-| `--ink` | Primary text. Dark surfaces. **Not black.** |
+| `--ink` | All text on light surfaces. `#0a0a0a` (near-black). |
+| (literal `#fff`) | All text on dark surfaces. |
 | `--bg` | Default page background |
 | `--surface` | Cards, sheets |
 | `--cream` | Warm-paper section backdrop |
 | `--ice` | Cool-paper accent |
-| `--azure` | Bright aqua highlight, hover states |
+| `--paper-warm` | Warm-paper terminus stop in the radial paper gradient + `solutions.html .additional` |
+| `--azure` | Bright aqua highlight, hover states, link emphasis |
 | `--aqua` / `--azure-deep` | CTA fills, button ticks |
-| `--teal` | Editorial italic accents (closers, eyebrows on light) |
+| `--teal` | Editorial italic accents (closers, link emphasis on light) |
 | `--blue` | Cool gradient stop only — never on its own |
 | `--oxford` | Plum-blue accent — gradient stop only |
-| `--muted` | Captions, helper text |
-| `--line` / `--line-soft` | Dividers |
+| `--line` | Hairline dividers (`rgba(0,0,0,.10)`). Single tier. |
 
-Reach order when picking: ink text on paper (default) → aqua for action → teal for editorial emphasis → muted for secondary text.
+Reach order when picking: `--ink` text on paper (default) → `--azure`/`--aqua` for action → `--teal` for editorial emphasis or links.
 
 ### Gradient tokens & utilities
 
@@ -696,7 +695,7 @@ These are the brand non-negotiables. When a request implies one of these, raise 
 
 - **New colors not in `tokens.css`.** Palette is closed.
 - **New gradients not in the named-gradient list.** Add a token first or reuse an existing one.
-- **Black (`#000`) text or pure-white backgrounds.** Use `--ink` and the paper tints.
+- **Opacity-softened ink (e.g. `rgba(11,26,43,.78)`) for secondary text.** The brand uses two font colors only — `--ink` on light, `#fff` on dark. Hierarchy comes from font / size / weight (Body vs Small, Cormorant italic vs Poppins). Never from color softening.
 - **Centered body copy.** Left-aligned only, except a single-line editorial closer.
 - **Multiple hero videos on the same page.** One per page, max.
 - **Hand-tuned shader, dither, grain, or halftone parameters.** These are the brand fingerprint — drift breaks the visual system. The kit's values are canonical.

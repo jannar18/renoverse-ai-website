@@ -333,3 +333,96 @@ Once Phases 11–16 land:
 
 - Newsletter signup currently has no backend (see `index.html:539` TODO). Out of scope for this round but flag separately.
 - Demo form submit handler is also a stub (`demo.html:142-147`). Same — flag separately.
+
+---
+
+## Final-pass plan (2026-05-06) — six PRs
+
+All build-out phases (0–17) are merged. This is the polish + handoff round before launch. **Launch is gated on the demo form backend** — once that lands, we'll do a separate F6 PR for hosting/DNS cutover (Cloudflare Pages preview → custom domain). Until then, the site stays on GitHub Pages.
+
+### F1 — Code review (strict)
+
+Single sweep across `index.html`, `solutions.html`, `about.html`, `demo.html`, every `shared/components/*`. Look for:
+- **Token drift** — hex/rgb/font/spacing values outside `shared/tokens.css`. Magic numbers, inline styles.
+- **Dead code** — unused CSS rules, orphaned JS, unreferenced assets, stale class names, leftover TODOs.
+- **Component contract** — every component ships `index.css` + `index.js` + `README.md` + `test.html`; mounts via `data-*` hook; configures via `data-*` attrs. Backfill anything missing.
+- **Duplicated logic** — primitives that should be extracted (button corner-tick recipe, frosted background recipe — per memory).
+- **Page-level HTML hygiene** — meta tags, canonical URLs, OG/Twitter cards, favicon set, `lang`, `<title>` per page.
+- Delete `BACKLOG.md` (all three items shipped — verified 2026-05-06).
+
+### F1.5 — Component library / taxonomy / CMS-style
+
+Audit `shared/components/*` as a CMS-style library — could a non-technical teammate edit content without touching JS? Look for:
+- **Content/code separation** — hardcoded copy, image paths, link URLs, or panel arrays inside `index.js` vs. driven by `data-*` attrs, slot elements in HTML, or a JSON config on the mount node. Scrutinize: `icp-carousel` (`PANELS`/`TINTS`/`PANEL_ORDER`), `site-footer` link columns + socials, `features-editorial` `DEFAULT_ITEMS`, `team-section` person list. The Solutions page already shows the target shape — content as inline JSON on the mount node.
+- **Mount / configure pattern consistency** — every component should mount via `data-component-name` and configure via `data-*` attrs. Flag inconsistent attribute style (kebab-case vs. abbreviated, e.g. `data-fh-mounted` / `data-fa-mounted` / `data-fe-mounted`), default-vs-override conventions, and how content is provided (attr vs slot vs hardcoded).
+- **Component taxonomy** — are 10 components the right grouping, or are some really variants of one primitive? `feature-highlights` / `features-alternating` / `features-editorial` is the obvious offender; the four halftone shader implementations (`halftone-video`, `icp-carousel`, `features-alternating`, `features-editorial`) is the second. Per the "match X" memory rule, two components that are the same primitive parameterized should be one.
+- **README quality** — every README must let an editor or AI agent use the component without reading source: data attrs (with type + default), slot elements expected, mount example HTML, dependencies (Tailwind / GSAP / WebGL?), gotchas. Overlaps with F5.
+- **Test fixtures** — `test.html` should be a self-contained working example. Include `tokens.css` / `button.css` / `effects.css` imports so token-correctness is verifiable in isolation, not just layout.
+- **CMS-readability of HTML** — on each page, can an editor scanning the markup tell which block is which component, find the copy, and edit it without breaking layout? Spots where copy is tangled into nested wrappers, or content lives outside the page (in component defaults), are findings.
+- **Naming hygiene** — class names, data attrs, file names, or token names that are opaque, abbreviated past readability, inconsistent with siblings, or misleading (e.g. `.tk` corner ticks, `panel--cal`, `--azure-deep` aliasing `--aqua`). Flag *why* the existing name is bad; do not propose a replacement (operator picks names).
+- **Composition surface** — could the team add a 4th ICP panel, a 5th team member, or a new feature row by editing HTML/data only? Each "no" is a finding.
+
+### F2 — ARIA + WCAG 2.1 AA compliance (strict)
+
+**Standards:** WCAG 2.1 Level AA + WAI-ARIA 1.2 + APG patterns for the three widgets that need them — Carousel (ICP), Dialog (mobile menu sheet), Disclosure (hamburger). HTML5-first; ARIA only when native semantics can't do the job.
+
+**Screen-reader test matrix:** VoiceOver (macOS Safari + iOS Safari), NVDA (Windows + Firefox + Chrome), TalkBack (Android Chrome). JAWS skipped unless an enterprise customer asks.
+
+**Automated tools:** axe-core CLI on every page, Lighthouse a11y ≥ 95, Pa11y as second opinion, WAVE for spot-check.
+
+**Coverage checklist:**
+- Landmarks: `<header> <nav> <main id="main"> <footer>` per page; one `<h1>`; heading order monotonic.
+- Skip-link verified on every page; `:focus-visible` rings on every interactive.
+- `<img>` alts meaningful (or `alt=""` if decorative); halftone overlays + hero video `aria-hidden`.
+- Forms (demo + footer newsletter): real or `sr-only` labels; `aria-required`; `aria-live` for errors / submit feedback.
+- ICP carousel: `role="region"`, `aria-roledescription="carousel"`, slide labels, `aria-live="polite"`, prev/next labeled, tap zones `aria-hidden`, ←/→ keyboard works.
+- Mobile menu: hamburger `aria-expanded` + `aria-controls`; sheet `role="dialog"` + `aria-modal="true"` + focus trap + Esc + initial focus + return focus to trigger.
+- Stack animation: `prefers-reduced-motion` honored (reduce → static stack).
+- Color contrast ≥ 4.5:1 (3:1 for ≥18pt). Frosted nav over hero + azure-on-paper are the usual offenders.
+- Tab order matches visual order; no `tabindex > 0`; no keyboard traps.
+
+### F3 — Mobile polish
+
+Capture screenshots and walk every page top-to-bottom at the standard breakpoint set (memory rule): **1440 / 1280 / 1024 / 820 / 768 portrait + 1024×768 landscape / 430 / 390 / 360**. Fix in component CSS (never page CSS) so fixes ride along everywhere. Per memory rule: every fix names its breakpoint.
+
+**Confirmed issues** — sources: `notes/team-review-main-20260506-123533.md` (static analysis, two-reviewer synthesis) + `notes/CR-RENOVERSE-MobileVideo-20260506-131237.md` (real-device mobile video review at ~390w portrait). Each item has a video timestamp in the latter doc.
+
+- **Stack-animation has no responsive rules.** At phone width the popups overflow and obscure the central Renoverse dashboard entirely; the caption "One workspace. Every detail." disappears off-screen before the popups settle. Phase 12 sequencing bug also visually confirmed (popups appear mid-recession of prior screens).
+- **`features-editorial` alternates between vertical-stack and side-by-side layouts within one section on the homepage.** Cards 1 + 3 (Email Triage, Intelligence Layer) stack vertically; cards 2 + 4 (Decision Log, Controlled Stakeholder Access) force side-by-side image+text and the body column wraps to 1–2 words per line for ~13 lines at ~390w. Fix: stack all four cards on phone widths.
+- **ICP carousel** has three compounding failures at phone width: title text clips at *both* viewport edges (leading and trailing characters off-screen); arrow pucks physically cover the first character of multiple quote lines; halftone shader bleeds onto the quote body on the Project Managers panel. Plus the section is still `100vh / min-height:720px` with no real mobile layout below 700w.
+- **Footer wordmark sized ~100% of viewport width.** Dominates the panel and crowds eyebrow + newsletter + fineprint into a cramped upper band over the dark teal halftone where contrast is marginal. Either shrink the wordmark or grow the panel (operator's instinct: full-screen-height footer).
+- **Demo page** has insufficient padding above the form — the third checkmark bullet "Pricing & rollout plan in your inbox after." is briefly covered by the frosted nav during scroll. The form fields themselves are not covered.
+- **Frosted-nav contrast over the hero halftone-video** varies frame-to-frame; on darker frames the burger icon disappears into the frost. Confirmed real, not theoretical (also covered by F2).
+- **Components disagree on the "tablet → mobile" breakpoint by 20–100px** (860 / 880 / 960 in different components). Pick one and propagate.
+- **Page-level mobile rules** in `index.html:441-450`, `solutions.html:164-166`, `about.html:111-115` should move into the relevant components.
+
+**Tablet / landscape coverage gap:** the video review is portrait-only on a single ~390w device. 360w / 430w / 768 / 820 / 1024 portrait + 1024×768 landscape are still rubric-only. Add a screenshot pass (headless Chromium) at those breakpoints during F3 implementation to fill the gap.
+
+### F4 — Style finalization
+
+Last token audit, then lock:
+- `STYLE_GUIDE.md` updated for any drift introduced in F1–F3.
+- Type-scale clamps confirmed across all four pages.
+- Token-only check: no hex/rgb anywhere outside `tokens.css` (allowable exception: opaque overlays inside a single component).
+- Add missing tokens for anything I had to inline.
+
+### F5 — Authoring docs (audience: non-technical teammates pasting into Claude.ai)
+
+Three docs:
+1. **`EDITING.md`** — primary doc. Recipe book of common edits ("change a homepage headline", "swap a feature image", "add a person to the team", "edit ICP carousel quote", "change footer links"). Each recipe = (a) file to point Claude at, (b) copy-pasteable prompt template, (c) what to look for in the preview to confirm the change worked. **No engineer jargon** — assume reader has never opened a code editor.
+2. **`AGENTS.md`** — house rules pasted into Claude's context: token system, "match X" rule (component identity, not copy-paste), halftone shader spec, component contract, breakpoint set, things never to do. Teammates won't read this; the AI will.
+3. **`README.md` rewrite** — short. What the site is + pointer to `EDITING.md` for editors and `AGENTS.md` for AI.
+4. **Per-component `README.md` audit** — every `shared/components/*/README.md` must describe data attrs, mount example, dependencies, gotchas. Backfill any missing.
+
+---
+
+## Deferred to post-launch (after demo form lands)
+
+### F6 — Hosting + domain cutover
+
+- Stand up Cloudflare Pages preview deploy (free, instant builds from GitHub, generous CDN). Get every page green at `*.pages.dev`.
+- Add `_headers` / `_redirects` for security headers + cache rules.
+- Once demo form backend is wired: add custom domain (`renoverse.com` or `renoverse.ai` — tbd), point DNS, verify TLS, verify `www`/apex redirects, enable HSTS after smoke-test.
+- Decommission GitHub Pages.
+
+**This will not happen until Julianna confirms the demo form is live.**
