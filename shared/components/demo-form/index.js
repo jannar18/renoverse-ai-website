@@ -67,7 +67,7 @@
           ink:           '#0a0a0a',
           'ink-soft':    '#3a3a3a',
           beige:         '#FAFAF7',
-          surface:       '#FFFFFF',
+          white:         '#FFFFFF',
           cream:         '#F2EBD8',
           ice:           '#E5F4F1',
           'sky-blue':    '#7FE3CB',

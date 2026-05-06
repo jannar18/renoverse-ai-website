@@ -593,7 +593,7 @@ Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` 
 | `--ink` `#0a0a0a` | Headings (H1/H2/H3), eyebrows, bold-emphasized body (attribution names, bullet labels), buttons. |
 | `--ink-soft` `#3a3a3a` | All paragraph copy: hero subtitles, section intros, body paragraphs, captions, small text. |
 | `--beige` `#FAFAF7` | Warm off-white surface — used as a section background where you want a warmer-than-white feel. **Not** the default page bg. |
-| `--surface` `#FFFFFF` | Default page background. Cards, sheets, anywhere wanting clean white. |
+| `--white` `#FFFFFF` | Default page background. Cards, sheets, anywhere wanting clean white. |
 | `--cream` `#F2EBD8` | Warm-paper accent surface. |
 | `--ice` `#E5F4F1` | Cool-paper accent surface. |
 | `--paper-warm` `#F5F1EC` | Warm-paper terminus stop (`team-section[data-theme="paper"]`, `solutions.html .additional`). |
