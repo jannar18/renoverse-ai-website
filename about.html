@@ -31,15 +31,14 @@
      Heroes are centered as a block (H1 is centered as a defining
      property; the sub follows the same axis). Heroes don't have
      eyebrows — eyebrows mark section labels above an H2, not heroes. */
-  /* Hero takes ~70vh so the H1 + lead remain the dominant beat in the
-     first viewport (flex-centered vertically) while the backstory's H2
-     peeks at the bottom — together hero + H2 fill the viewport. */
+  /* Hero fills the full viewport on load; H1 + lead are flex-centered
+     vertically + horizontally inside the paper zone. */
   .page-hero{
     position:relative;
     isolation:isolate;
     overflow:hidden;
-    min-height:70vh;
-    padding:calc(var(--nav-height) + var(--section-y-tight)) 0 var(--section-y-tight);
+    min-height:100vh;
+    padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
     background:var(--grad-paper);
     text-align:center;
     display:flex;
@@ -56,19 +55,19 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0 auto;
-    max-width:18ch;
+    max-width:26ch;
   }
-  /* Hero subtitle — Body role; smaller + tighter than a hero Lead so the
-     hero sits closer in weight to a section opener than a page-defining
-     statement (this is About us — a quieter, company-framed opener). */
+  /* Hero subtitle — Lead role per STYLE_GUIDE. Centered to match the
+     centered H1 (one composition); 60ch column carries the longer
+     positioning paragraph in 3-ish lines on desktop. */
   .page-hero .lead{
-    margin:20px auto 0;
+    margin:24px auto 0;
     font-family:var(--font-sans);
     font-weight:400;
-    font-size:var(--fs-body);
-    line-height:var(--lh-body);
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
     color:rgba(11,26,43,.78);
-    max-width:48ch;
+    max-width:60ch;
   }
 
   /* ---------- backstory ----------
@@ -269,9 +268,12 @@
   <!-- ========== PAGE HERO ========== -->
   <section class="page-hero">
     <div class="wrap">
-      <h1>About us</h1>
+      <h1>Coordinating Complexity.<br>Capturing Accountability.</h1>
       <p class="lead">
-        A small team building the source of truth for architecture.
+        Your projects involve dozens of stakeholders, layered approval workflows, and decisions
+        happening across email, phone, text, and marked-up plans. Renoverse gives you a single
+        source of truth for everything that matters: who decided what, when, and what version
+        they were looking at.
       </p>
     </div>
   </section>
