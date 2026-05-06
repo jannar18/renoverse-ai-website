@@ -274,7 +274,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 
 - Reuse the `feature-highlights` component (`shared/components/feature-highlights/`) — don't hand-build.
 - Each feature: small icon + H3 in Poppins + 1–2 line body. No imagery.
-- Surface: `.fx-grad-paper` + `.fx-grain--ink`. **Quiet signature.**
+- Surface: `.fx-grad-ice-cream-beige` + `.fx-grain--ink`. **Quiet signature.**
 - Animation *(intended state — not yet wired into the existing component; Phase 4 target)*: subtle staggered fade-in + 24px slide-up on enter (~600ms ease-out, GSAP ScrollTrigger), one stagger step ~80ms apart. The current `feature-highlights` component renders items statically with no entrance animation; matching the brand baseline (see "Animation rules" below) is queued for the cleanup pass.
 
 > **Don't widen to a 5+ card strip.** The brand reads card families as 3 or 4, max. If more features are requested, propose a stacked or alternating variation instead.
@@ -292,7 +292,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 **Use when:** each feature needs more space and a richer description than a card can hold — feature deep-dives, product page detail.
 
 - Vertical stack of full-width rows. Each row: small photo/screenshot left (or right), eyebrow + H3 + 2–4 line body + optional inline link on the other side. No alternating — every row reads the same way.
-- Surface: `.fx-grad-paper` + `.fx-grain--ink`. **Quiet signature.**
+- Surface: `.fx-grad-ice-cream-beige` + `.fx-grain--ink`. **Quiet signature.**
 - Row spacing: `--section-y-tight` between rows so the section doesn't sprawl.
 - Photo: aspect-ratio 16/10 or similar wide; photo passes through `.fx-dither.fx-dither--photo` if it's stock imagery, or stays unfiltered for product UI screenshots.
 - Animation: each row fades in + slides up 24px as it enters the viewport. No alternating direction (keeps the rhythm steady).
@@ -304,7 +304,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 - Each feature is a near-full-vw row: blurb on one side (~40% width) + product highlight on the other (~60% width — large screenshot, illustration, or short looping video). Alternate which side the blurb sits on per row.
 - Blurb: eyebrow (JetBrains Mono) + H3 (Poppins section header) + optional H2 (Cormorant italic editorial moment) + lead paragraph + optional `.btn .btn--filled` or `.btn .btn--white` CTA.
 - Product highlight: large media block, dithered if photo (`.fx-dither.fx-dither--photo`), unfiltered if product UI. Can include a short autoplay-loop muted video for animated UI demos.
-- Surface: alternates per row between `.fx-grad-paper` (Quiet, blurb-only side) and a dark vertical gradient (`.fx-grad-dark-oxford-teal-cream` or `.fx-grad-dark-oxford-azure-ice` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
+- Surface: alternates per row between `.fx-grad-ice-cream-beige` (Quiet, blurb-only side) and a dark vertical gradient (`.fx-grad-dark-oxford-teal-cream` or `.fx-grad-dark-oxford-azure-ice` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
 - Spacing: each row is min `80vh` so each gets its own scroll moment without being pinned.
 - Animation: as each row enters the viewport, the *side that's currently coming in from off-screen* slides 32px from its outside edge with fade-in (600ms, ease-out). Don't pin-scroll these — the stack-animation already owns that slot.
 - Don't apply this to more than 3–4 features in one section. If the page needs more, switch to Variation 3 (stacked rows).
@@ -325,7 +325,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 
 **Use when:** two features need equal visual weight and they're parallel/contrasting (e.g. "before / after," "you / your client," "what we do / what we don't do").
 
-- Two columns, equal width, ~`60vh` tall each. Each column: eyebrow + H3 + body + optional small image. Alternate the surface per column — one column on `.fx-grad-paper`, the other on `.fx-grad-dark-oxford-teal-cream` (or any other dark vertical gradient). The contrast between paper and dark *is* the message.
+- Two columns, equal width, ~`60vh` tall each. Each column: eyebrow + H3 + body + optional small image. Alternate the surface per column — one column on `.fx-grad-ice-cream-beige`, the other on `.fx-grad-dark-oxford-teal-cream` (or any other dark vertical gradient). The contrast between paper and dark *is* the message.
 - The optional small image, if used, passes through `.fx-dither.fx-dither--photo` — making the imagery-bearing column **Imagery**. Without an image, the dark column is **Quiet** on a saturated gradient. So per the four-signature taxonomy: **Quiet ↔ Quiet (text-only)** or **Quiet ↔ Imagery (with photos)**, depending on whether the columns include media.
 - Animation: both columns fade in together as the section enters viewport.
 
@@ -392,7 +392,7 @@ This is the **Quiet signature**. A two-column layout that pairs a short label se
 
 **Right column:** a stack of rows. Each row is `display: grid; grid-template-columns: 1fr auto;` with the stat name (Poppins 14px) on the left and a big number on the right. Number uses `--fs-h2` (clamp 32–52px), weight 600, letter-spacing -0.02em, white-space: nowrap so commas don't break. `border-top: 1px solid var(--line)` between rows; the last row also gets `border-bottom`. ~22px vertical padding per row.
 
-**Surface:** `.fx-grad-paper` is the default. Add `.fx-grain--ink` for grain.
+**Surface:** `.fx-grad-ice-cream-beige` is the default. Add `.fx-grain--ink` for grain.
 
 ### "Add a final CTA before the footer" / "Add a closing call-to-action"
 
@@ -454,7 +454,7 @@ Heading (H4) inside: Poppins 17px / 600 / `--ink`. Body: Poppins 14px / line-hei
 
 This is the **paper-zone** architectural pattern: a single host that wraps two or more adjacent sections so they share one continuous warm-paper surface (gradient + grain) instead of each section painting its own. **No live mirror today** — when the homepage and About were redesigned, the only paper-backed section left was the team-section, so the team component absorbed the paper surface itself (see `data-theme="paper"` on `[data-team-section]`). The recipe below is how to bring the pattern back if a future page needs 2+ sections inside one warm zone.
 
-**Host:** `position: relative; isolation: isolate; overflow: hidden;` with `.fx-grad-paper` on it, `.fx-grain--ink` as a positioned child, and optionally `.fx-halftone-bloom` (override `--fx-bloom-mask` to target a CTA or moment under the wrapped sections).
+**Host:** `position: relative; isolation: isolate; overflow: hidden;` with `.fx-grad-ice-cream-beige` on it, `.fx-grain--ink` as a positioned child, and optionally `.fx-halftone-bloom` (override `--fx-bloom-mask` to target a CTA or moment under the wrapped sections).
 
 **Children:** the inner sections must use `position: relative; z-index: 1;` so they render above the host's grain/bloom layers — the host applies `.paper-zone > :not([class*="fx-"]) { position: relative; z-index: 1; }` automatically.
 
@@ -463,7 +463,7 @@ This is the **paper-zone** architectural pattern: a single host that wraps two o
 - **Paper-zone wrapper** — when 2+ adjacent sections should feel like one zone (e.g. team → testimonial → CTA closer all on one warm sweep).
 - **Per-section gradients** — when each section is its own moment with its own color identity.
 
-**Don't put a paper-zone wrapper around a single section** — it adds nothing over the component-owned approach or just applying `.fx-grad-paper` directly.
+**Don't put a paper-zone wrapper around a single section** — it adds nothing over the component-owned approach or just applying `.fx-grad-ice-cream-beige` directly.
 
 ### "Add a footer" / "Add the page footer"
 
@@ -520,7 +520,7 @@ The brand has a **closed list of 7 gradients**: 5 vertical, 1 horizontal signatu
 
 | Stops | Where it's used | Token | Class |
 |---|---|---|---|
-| Radial: `ice → cream → beige` (origin top-center) | About hero, Solutions hero, team-section paper variant | `--grad-paper` | `.fx-grad-paper` |
+| Radial: `ice → cream → beige` (origin top-center) | About hero, Solutions hero, team-section paper variant | `--grad-ice-cream-beige` | `.fx-grad-ice-cream-beige` |
 
 #### Signature (horizontal — accent line, not a section fill)
 
@@ -641,7 +641,7 @@ Closed list of 7. Token names mirror the actual color stops in declared order �
 
 | Token / class | Stops |
 |---|---|
-| `--grad-paper` / `.fx-grad-paper` *(radial, origin top-center)* | ice → cream → beige |
+| `--grad-ice-cream-beige` / `.fx-grad-ice-cream-beige` *(radial, origin top-center)* | ice → cream → beige |
 
 **Signature (the only horizontal gradient — accent line, not a section fill):**
 
@@ -757,6 +757,7 @@ The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.
 
 **Other:**
 - Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**
+- `.page-hero` is duplicated verbatim across `solutions.html` and `about.html` (same min-height, padding, gradient, layout — only the H1 max-width differs). Extract to a shared `data-page-hero` component or a single `.page-hero` rule in a shared stylesheet so adding a new paper-hero page is one mount, not a copy. **(F1.5.)**
 
 ---
 

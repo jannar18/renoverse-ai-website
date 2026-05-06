@@ -55,9 +55,11 @@
   --grad-dark-oxford-blue-cream: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--blue)  70%, var(--cream) 100%);   /* ICP junior-designers */
   --grad-cream-aqua-teal:        linear-gradient(in oklab 180deg, var(--cream)       0%, var(--aqua) 55%, var(--teal)  100%);    /* features-alternating */
 
-  /* Radial paper backdrop — soft warm-paper surface. Used by about/solutions
-     hero pages and the team-section paper variant. Brand colors only. */
-  --grad-paper: radial-gradient(120% 80% at 50% 0%,
+  /* Radial backdrop — soft warm-paper surface. Origin top-center, three
+     stops from cool ice through warm cream to beige at the edges. Used by
+     about/solutions hero pages, the team-section paper variant, and the
+     demo-form's `.demo-form__bg`. */
+  --grad-ice-cream-beige: radial-gradient(120% 80% at 50% 0%,
     var(--ice)   0%,
     var(--cream) 45%,
     var(--beige) 100%);
