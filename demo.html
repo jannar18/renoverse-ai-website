@@ -6,7 +6,7 @@
 <title>Book a demo — Renoverse</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Preload Tailwind config + Play CDN so the demo-form's utility
      classes are ready before the component mounts. (The component
@@ -47,6 +47,7 @@
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/demo-form/index.css">
+<link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
@@ -68,52 +69,6 @@
      a header bug. */
   .demo-page{ position:relative; background:var(--bg) }
 
-  /* ---------- footer (matches index.html) ---------- */
-  footer.site{background:#0a0a0a;color:#fff;padding:48px 0 56px;border-top:1px solid rgba(255,255,255,.12)}
-  footer.site .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
-  footer.site .row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;align-items:start}
-  footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
-  footer.site .tagline{
-    margin-top:12px;
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:rgba(255,255,255,.55);
-    max-width:32ch;
-  }
-  /* Footer column heading — Eyebrow role. */
-  footer.site .col h5{
-    font-family:var(--font-mono);
-    font-size:var(--fs-eyebrow);
-    line-height:var(--lh-eyebrow);
-    font-weight:500;
-    letter-spacing:var(--xwide);
-    text-transform:uppercase;
-    color:rgba(255,255,255,.55);
-    margin:0 0 14px;
-  }
-  /* Footer column link — Small role. */
-  footer.site .col a{
-    display:block;
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:rgba(255,255,255,.85);
-    margin-bottom:8px;
-  }
-  footer.site .col a:hover{color:var(--azure)}
-  /* Copyright — Small role. */
-  footer.site .copyright{
-    margin-top:48px;
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:rgba(255,255,255,.45);
-  }
-
-  @media (max-width:960px){
-    footer.site .row{grid-template-columns:1fr 1fr}
-  }
 </style>
 </head>
 <body>
@@ -129,35 +84,7 @@
 </main>
 
 <!-- ========== FOOTER ========== -->
-<footer class="site">
-  <div class="wrap">
-    <div class="row">
-      <div class="brand">
-        <img src="assets/logo-mark.png" alt="Renoverse" />
-        <p class="tagline">The source of truth for architects. Drawings, decisions, and your entire team — all in one place.</p>
-      </div>
-      <div class="col">
-        <h5>Solutions</h5>
-        <a href="solutions.html">Overview</a>
-        <a href="index.html#typology">For Architects</a>
-        <a href="demo.html">Book a demo</a>
-      </div>
-      <div class="col">
-        <h5>Company</h5>
-        <a href="about.html">About</a>
-        <a href="index.html#founders">The Team</a>
-        <a href="mailto:hello@renoverse.ai">Contact</a>
-      </div>
-      <div class="col">
-        <h5>Follow</h5>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="mailto:hello@renoverse.ai">hello@renoverse.ai</a>
-      </div>
-    </div>
-    <div class="copyright">© 2026 Renoverse AI. All rights reserved.</div>
-  </div>
-</footer>
+<footer class="site-footer" data-site-footer></footer>
 
 <script src="shared/components/site-nav/index.js"></script>
 <script src="shared/components/demo-form/index.js"></script>
@@ -168,6 +95,18 @@
     console.log('[demo] submission:', e.detail.values);
   });
 </script>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "@paper-design/shaders-react": "https://esm.sh/@paper-design/shaders-react@0.0.76?deps=react@18.3.1,react-dom@18.3.1"
+  }
+}
+</script>
+<script type="module" src="shared/components/site-footer/index.js"></script>
 
 </body>
 </html>

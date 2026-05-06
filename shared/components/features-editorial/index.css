@@ -58,17 +58,15 @@
   max-width: 52ch;
 }
 
-/* H3 role per STYLE_GUIDE — Poppins 500, --fs-h3, section-header voice,
-   set in all-caps with positive tracking to read as a label-style header.
+/* H3 role per STYLE_GUIDE — Poppins, --fs-h3, section-header voice.
    Inherits the global type scale so a token-level size change propagates
    site-wide. */
 .features-editorial__title {
   font-family: var(--font-sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h3);
   line-height: var(--lh-h3);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: var(--ls-display);
   color: var(--ink);
   margin: 0 0 12px;
 }

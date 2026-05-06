@@ -1,0 +1,352 @@
+/* Renoverse — site-footer.
+   Monumental shared footer with shader background. The HalftoneDots layer
+   composites the photographic source over the warm paper backdrop; a
+   GrainGradient wave sits on top in mint/lavender/cream and washes into
+   the bottom edge.
+
+   Layout, top → bottom:
+     1. site-footer__newsletter — single-line mono label + inline arrow
+                                   form, right-aligned
+     2. site-footer__utility    — hairline divider, socials (left), legal
+                                   links + copyright (right)
+     3. site-footer__brand      — large logo grounded at the bottom-left
+   The whole stack is anchored to the bottom of a 100vh footer so the
+   shader background gets the full upper viewport to breathe. */
+
+footer.site-footer{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  /* Full viewport so the gradient + halftone shader has the room to
+     breathe — content stays anchored at the bottom via flex-end. Mobile
+     breakpoint below collapses this to content-driven height. */
+  min-height: 100vh;
+  overflow: hidden;
+  /* Paper backdrop + a flat fallback gradient using GrainGradient's color
+     trio, so pages without WebGL still get a recognizable wash. */
+  background:
+    linear-gradient(160deg, rgba(119,126,221,0.18) 0%, rgba(92,193,171,0.30) 55%, rgba(213,255,250,0.55) 100%),
+    #F4F1EA;
+  color: #0a0a0a;
+  isolation: isolate;
+}
+
+/* Shader root — fills the footer; the two children inside are absolute,
+   inset:0 so each layer covers the full footer area. */
+.site-footer__shaders{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.site-footer__halftone,
+.site-footer__gradient{
+  position: absolute;
+  inset: 0;
+}
+/* Paper's shader components render a sized <canvas> — force them to fill
+   regardless of any intrinsic sizing the props might apply. */
+.site-footer__halftone > *,
+.site-footer__gradient > *{
+  width: 100% !important;
+  height: 100% !important;
+}
+.site-footer__gradient{ opacity: 0.9; }
+
+/* ---------- copy stack (bottom-anchored column) ----------
+   Spacing here is per-section (margin-top on each child) instead of a
+   uniform `gap`, so the newsletter sits the same 24px above the
+   divider as the utility content sits below it. */
+.site-footer__copy{
+  position: relative;
+  z-index: 2;
+  padding: 80px clamp(24px, 6vw, 96px) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.site-footer__top-row{
+  /* First utility row — sits 24px above the divider line that lives on
+     .site-footer__legal. */
+  margin-top: 0;
+}
+
+.site-footer__legal{
+  /* Sits below the divider line — 24px above the line (margin-top), 24px
+     below it (padding-top). Symmetric spacing around the line. */
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(11,26,43,0.18);
+}
+
+.site-footer__bottom{
+  /* Grounding row — logo + copyright. No divider here anymore. */
+  margin-top: 24px;
+}
+
+/* ---------- top row: socials (left) + newsletter (right) ----------
+   Both anchored to the row's bottom edge so their visual bottoms sit at
+   the same y-level — 24px above the divider line. Newsletter content
+   stacks upward from there. */
+.site-footer__top-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+/* ---------- newsletter (right side of the top row) ----------
+   Eyebrow label (canonical mono/uppercase/--xwide style) above an inline
+   input + arrow submit puck. Follows the style-guide newsletter recipe —
+   8px-radius input, 60% white fill, --azure-deep border. */
+.site-footer__newsletter{
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* Eyebrow role — JetBrains Mono uppercase, --xwide letter-spacing,
+   --fs-eyebrow size. Tinted to brand --teal per request (the whole footer
+   text + social icons share this color). */
+.site-footer__newsletter-label{
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: var(--fs-eyebrow, 12px);
+  line-height: var(--lh-eyebrow, 1.2);
+  font-weight: 500;
+  letter-spacing: var(--xwide, 0.32em);
+  text-transform: uppercase;
+  color: var(--teal, #2D6F75);
+  margin: 0;
+  text-align: right;
+}
+
+.site-footer__newsletter form{
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+}
+/* 8px radius, 14px font, 60% white fill, --azure-deep border (same
+   azure as the submit puck so the form reads as one unit), teal text
+   to match the rest of the footer copy. */
+.site-footer__newsletter input[type="email"]{
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--teal, #2D6F75);
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--azure-deep, #5EC9B7);
+  border-radius: 8px;
+  outline: none;
+  transition: background .15s ease;
+}
+.site-footer__newsletter input[type="email"]::placeholder{ color: rgba(45,111,117,0.55); }
+.site-footer__newsletter input[type="email"]:focus{
+  background: #fff;
+}
+/* Submit — circular arrow puck following the brand's .btn--white color
+   logic: white fill + --azure-deep stroke at rest, fills --azure-deep
+   with white stroke on hover. SVG inherits stroke via currentColor so
+   the swap is driven by the button's `color` property. */
+.site-footer__newsletter button[type="submit"]{
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--azure-deep, #5EC9B7);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--azure-deep, #5EC9B7);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.site-footer__newsletter button[type="submit"]:hover{
+  background: var(--azure-deep, #5EC9B7);
+  color: #fff;
+  border-color: var(--azure-deep, #5EC9B7);
+}
+.site-footer__newsletter button[type="submit"] svg{
+  width: 14px;
+  height: 14px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+}
+
+.site-footer__nl-status{
+  font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
+  font-size: var(--fs-small, 12.5px);
+  line-height: var(--lh-small, 1.5);
+  color: var(--teal, #2D6F75);
+  min-height: 1em;
+  text-align: right;
+  width: 100%;
+}
+/* Pre-submit there's no message — collapse out of the flex layout so the
+   eyebrow→form gap and the form→fineprint gap match (both 12px). The
+   status element re-enters the flow when JS sets its textContent. */
+.site-footer__nl-status:empty{
+  display: none;
+}
+
+/* Fineprint — Small role in brand teal. */
+.site-footer__nl-fineprint{
+  font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
+  font-size: var(--fs-small, 12.5px);
+  line-height: var(--lh-small, 1.5);
+  color: var(--teal, #2D6F75);
+  margin: 0;
+  text-align: right;
+  max-width: 36ch;
+}
+.site-footer__nl-fineprint a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.site-footer__nl-fineprint a:hover{ color: var(--ink, #0B1A2B); }
+
+/* Plain SVG socials (no pill / no border). Top-level utility row — sits
+   above the divider line. Tinted brand --teal so they share the footer's
+   color story; hover darkens to ink for affordance. */
+.site-footer__socials{
+  display: flex;
+  gap: 18px;
+}
+.site-footer__socials a{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal, #2D6F75);
+  transition: color .15s ease, transform .15s ease;
+}
+.site-footer__socials a:hover{ color: var(--ink, #0B1A2B); }
+.site-footer__socials svg{
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Legal links — own row below the divider, right-aligned. Brand teal
+   text, ink on hover. */
+.site-footer__legal{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  justify-content: flex-end;
+  font-family: "Poppins", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.site-footer__legal a{
+  color: var(--teal, #2D6F75);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.site-footer__legal a:hover{ color: var(--ink, #0B1A2B); }
+
+/* Copyright — canonical Body role per style guide § Type scale: Poppins
+   400, --fs-body, --lh-body. Tinted brand --teal to match the rest of
+   the footer copy. */
+.site-footer__copyright{
+  font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
+  font-size: var(--fs-body, 16px);
+  line-height: var(--lh-body, 1.55);
+  font-weight: 400;
+  color: var(--teal, #2D6F75);
+}
+
+/* ---------- bottom row (logo grounds left, copyright grounds right) ----
+   The grounding line — logo at the bottom-left as the visual anchor,
+   copyright at the bottom-right balancing it. */
+.site-footer__bottom{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-footer__brand{
+  display: inline-block;
+  line-height: 0;
+}
+.site-footer__brand img{
+  height: clamp(64px, 8vw, 100px);
+  width: auto;
+  display: block;
+}
+
+/* Local sr-only fallback so the email <label> stays visually hidden even
+   on pages whose page-level CSS doesn't define the helper. */
+.site-footer .sr-only{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 880px){
+  footer.site-footer{
+    min-height: 0;
+  }
+  .site-footer__copy{
+    gap: 40px;
+    padding: 96px clamp(20px, 5vw, 40px) 32px;
+  }
+  /* On mobile, fall back to uniform gap-based spacing — clear the
+     desktop per-section margin-tops so they don't double up. */
+  .site-footer__top-row,
+  .site-footer__legal,
+  .site-footer__bottom{
+    margin-top: 0;
+  }
+  /* Top row stacks: socials above, newsletter below, both left-aligned. */
+  .site-footer__top-row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  /* Legal goes left-aligned on mobile, no divider line on top. */
+  .site-footer__legal{
+    justify-content: flex-start;
+    padding-top: 0;
+    border-top: 0;
+    gap: 14px 22px;
+  }
+  /* Newsletter flips to left-aligned full-width on phones. */
+  .site-footer__newsletter{
+    align-self: stretch;
+    align-items: stretch;
+    max-width: none;
+  }
+  .site-footer__newsletter-label,
+  .site-footer__nl-status,
+  .site-footer__nl-fineprint{
+    text-align: left;
+  }
+  /* Bottom row keeps logo + copyright on one line if they fit; if not,
+     stacks logo above copyright. */
+  .site-footer__bottom{
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 18px 24px;
+  }
+}

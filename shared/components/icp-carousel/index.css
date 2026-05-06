@@ -135,7 +135,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: clamp(24px, 4vh, 48px);
+  gap: clamp(22px, 3vh, 32px);
 }
 
 /* ===== Shared heading overlay (overline + title carousel) ===== */
@@ -208,18 +208,16 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: clamp(22px, 3vh, 32px);
 }
 /* H3 role per STYLE_GUIDE — the carousel lead is the canonical H3 size
-   reference (section header) for the rest of the site. Poppins 500,
-   set in all-caps with positive tracking. */
+   reference (section header) for the rest of the site. Poppins, mixed case. */
 .icp-carousel__lead {
   font-family: var(--font-sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h3);
   line-height: var(--lh-h3);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: var(--ls-display);
   color: #fff;
   margin: 0;
 }
@@ -234,36 +232,6 @@
   color: rgba(255,255,255,.9);
   margin: 0;
 }
-/* Persona-voice blockquote (Phase 13) — Cormorant italic with a decorative
-   open-quote glyph above. Editorial register signals "this is a voice from
-   the role" rather than marketing copy. Keeps the centered alignment of the
-   panel content so it sits on the same vertical axis as the lead + CTA. */
-.icp-carousel__quote {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(17px, 1.35vw, 21px);
-  line-height: 1.5;
-  color: rgba(255,255,255,.92);
-  margin: 0;
-  position: relative;
-  padding-top: 28px;
-}
-.icp-carousel__quote::before {
-  content: "\201C";
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 56px;
-  line-height: 1;
-  color: rgba(255,255,255,.55);
-  pointer-events: none;
-}
-
 /* CTA — uses shared .btn .btn--frosted; we just append the arrow puck. */
 .icp-carousel__cta { gap: 14px; padding-right: 13px; }
 .icp-carousel__cta-arrow {
