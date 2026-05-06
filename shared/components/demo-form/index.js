@@ -306,15 +306,15 @@
         <aside class="space-y-5 lg:col-span-5 lg:sticky lg:top-24">
           <p class="uppercase tracking-[0.32em] text-teal" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:clamp(13px,1vw,15px);">${eyebrow}</p>
           <h2 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h2>
-          <p class="max-w-[46ch] text-[clamp(15px,1.1vw,17px)] leading-relaxed text-muted">${lead}</p>
+          <p class="max-w-[46ch] text-[clamp(15px,1.1vw,17px)] leading-relaxed text-ink/[0.78]">${lead}</p>
           <ul role="list" class="mt-2 space-y-3.5">
             ${[
               '30-minute walk-through, tailored to your stack.',
               'Bring a real drawing — we\'ll mark it up live.',
               'Pricing &amp; rollout plan in your inbox after.',
             ].map(t => `
-              <li class="flex items-start gap-3 text-sm leading-snug text-ink">
-                <span class="mt-0.5 inline-grid h-6 w-6 place-items-center rounded-full bg-ice text-teal">${CHECK}</span>
+              <li class="flex items-center gap-3 text-sm leading-snug text-ink">
+                <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-aqua text-white">${CHECK}</span>
                 <span>${t}</span>
               </li>`).join('')}
           </ul>
@@ -353,7 +353,7 @@
             </form>
 
             <div class="grid justify-items-start gap-3 px-1 py-2" role="status" aria-live="polite" data-success hidden>
-              <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-ice text-teal">${CHECK_LG}</span>
+              <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-aqua text-white">${CHECK_LG}</span>
               <h3 class="text-[clamp(22px,2.2vw,30px)] text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;line-height:1.1;letter-spacing:-.005em;">Thanks — we'll be in touch.</h3>
               <p class="max-w-[48ch] text-[15px] leading-relaxed text-muted">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
             </div>
