@@ -63,15 +63,15 @@
     margin:0;
     max-width:16ch;
   }
-  /* Hero subtitle — plain Body register (no opacity-softened lead). Hierarchy
-     is carried by the H1 above, not by color softening. */
+  /* Hero subtitle — Lead tier. Body font/size in the softer --ink-soft
+     shade so the subtitle sits visually below the H1. */
   .page-hero p{
     margin:24px 0 0;
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
     line-height:var(--lh-body);
-    color:var(--ink);
+    color:var(--ink-soft);
     max-width:60ch;
   }
 
@@ -155,12 +155,13 @@
     color:var(--ink);
     margin:0 0 8px;
   }
-  /* Card body text — Small role (compact paragraph inside a card). */
+  /* Card body text — Small role (compact paragraph inside a card). Body
+     color is --ink-soft site-wide; only headings sit at full --ink. */
   .add-card .meta p{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:var(--ink);
+    color:var(--ink-soft);
     margin:0;
   }
 

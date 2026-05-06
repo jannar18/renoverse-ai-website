@@ -568,28 +568,29 @@ When implementing, these are the canonical specs.
 
 ### Type scale
 
-Six roles. Hierarchy comes from **type** (family / size / weight / italic), not from color or opacity. The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but smaller than H2.
+Six roles. Hierarchy comes from **type** (family / size / weight / italic). The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but smaller than H2.
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment | Color |
 |---|---|---|---|---|---|---|---|
 | H1 | Cormorant Garamond | italic 600 | `--fs-h1` (48–96px) | `--lh-h1` (1.10) | `--ls-display` | left or centered (per page) | `--ink` |
 | H2 | Cormorant Garamond | italic 500 | `--fs-h2` (32–52px) | `--lh-h2` (1.10) | `--ls-display` | left (centered ok for a single editorial sentence) | `--ink` |
 | H3 | Poppins | 500 | `--fs-h3` (20–28px) | `--lh-h3` (1.30) | `--ls-display` | left | `--ink` |
-| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--ink` |
-| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left in sections; centered when used as a hero subtitle (matches its H1) | `--ink` |
-| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left | `--ink` |
+| Eyebrow | JetBrains Mono | 500 uppercase | `--fs-eyebrow` | `--lh-eyebrow` | `--xwide` | left. Above an H3 (section header) only — not on heroes. | `--ink` (or `--teal` when ornamental) |
+| Body | Poppins | 400 | `--fs-body` | `--lh-body` | normal | left in sections; centered when used as a hero subtitle (matches its H1) | `--ink-soft` |
+| Small | Poppins | 400 | `--fs-small` | `--lh-small` | normal | left | `--ink-soft` |
 
 **Heading hierarchy reads by voice, not just depth:** H1 + H2 share the editorial Cormorant italic family (hero + page-defining moments + closers); H3 is the utility Poppins family (functional section header). Eyebrows label section headers, so they sit above H3.
 
-Body doubles as **section-intro paragraph**, **hero subtitle** (under an H1), and default paragraph copy. Same register everywhere; alignment shifts to match the H1 when used in a hero. Small handles the secondary register that opacity-softened ink used to carry — fine print, captions, role-under-name, footer legal. Hierarchy from size, never from color.
+**Color rule:** headings + emphasis at full `--ink` (`#0a0a0a`); paragraph copy and small text at the slightly softened `--ink-soft` (`#3a3a3a`). The softer ink is what makes long-form copy easier to read against the headings. Bold-emphasized body (e.g. attribution name, bullet label) stays at full `--ink` — the weight + color together mark it as the heading-adjacent peak inside the paragraph block. **Color softening is flat, never opacity** — only the two solid `--ink` / `--ink-soft` tokens are sanctioned for ink-tier text.
 
 ### Color tokens
 
-The brand has **two font colors** plus `--azure` for highlights. No opacity-softened ink tier — secondary register comes from font/size/weight, not color.
+Two ink shades on light surfaces (`--ink` for primary, `--ink-soft` for the Lead tier), pure white on dark surfaces, plus `--azure` for highlights. **All ink softening is flat color, never opacity.**
 
 | Token | What it's for |
 |---|---|
-| `--ink` | All text on light surfaces. `#0a0a0a` (near-black). |
+| `--ink` | Headings (H1/H2/H3), eyebrows, bold-emphasized body (attribution names, bullet labels), buttons. `#0a0a0a` (near-black). |
+| `--ink-soft` | All paragraph copy, including hero subtitles, section intros, body paragraphs, captions, small text. `#3a3a3a` (slightly softer than `--ink`). |
 | (literal `#fff`) | All text on dark surfaces. |
 | `--bg` | Default page background |
 | `--surface` | Cards, sheets |
@@ -603,7 +604,7 @@ The brand has **two font colors** plus `--azure` for highlights. No opacity-soft
 | `--oxford` | Plum-blue accent — gradient stop only |
 | `--line` | Hairline dividers (`rgba(0,0,0,.10)`). Single tier. |
 
-Reach order when picking: `--ink` text on paper (default) → `--azure`/`--aqua` for action → `--teal` for editorial emphasis or links.
+Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` for headings + bold emphasis → `--azure`/`--aqua` for action → `--teal` for editorial emphasis or links.
 
 ### Gradient tokens & utilities
 
@@ -695,7 +696,7 @@ These are the brand non-negotiables. When a request implies one of these, raise 
 
 - **New colors not in `tokens.css`.** Palette is closed.
 - **New gradients not in the named-gradient list.** Add a token first or reuse an existing one.
-- **Opacity-softened ink (e.g. `rgba(11,26,43,.78)`) for secondary text.** The brand uses two font colors only — `--ink` on light, `#fff` on dark. Hierarchy comes from font / size / weight (Body vs Small, Cormorant italic vs Poppins). Never from color softening.
+- **Opacity-softened ink (e.g. `rgba(11,26,43,.78)`) for secondary text.** Color softening is allowed *only* via the flat `--ink-soft` token (the Lead tier — `#555555`). Never translucent ink, never an arbitrary new shade.
 - **Centered body copy.** Left-aligned only, except a single-line editorial closer.
 - **Multiple hero videos on the same page.** One per page, max.
 - **Hand-tuned shader, dither, grain, or halftone parameters.** These are the brand fingerprint — drift breaks the visual system. The kit's values are canonical.

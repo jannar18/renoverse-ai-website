@@ -4,11 +4,16 @@
 
 :root {
   /* ---------- brand color ----------
-     Two font colors only: --ink for text on light surfaces, #fff for text
-     on dark surfaces. Hierarchy comes from type (family / size / weight /
-     italic), never from opacity-softened ink. --azure is the highlight
-     accent for links and button fills. */
+     Two ink shades on light surfaces:
+       --ink (#0a0a0a) — headings (H1/H2/H3), eyebrows, bold emphasis,
+                         button fills/text.
+       --ink-soft (#3a3a3a) — all paragraph copy, hero subtitles, captions,
+                         small text. The slight softening is what makes
+                         long-form copy read comfortably next to headings.
+     #fff for text on dark surfaces. Color softening is flat, never opacity.
+     --azure is the highlight accent for links and button fills. */
   --ink: #0a0a0a;
+  --ink-soft: #3a3a3a;
   --bg: #FAFAF7;
   --surface: #FFFFFF;
   --cream: #F2EBD8;

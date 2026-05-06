@@ -71,16 +71,15 @@
     max-width:16ch;
     color:var(--ink);
   }
-  /* Hero subtitle — plain Body register (Poppins 400, --fs-body). Hierarchy
-     reads from the H1 above (Cormorant italic, ~7× larger), not from any
-     opacity softening. */
+  /* Hero subtitle — Lead tier. Body font/size, but in the softer --ink-soft
+     shade so it sits visually below the H1. Solid color, not opacity. */
   .hero p{
     margin-top:24px;
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
     line-height:var(--lh-body);
-    color:var(--ink);
+    color:var(--ink-soft);
     max-width:60ch;
   }
 
@@ -133,16 +132,14 @@
     color:var(--ink);
     margin:0;
   }
-  /* Right-column intro stack — vertically anchored at the top of the row so
-     the first paragraph's baseline sits near the H2's first line. Body
-     register (Poppins 400, --fs-body). Stack the two paragraphs with a
-     gap that matches the H3 → body rhythm used elsewhere on the page. */
+  /* Right-column intro stack — Body paragraphs (Body color = --ink-soft
+     site-wide; only headings sit at full --ink). */
   .capabilities-section__intro{
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
     line-height:var(--lh-body);
-    color:var(--ink);
+    color:var(--ink-soft);
   }
   .capabilities-section__intro p{margin:0}
   .capabilities-section__intro p + p{margin-top:16px}

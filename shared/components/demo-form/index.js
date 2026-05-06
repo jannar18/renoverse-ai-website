@@ -64,7 +64,8 @@
     theme: {
       extend: {
         colors: {
-          ink:        '#0B1A2B',
+          ink:        '#0a0a0a',
+          'ink-soft': '#3a3a3a',
           paper:      '#FAFAF7',
           surface:    '#FFFFFF',
           cream:      '#F2EBD8',
@@ -112,7 +113,7 @@
   ].join(' ');
 
   const LABEL_CLS = 'block text-sm font-medium text-ink';
-  const HINT_CLS  = 'mt-1.5 text-xs leading-snug text-ink data-[error=true]:text-rose-600';
+  const HINT_CLS  = 'mt-1.5 text-xs leading-snug text-ink-soft data-[error=true]:text-rose-600';
   const FIELD_CLS = 'min-w-0';
 
   // ---------- Loaders ----------
@@ -304,7 +305,7 @@
         <aside class="space-y-5 lg:col-span-5 lg:sticky lg:top-24">
           <p class="uppercase tracking-[0.32em] text-teal" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:clamp(13px,1vw,15px);">${eyebrow}</p>
           <h2 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h2>
-          <p class="max-w-[46ch] text-base leading-relaxed text-ink">${lead}</p>
+          <p class="max-w-[46ch] text-base leading-relaxed text-ink-soft">${lead}</p>
           <ul role="list" class="mt-2 space-y-3.5">
             ${[
               '30-minute walk-through, tailored to your stack.',
@@ -344,7 +345,7 @@
                         style="font-family:'JetBrains Mono',ui-monospace,monospace;">
                   ${cta}
                 </button>
-                <p class="ml-auto max-w-[260px] text-right text-xs text-ink">
+                <p class="ml-auto max-w-[260px] text-right text-xs text-ink-soft">
                   By submitting, you agree to our <a href="#" class="text-teal underline underline-offset-2">privacy policy</a>.
                 </p>
               </div>
@@ -353,7 +354,7 @@
             <div class="grid justify-items-start gap-3 px-1 py-2" role="status" aria-live="polite" data-success hidden>
               <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-aqua text-white">${CHECK_LG}</span>
               <h3 class="text-[clamp(22px,2.2vw,30px)] text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;line-height:1.1;letter-spacing:-.005em;">Thanks — we'll be in touch.</h3>
-              <p class="max-w-[48ch] text-[15px] leading-relaxed text-ink">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
+              <p class="max-w-[48ch] text-[15px] leading-relaxed text-ink-soft">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
             </div>
           </div>
         </section>
