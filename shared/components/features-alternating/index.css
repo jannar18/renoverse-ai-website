@@ -175,6 +175,40 @@
   color: rgba(11, 26, 43, .78);
 }
 
+/* ---------- bullets (Solutions deep-dive mode) ----------
+   When an item provides `bullets`, body+CTA are replaced with a 3-bullet
+   list. Each bullet is a Body-weight label + Small-role body paragraph,
+   stacked. Vertical rhythm separates entries; no glyphs/markers (the bold
+   label is the visual anchor). */
+.features-alt__bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.features-alt__bullet { margin: 0; }
+/* Bullet label — Body role with 600 weight emphasis. */
+.features-alt__bullet-label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 600;
+  letter-spacing: -.005em;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+/* Bullet body — Small role, softened ink. */
+.features-alt__bullet-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 400;
+  color: rgba(11, 26, 43, .78);
+  margin: 0;
+}
+
 /* ---------- media ---------- */
 
 .features-alt__media {
@@ -215,6 +249,57 @@
   height: auto;
   width: auto;
   background: #fff;
+}
+
+/* Placeholder media frame — keep the frame's rounded corners + shadow so the
+   placeholder still reads as a card floating on the dark teal panel.
+   Sized to match a typical product screenshot's visual weight: width is
+   responsive (clamp shrinks below the standard image-frame size on narrow
+   viewports), aspect locks the height. The 16:10 aspect mirrors the
+   feature-* PNGs in /assets so the row visual rhythm is consistent. */
+.features-alt__media-frame--ph {
+  display: block;
+  width: clamp(280px, 38vw, 640px);
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+/* Diagonal-stripe placeholder hash. Matches team-section's media-ph recipe
+   exactly so the two placeholders read as the same intentional treatment.
+   Tag/label use the brand mono-uppercase eyebrow voice. */
+.features-alt__media-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, .02) 0 12px,
+      rgba(0, 0, 0, .05) 12px 24px
+    ),
+    #ece7e1;
+  color: rgba(11, 26, 43, .55);
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--xwide);
+  text-transform: uppercase;
+}
+.features-alt__media-ph .tag {
+  display: block;
+  font-size: 10px;
+  letter-spacing: var(--xwide);
+  opacity: .55;
+  margin-bottom: 6px;
+}
+.features-alt__media-ph small {
+  display: block;
+  font-weight: 500;
+  opacity: .85;
 }
 
 /* ---------- per-row CTA ----------
