@@ -607,13 +607,8 @@ Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` 
 |---|---|
 | `--blue` `#5BA7C9` | Cool blue — gradient start; rarely on its own. |
 | `--azure` `#5D6FB8` | Indigo accent — gradient stop only. |
-| `--oxford-blue` `#022E41` | Dark blue — for any "deep blue surface" need. |
-
-**Gradient-internal:**
-
-| Token | What it's for |
-|---|---|
-| `--dark-oxford` `#0B1A2B` | Dark stop in the vertical "dark-oxford → ___" gradients. Don't use as a direct text/surface color — that's `--ink` or `--oxford-blue`. |
+| `--oxford-blue` `#022E41` | Deep blue — for any "deep blue surface" need. |
+| `--dark-oxford` `#0B1A2B` | Dark navy — top stop in the vertical `dark-oxford → ___` gradients. |
 
 **Utility:**
 
