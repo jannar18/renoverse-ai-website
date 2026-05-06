@@ -214,7 +214,7 @@
    reference (section header) for the rest of the site. Poppins, mixed case. */
 .icp-carousel__lead {
   font-family: var(--font-sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h3);
   line-height: var(--lh-h3);
   letter-spacing: var(--ls-display);

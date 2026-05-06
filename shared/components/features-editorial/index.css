@@ -63,7 +63,7 @@
    site-wide. */
 .features-editorial__title {
   font-family: var(--font-sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h3);
   line-height: var(--lh-h3);
   letter-spacing: var(--ls-display);
