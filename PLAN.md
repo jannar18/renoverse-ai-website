@@ -423,6 +423,7 @@ Three docs:
 - Stand up Cloudflare Pages preview deploy (free, instant builds from GitHub, generous CDN). Get every page green at `*.pages.dev`.
 - Add `_headers` / `_redirects` for security headers + cache rules.
 - Once demo form backend is wired: add custom domain (`renoverse.com` or `renoverse.ai` — tbd), point DNS, verify TLS, verify `www`/apex redirects, enable HSTS after smoke-test.
+- **Update the absolute URLs in every page `<head>`** — `canonical`, `og:url`, `og:image`, `twitter:image` — from `https://jannar18.github.io/renoverse-ai-website/...` to the new domain. Marker comment in each head: `<!-- F6 cutover: replace absolute URLs ... -->`. Also update `og:image` URL in `assets/og-card.html` if regenerating, and `start_url` / icon paths in `assets/favicon/site.webmanifest` (currently relative — should still work, but verify after cutover).
 - Decommission GitHub Pages.
 
 **This will not happen until Julianna confirms the demo form is live.**

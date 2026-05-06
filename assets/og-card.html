@@ -1,0 +1,79 @@
+<!doctype html>
+<!--
+  Renoverse OG card source. 1200×630.
+  Render to assets/og-card.png with:
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+      --headless --hide-scrollbars --window-size=1200,630 \
+      --screenshot=assets/og-card.png \
+      file:///absolute/path/to/assets/og-card.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:#F5F1EC;
+    background-image:
+      radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(80% 60% at 100% 100%, rgba(44,111,117,.10) 0%, rgba(44,111,117,0) 70%);
+    font-family:'Cormorant Garamond', Georgia, serif;
+    color:#0B1A2B;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:80px 96px;
+  }
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .wordmark{
+    height:64px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-weight:400;
+    font-size:14px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:#0B1A2B;
+    opacity:.6;
+  }
+  .tagline{
+    font-style:italic;
+    font-weight:500;
+    font-size:96px;
+    line-height:1.05;
+    letter-spacing:-.01em;
+    max-width:1000px;
+  }
+  .tagline em{
+    color:#2C6F75;
+    font-style:italic;
+  }
+  .rule{
+    width:120px;
+    height:2px;
+    background:#0B1A2B;
+    opacity:.25;
+    margin-bottom:32px;
+  }
+</style>
+</head>
+<body>
+  <div class="top">
+    <img class="wordmark" src="logo-black.png" alt="Renoverse">
+    <span class="eyebrow">Renoverse.ai</span>
+  </div>
+  <div>
+    <div class="rule"></div>
+    <p class="tagline">The source of truth<br>for <em>architects</em>.</p>
+  </div>
+</body>
+</html>
