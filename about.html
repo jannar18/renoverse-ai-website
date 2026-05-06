@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="shared/effects.css">
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
+<link rel="stylesheet" href="shared/components/team-section/index.css">
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
@@ -30,14 +31,22 @@
      Heroes are centered as a block (H1 is centered as a defining
      property; the sub follows the same axis). Heroes don't have
      eyebrows — eyebrows mark section labels above an H2, not heroes. */
+  /* Hero takes ~70vh so the H1 + lead remain the dominant beat in the
+     first viewport (flex-centered vertically) while the backstory's H2
+     peeks at the bottom — together hero + H2 fill the viewport. */
   .page-hero{
     position:relative;
     isolation:isolate;
     overflow:hidden;
-    padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
+    min-height:70vh;
+    padding:calc(var(--nav-height) + var(--section-y-tight)) 0 var(--section-y-tight);
     background:var(--grad-paper);
     text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
+  .page-hero .wrap{width:100%}
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
@@ -49,49 +58,41 @@
     margin:0 auto;
     max-width:18ch;
   }
-  /* Hero subtitle — Lead role per STYLE_GUIDE. Centered to match the
-     centered H1 (one composition). */
+  /* Hero subtitle — Body role; smaller + tighter than a hero Lead so the
+     hero sits closer in weight to a section opener than a page-defining
+     statement (this is About us — a quieter, company-framed opener). */
   .page-hero .lead{
-    margin:24px auto 0;
+    margin:20px auto 0;
     font-family:var(--font-sans);
     font-weight:400;
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
-    color:rgba(11,26,43,.78);
-    max-width:60ch;
-  }
-
-  /* ---------- placeholder body section ----------
-     Real About copy is TBD. This block reserves the slot with a
-     structurally-correct placeholder so the page's information
-     architecture is visible while we wait for content. */
-  .about-body{padding:var(--section-y) 0}
-  .about-body .stack{display:flex;flex-direction:column;gap:32px;max-width:64ch}
-  /* Body role. */
-  .about-body p{
-    margin:0;
-    font-family:var(--font-sans);
     font-size:var(--fs-body);
     line-height:var(--lh-body);
-    color:var(--ink);
-  }
-  /* Lead role (in-section, left-aligned). */
-  .about-body p.lead{
-    font-family:var(--font-sans);
-    font-size:var(--fs-lead);
-    line-height:var(--lh-lead);
     color:rgba(11,26,43,.78);
+    max-width:48ch;
   }
 
-  /* ---------- final cta ---------- */
-  .cta{
-    position:relative;
-    color:var(--ink);
-    padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
+  /* ---------- backstory ----------
+     Long-form founding-story section. H2 standalone editorial sentence
+     (Cormorant italic 500) opens; a stack of body paragraphs follows
+     beneath. Real copy is pending (Phase 16: lorem ipsum placeholder for
+     v1, replace when Julianna/Nola hand off the founding story). */
+  .backstory{
+    padding:var(--section-y-tight) 0 var(--section-y);
+    background:var(--paper);
   }
-  .cta .row{display:flex;align-items:center;justify-content:space-between;gap:24px}
-  /* Final CTA closer — H2 styling per STYLE_GUIDE (Cormorant italic 500, editorial register). */
-  .cta h3{
+  .backstory .wrap{max-width:var(--container)}
+  /* Two-column grid: editorial H2 on the left, body paragraphs on the
+     right. Columns are equal-weight (1fr 1fr) and align to the top so
+     the H2 reads as a "headline pull-quote" against the running body. */
+  .backstory__inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(32px,5vw,80px);
+    align-items:start;
+  }
+  /* H2 role per STYLE_GUIDE — Cormorant italic 500, --fs-h2. Standalone
+     editorial sentence; left-aligned in its column. */
+  .backstory h2{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
@@ -100,42 +101,102 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
-    max-width:30ch;
+    max-width:18ch;
+  }
+  .backstory__stack{display:flex;flex-direction:column;gap:24px;max-width:60ch}
+  /* Stack ≤860px: collapse the two columns so H2 sits above the body. */
+  @media (max-width:860px){
+    .backstory__inner{grid-template-columns:1fr;gap:32px}
+    .backstory h2{margin:0 0 clamp(24px,4vw,40px);max-width:24ch}
+  }
+  /* Lead role — first paragraph; softened ink, slightly larger. */
+  .backstory__stack p.lead{
+    font-family:var(--font-sans);
+    font-size:var(--fs-lead);
+    line-height:var(--lh-lead);
+    font-weight:400;
+    color:rgba(11,26,43,.78);
+    margin:0;
+  }
+  /* Body role — subsequent paragraphs. */
+  .backstory__stack p{
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink);
+    margin:0;
   }
 
-  /* ---------- footer (mirrors index.html light footer) ---------- */
-  footer.site{background:transparent;color:var(--ink);padding:48px 0 56px;border-top:1px solid var(--line)}
+  /* ---------- paper zone (team section sits on warm paper, mirrors index.html) ---------- */
+  .paper-zone{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    color:#0a0a0a;
+    background:
+      radial-gradient(120% 80% at 50% 0%,
+        rgba(229,244,241,1) 0%,
+        rgba(242,235,216,.85) 45%,
+        #f5f1ec 100%);
+  }
+  /* SVG turbulence paper grain */
+  .paper-zone::before{
+    content:"";
+    position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:320px 320px;
+    mix-blend-mode:multiply;
+    opacity:.35;
+    z-index:0;
+  }
+  .paper-zone > *{position:relative;z-index:1}
+
+  /* ---------- footer (dark slab — mirrors index.html / demo.html) ----------
+     Phase 13 footer treatment: dark ink slab so the footer reads as its
+     own region across pages (consistent cross-page footer language). */
+  footer.site{
+    background:#0a0a0a;
+    color:#fff;
+    padding:64px 0 56px;
+    border-top:1px solid rgba(255,255,255,.08);
+  }
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
-  footer.site .brand img{height:30px;width:auto}
+  footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
+  /* Tagline — Small role on dark surface. */
   footer.site .tagline{
     margin-top:12px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:var(--muted);
+    color:rgba(255,255,255,.7);
     max-width:32ch;
   }
   footer.site .socials{display:flex;gap:18px;margin-top:20px}
-  footer.site .socials a{display:inline-flex;align-items:center;justify-content:center;color:var(--azure-deep);transition:color .15s ease, transform .15s ease}
-  footer.site .socials a:hover{color:var(--azure)}
+  footer.site .socials a{
+    display:inline-flex;align-items:center;justify-content:center;
+    color:var(--azure);
+    transition:color .15s ease, transform .15s ease;
+  }
+  footer.site .socials a:hover{color:#fff}
   footer.site .socials svg{width:22px;height:22px;display:block}
+  /* Legal links + copyright — Small role on dark surface. */
   footer.site .legal{
     display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
   }
-  footer.site .legal a{color:var(--muted)}
-  footer.site .legal a:hover{color:var(--azure-deep)}
+  footer.site .legal a{color:rgba(255,255,255,.7);text-decoration:none}
+  footer.site .legal a:hover{color:var(--azure)}
   footer.site .copyright{
     margin-top:14px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.5);
+    color:rgba(255,255,255,.5);
   }
   footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
-  /* Eyebrow + Small per type system. */
+  /* Newsletter heading — Eyebrow role on dark surface. */
   footer.site .newsletter h5{
     font-family:var(--font-mono);
     font-size:var(--fs-eyebrow);
@@ -143,48 +204,49 @@
     font-weight:500;
     letter-spacing:var(--xwide);
     text-transform:uppercase;
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.6);
     margin:0 0 10px;
   }
   footer.site .newsletter p{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.7);
+    color:rgba(255,255,255,.75);
     margin:0 0 16px;
   }
   footer.site .newsletter form{display:flex;flex-direction:column;align-items:flex-start}
   footer.site .newsletter input[type="email"]{
-    width:100%;padding:10px 14px;font:inherit;font-size:14px;color:var(--ink);
-    background:rgba(255,255,255,.6);border:1px solid rgba(11,26,43,.18);
+    width:100%;padding:10px 14px;font:inherit;font-size:14px;color:#fff;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
     border-radius:8px;outline:none;
     transition:border-color .15s ease, background .15s ease;
   }
-  footer.site .newsletter input[type="email"]:focus{border-color:var(--azure-deep);background:#fff}
+  footer.site .newsletter input[type="email"]::placeholder{color:rgba(255,255,255,.4)}
+  footer.site .newsletter input[type="email"]:focus{border-color:var(--azure);background:rgba(255,255,255,.1)}
+  /* Subscribe uses canonical .btn .btn--filled. The .btn default 24px margin
+     is too generous here; inset by tick length (9px) on the left so TL/BL
+     ticks land flush with the column-content left edge. */
   footer.site .newsletter .btn{--btn-clearance:0;margin:18px 0 0 9px}
   footer.site .newsletter .nl-status{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.6);
+    color:rgba(255,255,255,.7);
     margin-top:6px;min-height:1.2em;
   }
   footer.site .newsletter .nl-fineprint{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.55);
     margin:14px 0 0;
   }
-  footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
+  footer.site .newsletter .nl-fineprint a{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:2px}
+  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure)}
 
   @media (max-width:960px){
     footer.site .row{grid-template-columns:1fr;gap:40px}
     footer.site .newsletter{justify-self:start;max-width:none}
-  }
-  @media (max-width:540px){
-    .cta .row{flex-direction:column;align-items:flex-start}
   }
 </style>
 </head>
@@ -200,39 +262,61 @@
   <!-- ========== PAGE HERO ========== -->
   <section class="page-hero">
     <div class="wrap">
-      <h1>Building the source of truth for architecture.</h1>
+      <h1>About us</h1>
       <p class="lead">
-        Renoverse exists to give architects, builders, and clients a single, trustworthy place
-        for every drawing, decision, and conversation across a project's life.
+        A small team building the source of truth for architecture.
       </p>
     </div>
   </section>
 
-  <!-- ========== PLACEHOLDER BODY (real content TBD) ========== -->
-  <section class="about-body">
+  <!-- ========== BACKSTORY ==========
+       Long-form founding-story section. Copy is lorem ipsum placeholder
+       per Phase 16 — replace with Julianna/Nola's founding-story copy
+       when it lands. Structure (H2 + lead + body paragraphs) and the
+       64ch readable column will stay the same. -->
+  <section class="backstory">
     <div class="wrap">
-      <div class="stack">
-        <p class="lead">
-          Our team comes from architecture, construction, and AI — backgrounds that taught us
-          how much critical context goes missing in long email threads, scattered file shares,
-          and after-the-fact phone calls.
-        </p>
-        <p>
-          More about our story, our team, and how we work is coming soon.
-        </p>
+      <div class="backstory__inner">
+        <h2>Renoverse was born out of a renovation.</h2>
+        <div class="backstory__stack">
+          <p class="lead">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+            doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+            veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          </p>
+          <p>
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
+            quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
+            porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+            adipisci velit.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== FINAL CTA ========== -->
-  <section class="cta">
-    <div class="wrap">
-      <div class="row">
-        <h3>Bring order into complexity.</h3>
-        <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
-      </div>
-    </div>
-  </section>
+  <!-- ========== PAPER ZONE — team section sits on warm paper, mirrors homepage ========== -->
+  <div class="paper-zone">
+
+    <!-- ========== MEET THE TEAM (shared component) ==========
+         No data-link-href / data-link-label here — on the homepage the
+         team teaser carries a "Learn more →" CTA pointing to this page;
+         this is the destination, so the CTA is intentionally suppressed. -->
+    <div data-team-section
+         data-theme="paper"
+         data-eyebrow="Meet the team"></div>
+
+  </div><!-- /.paper-zone -->
 
 </main>
 
@@ -283,6 +367,7 @@
 </footer>
 
 <script src="shared/components/site-nav/index.js"></script>
+<script src="shared/components/team-section/index.js"></script>
 <script>
   (function () {
     document.querySelectorAll('[data-newsletter-signup]').forEach(function (form) {

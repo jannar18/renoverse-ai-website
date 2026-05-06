@@ -283,14 +283,14 @@ This replaces `data-features-alternating` on `index.html` only — the alternati
    Composition: 3 cards / rows with more visual weight than today's strip but less than the 4 major capabilities above. Goal — clear "4 main, 3 additional" hierarchy.
 5. **Footer** (no editorial closer / final CTA on this page per the new IA).
 
-### Phase 16 — Build out About page
+### Phase 16 — Build out About page ✅ DONE
 
 Final structure (locked by Derek): **Hero → Backstory → Meet the team → Footer**. No editorial closer / final CTA.
 
-- **Hero** — H1 + Lead (style guide).
-- **Backstory** — long-form mission / founding story (copy needed from Julianna or Nola).
-- **Meet the team** — reuse the existing `[data-team-section]` shared component (already used on the homepage). Theme to match page background.
-- **Footer** — distinct style/color per Phase 13 footer treatment.
+- **Hero** — kept the existing H1 + Lead (style-guide-conformant from Phase 9).
+- **Backstory** — new `.backstory` section: H2 standalone editorial sentence ("Renoverse started inside a renovation that made the problem obvious.") + 4-paragraph stack inside a 64ch readable column. Copy is **lorem ipsum placeholder** per the locked open-question — replace when Julianna/Nola hand off the founding story.
+- **Meet the team** — `[data-team-section]` mounted with `data-theme="paper"` + `data-eyebrow="Meet the team"` and *no* `data-link-href` (the homepage teaser carries the "Learn more →" link; this page is the destination, so the CTA is intentionally suppressed). Wrapped in a `.paper-zone` (paper grain + warm gradient) mirroring the homepage's team treatment.
+- **Footer** — flipped from the previous light footer to the dark `#0a0a0a` slab per the Phase 13 treatment (markup unchanged; only CSS swapped). Final-CTA section dropped per the locked IA.
 
 ### Phase 17 — Deploy preview + content handoff
 
@@ -302,13 +302,12 @@ Once Phases 11–16 land:
 
 ## Execution order (revised)
 
-**Done:** Phase 0, 1, 2, 3, 4, 5 (rolled into 13), 6, 7, 8, 9 (stubs + nav), 11, 12, 13.
+**Done:** Phase 0, 1, 2, 3, 4, 5 (rolled into 13), 6, 7, 8, 9 (stubs + nav), 11, 12, 13, 16.
 
 **Remaining — recommended order:**
 1. **Phase 14** — Homepage 2×2 core-capabilities grid.
 2. **Phase 15** — Solutions page build-out (depends on platform-doc copy).
-3. **Phase 16** — About page build-out (depends on about copy).
-4. **Phase 17** — Deploy preview + send to Julianna + Nola.
+3. **Phase 17** — Deploy preview + send to Julianna + Nola.
 
 **Deferred / changed status:**
 - **Phase 5** (ICP carousel rework) — **back in v1**. Julianna's call: keep the section on the homepage, do one more pass at the Architects sub-personas idea with working prev/next arrows + tap zones (per the original Phase 5 spec). Slot after Phase 13.
