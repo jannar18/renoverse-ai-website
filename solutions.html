@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="shared/effects.css">
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
-<link rel="stylesheet" href="shared/components/feature-highlights/index.css">
+<link rel="stylesheet" href="shared/components/features-alternating/index.css">
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
@@ -63,15 +63,25 @@
     max-width:60ch;
   }
 
-  /* ---------- final cta (mirrors index.html .cta) ---------- */
-  .cta{
-    position:relative;
-    color:var(--ink);
-    padding:clamp(72px,9vw,112px) 0 clamp(48px,6vw,72px);
+  /* ---------- additional capabilities (3-up cards) ----------
+     Hierarchy beat: the 4 major capabilities live in the alternating
+     section above (full 100vh-per-row treatment). These 3 minor features
+     sit one notch lighter — image-on-top cards in a single row — so the
+     "4 main, 3 additional" split reads at a glance. Card surface mirrors
+     the homepage typology cards (.ty-card): rounded warm-paper container
+     with a frosted meta panel under a product-screenshot photo well. */
+  .additional{
+    background:var(--paper-warm, #f5f1ec);
+    padding:clamp(72px,9vw,112px) 0 clamp(80px,10vw,120px);
   }
-  .cta .row{display:flex;align-items:center;justify-content:space-between;gap:24px}
-  /* Final CTA closer — H2 styling per STYLE_GUIDE (Cormorant italic 500, editorial register). */
-  .cta h3{
+  .additional .head{
+    margin:0 auto clamp(40px,5vw,64px);
+    max-width:60ch;
+    text-align:center;
+    padding:0 var(--gutter);
+  }
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment. */
+  .additional .head h2{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
@@ -80,42 +90,115 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
-    max-width:30ch;
+  }
+  .additional .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:clamp(20px,2.4vw,32px);
+    align-items:stretch;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 var(--gutter);
+  }
+  .add-card{
+    display:flex;flex-direction:column;
+    border-radius:14px;
+    overflow:hidden;
+    isolation:isolate;
+    background:#ece7e1;
+    box-shadow:0 1px 0 rgba(11,26,43,.06), 0 18px 40px -22px rgba(11,26,43,.22);
+    color:var(--ink);
+  }
+  .add-card .shot{
+    position:relative;
+    aspect-ratio:1280/832;
+    background:#fff;
+    overflow:hidden;
+  }
+  .add-card .shot img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .add-card .meta{
+    position:relative;
+    flex:1;
+    padding:24px 22px 26px;
+    text-align:center;
+    color:var(--ink);
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border-top:1px solid rgba(255,255,255,.6);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  /* Card title — Body role with 600 weight emphasis (no dedicated card-title role). */
+  .add-card h3{
+    font-family:var(--font-sans);
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    font-weight:600;
+    letter-spacing:-.005em;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  /* Card body text — Small role (compact paragraph inside a card). */
+  .add-card .meta p{
+    font-family:var(--font-sans);
+    font-size:var(--fs-small);
+    line-height:var(--lh-small);
+    color:rgba(11,26,43,.78);
+    margin:0;
   }
 
-  /* ---------- footer (mirrors index.html light footer) ---------- */
-  footer.site{background:transparent;color:var(--ink);padding:48px 0 56px;border-top:1px solid var(--line)}
+  /* ---------- footer (dark slab — Phase 13 treatment) ----------
+     Solutions follows the same dark-footer pattern as index.html and
+     demo.html: #0a0a0a bg, white text, azure accents, white-inverted
+     logo, dark newsletter input. */
+  footer.site{
+    background:#0a0a0a;
+    color:#fff;
+    padding:64px 0 56px;
+    border-top:1px solid rgba(255,255,255,.08);
+  }
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
-  footer.site .brand img{height:30px;width:auto}
+  footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
+  /* Tagline — Small role on dark surface. */
   footer.site .tagline{
     margin-top:12px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:var(--muted);
+    color:rgba(255,255,255,.7);
     max-width:32ch;
   }
   footer.site .socials{display:flex;gap:18px;margin-top:20px}
-  footer.site .socials a{display:inline-flex;align-items:center;justify-content:center;color:var(--azure-deep);transition:color .15s ease, transform .15s ease}
-  footer.site .socials a:hover{color:var(--azure)}
+  footer.site .socials a{
+    display:inline-flex;align-items:center;justify-content:center;
+    color:var(--azure);
+    transition:color .15s ease, transform .15s ease;
+  }
+  footer.site .socials a:hover{color:#fff}
   footer.site .socials svg{width:22px;height:22px;display:block}
+  /* Legal links + copyright — Small role on dark surface. */
   footer.site .legal{
     display:flex;flex-wrap:wrap;gap:18px;margin-top:32px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
   }
-  footer.site .legal a{color:var(--muted)}
-  footer.site .legal a:hover{color:var(--azure-deep)}
+  footer.site .legal a{color:rgba(255,255,255,.7);text-decoration:none}
+  footer.site .legal a:hover{color:var(--azure)}
   footer.site .copyright{
     margin-top:14px;
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.5);
+    color:rgba(255,255,255,.5);
   }
   footer.site .newsletter{max-width:360px;justify-self:end;width:100%}
-  /* Eyebrow + Small per type system. */
+  /* Newsletter heading — Eyebrow role on dark surface. */
   footer.site .newsletter h5{
     font-family:var(--font-mono);
     font-size:var(--fs-eyebrow);
@@ -123,48 +206,64 @@
     font-weight:500;
     letter-spacing:var(--xwide);
     text-transform:uppercase;
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.6);
     margin:0 0 10px;
   }
+  /* Newsletter intro paragraph — Small role on dark surface. */
   footer.site .newsletter p{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.7);
+    color:rgba(255,255,255,.75);
     margin:0 0 16px;
   }
   footer.site .newsletter form{display:flex;flex-direction:column;align-items:flex-start}
   footer.site .newsletter input[type="email"]{
-    width:100%;padding:10px 14px;font:inherit;font-size:14px;color:var(--ink);
-    background:rgba(255,255,255,.6);border:1px solid rgba(11,26,43,.18);
-    border-radius:8px;outline:none;
+    width:100%;
+    padding:10px 14px;
+    font:inherit;font-size:14px;
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:8px;
+    outline:none;
     transition:border-color .15s ease, background .15s ease;
   }
-  footer.site .newsletter input[type="email"]:focus{border-color:var(--azure-deep);background:#fff}
-  footer.site .newsletter .btn{--btn-clearance:0;margin:18px 0 0 9px}
+  footer.site .newsletter input[type="email"]::placeholder{color:rgba(255,255,255,.4)}
+  footer.site .newsletter input[type="email"]:focus{
+    border-color:var(--azure);
+    background:rgba(255,255,255,.1);
+  }
+  /* Subscribe uses the canonical .btn .btn--filled (azure). The .btn default
+     24px all-around margin is too much here. Inset by the tick length (9px)
+     on the left so the TL/BL ticks land exactly on the column-content left
+     edge. Top: 18px gap so hover tick clears the input. */
+  footer.site .newsletter .btn{
+    --btn-clearance: 0;
+    margin: 18px 0 0 9px;
+  }
+  /* Status + fineprint — Small role on dark surface. */
   footer.site .newsletter .nl-status{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.6);
+    color:rgba(255,255,255,.7);
     margin-top:6px;min-height:1.2em;
   }
   footer.site .newsletter .nl-fineprint{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
-    color:rgba(11,26,43,.55);
+    color:rgba(255,255,255,.55);
     margin:14px 0 0;
   }
-  footer.site .newsletter .nl-fineprint a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure-deep)}
+  footer.site .newsletter .nl-fineprint a{color:rgba(255,255,255,.75);text-decoration:underline;text-underline-offset:2px}
+  footer.site .newsletter .nl-fineprint a:hover{color:var(--azure)}
 
   @media (max-width:960px){
+    .additional .grid{grid-template-columns:1fr;gap:24px;max-width:560px}
     footer.site .row{grid-template-columns:1fr;gap:40px}
     footer.site .newsletter{justify-self:start;max-width:none}
-  }
-  @media (max-width:540px){
-    .cta .row{flex-direction:column;align-items:flex-start}
   }
 </style>
 </head>
@@ -188,19 +287,99 @@
     </div>
   </section>
 
-  <!-- ========== FEATURES (placeholder for the merged Phase 3 content) ========== -->
-  <!-- Phase 3 will replace this 4-up strip with a fuller, copy-rich section
-       sourced from Nola's docs. For now, the existing teaser stands in as
-       the canonical "all features" surface so the link targets are stable. -->
-  <div data-feature-highlights data-cta-label="Book a demo" data-cta-href="demo.html"></div>
+  <!-- ========== CORE CAPABILITIES (alternating, deep dive) ==========
+       Phase 15: same alternating-features primitive used on the homepage,
+       but each row swaps body+CTA for three sub-bullets (label + body)
+       sourced from the Renoverse AI Platform Overview pages 5–8. CTAs
+       suppressed via data-cta-hidden — Solutions IS the deep dive page,
+       so per-row "See solutions" links would loop on themselves. The 4th
+       row (Controlled Stakeholder Access) uses a placeholder hash matching
+       the team-section media-ph until a real visual is designed. -->
+  <div data-features-alternating
+       data-cta-hidden="1"
+       data-items='[
+         {
+           "eyebrow": "Capture",
+           "title": "Email Triage & Auto-Capture",
+           "image": "assets/feature-email-triage.png",
+           "alt": "Renoverse Ella AI triage inbox surfacing decisions, questions, and action items extracted from project emails",
+           "side": "image-right",
+           "bullets": [
+             { "label": "Automated Information Capture", "body": "Connect email to automatically surface decisions, action items, and open questions — organized by project and prepped for human review." },
+             { "label": "Human-in-the-Loop Controls", "body": "You stay in control of what gets logged — review the triage queue and approve, edit, or skip anything Ella AI surfaces." },
+             { "label": "Comprehensive Organization", "body": "Ensure essential information is organized and easily accessible, preventing valuable insights from being lost amidst the clutter of fragmented communications." }
+           ]
+         },
+         {
+           "eyebrow": "Track",
+           "title": "Decision Log & Audit Trail",
+           "image": "assets/feature-decision-log.png",
+           "alt": "Renoverse decision log with timestamped audit trail tracing a backsplash tile selection from first log to final approval",
+           "side": "image-left",
+           "bullets": [
+             { "label": "Tracked Approvals", "body": "Every decision made within Renoverse is meticulously tracked, ensuring all approvals are logged and easily accessible for review, enhancing transparency among team members." },
+             { "label": "Timestamped Decisions", "body": "With each decision timestamped, users can effortlessly identify when decisions were made, providing an accurate historical record that supports accountability and informed decision-making." },
+             { "label": "Comprehensive Audit Trail", "body": "The digital audit trail captures all changes, creating a detailed history of project decisions that helps teams understand the context and reasoning behind each action taken." }
+           ]
+         },
+         {
+           "eyebrow": "Connect",
+           "title": "Intelligence Layer on Existing Stack",
+           "image": "assets/feature-intelligence-layer.png",
+           "alt": "Renoverse Connectors page showing Gmail, Outlook, and other communication and storage integrations",
+           "side": "image-right",
+           "bullets": [
+             { "label": "Existing Stack", "body": "Renoverse integrates with your current software tools, ensuring minimal lift to improved project coordination without overhauling existing workflows." },
+             { "label": "Microsoft Integrations", "body": "Integrates natively with Microsoft email & tools, so critical information is captured automatically, ensuring project context doesn’t slip through the cracks." },
+             { "label": "Coordination Layer", "body": "Enhances your existing infrastructure with a smart coordination layer, promoting collaborative projects while centralizing decision tracking and communication across various teams and tools." }
+           ]
+         },
+         {
+           "title": "Controlled Stakeholder Access",
+           "side": "image-left",
+           "placeholder": true,
+           "placeholderTag": "Image placeholder",
+           "placeholderLabel": "Stakeholder access view",
+           "bullets": [
+             { "label": "Private Workspace", "body": "Protect sensitive information with a dedicated team space, ensuring only authorized members can access critical project details and discussions pertinent to their roles." },
+             { "label": "Professional Layer (Pro-to-Pro)", "body": "Collaborators can engage with relevant project information, allowing for streamlined interactions without overwhelming them with unnecessary data or access to restricted content." },
+             { "label": "Client-Facing View (Client)", "body": "Share tailored insights with clients, offering them visibility into the project’s progress while maintaining control over the sensitive internal discussions and decisions made by the team." }
+           ]
+         }
+       ]'></div>
 
-  <!-- ========== FINAL CTA ========== -->
-  <section class="cta">
-    <div class="wrap">
-      <div class="row">
-        <h3>Ready to see Renoverse in action?</h3>
-        <a class="btn btn--filled" href="demo.html"><span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>Book a demo</a>
-      </div>
+  <!-- ========== ADDITIONAL CAPABILITIES (3-up) ==========
+       The "4 main, 3 additional" hierarchy beat. Cards mirror the homepage
+       typology card surface (warm-paper rounded container + frosted meta
+       under a product-screenshot photo well) so the visual weight sits one
+       step below the alternating rows above. Imagery from existing
+       pillar-* assets — collaborators / comments / tasks. -->
+  <section class="additional">
+    <div class="head">
+      <h2>And the rest comes built-in.</h2>
+    </div>
+    <div class="grid">
+      <article class="add-card">
+        <div class="shot"><img src="assets/pillar-collaborators.png" alt="Project collaborators panel showing architects, contractors, designers, and homeowners on a single project" loading="lazy" /></div>
+        <div class="meta">
+          <h3>Frictionless collaboration</h3>
+          <p>Consolidate communication in one unified workspace — so nothing gets lost across emails and texts.</p>
+        </div>
+      </article>
+      <article class="add-card">
+        <div class="shot"><img src="assets/pillar-comments.png" alt="Drawing v3 with anchored comments threaded against specific revisions" loading="lazy" /></div>
+        <div class="meta">
+          <h3>Version control</h3>
+          <p>Manage design plan revisions so all stakeholders collaborate on the correct set.</p>
+        </div>
+      </article>
+      <article class="add-card">
+        <div class="shot"><img src="assets/pillar-tasks.png" alt="Ella AI activity summary surfacing tasks, queries, and homeowner questions ready for review" loading="lazy" /></div>
+        <div class="meta">
+          <h3>AI assistant</h3>
+          <p>Automate repetitive admin, query project info & town documents, and field homeowner questions.</p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -252,8 +431,10 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="shared/components/site-nav/index.js"></script>
-<script src="shared/components/feature-highlights/index.js"></script>
+<script src="shared/components/features-alternating/index.js"></script>
 <script>
   // Newsletter signup — placeholder handler (no backing service yet).
   (function () {

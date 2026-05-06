@@ -1,5 +1,5 @@
 /* Renoverse — Features (alternating).
-   Mounts a 3-row alternating product-feature section into every
+   Mounts an N-row alternating product-feature section into every
    [data-features-alternating] on the page.
 
    Hybrid of STYLE_GUIDE Variation 4 (alternating blurb + product highlight)
@@ -10,8 +10,16 @@
 
    Defaults to the canonical homepage 3 features (Email Triage, Decision Log,
    Intelligence Layer). Hosts can override items and CTA via data-attributes —
-   items takes a JSON array of { eyebrow, title, body, image, alt,
-   side: 'image-left' | 'image-right' }.
+   items takes a JSON array of items, each:
+     { eyebrow, title, body, image, alt, side: 'image-left' | 'image-right',
+       bullets?: [{ label, body }, ...],
+       placeholder?: boolean,        // render diagonal-stripe ph instead of image
+       placeholderLabel?: string,    // small label inside placeholder
+       placeholderTag?: string       // tag above the label (default "Image placeholder")
+     }
+   When `bullets` is non-empty, the row renders the bullet list instead of
+   `body` + the per-row CTA. Use `data-cta-hidden="1"` on the host to suppress
+   per-row CTAs globally even on items without bullets.
 */
 (function () {
   const MOUNT = '[data-features-alternating]';
@@ -88,24 +96,71 @@
     };
   }
 
-  function buildBlurb(item, cta) {
+  function readCtaHidden(host) {
+    return host.getAttribute('data-cta-hidden') === '1';
+  }
+
+  function buildBullets(bullets) {
+    return `
+      <ul class="features-alt__bullets">
+        ${bullets.map((b) => `
+          <li class="features-alt__bullet">
+            <p class="features-alt__bullet-label">${escape(b.label || '')}</p>
+            <p class="features-alt__bullet-body">${escape(b.body || '')}</p>
+          </li>`).join('')}
+      </ul>`;
+  }
+
+  function buildBlurb(item, cta, ctaHidden) {
     /* Per-row CTA mirrors the ICP carousel CTA: bracket-corner button + aqua
        arrow puck. All blurbs sit on white now (text-on-white side of the
-       split row), so a single .btn--white variant reads consistently. */
+       split row), so a single .btn--white variant reads consistently.
+
+       When `bullets` is provided, the row swaps body+CTA for a 3-bullet list
+       (Solutions page deep-dive). Otherwise the homepage's body+CTA pattern
+       is preserved. `ctaHidden` (host-level) suppresses the CTA even for
+       body-mode items. */
+    const hasBullets = Array.isArray(item.bullets) && item.bullets.length > 0;
+    const showCta = !hasBullets && !ctaHidden;
+    const bodyOrBullets = hasBullets
+      ? buildBullets(item.bullets)
+      : `<p class="features-alt__body">${escape(item.body || '')}</p>`;
+    const ctaMarkup = showCta
+      ? `<a class="btn btn--white features-alt__cta" href="${escape(cta.href)}">
+           <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
+           ${escape(cta.label)}
+           <span class="features-alt__cta-arrow">${ARROW_SVG}</span>
+         </a>`
+      : '';
     return `
       <div class="features-alt__blurb">
         ${item.eyebrow ? `<p class="features-alt__eyebrow">${escape(item.eyebrow)}</p>` : ''}
         <h2 class="features-alt__title">${escape(item.title)}</h2>
-        <p class="features-alt__body">${escape(item.body)}</p>
-        <a class="btn btn--white features-alt__cta" href="${escape(cta.href)}">
-          <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
-          ${escape(cta.label)}
-          <span class="features-alt__cta-arrow">${ARROW_SVG}</span>
-        </a>
+        ${bodyOrBullets}
+        ${ctaMarkup}
       </div>`;
   }
 
   function buildMedia(item) {
+    /* Placeholder mode mirrors the team-section media-ph hash (diagonal
+       stripe pattern + small mono-uppercase label). Used when copy is
+       locked but the visual hasn't been designed yet (Controlled
+       Stakeholder Access on solutions.html, per Phase 15 spec). */
+    if (item.placeholder) {
+      const tag = escape(item.placeholderTag || 'Image placeholder');
+      const label = escape(item.placeholderLabel || '');
+      return `
+        <div class="features-alt__media">
+          <div class="features-alt__media-frame features-alt__media-frame--ph">
+            <div class="features-alt__media-ph">
+              <div>
+                <span class="tag">${tag}</span>
+                ${label ? `<small>${label}</small>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
     return `
       <div class="features-alt__media">
         <div class="features-alt__media-frame">
@@ -114,10 +169,10 @@
       </div>`;
   }
 
-  function buildRow(item, cta) {
+  function buildRow(item, cta, ctaHidden) {
     const side = item.side === 'image-right' ? 'image-right' : 'image-left';
 
-    const blurb = buildBlurb(item, cta);
+    const blurb = buildBlurb(item, cta, ctaHidden);
     const media = buildMedia(item);
     const first = side === 'image-left' ? media : blurb;
     const second = side === 'image-left' ? blurb : media;
@@ -278,7 +333,7 @@
     resize();
   }
 
-  function buildMarkup(items, cta) {
+  function buildMarkup(items, cta, ctaHidden) {
     /* All three background layers — gradient strip, CSS halftone, WebGL
        shader — live at the section level so they share the same vertical
        extent: one continuous gradient AND one continuous halftone AND one
@@ -291,7 +346,7 @@
         <span class="features-alt__panel-strip" aria-hidden="true"></span>
         <span class="features-alt__halftone" aria-hidden="true" style="background-image:url('${escape(halftoneSrc)}')"></span>
         <canvas class="features-alt__shader" aria-hidden="true" data-halftone-src="${escape(halftoneSrc)}"></canvas>
-        ${items.map((item) => buildRow(item, cta)).join('')}
+        ${items.map((item) => buildRow(item, cta, ctaHidden)).join('')}
       </section>`;
   }
 
@@ -328,7 +383,7 @@
   function mount(host) {
     if (host.dataset.faMounted === '1') return;
     host.dataset.faMounted = '1';
-    host.innerHTML = buildMarkup(readItems(host), readCta(host));
+    host.innerHTML = buildMarkup(readItems(host), readCta(host), readCtaHidden(host));
     /* Boot the WebGL halftone shader on each row's canvas. Source URL is
        carried via data-halftone-src so each row can use its own image. */
     host.querySelectorAll('.features-alt__shader').forEach((canvas) => {
