@@ -58,17 +58,16 @@
 /* ===== Per-panel gradients =====
    Pure gradient panel background — the architecture render shows up
    through the .icp-carousel__halftone overlay (photo masked by a dot pattern).
-   Phase 13: ids changed to architect sub-personas; gradients reused as-is from
-   the prior architects / builders / interior set so the visual signature is
-   preserved. */
+   Each panel pulls a distinct DARK gradient token from tokens.css so the three
+   reads stay clearly separable (no two panels share a middle stop). */
 .icp-carousel__panel[data-id="principal-architects"] {
-  background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 72%, var(--ice) 100%);
+  background: var(--grad-cool-oxford);
 }
 .icp-carousel__panel[data-id="project-managers"] {
-  background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--teal) 70%, var(--cream) 100%);
+  background: var(--grad-dark-teal);
 }
 .icp-carousel__panel[data-id="junior-designers"] {
-  background: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 75%, var(--blue) 100%);
+  background: var(--grad-dark-blue);
 }
 
 /* ===== Texture overlays ===== */
