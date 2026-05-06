@@ -28,24 +28,22 @@
   .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 
   /* ---------- page hero (paper, no video) ----------
-     Heroes are centered as a block (H1 is centered as a defining
-     property; the sub follows the same axis). Heroes don't have
-     eyebrows — eyebrows mark section labels above an H2, not heroes. */
-  /* Hero fills the full viewport on load; H1 + lead are flex-centered
-     vertically + horizontally inside the paper zone. */
+     Mirrors the Solutions page hero: flex column centered vertically,
+     content left-aligned (H1 + lead share the left axis). min-height is
+     capped below 100vh so the section beneath peeks into the first
+     viewport on entry — taller than a paper title block, shorter than
+     a full hero. */
   .page-hero{
     position:relative;
     isolation:isolate;
     overflow:hidden;
-    min-height:100vh;
-    padding:calc(var(--nav-height) + var(--section-y)) 0 var(--section-y);
+    min-height:clamp(516px, 57.5vh, 696px);
+    padding:calc(var(--nav-height) + 28px) 0 clamp(48px, 6vw, 72px);
     background:var(--grad-paper);
-    text-align:center;
     display:flex;
     align-items:center;
-    justify-content:center;
   }
-  .page-hero .wrap{width:100%}
+  .page-hero .wrap{ width:100%; text-align:left; }
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
@@ -54,14 +52,13 @@
     line-height:var(--lh-h1);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0 auto;
+    margin:0;
     max-width:26ch;
   }
-  /* Hero subtitle — Lead role per STYLE_GUIDE. Centered to match the
-     centered H1 (one composition); 60ch column carries the longer
-     positioning paragraph in 3-ish lines on desktop. */
+  /* Hero subtitle — Lead role per STYLE_GUIDE. Alignment follows the H1
+     axis (left here), matching the Solutions hero. */
   .page-hero .lead{
-    margin:24px auto 0;
+    margin:24px 0 0;
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-lead);
