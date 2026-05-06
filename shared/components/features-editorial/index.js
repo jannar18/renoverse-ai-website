@@ -96,7 +96,7 @@
   function buildMedia(item) {
     /* Per-item tint cycles brand colors across the strip series. Falls
        back to teal so older items / hosts that don't set tint keep working.
-       Strip backgrounds stay paper-warm site-wide; only the foreground
+       Strip backgrounds stay cream site-wide; only the foreground
        dots / placeholder fill vary per item. */
     const tint = item.tint || '#2D6F75';
     if (item.placeholder) {
@@ -259,8 +259,8 @@ void main(){
   }
 
   /* Sets up the ordered-dither shader on a canvas + still-image source.
-     Foreground tint per item (brand color rotation), background paper-warm
-     #F5F1EC (the strip's panel color), invert=1 (Paper's "Inverted Off" —
+     Foreground tint per item (brand color rotation), background cream
+     #F2EBD8 (the strip's panel color), invert=1 (Paper's "Inverted Off" —
      dark UI elements become tint). */
   function setupOrderedDither(canvas, imageUrl, tintHex) {
     const gl = canvas.getContext('webgl2', {
@@ -310,7 +310,7 @@ void main(){
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    /* 1x1 paper-warm pixel as initial texture — matches the strip's bg
+    /* 1x1 cream pixel as initial texture — matches the strip's bg
        so there's no flash before the screenshot loads. */
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
                   new Uint8Array([245, 241, 236, 255]));
@@ -331,12 +331,12 @@ void main(){
          Type 8x8, Fit Cover, Original colors Off, Inverted Off (= invert 1
          → dark UI elements become teal), Dither size 1, Color steps 7.
          Foreground teal #2C6F75; background ice #E5F4F1 so the strip stands
-         out against the section's paper-warm bg without per-strip tinting. */
+         out against the section's cream bg without per-strip tinting. */
     gl.uniform1f(uDitherSize, 1.0);
     gl.uniform1f(uColorSteps, 7.0);
     gl.uniform1f(uContrast, 0.0);
     gl.uniform3fv(uColorFront, hexToRgb(tintHex || '#2C6F75')); // brand-tint dots
-    gl.uniform3fv(uColorBack,  hexToRgb('#F5F1EC'));            // paper-warm panel
+    gl.uniform3fv(uColorBack,  hexToRgb('#F2EBD8'));            // cream panel
     gl.uniform1f(uInvert, 1.0);
     gl.uniform2f(uImgSize, 1, 1);
 
@@ -344,7 +344,7 @@ void main(){
 
     function render() {
       gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.clearColor(245 / 255, 241 / 255, 236 / 255, 1); // paper-warm
+      gl.clearColor(242 / 255, 235 / 255, 216 / 255, 1); // cream
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.drawArrays(gl.TRIANGLES, 0, 6);

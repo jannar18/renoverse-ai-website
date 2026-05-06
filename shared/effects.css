@@ -26,43 +26,22 @@
    ============================================================ */
 
 
-/* ---------- 1. Gradients ---------- */
-/* Utility wrappers around the named gradient tokens. Each gradient is
-   exposed under two class names — the technical name (describes the
-   stops) and a plain-language alias (how a human would request it).
-   Both classes do the same thing; use whichever reads more clearly at
-   the call-site. */
+/* ---------- 1. Gradients ----------
+   One utility class per gradient token. Class names mirror the token
+   names (e.g. `--grad-sky-blue-ice` → `.fx-grad-sky-blue-ice`). */
 
-/* Brand sweep — horizontal signature */
-.fx-grad,
-.fx-grad-brand-sweep         { background: var(--grad); }
+/* Signature — horizontal */
+.fx-grad                          { background: var(--grad); }
 
-/* The four DARK panel gradients (ink-anchored, vertical) */
-.fx-grad-ink-teal-cream,
-.fx-grad-dark-teal           { background: var(--grad-ink-teal-cream); }
+/* Vertical */
+.fx-grad-sky-blue-ice             { background: var(--grad-sky-blue-ice); }
+.fx-grad-dark-oxford-teal-cream   { background: var(--grad-dark-oxford-teal-cream); }
+.fx-grad-dark-oxford-azure-ice    { background: var(--grad-dark-oxford-azure-ice); }
+.fx-grad-dark-oxford-blue-cream   { background: var(--grad-dark-oxford-blue-cream); }
+.fx-grad-cream-aqua-teal          { background: var(--grad-cream-aqua-teal); }
 
-.fx-grad-ink-oxford-ice,
-.fx-grad-cool-oxford         { background: var(--grad-ink-oxford-ice); }
-
-.fx-grad-ink-oxford-blue,
-.fx-grad-deep-oxford-blue,
-.fx-grad-dark-oxford-blue    { background: var(--grad-ink-oxford-blue); }
-
-.fx-grad-ink-blue-cream,
-.fx-grad-deep-blue,
-.fx-grad-dark-blue           { background: var(--grad-ink-blue-cream); }
-
-/* The five LIGHT gradients (tint-anchored).
-   Four vertical brand-color variants + paper, the most neutral light
-   backdrop (warm radial, no strong brand color — used wherever a section
-   wants to feel open without leaning aqua/blue/oxford). */
-.fx-grad-light-teal          { background: var(--grad-light-teal); }
-.fx-grad-light-azure         { background: var(--grad-light-azure); }
-.fx-grad-light-blue          { background: var(--grad-light-blue); }
-.fx-grad-light-oxford        { background: var(--grad-light-oxford); }
-
-.fx-grad-paper-zone,
-.fx-grad-paper               { background: var(--grad-paper-zone); }
+/* Radial paper backdrop */
+.fx-grad-paper                    { background: var(--grad-paper); }
 
 
 /* ---------- 2. Dither dot-mask ---------- */

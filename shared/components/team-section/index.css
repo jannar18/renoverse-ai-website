@@ -47,7 +47,7 @@
   --ts-media-stripe-b: rgba(11, 26, 43, .06);
   --ts-media-ph-bg: #ece7e1;
 
-  background: var(--grad-paper-zone, radial-gradient(120% 80% at 50% 0%, #E5F4F1 0%, rgba(242,235,216,.85) 45%, #F5F1EC 100%));
+  background: var(--grad-paper, radial-gradient(120% 80% at 50% 0%, #E5F4F1 0%, #F2EBD8 45%, #FAFAF7 100%));
 }
 
 /* Paper-variant grain overlay — same SVG turbulence as .fx-grain--ink in

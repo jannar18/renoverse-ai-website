@@ -11,7 +11,7 @@
 .features-alt {
   position: relative;
   /* Hard-clip the gradient strip + halftone + shader to the section's
-     vertical bounds. Without this, the cream top-stop of --grad-light-teal
+     vertical bounds. Without this, the cream top-stop of --grad-cream-aqua-teal
      blends into the white above so subtly that it reads as the gradient
      bleeding above the section; overflow:hidden makes the boundary sharp. */
   overflow: hidden;
@@ -40,7 +40,7 @@
   pointer-events: none;
 }
 .features-alt__panel-strip {
-  background: var(--grad-light-teal);
+  background: var(--grad-cream-aqua-teal);
   z-index: 0;
 }
 

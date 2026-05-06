@@ -118,7 +118,7 @@ Until a live mirror exists, build Imagery sections from this skeleton. It's the 
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: var(--grad-dark-teal); /* or any panel gradient */
+  background: var(--grad-dark-oxford-teal-cream); /* or any other vertical gradient */
   padding: var(--section-y) 0;
   color: #fff;
 }
@@ -158,7 +158,7 @@ For each request below: what the human probably means, which signature it is, an
 This is the **Editorial signature** — the full layer stack. The carousel is the reference. Mirror its layer stack:
 
 1. **Host element** — `position: relative; isolation: isolate; overflow: hidden;` so blends and masks don't leak.
-2. **Base gradient** — one of the four **dark panel gradients** (`.fx-grad-dark-teal`, `.fx-grad-cool-oxford`, `.fx-grad-dark-oxford-blue`, `.fx-grad-dark-blue`). All four go ink → accent → tint, top-down — that vertical movement is what makes panels feel like one family.
+2. **Base gradient** — one of the three **dark vertical gradients** (`.fx-grad-dark-oxford-teal-cream`, `.fx-grad-dark-oxford-azure-ice`, `.fx-grad-dark-oxford-blue-cream`). All three go dark-oxford → accent → tint, top-down — that vertical movement is what makes panels feel like one family.
 3. **Dithered photo** — positioned `<div>` with the photo as `background-image`, classes `.fx-dither.fx-dither--photo`. Tune opacity per surface (~0.05 over saturated gradients, up to ~0.18 over flat color).
 4. **Halftone bloom** — `.fx-halftone-bloom` as a positioned child to draw the eye to the heading or CTA. Override `--fx-bloom-mask` to move the focal point if needed.
 5. **Paper grain** — `.fx-grain--warm` as a positioned child (warm tint pairs with dark/saturated surfaces).
@@ -190,7 +190,7 @@ Mirror `.testimonial-section` in `index.html`. The recipe:
 **Card host** — `position: relative; isolation: isolate; overflow: hidden;` with rounded corners (~14px).
 
 **Layers, bottom → top:**
-1. **Base gradient** — any of the four **dark panel gradients** (`.fx-grad-dark-teal` is the conventional default; pick the variant that matches the page's color lean). Don't introduce a new gradient just for the testimonial.
+1. **Base gradient** — any of the three **dark vertical gradients** (`.fx-grad-dark-oxford-teal-cream` is the conventional default; pick the variant that matches the page's color lean). Don't introduce a new gradient just for the testimonial.
 2. **Dithered photo (Editorial only)** — if the testimonial has imagery, positioned `<div>` with the photo as `background-image`, using `.fx-dither.fx-dither--photo`. Keep opacity low (~0.05–0.10).
 3. **Halftone bloom** — `.fx-halftone-bloom`, faded around the heading or attribution.
 4. **Paper grain** — `.fx-grain--warm`.
@@ -304,7 +304,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 - Each feature is a near-full-vw row: blurb on one side (~40% width) + product highlight on the other (~60% width — large screenshot, illustration, or short looping video). Alternate which side the blurb sits on per row.
 - Blurb: eyebrow (JetBrains Mono) + H3 (Poppins section header) + optional H2 (Cormorant italic editorial moment) + lead paragraph + optional `.btn .btn--filled` or `.btn .btn--white` CTA.
 - Product highlight: large media block, dithered if photo (`.fx-dither.fx-dither--photo`), unfiltered if product UI. Can include a short autoplay-loop muted video for animated UI demos.
-- Surface: alternates per row between `.fx-grad-paper` (Quiet, blurb-only side) and a dark panel gradient (`.fx-grad-dark-teal` or `.fx-grad-cool-oxford` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
+- Surface: alternates per row between `.fx-grad-paper` (Quiet, blurb-only side) and a dark vertical gradient (`.fx-grad-dark-oxford-teal-cream` or `.fx-grad-dark-oxford-azure-ice` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
 - Spacing: each row is min `80vh` so each gets its own scroll moment without being pinned.
 - Animation: as each row enters the viewport, the *side that's currently coming in from off-screen* slides 32px from its outside edge with fade-in (600ms, ease-out). Don't pin-scroll these — the stack-animation already owns that slot.
 - Don't apply this to more than 3–4 features in one section. If the page needs more, switch to Variation 3 (stacked rows).
@@ -314,7 +314,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 **Use when:** *one* feature deserves its own moment — a flagship capability, the product's headline differentiator, an editorial hero-after-hero placement.
 
 - One section, `min-height: 100vh`. Full-bleed media (image, looped video, or animated UI screen) with copy overlaid in a corner or beside it.
-- Surface: dark panel gradient (`.fx-grad-dark-oxford-blue` or similar) under the media. **Editorial signature** — gradient + grain + dithered photo + halftone bloom. Full stack.
+- Surface: dark vertical gradient (`.fx-grad-dark-oxford-azure-ice` or similar) under the media. **Editorial signature** — gradient + grain + dithered photo + halftone bloom. Full stack.
 - Copy block: eyebrow + Cormorant H1 (yes, H1-sized — this is a moment) + lead + CTA.
 - Animation options:
   - *Static* — no animation, just the media holding the viewport.
@@ -325,7 +325,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 
 **Use when:** two features need equal visual weight and they're parallel/contrasting (e.g. "before / after," "you / your client," "what we do / what we don't do").
 
-- Two columns, equal width, ~`60vh` tall each. Each column: eyebrow + H3 + body + optional small image. Alternate the surface per column — one column on `.fx-grad-paper`, the other on `.fx-grad-dark-teal` (or any panel-gradient pair). The contrast between paper and dark *is* the message.
+- Two columns, equal width, ~`60vh` tall each. Each column: eyebrow + H3 + body + optional small image. Alternate the surface per column — one column on `.fx-grad-paper`, the other on `.fx-grad-dark-oxford-teal-cream` (or any other dark vertical gradient). The contrast between paper and dark *is* the message.
 - The optional small image, if used, passes through `.fx-dither.fx-dither--photo` — making the imagery-bearing column **Imagery**. Without an image, the dark column is **Quiet** on a saturated gradient. So per the four-signature taxonomy: **Quiet ↔ Quiet (text-only)** or **Quiet ↔ Imagery (with photos)**, depending on whether the columns include media.
 - Animation: both columns fade in together as the section enters viewport.
 
@@ -384,7 +384,7 @@ Rules:
 
 This is the **Quiet signature**. A two-column layout that pairs a short label sentence on the left with a table-of-numbers on the right, divided by horizontal rules.
 
-> **No live mirror yet.** `.stats` CSS exists in `index.html` (lines 259–270) but the section isn't rendered anywhere on the live page, and the legacy CSS uses page-local tokens (`--paper-warm`) and a smaller hand-authored number size (`clamp(28px, 3.4vw, 44px)`) that diverge from the canonical recipe below. When this pattern is first requested, build it from the recipe — don't copy from the dead CSS.
+> **No live mirror.** When this pattern is first requested, build it from the recipe below.
 
 **Layout:** `display: grid; grid-template-columns: 1fr 1.4fr; gap: 48px;` — label left, table right. Stack to one column at ≤960px.
 
@@ -502,38 +502,33 @@ The site already has one big pinned-scroll product moment — the **stack-animat
 
 **Push back.** The palette is closed — see `tokens.css`. If a new color is genuinely needed (e.g. a future ICP-themed page leading with a fresh tint), add it to `tokens.css` with a semantic name first, *then* use it. Don't hand-paste hex values into a section.
 
-### "Use the dark teal gradient" / "Use the light azure gradient" / "Use the cool oxford gradient" / etc.
+### "Use a brand gradient"
 
-Every brand gradient has a **plain-language name** the human will use, plus a technical name that describes the stops. Map their request to the right token by the plain-language name. The palette is split into **dark** (ink-anchored, weighty) and **light** (tint-anchored, airy) — every section background pulls from these. The only gradient outside this set is the **brand sweep**, because it's a horizontal accent line, not a section fill.
+The brand has a **closed list of 7 gradients**: 5 vertical, 1 horizontal signature, 1 radial paper backdrop. Each token name describes its actual color stops in declared order.
 
-#### Dark gradients (ink at the top — weighted, editorial)
+#### Vertical gradients (oklab interpolation, top → bottom)
 
-| Human says… | What it looks like | Token | Class |
+| Stops | Where it's used | Token | Class |
 |---|---|---|---|
-| "**Dark teal**" | ink → teal → cream. Warm finish. | `--grad-dark-teal` | `.fx-grad-dark-teal` |
-| "**Cool oxford**" | ink → oxford plum → ice mint. Cool finish. | `--grad-cool-oxford` | `.fx-grad-cool-oxford` |
-| "**Dark oxford-blue**" / "deep oxford-blue" | ink → oxford plum → brand blue. All cool. | `--grad-dark-oxford-blue` | `.fx-grad-dark-oxford-blue` |
-| "**Dark blue**" / "deep blue" | ink → brand blue → cream. Warm finish. | `--grad-dark-blue` | `.fx-grad-dark-blue` |
+| `sky-blue → ice` | Capabilities section header backdrop (homepage) | `--grad-sky-blue-ice` | `.fx-grad-sky-blue-ice` |
+| `dark-oxford → teal → cream` | Testimonial card; ICP project-managers panel | `--grad-dark-oxford-teal-cream` | `.fx-grad-dark-oxford-teal-cream` |
+| `dark-oxford → azure → ice` | ICP principal-architects panel | `--grad-dark-oxford-azure-ice` | `.fx-grad-dark-oxford-azure-ice` |
+| `dark-oxford → blue → cream` | ICP junior-designers panel | `--grad-dark-oxford-blue-cream` | `.fx-grad-dark-oxford-blue-cream` |
+| `cream → aqua → teal` | features-alternating row backdrop | `--grad-cream-aqua-teal` | `.fx-grad-cream-aqua-teal` |
 
-#### Light gradients (tint at the top — airy, open)
+#### Radial paper backdrop
 
-| Human says… | What it looks like | Token | Class |
+| Stops | Where it's used | Token | Class |
 |---|---|---|---|
-| "**Light teal**" | cream → aqua → teal. Warm airy teal. | `--grad-light-teal` | `.fx-grad-light-teal` |
-| "**Light azure**" | white → bright azure → aqua. The airiest — predominantly bright mint. | `--grad-light-azure` | `.fx-grad-light-azure` |
-| "**Light blue**" | cream → brand blue → oxford. Warm-to-cool, lifts to plum. | `--grad-light-blue` | `.fx-grad-light-blue` |
-| "**Light oxford**" | ice → oxford plum → cream. Cool-to-warm through plum. | `--grad-light-oxford` | `.fx-grad-light-oxford` |
-| "**Paper gradient**" / "warm paper" | Soft radial from top — ice → cream → warm paper. The neutral light backdrop (no strong brand color). Already used behind team + final-CTA + footer in `index.html`, the 4-feature highlights row, and the demo form on `demo.html`. | `--grad-paper` | `.fx-grad-paper` |
+| Radial: `ice → cream → beige` (origin top-center) | About hero, Solutions hero, team-section paper variant | `--grad-paper` | `.fx-grad-paper` |
 
-#### Brand sweep (the only gradient outside the panel system — accent line, not a fill)
+#### Signature (horizontal — accent line, not a section fill)
 
-| Human says… | What it looks like | Token | Class |
+| Stops | Where it's used | Token | Class |
 |---|---|---|---|
-| "**Brand sweep**" / "signature gradient" | Horizontal blue → aqua → teal. For hairlines, accent rules, eyebrow underlines. **Not a section background.** | `--grad` (alias `--grad-brand-sweep`) | `.fx-grad` |
+| `blue → aqua → teal` (90deg) | Brand-mark gradient, hairlines, eyebrow underlines, the Renoverse logo | `--grad` | `.fx-grad` |
 
-**Picking light vs dark:** if the section should feel weighted and editorial (a "moment" — a customer-quote, a hero panel, an ICP highlight), reach for a **dark** gradient. If the section should feel open or breathable (an intro, a feature row, a soft hero on a secondary page), reach for a **light** one.
-
-**If they ask for a name that isn't on this list** — say "pink gradient" or "sunset gradient" — the brand doesn't have one yet. **Push back**: ask which existing gradient is closest, OR propose adding a new gradient (with their approval) by extending `tokens.css` and `effects.css` with both a technical name and a plain-language alias. Don't hand-paste new stops into a section.
+**If a request asks for a gradient that isn't on this list** — "pink gradient," "sunset gradient," "dark blue gradient" — the brand doesn't have one. **Push back**: ask which existing gradient is closest, or propose adding a new gradient (with operator approval) by extending `tokens.css` and `effects.css`. Don't hand-paste new stops into a section.
 
 ### "Make this heading bigger / smaller / different"
 
@@ -596,7 +591,6 @@ Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` 
 | `--white` `#FFFFFF` | Default page background. Cards, sheets, anywhere wanting clean white. |
 | `--cream` `#F2EBD8` | Warm-paper accent surface. |
 | `--ice` `#E5F4F1` | Cool-paper accent surface. |
-| `--paper-warm` `#F5F1EC` | Warm-paper terminus stop (`team-section[data-theme="paper"]`, `solutions.html .additional`). |
 | (literal `#fff`) | All text on dark surfaces. |
 
 **Aqua / teal ramp** (primary accent — light → dark):
@@ -631,34 +625,31 @@ Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` 
 
 ### Gradient tokens & utilities
 
-The full gradient vocabulary — see Part I for the request-driven mapping. Both technical and plain-language names exist as aliases; both classes do the same thing.
+Closed list of 7. Token names mirror the actual color stops in declared order — see Part I for the request-driven mapping.
 
-**Dark panels (ink-anchored):**
+**Vertical (oklab interpolation, top → bottom):**
 
-| Plain-language | Technical | Stops |
-|---|---|---|
-| `--grad-dark-teal` / `.fx-grad-dark-teal` | `--grad-ink-teal-cream` | ink → teal → cream |
-| `--grad-cool-oxford` / `.fx-grad-cool-oxford` | `--grad-ink-oxford-ice` | ink → oxford → ice |
-| `--grad-dark-oxford-blue` / `.fx-grad-dark-oxford-blue` *(also `--grad-deep-oxford-blue`)* | `--grad-ink-oxford-blue` | ink → oxford → blue |
-| `--grad-dark-blue` / `.fx-grad-dark-blue` *(also `--grad-deep-blue`)* | `--grad-ink-blue-cream` | ink → blue → cream |
-
-**Light panels (tint-anchored):**
-
-| Plain-language | Stops |
+| Token / class | Stops |
 |---|---|
-| `--grad-light-teal` / `.fx-grad-light-teal` | cream → aqua → teal |
-| `--grad-light-azure` / `.fx-grad-light-azure` | white → azure → aqua |
-| `--grad-light-blue` / `.fx-grad-light-blue` | cream → blue → oxford |
-| `--grad-light-oxford` / `.fx-grad-light-oxford` | ice → oxford → cream |
-| `--grad-paper` / `.fx-grad-paper` *(neutral, radial)* | ice → cream → warm paper |
+| `--grad-sky-blue-ice` / `.fx-grad-sky-blue-ice` | sky-blue → ice |
+| `--grad-dark-oxford-teal-cream` / `.fx-grad-dark-oxford-teal-cream` | dark-oxford → teal → cream |
+| `--grad-dark-oxford-azure-ice` / `.fx-grad-dark-oxford-azure-ice` | dark-oxford → azure → ice |
+| `--grad-dark-oxford-blue-cream` / `.fx-grad-dark-oxford-blue-cream` | dark-oxford → blue → cream |
+| `--grad-cream-aqua-teal` / `.fx-grad-cream-aqua-teal` | cream → aqua → teal |
 
-**Brand sweep (the only gradient outside the panel system):**
+**Radial paper backdrop:**
 
-| Plain-language | Technical | Use |
-|---|---|---|
-| `--grad-brand-sweep` / `.fx-grad` | `--grad` | Horizontal blue → aqua → teal — hairlines, accent rules, eyebrow underlines. Not a section background. |
+| Token / class | Stops |
+|---|---|
+| `--grad-paper` / `.fx-grad-paper` *(radial, origin top-center)* | ice → cream → beige |
 
-**Direction rules:** dark panels start at `--ink` at the top and resolve to a tint at the bottom — never reversed. Light panels start at a tint at the top and resolve to a brand color at the bottom — never reversed. Paper is a soft radial from top center. The panel direction is the brand's vertical hierarchy.
+**Signature (the only horizontal gradient — accent line, not a section fill):**
+
+| Token / class | Use |
+|---|---|
+| `--grad` / `.fx-grad` | Horizontal blue → aqua → teal — hairlines, accent rules, eyebrow underlines, the Renoverse logo. Not a section background. |
+
+**Direction rules:** vertical gradients are 180deg top-down — never reversed. Token names always describe stops in declared order (top stop first). Paper is a soft radial from top center. New gradients earn an addition only if no existing one fits.
 
 ### Effects kit (`shared/effects.css`)
 
@@ -759,7 +750,7 @@ When in doubt, mirror these working examples:
 The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.paper-zone` + `.testimonial` inlined recipes, paper-warm canonicalization, `--muted` / `--line-soft` removal, `.lead` consolidation) was cleared in the 2026-05-06 pre-launch cleanup PR. Open follow-ups below.
 
 **Token / type:**
-- ICP carousel still inlines its panel gradients, dither mask, and grain SVG. Lift each to the kit utilities (`.fx-grad-ink-teal-cream` etc., `.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. **(F1.5 component-library audit territory.)**
+- ICP carousel still inlines its dither mask and grain SVG. Lift each to the kit utilities (`.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. (Panel gradients are already canonical-token-driven post-Phase-2.) **(F1.5 component-library audit territory.)**
 - The four shader implementations (`halftone-video`, `icp-carousel`, `features-alternating`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)**
 
 **Other:**

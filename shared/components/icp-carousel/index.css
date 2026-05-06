@@ -61,13 +61,13 @@
    Each panel pulls a distinct DARK gradient token from tokens.css so the three
    reads stay clearly separable (no two panels share a middle stop). */
 .icp-carousel__panel[data-id="principal-architects"] {
-  background: var(--grad-cool-oxford);
+  background: var(--grad-dark-oxford-azure-ice);
 }
 .icp-carousel__panel[data-id="project-managers"] {
-  background: var(--grad-dark-teal);
+  background: var(--grad-dark-oxford-teal-cream);
 }
 .icp-carousel__panel[data-id="junior-designers"] {
-  background: var(--grad-dark-blue);
+  background: var(--grad-dark-oxford-blue-cream);
 }
 
 /* ===== Texture overlays ===== */

@@ -84,12 +84,12 @@
    Same WebGL hex-halftone shader the hero uses (data-halftone-video),
    adapted for static images. Each strip renders the screenshot as teal
    hex-grid dots whose size scales with darkness — dark UI = big dots,
-   light bg = sparse dots — over a paper-warm base. Result: the screenshot
+   light bg = sparse dots — over a cream base. Result: the screenshot
    reads as a recognizable halftone of the actual product, with the same
    ink-on-paper character as the hero.
 
    Layer stack (bottom → top):
-     1. paper-warm panel base
+     1. cream panel base
      2. <canvas> — hex-halftone shader rendering the screenshot in teal
      3. ::after — SVG paper grain overlay
 */
@@ -98,7 +98,7 @@
   height: clamp(130px, 14vw, 180px);
   overflow: hidden;
   border-radius: 0;
-  background: var(--paper-warm);
+  background: var(--cream);
   isolation: isolate;
   box-shadow:
     0 1px 0 rgba(11, 26, 43, 0.06),

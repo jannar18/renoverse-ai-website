@@ -19,7 +19,6 @@
   --white: #FFFFFF;          /* default page background; cards, sheets, anywhere wanting clean white */
   --cream: #F2EBD8;
   --ice: #E5F4F1;
-  --paper-warm: #F5F1EC;     /* warm-paper backdrop terminus stop; consumed by features-editorial + solutions.html .additional + team-section paper variant */
 
   /* aqua / teal — primary accent ramp (light → dark) */
   --sky-blue: #7FE3CB;       /* light aqua tint (was named --azure) */
@@ -40,57 +39,28 @@
   --line: rgba(0, 0, 0, 0.10);
 
   /* ---------- gradients ----------
-     Named two ways:
-       1. Technical name (`--grad-ink-teal-cream`) — describes the stops
-       2. Plain-language alias (`--grad-dark-teal`) — describes how a
-          human would naturally request it ("the dark teal gradient")
-     Always pair them so a human request can route directly to a token.
-     Add new gradients in BOTH naming layers; never paste one-off stops. */
+     Closed list of 7. Five vertical + 1 horizontal signature + 1 radial
+     paper backdrop. Each named after its actual color stops in declared
+     order (top → bottom for vertical). New gradients earn an addition
+     here only if they can't be served by one of these. */
 
-  /* Brand sweep — horizontal signature, used for hairlines, accent rules */
+  /* Signature — horizontal blue → aqua → teal. Same gradient used in the
+     Renoverse logo. Used for hairlines, accent rules, eyebrow underlines. */
   --grad: linear-gradient(90deg, var(--blue) 0%, var(--aqua) 50%, var(--teal) 100%);
-  --grad-brand-sweep: var(--grad);          /* alias: "brand sweep" / "signature gradient" */
 
-  /* Vertical dark-oxford → accent → tint (oklab) — the ICP-carousel panels.
-     `var(--ink)` resolves to #0a0a0a now (text ink); the gradients want the
-     legacy navy #0B1A2B at the top, exposed as --dark-oxford. */
-  --grad-ink-teal-cream:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--teal)  70%, var(--cream) 100%);
-  --grad-ink-oxford-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 72%, var(--ice)  100%);
-  --grad-ink-oxford-blue: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 75%, var(--blue) 100%);
-  --grad-ink-blue-cream:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--blue)  70%, var(--cream) 100%);
+  /* Vertical gradients (oklab interpolation). */
+  --grad-sky-blue-ice:           linear-gradient(in oklab 180deg, var(--sky-blue)    0%, var(--ice)  100%);                      /* capabilities-section */
+  --grad-dark-oxford-teal-cream: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--teal)  70%, var(--cream) 100%);   /* testimonial card + ICP project-managers */
+  --grad-dark-oxford-azure-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 72%, var(--ice)  100%);    /* ICP principal-architects */
+  --grad-dark-oxford-blue-cream: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--blue)  70%, var(--cream) 100%);   /* ICP junior-designers */
+  --grad-cream-aqua-teal:        linear-gradient(in oklab 180deg, var(--cream)       0%, var(--aqua) 55%, var(--teal)  100%);    /* features-alternating */
 
-  /* Plain-language aliases for the four DARK panel gradients.
-     These are how Julianna / Nola / anyone non-technical refer to them. */
-  --grad-dark-teal:        var(--grad-ink-teal-cream);   /* "dark teal" — warm finish */
-  --grad-cool-oxford:      var(--grad-ink-oxford-ice);   /* "cool oxford" — plum to mint */
-  --grad-deep-oxford-blue: var(--grad-ink-oxford-blue);  /* "deep oxford-blue" / "dark oxford-blue" */
-  --grad-dark-oxford-blue: var(--grad-ink-oxford-blue);  /* same — alternate phrasing */
-  --grad-deep-blue:        var(--grad-ink-blue-cream);   /* "deep blue" / "dark blue" — warm finish */
-  --grad-dark-blue:        var(--grad-ink-blue-cream);   /* same — alternate phrasing */
-
-  /* LIGHT panel gradients — airy companions to the dark four.
-     Same vertical 180deg oklab structure, but anchored on a light tint
-     at the top instead of ink. Use these for ICP pages, soft heroes,
-     or any section that wants to feel "open" rather than "weighted." */
-  --grad-light-teal:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--aqua)     55%, var(--teal)  100%);
-  --grad-light-azure:       linear-gradient(in oklab 180deg, var(--white) 0%, var(--sky-blue) 55%, var(--aqua)  100%);
-  --grad-light-blue:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--blue)     55%, var(--azure) 100%);
-  --grad-light-oxford:      linear-gradient(in oklab 180deg, var(--ice)     0%, var(--azure)    55%, var(--cream) 100%);
-
-  /* Soft two-stop washes — quieter than the LIGHT three-stop set above.
-     Use these for section backgrounds that want a gentle tint shift rather
-     than a full hero-style gradient. */
-  --grad-azure-ice: linear-gradient(in oklab 180deg, var(--sky-blue) 0%, var(--ice) 100%);
-
-  /* Warm paper backdrop — consumed by `team-section[data-theme="paper"]`,
-     `solutions.html .additional`, and any future "warm paper section" need.
-     Class name `--grad-paper-zone` is historical (originally a wrapper
-     pattern); the alias `--grad-paper` reads more naturally at call-sites. */
-  --grad-paper-zone: radial-gradient(120% 80% at 50% 0%,
-    var(--ice) 0%,
-    rgba(242,235,216,.85) 45%,
-    #F5F1EC 100%);
-  --grad-paper: var(--grad-paper-zone);     /* alias: "paper gradient" / "warm paper" */
+  /* Radial paper backdrop — soft warm-paper surface. Used by about/solutions
+     hero pages and the team-section paper variant. Brand colors only. */
+  --grad-paper: radial-gradient(120% 80% at 50% 0%,
+    var(--ice)   0%,
+    var(--cream) 45%,
+    var(--beige) 100%);
 
   /* ---------- type families ---------- */
   --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
