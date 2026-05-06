@@ -16,8 +16,7 @@
      </a>
 
    TOKENS (with fallbacks — define on :root to override)
-     --azure       (#7FE3CB)
-     --azure-deep  (#5EC9B7)
+     --aqua        (#5EC9B7)   ← used for fills, ticks, borders
      --ink         (#0a0a0a)
 
    ⚠️  SPACING RULE — REQUIRED MARGIN
@@ -97,43 +96,43 @@
 
 /* WHITE — white fill, azure outline + text → hover fills azure */
 .btn--white{
-  --tick: var(--azure-deep, #5EC9B7);
+  --tick: var(--aqua, #5EC9B7);
   background: #fff;
-  border-color: var(--azure-deep, #5EC9B7);
-  color: var(--azure-deep, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
+  color: var(--aqua, #5EC9B7);
 }
 .btn--white:hover{
-  background: var(--azure-deep, #5EC9B7);
-  border-color: var(--azure-deep, #5EC9B7);
+  background: var(--aqua, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
   color: #fff;
 }
 
 /* FILLED — pre-filled azure with white text → hover swaps to white fill */
 .btn--filled{
-  --tick: var(--azure-deep, #5EC9B7);
-  background: var(--azure-deep, #5EC9B7);
-  border-color: var(--azure-deep, #5EC9B7);
+  --tick: var(--aqua, #5EC9B7);
+  background: var(--aqua, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
   color: #fff;
 }
 .btn--filled:hover{
   background: #fff;
-  border-color: var(--azure-deep, #5EC9B7);
-  color: var(--azure-deep, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
+  color: var(--aqua, #5EC9B7);
 }
 
 /* FROSTED — cream-tinted glass for dark surfaces.
    Light cream backdrop + blur reads cleanly on photo / gradient backgrounds
    without competing with the azure text. */
 .btn--frosted{
-  --tick: var(--azure-deep, #5EC9B7);
+  --tick: var(--aqua, #5EC9B7);
   background: rgba(242,234,216,.08);
-  border-color: var(--azure-deep, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
   color: #fff;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 .btn--frosted:hover{
   background: rgba(242,234,216,.16);
-  border-color: var(--azure-deep, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
   color: #fff;
 }

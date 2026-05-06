@@ -11,24 +11,30 @@
                          small text. The slight softening is what makes
                          long-form copy read comfortably next to headings.
      #fff for text on dark surfaces. Color softening is flat, never opacity.
-     --azure is the highlight accent for links and button fills. */
+     --aqua is the primary CTA fill; --azure (the indigo) is the indigo
+     accent in vertical gradients; --teal is the editorial accent. */
   --ink: #0a0a0a;
   --ink-soft: #3a3a3a;
-  --bg: #FAFAF7;
+  --beige: #FAFAF7;          /* warm off-white surface — used as a section bg, NOT the default page bg (which is --surface white) */
   --surface: #FFFFFF;
   --cream: #F2EBD8;
   --ice: #E5F4F1;
-  --paper-warm: #F5F1EC;   /* warm-paper backdrop terminus stop; consumed by features-editorial + solutions.html .additional + the homepage capabilities/typology lineage */
+  --paper-warm: #F5F1EC;     /* warm-paper backdrop terminus stop; consumed by features-editorial + solutions.html .additional + team-section paper variant */
 
-  /* aqua/teal */
-  --azure: #7FE3CB;
-  --aqua: #5EC9B7;
-  --azure-deep: #5EC9B7;   /* alias of --aqua; used by .btn corner ticks/fills */
-  --teal: #2D6F75;
+  /* aqua / teal — primary accent ramp (light → dark) */
+  --sky-blue: #7FE3CB;       /* light aqua tint (was named --azure) */
+  --aqua: #5EC9B7;           /* mid aqua — primary CTA fill */
+  --teal: #2D6F75;           /* deep teal — emphasis */
 
-  /* blue */
-  --blue: #5BA7C9;
-  --oxford: #5D6FB8;
+  /* blue — secondary accent ramp (light → dark) */
+  --blue: #5BA7C9;           /* cool blue — gradient start / accent */
+  --azure: #5D6FB8;          /* indigo blue (was named --oxford) */
+  --oxford-blue: #022E41;    /* dark blue brand color (very dark navy) */
+
+  /* dark navy used as the dark stop in vertical "ink → ___" gradients —
+     the legacy ink color that the gradients still want even after the
+     text --ink shifted to #0a0a0a. */
+  --dark-oxford: #0B1A2B;
 
   /* utility — single hairline tier (light grey, surface effect not font color) */
   --line: rgba(0, 0, 0, 0.10);
@@ -45,11 +51,13 @@
   --grad: linear-gradient(90deg, var(--blue) 0%, var(--aqua) 50%, var(--teal) 100%);
   --grad-brand-sweep: var(--grad);          /* alias: "brand sweep" / "signature gradient" */
 
-  /* Vertical ink → accent → tint (oklab) — the ICP-carousel panels */
-  --grad-ink-teal-cream:  linear-gradient(in oklab 180deg, var(--ink) 0%, var(--teal)  70%, var(--cream) 100%);
-  --grad-ink-oxford-ice:  linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 72%, var(--ice)  100%);
-  --grad-ink-oxford-blue: linear-gradient(in oklab 180deg, var(--ink) 0%, var(--oxford) 75%, var(--blue) 100%);
-  --grad-ink-blue-cream:  linear-gradient(in oklab 180deg, var(--ink) 0%, var(--blue)  70%, var(--cream) 100%);
+  /* Vertical dark-oxford → accent → tint (oklab) — the ICP-carousel panels.
+     `var(--ink)` resolves to #0a0a0a now (text ink); the gradients want the
+     legacy navy #0B1A2B at the top, exposed as --dark-oxford. */
+  --grad-ink-teal-cream:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--teal)  70%, var(--cream) 100%);
+  --grad-ink-oxford-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 72%, var(--ice)  100%);
+  --grad-ink-oxford-blue: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 75%, var(--blue) 100%);
+  --grad-ink-blue-cream:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--blue)  70%, var(--cream) 100%);
 
   /* Plain-language aliases for the four DARK panel gradients.
      These are how Julianna / Nola / anyone non-technical refer to them. */
@@ -64,17 +72,20 @@
      Same vertical 180deg oklab structure, but anchored on a light tint
      at the top instead of ink. Use these for ICP pages, soft heroes,
      or any section that wants to feel "open" rather than "weighted." */
-  --grad-light-teal:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--aqua)  55%, var(--teal)   100%);
-  --grad-light-azure:       linear-gradient(in oklab 180deg, var(--surface) 0%, var(--azure) 55%, var(--aqua)   100%);
-  --grad-light-blue:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--blue)  55%, var(--oxford) 100%);
-  --grad-light-oxford:      linear-gradient(in oklab 180deg, var(--ice)     0%, var(--oxford) 55%, var(--cream) 100%);
+  --grad-light-teal:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--aqua)     55%, var(--teal)  100%);
+  --grad-light-azure:       linear-gradient(in oklab 180deg, var(--surface) 0%, var(--sky-blue) 55%, var(--aqua)  100%);
+  --grad-light-blue:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--blue)     55%, var(--azure) 100%);
+  --grad-light-oxford:      linear-gradient(in oklab 180deg, var(--ice)     0%, var(--azure)    55%, var(--cream) 100%);
 
   /* Soft two-stop washes — quieter than the LIGHT three-stop set above.
      Use these for section backgrounds that want a gentle tint shift rather
      than a full hero-style gradient. */
-  --grad-azure-ice: linear-gradient(in oklab 180deg, var(--azure) 0%, var(--ice) 100%);
+  --grad-azure-ice: linear-gradient(in oklab 180deg, var(--sky-blue) 0%, var(--ice) 100%);
 
-  /* Warm paper backdrop — paper-zone (team + final-CTA + footer) */
+  /* Warm paper backdrop — consumed by `team-section[data-theme="paper"]`,
+     `solutions.html .additional`, and any future "warm paper section" need.
+     Class name `--grad-paper-zone` is historical (originally a wrapper
+     pattern); the alias `--grad-paper` reads more naturally at call-sites. */
   --grad-paper-zone: radial-gradient(120% 80% at 50% 0%,
     var(--ice) 0%,
     rgba(242,235,216,.85) 45%,

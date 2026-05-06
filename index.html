@@ -151,12 +151,13 @@
     }
   }
 
-  /* ---------- quote ----------
-     Card surface comes from `.fx-grad-dark-teal` + `.fx-grain--warm` (effects
-     kit canonicals). Spotlight signature per STYLE_GUIDE — gradient + grain;
-     no halftone bloom (keeps the card quieter than the ICP panels above). */
-  .quote-section{background:var(--surface);padding:72px 0 96px}
-  .quote{
+  /* ---------- testimonial ----------
+     Customer-quote card. Surface comes from `.fx-grad-dark-teal` +
+     `.fx-grain--warm` (effects kit canonicals). Spotlight signature per
+     STYLE_GUIDE — gradient + grain; no halftone bloom (keeps the card
+     quieter than the ICP panels above). */
+  .testimonial-section{background:var(--surface);padding:72px 0 96px}
+  .testimonial{
     position:relative;
     color:#fff;
     border-radius:14px;
@@ -166,15 +167,15 @@
   }
   /* Slightly lighter grain than the canonical .fx-grain--warm default (.35)
      so the testimonial card doesn't read as noisy as the ICP panels. */
-  .quote > .fx-grain--warm{ opacity:.28 }
-  .quote .text{
+  .testimonial > .fx-grain--warm{ opacity:.28 }
+  .testimonial .text{
     position:relative;z-index:3;
     height:100%;
     padding:var(--gutter);
     display:flex;flex-direction:column;justify-content:space-between;
     max-width:680px;
   }
-  .quote .logo{
+  .testimonial .logo{
     width:auto;height:48px;
     align-self:flex-start;
     object-fit:contain;
@@ -182,7 +183,7 @@
     opacity:.95;
   }
   /* Quote text — Body register on dark surface. Type does the work, not opacity. */
-  .quote blockquote{
+  .testimonial blockquote{
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
@@ -191,9 +192,9 @@
     margin:clamp(40px,6vw,64px) 0 0;
     max-width:42ch;
   }
-  .quote .attrib{margin-top:clamp(32px,4vw,48px)}
+  .testimonial .attrib{margin-top:clamp(32px,4vw,48px)}
   /* Attribution name — Body with 600 weight emphasis. */
-  .quote .who{
+  .testimonial .who{
     font-family:var(--font-sans);
     font-size:var(--fs-body);
     line-height:var(--lh-body);
@@ -202,7 +203,7 @@
     color:#fff;
   }
   /* Role/company line — Small role on dark surface (size differentiates from name). */
-  .quote .who-meta{
+  .testimonial .who-meta{
     font-family:var(--font-sans);
     font-size:var(--fs-small);
     line-height:var(--lh-small);
@@ -211,21 +212,9 @@
     margin:4px 0 0;
   }
 
-  /* ---------- founders/team lives in shared/components/team-section/ ---------- */
-
-  /* ---------- paper zone (team + cta + footer share one paper backdrop) ----------
-     Surface composed from effects-kit utilities: `.fx-grad-paper` (warm radial),
-     `.fx-grain--ink` (multiply grain), `.fx-halftone-bloom` (default mask focal
-     point, 50% 78% — sits behind a centered CTA below the team grid). */
-  .paper-zone{
-    position:relative;
-    isolation:isolate;
-    overflow:hidden;
-    color:var(--ink);
-  }
-  /* Promote real content children above the .fx-* effect overlays. The fx
-     layers keep their own absolute positioning (not caught by this rule). */
-  .paper-zone > :not([class*="fx-"]){position:relative;z-index:1}
+  /* ---------- founders/team lives in shared/components/team-section/ ----------
+     `data-theme="paper"` makes the team-section own its paper-gradient
+     surface + ink grain — no outer .paper-zone wrapper needed. */
 
   /* ---------- responsive ---------- */
   @media (max-width:960px){
@@ -283,10 +272,10 @@
 <!-- ========== ICP CAROUSEL ========== -->
 <div data-icp-carousel data-nav-tone="dark"></div>
 
-<!-- ========== QUOTE ========== -->
-<section class="quote-section">
+<!-- ========== TESTIMONIAL ========== -->
+<section class="testimonial-section">
   <div class="wrap">
-    <div class="quote fx-grad-dark-teal" data-nav-tone="dark">
+    <div class="testimonial fx-grad-dark-teal" data-nav-tone="dark">
       <div class="fx-grain fx-grain--warm"></div>
       <div class="text">
         <img class="logo" src="assets/slc-logo.webp" alt="SLC Architect" />
@@ -303,18 +292,13 @@
   </div>
 </section>
 
-<!-- ========== PAPER ZONE — team + cta + footer share one paper backdrop ========== -->
-<div class="paper-zone fx-grad-paper">
-  <div class="fx-grain fx-grain--ink"></div>
-  <div class="fx-halftone-bloom"></div>
-
-  <!-- ========== TEAM (shared component) ========== -->
-  <div data-team-section
-       data-theme="paper"
-       data-link-href="about.html"
-       data-link-label="Learn more"></div>
-
-</div><!-- /.paper-zone -->
+<!-- ========== TEAM (shared component) ==========
+     data-theme="paper" makes the team-section own its paper gradient + ink
+     grain. No wrapper needed. -->
+<div data-team-section
+     data-theme="paper"
+     data-link-href="about.html"
+     data-link-label="Learn more"></div>
 
 <!-- ========== FOOTER ========== -->
 <footer class="site-footer" data-site-footer></footer>

@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  html,body{margin:0;padding:0;background:var(--surface);color:var(--ink)}
   body{
     font-family:var(--font-sans);
     font-weight:400;
@@ -78,7 +78,7 @@
      v1, replace when Julianna/Nola hand off the founding story). */
   .backstory{
     padding:var(--section-y-tight) 0 var(--section-y);
-    background:var(--bg);
+    background:var(--beige);
   }
   .backstory .wrap{max-width:var(--container)}
   /* Stacked 2-column rows: each block has an editorial H2 on the left
@@ -125,20 +125,6 @@
     color:var(--ink-soft);
     margin:0;
   }
-
-  /* ---------- paper zone (team section sits on warm paper, mirrors index.html) ----------
-     Surface composed from effects-kit utilities: `.fx-grad-paper` + `.fx-grain--ink`.
-     The homepage paper-zone also adds `.fx-halftone-bloom` masked behind its CTA;
-     About has no CTA below the team grid so the bloom is intentionally omitted —
-     the team section is the destination, not a setup-and-payoff moment. */
-  .paper-zone{
-    position:relative;
-    isolation:isolate;
-    overflow:hidden;
-    color:var(--ink);
-  }
-  /* Promote real content children above the .fx-* effect overlays. */
-  .paper-zone > :not([class*="fx-"]){position:relative;z-index:1}
 
 </style>
 </head>
@@ -209,19 +195,14 @@
     </div>
   </section>
 
-  <!-- ========== PAPER ZONE — team section sits on warm paper, mirrors homepage ========== -->
-  <div class="paper-zone fx-grad-paper">
-    <div class="fx-grain fx-grain--ink"></div>
-
-    <!-- ========== MEET THE TEAM (shared component) ==========
-         No data-link-href / data-link-label here — on the homepage the
-         team teaser carries a "Learn more →" CTA pointing to this page;
-         this is the destination, so the CTA is intentionally suppressed. -->
-    <div data-team-section
-         data-theme="paper"
-         data-eyebrow="Meet the team"></div>
-
-  </div><!-- /.paper-zone -->
+  <!-- ========== MEET THE TEAM (shared component) ==========
+       data-theme="paper" makes the team-section own its paper gradient +
+       ink grain. No data-link-href / data-link-label — the homepage team
+       teaser carries the "Learn more →" CTA pointing to this page; this
+       is the destination, so the CTA is intentionally suppressed. -->
+  <div data-team-section
+       data-theme="paper"
+       data-eyebrow="Meet the team"></div>
 
 </main>
 

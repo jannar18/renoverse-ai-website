@@ -91,7 +91,7 @@ On top of the baseline, there are two **optional layers**: a dithered SVG/photo,
 |---|---|
 | Quiet | feature-highlights row, intro section *(demo-form is intended Quiet but currently bypasses the kit — see drift list)* |
 | Imagery | (no live mirror yet — see code skeleton below) |
-| Spotlight | the existing `.quote-section` (gradient + grain — needs the bloom added in Phase 4 for parity) |
+| Spotlight | the homepage `.testimonial-section` (gradient + grain) |
 | Editorial | the ICP carousel panels |
 
 If someone asks for a section type that doesn't fit one of these signatures, **push back** and ask which signature they're imagining. Don't invent a fifth — the constraint is what keeps the brand coherent.
@@ -185,7 +185,7 @@ Never invent a new button silhouette. If a request implies one, push back and as
 
 A testimonial is most often the **Spotlight signature** — gradient + grain + halftone bloom — when it's text-only. If the testimonial has a supporting project photo from the customer, upgrade it to **Editorial** (add the dithered photo layer). Either way, it's the same vocabulary as the carousel; pick the signature based on whether you have imagery.
 
-Mirror `.quote-section` in `index.html`. The recipe:
+Mirror `.testimonial-section` in `index.html`. The recipe:
 
 **Card host** — `position: relative; isolation: isolate; overflow: hidden;` with rounded corners (~14px).
 
@@ -221,7 +221,7 @@ The homepage hero uses the WebGL halftone-video shader. **Reuse its exact config
 </header>
 ```
 
-Don't drift `data-cell`, `data-radius`, `data-contrast`, or `data-grain` — those are the shader's brand fingerprint. Only sanctioned exception: change `data-front` to a different brand hex if the page leads with a different brand color (e.g. an ICP-themed page on `--oxford` or `--blue`).
+Don't drift `data-cell`, `data-radius`, `data-contrast`, or `data-grain` — those are the shader's brand fingerprint. Only sanctioned exception: change `data-front` to a different brand hex if the page leads with a different brand color (e.g. an ICP-themed page on `--azure` or `--blue`).
 
 **The `.scrim` element** is required — it's a top + bottom white-gradient overlay (~45% opacity at the very top and bottom, transparent through the middle) that ensures the H1 and sub-copy remain legible regardless of what frame of the video is currently rendering. Don't omit it; the halftone-video luminance varies frame-to-frame and bare text on top of it fails contrast in some frames.
 
@@ -339,7 +339,7 @@ A reusable text block used inside *any* of the above variations:
 [eyebrow]                 ← JetBrains Mono uppercase, --xwide letter-spacing
 H3 / Poppins 500           ← section header (utility); reach for H2 (Cormorant italic) when the line is an editorial moment, not a label
 2–4 line body in Poppins  ← --fs-body
-optional [link →] or .btn ← inline link in --azure-deep, or full button for CTAs
+optional [link →] or .btn ← inline link in --aqua, or full button for CTAs
 ```
 
 When a non-technical user says "add a feature blurb" or "add a quick description block," that's this — reach for it as a building block, don't restyle it per location.
@@ -404,7 +404,7 @@ The brand's go-to "and now do this" moment. Mirror `.cta` in `index.html`.
 
 **Button:** always `.btn .btn--filled` (primary), pointing at `demo.html` or whatever the primary conversion goal is.
 
-**Vertical padding:** `padding: clamp(72px, 9vw, 112px) 0 clamp(48px, 6vw, 72px);` — generous on top, slightly less on bottom because the footer continues the same paper backdrop (see "paper-zone wrapper" below).
+**Vertical padding:** `padding: clamp(72px, 9vw, 112px) 0 clamp(48px, 6vw, 72px);` — generous on top, slightly less on bottom so the section settles into whatever follows (typically the dark footer slab).
 
 ### "Add an editorial closer" / "Add a closing italic line at the end of a section"
 
@@ -452,26 +452,25 @@ Heading (H4) inside: Poppins 17px / 600 / `--ink`. Body: Poppins 14px / line-hei
 
 ### "Wrap multiple sections in one shared paper backdrop" / "Make the bottom of the page feel like one warm zone"
 
-This is the **paper-zone** architectural pattern. When two or three sections at the bottom of a page should feel like one continuous warm surface (currently: team + final-CTA + footer on the homepage), wrap them in a single `<div class="paper-zone">` host that owns the gradient + grain + halftone-dot bloom for all of them.
+This is the **paper-zone** architectural pattern: a single host that wraps two or more adjacent sections so they share one continuous warm-paper surface (gradient + grain) instead of each section painting its own. **No live mirror today** — when the homepage and About were redesigned, the only paper-backed section left was the team-section, so the team component absorbed the paper surface itself (see `data-theme="paper"` on `[data-team-section]`). The recipe below is how to bring the pattern back if a future page needs 2+ sections inside one warm zone.
 
-Mirror `.paper-zone` in `index.html`.
+**Host:** `position: relative; isolation: isolate; overflow: hidden;` with `.fx-grad-paper` on it, `.fx-grain--ink` as a positioned child, and optionally `.fx-halftone-bloom` (override `--fx-bloom-mask` to target a CTA or moment under the wrapped sections).
 
-**Host:** `position: relative; isolation: isolate; overflow: hidden;` with `.fx-grad-paper` on it, `.fx-grain--ink` as a positioned child, and `.fx-halftone-bloom` (with mask focused on the CTA area — `--fx-bloom-mask: radial-gradient(60% 40% at 50% 78%, #000 0%, transparent 70%)`).
+**Children:** the inner sections must use `position: relative; z-index: 1;` so they render above the host's grain/bloom layers — the host applies `.paper-zone > :not([class*="fx-"]) { position: relative; z-index: 1; }` automatically.
 
-**Children:** the inner sections must use `position: relative; z-index: 1;` so they render above the host's grain/bloom layers — the host applies `.paper-zone > * { position: relative; z-index: 1; }` automatically.
+**When to use paper-zone vs. per-section gradients vs. component-owned theming:**
+- **Component-owned** (default for single sections that need a paper surface) — let the component carry its own `data-theme="paper"` styling. The team-section is the canonical example.
+- **Paper-zone wrapper** — when 2+ adjacent sections should feel like one zone (e.g. team → testimonial → CTA closer all on one warm sweep).
+- **Per-section gradients** — when each section is its own moment with its own color identity.
 
-**When to use paper-zone vs. per-section gradients:**
-- **Use paper-zone** when 2+ adjacent sections should feel like one zone — the closing arc of a page (team → CTA → footer), or any "warm finish" stretch.
-- **Use per-section gradients** when each section is its own moment with its own color identity.
-
-Don't put a paper-zone wrapper around a single section — it adds nothing over just applying `.fx-grad-paper` directly.
+**Don't put a paper-zone wrapper around a single section** — it adds nothing over the component-owned approach or just applying `.fx-grad-paper` directly.
 
 ### "Add a footer" / "Add the page footer"
 
 Two variants exist; pick by what the page's last content section is:
 
-- **Light footer** (transparent background, ink text) — when the last section is on a paper / cream / light surface (e.g. the homepage paper-zone). Mirror `footer.site` in `index.html`. Two-column layout: brand block (logo, tagline, socials, legal links, copyright) on the left; newsletter inline form on the right. Border-top hairline at `rgba(11,26,43,.12)`.
-- **Dark footer** (`#0a0a0a` background, white text) — when the last section is the demo form or any saturated/dark surface (e.g. `demo.html`). Mirror `footer.site` in `demo.html`. Four-column layout: brand left, then three columns of links. White socials, white legal, footer text dimmed to `rgba(255,255,255,.55)`.
+- **Light footer** (transparent background, ink text) — when the last section is on a paper / cream / light surface. Two-column layout: brand block (logo, tagline, socials, legal links, copyright) on the left; newsletter inline form on the right. Border-top hairline at `var(--line)`. (No live mirror — the current site uses the dark footer everywhere.)
+- **Dark footer** (`#0a0a0a` background, white text) — current default across all four pages. Mirror `footer.site` in `index.html` / `demo.html`. Four-column layout: brand left, then three columns of links.
 
 Don't mix the two on the same page. The footer is always paired with the last section's color temperature.
 
@@ -481,7 +480,7 @@ This is the small inline-form pattern — distinct from the demo-form's full car
 
 **Layout:** vertical stack inside a max ~360px column. Heading (eyebrow style — JetBrains Mono 11px uppercase, letter-spacing 0.22em, muted color), one short paragraph (Poppins 13px, 70% ink), `<input type="email">`, `.btn .btn--filled` Subscribe button, status message line, fine-print legal.
 
-**Input:** `padding: 10px 14px; font-size: 14px; background: rgba(255,255,255,.6); border: 1px solid rgba(11,26,43,.18); border-radius: 8px;` — focus state border-color `var(--azure-deep)` and `background: #fff`.
+**Input:** `padding: 10px 14px; font-size: 14px; background: rgba(255,255,255,.6); border: 1px solid rgba(11,26,43,.18); border-radius: 8px;` — focus state border-color `var(--aqua)` and `background: #fff`.
 
 **Button:** override clearance — `--btn-clearance: 0; margin: 18px 0 0 9px;` — to inset the corner-tick column with the input/heading edge, with 18px gap so the hover ticks clear the input.
 
@@ -585,26 +584,50 @@ Six roles. Hierarchy comes from **type** (family / size / weight / italic). The 
 
 ### Color tokens
 
-Two ink shades on light surfaces (`--ink` for primary, `--ink-soft` for the Lead tier), pure white on dark surfaces, plus `--azure` for highlights. **All ink softening is flat color, never opacity.**
+Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` for paragraph copy), pure white on dark surfaces, plus the aqua/teal and blue accent ramps. **All ink softening is flat color, never opacity.**
+
+**Brand neutrals:**
 
 | Token | What it's for |
 |---|---|
-| `--ink` | Headings (H1/H2/H3), eyebrows, bold-emphasized body (attribution names, bullet labels), buttons. `#0a0a0a` (near-black). |
-| `--ink-soft` | All paragraph copy, including hero subtitles, section intros, body paragraphs, captions, small text. `#3a3a3a` (slightly softer than `--ink`). |
+| `--ink` `#0a0a0a` | Headings (H1/H2/H3), eyebrows, bold-emphasized body (attribution names, bullet labels), buttons. |
+| `--ink-soft` `#3a3a3a` | All paragraph copy: hero subtitles, section intros, body paragraphs, captions, small text. |
+| `--beige` `#FAFAF7` | Warm off-white surface — used as a section background where you want a warmer-than-white feel. **Not** the default page bg. |
+| `--surface` `#FFFFFF` | Default page background. Cards, sheets, anywhere wanting clean white. |
+| `--cream` `#F2EBD8` | Warm-paper accent surface. |
+| `--ice` `#E5F4F1` | Cool-paper accent surface. |
+| `--paper-warm` `#F5F1EC` | Warm-paper terminus stop (`team-section[data-theme="paper"]`, `solutions.html .additional`). |
 | (literal `#fff`) | All text on dark surfaces. |
-| `--bg` | Default page background |
-| `--surface` | Cards, sheets |
-| `--cream` | Warm-paper section backdrop |
-| `--ice` | Cool-paper accent |
-| `--paper-warm` | Warm-paper terminus stop in the radial paper gradient + `solutions.html .additional` |
-| `--azure` | Bright aqua highlight, hover states, link emphasis |
-| `--aqua` / `--azure-deep` | CTA fills, button ticks |
-| `--teal` | Editorial italic accents (closers, link emphasis on light) |
-| `--blue` | Cool gradient stop only — never on its own |
-| `--oxford` | Plum-blue accent — gradient stop only |
-| `--line` | Hairline dividers (`rgba(0,0,0,.10)`). Single tier. |
 
-Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` for headings + bold emphasis → `--azure`/`--aqua` for action → `--teal` for editorial emphasis or links.
+**Aqua / teal ramp** (primary accent — light → dark):
+
+| Token | What it's for |
+|---|---|
+| `--sky-blue` `#7FE3CB` | Light aqua tint. |
+| `--aqua` `#5EC9B7` | Mid aqua — primary CTA fill, button ticks, links on light surfaces. |
+| `--teal` `#2D6F75` | Deep teal — editorial italic accents (closers, link emphasis). |
+
+**Blue ramp** (secondary accent — light → dark):
+
+| Token | What it's for |
+|---|---|
+| `--blue` `#5BA7C9` | Cool blue — gradient start; rarely on its own. |
+| `--azure` `#5D6FB8` | Indigo accent — gradient stop only. |
+| `--oxford-blue` `#022E41` | Dark blue — for any "deep blue surface" need. |
+
+**Gradient-internal:**
+
+| Token | What it's for |
+|---|---|
+| `--dark-oxford` `#0B1A2B` | Dark stop in the vertical "dark-oxford → ___" gradients. Don't use as a direct text/surface color — that's `--ink` or `--oxford-blue`. |
+
+**Utility:**
+
+| Token | What it's for |
+|---|---|
+| `--line` `rgba(0,0,0,.10)` | Hairline dividers. Single tier. |
+
+Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` for headings + bold emphasis → `--aqua` for action → `--teal` for editorial emphasis or links.
 
 ### Gradient tokens & utilities
 
@@ -684,7 +707,7 @@ Standard section pattern: `<section style="padding: var(--section-y) 0;"><div cl
 - Skip-to-main link as the first focusable element on every page.
 - `id="main"` on the main content target.
 - Every input has a `<label for>` (visible or `class="sr-only"`).
-- `:focus-visible` rings on all interactive elements — `2px solid var(--azure-deep)`, offset 2px.
+- `:focus-visible` rings on all interactive elements — `2px solid var(--aqua)`, offset 2px.
 - Tab order matches visual order; no `tabindex > 0` without rationale.
 - WCAG AA contrast on body text against every background it appears on.
 
@@ -715,12 +738,12 @@ When in doubt, mirror these working examples:
 | Branded section with full effect stack | `shared/components/icp-carousel/` |
 | Editorial card with photo + caption (typology cards) | `.ty-card` in `index.html` |
 | Frosted-glass caption over media | `.ty-card .meta` in `index.html` |
-| Customer testimonial / quote card | `.quote-section` in `index.html` |
+| Customer testimonial / quote card | `.testimonial-section` in `index.html` |
 | Hero with video | `<header class="hero">` in `index.html` |
 | Stats / proof strip | `.stats` in `index.html` |
 | Editorial closer (italic teal sign-off line) | `.typology .closer` in `index.html` |
 | Final CTA before footer | `.cta` in `index.html` |
-| Paper-zone shared backdrop | `.paper-zone` in `index.html` |
+| Paper-backed section | `[data-team-section][data-theme="paper"]` (component-owned paper surface; no separate wrapper) |
 | Footer (light/paper) | `footer.site` in `index.html` |
 | Footer (dark) | `footer.site` in `demo.html` |
 | Inline newsletter signup | `footer.site .newsletter` in `index.html` |
@@ -731,28 +754,17 @@ When in doubt, mirror these working examples:
 
 ---
 
-## Known drift to clean up later (Phase 4)
+## Known drift to clean up later
 
-These are existing inconsistencies that fight the system. They don't block new work, but the cleanup pass should fix them.
+The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.paper-zone` + `.testimonial` inlined recipes, paper-warm canonicalization, `--muted` / `--line-soft` removal, `.lead` consolidation) was cleared in the 2026-05-06 pre-launch cleanup PR. Open follow-ups below.
 
-**Cleanup rule:** all of these are *plumbing* changes — replace inlined values with references to the canonical tokens and kit utilities. **Visual output must not change.** The ICP carousel is the canonical reference for the brand's effect stack; if a kit utility's value differs from the carousel's, the kit is the bug — fix the kit, not the carousel.
-
-**Token-level drift:**
-- `index.html` and `demo.html` redeclare some color tokens locally with subtly different values (notably `--ink` as `#0a0a0a` instead of canonical `#0B1A2B`). Switch to the canonical tokens — but verify each call-site reads correctly afterward, since the existing pages were authored against the local `#0a0a0a`.
-- Hero `h1` (`index.html:107–117`) and `h2` (`index.html:130–137`) hand-author `font-size: clamp(...)` and `letter-spacing: -.015em` instead of using `--fs-h1`/`--fs-h2`/`--ls-display` (canonical `-0.01em`). Map to type-scale tokens; if the canonical scale doesn't match the live hero, decide which is correct (the guide's tokens, almost certainly) and adjust visually if needed.
-- `feature-highlights` and `demo-form` each declare local CSS-variable namespaces (`--fh-*`, `--df-*`) instead of consuming the canonical `--ink`, `--cream`, `--ice` tokens directly. Refactor to read from canonical tokens. Local namespaces are fine for genuinely component-private values (e.g. `--df-stripe-row-bg` for an internal stripe), but for color/type/spacing they should pass through.
-- Several other components hardcode font sizes instead of using `--fs-*` tokens. Map each to the type role.
-
-**Effects-kit migrations (preserve every pixel):**
-- The paper gradient is duplicated in three places — `.paper-zone` (`index.html`), `feature-highlights/index.css` line 28, and `demo-form/index.css` line 49 — all with identical stops. Switch each to `.fx-grad-paper` / `--grad-paper`. Pure plumbing; output unchanged.
-- The ICP carousel inlines its panel gradients, dither mask, and grain SVG. **Lift each to the kit utilities** (`.fx-grad-ink-teal-cream` etc., `.fx-dither.fx-dither--photo`, `.fx-grain--warm`). The carousel's current look is the canonical brand expression — *do not change any visual values during this cleanup*. If the kit's defaults don't already match the carousel exactly, fix the kit.
-- The customer-quote section (`.quote-section` in `index.html:217–256`) currently inlines its own **diagonal 160°** gradient — an outlier from the canonical "all panel gradients are vertical 180°" rule. Switch to a panel gradient (`.fx-grad-dark-teal`, vertical) + `.fx-grain--warm` (override opacity to 0.28 to preserve the current look) + add `.fx-halftone-bloom` so it matches the Spotlight signature exactly. Don't mirror the live diagonal when building new testimonial sections — it's drift, not a brand feature.
-- The paper-zone halftone bloom (`index.html` lines 296–309) and the feature-highlights bloom are both inlined — switch to `.fx-halftone-bloom` and override `--fx-bloom-mask` per call-site.
+**Token / type:**
+- ICP carousel still inlines its panel gradients, dither mask, and grain SVG. Lift each to the kit utilities (`.fx-grad-ink-teal-cream` etc., `.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. **(F1.5 component-library audit territory.)**
+- The four shader implementations (`halftone-video`, `icp-carousel`, `features-alternating`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)**
 
 **Other:**
-- `.intro` and `.typology .head` are center-aligned; should go left.
-- Newsletter input is missing a `<label for>`.
+- Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**
 
 ---
 
-*Last updated 2026-05-04.*
+*Last updated 2026-05-06.*

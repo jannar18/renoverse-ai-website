@@ -101,7 +101,7 @@ footer.site-footer{
 /* ---------- newsletter (right side of the top row) ----------
    Eyebrow label (canonical mono/uppercase/--xwide style) above an inline
    input + arrow submit puck. Follows the style-guide newsletter recipe —
-   8px-radius input, 60% white fill, --azure-deep border. */
+   8px-radius input, 60% white fill, --aqua border. */
 .site-footer__newsletter{
   width: 100%;
   max-width: 380px;
@@ -132,7 +132,7 @@ footer.site-footer{
   gap: 8px;
   width: 100%;
 }
-/* 8px radius, 14px font, 60% white fill, --azure-deep border (same
+/* 8px radius, 14px font, 60% white fill, --aqua border (same
    azure as the submit puck so the form reads as one unit), teal text
    to match the rest of the footer copy. */
 .site-footer__newsletter input[type="email"]{
@@ -143,7 +143,7 @@ footer.site-footer{
   font-size: 14px;
   color: var(--teal, #2D6F75);
   background: rgba(255,255,255,0.6);
-  border: 1px solid var(--azure-deep, #5EC9B7);
+  border: 1px solid var(--aqua, #5EC9B7);
   border-radius: 8px;
   outline: none;
   transition: background .15s ease;
@@ -153,7 +153,7 @@ footer.site-footer{
   background: #fff;
 }
 /* Submit — circular arrow puck following the brand's .btn--white color
-   logic: white fill + --azure-deep stroke at rest, fills --azure-deep
+   logic: white fill + --aqua stroke at rest, fills --aqua
    with white stroke on hover. SVG inherits stroke via currentColor so
    the swap is driven by the button's `color` property. */
 .site-footer__newsletter button[type="submit"]{
@@ -162,10 +162,10 @@ footer.site-footer{
   height: 40px;
   padding: 0;
   margin: 0;
-  border: 1px solid var(--azure-deep, #5EC9B7);
+  border: 1px solid var(--aqua, #5EC9B7);
   border-radius: 999px;
   background: #fff;
-  color: var(--azure-deep, #5EC9B7);
+  color: var(--aqua, #5EC9B7);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -173,9 +173,9 @@ footer.site-footer{
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 .site-footer__newsletter button[type="submit"]:hover{
-  background: var(--azure-deep, #5EC9B7);
+  background: var(--aqua, #5EC9B7);
   color: #fff;
-  border-color: var(--azure-deep, #5EC9B7);
+  border-color: var(--aqua, #5EC9B7);
 }
 .site-footer__newsletter button[type="submit"] svg{
   width: 14px;

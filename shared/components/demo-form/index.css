@@ -21,11 +21,11 @@
      so the component looks correct even if the host page hasn't
      loaded shared/tokens.css. */
   --df-ink: var(--ink, #0B1A2B);
-  --df-bg: var(--bg, #FAFAF7);
+  --df-beige: var(--beige, #FAFAF7);
   --df-cream: var(--cream, #F2EBD8);
   --df-ice: var(--ice, #E5F4F1);
   --df-aqua: var(--aqua, #5EC9B7);
-  --df-azure: var(--azure, #7FE3CB);
+  --df-sky-blue: var(--sky-blue, #7FE3CB);
   --df-teal: var(--teal, #2D6F75);
   --df-blue: var(--blue, #5BA7C9);
   --df-line: var(--line, rgba(0,0,0,.10));
@@ -47,7 +47,7 @@
     radial-gradient(120% 80% at 50% 0%,
       rgba(229,244,241,1) 0%,
       rgba(242,235,216,.85) 45%,
-      var(--df-bg) 100%);
+      var(--df-beige) 100%);
 }
 
 .demo-form__bg-halftone {

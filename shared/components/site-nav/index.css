@@ -105,11 +105,11 @@
 .site-nav .nav-links a:focus-visible,
 .site-nav .nav-links .dt:focus-visible,
 .site-nav .nav-brand:focus-visible{
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:3px;
 }
 .site-nav .btn:focus-visible{
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:4px;
 }
 
@@ -184,7 +184,7 @@
 }
 .site-nav .dropdown-menu a:hover{background:#f5f1ec;color:#5EC9B7}
 .site-nav .dropdown-menu a:focus-visible{
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:-2px;
 }
 /* invisible hover bridge so the menu doesn't disappear in the gap */
@@ -214,7 +214,7 @@
   z-index:2;
 }
 .site-nav .nav-toggle:focus-visible{
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:3px;
   border-radius:4px;
 }
@@ -291,7 +291,7 @@
 .site-nav .nav-sheet__links a:hover{opacity:.65}
 .site-nav .nav-sheet__links a:focus-visible,
 .site-nav .nav-sheet a.btn:focus-visible{
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:4px;
   border-radius:4px;
 }
@@ -336,7 +336,7 @@
 .skip-link:focus,
 .skip-link:focus-visible{
   top:8px;
-  outline:2px solid var(--azure-deep, #5EC9B7);
+  outline:2px solid var(--aqua, #5EC9B7);
   outline-offset:2px;
 }
 
