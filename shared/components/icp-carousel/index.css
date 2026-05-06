@@ -135,7 +135,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: clamp(24px, 4vh, 48px);
+  gap: clamp(22px, 3vh, 32px);
 }
 
 /* ===== Shared heading overlay (overline + title carousel) ===== */
@@ -208,7 +208,7 @@
   align-self: center;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: clamp(22px, 3vh, 32px);
 }
 /* H3 role per STYLE_GUIDE — the carousel lead is the canonical H3 size
    reference (section header) for the rest of the site. Poppins, mixed case. */
