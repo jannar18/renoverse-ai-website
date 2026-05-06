@@ -24,13 +24,13 @@
 (function () {
   const MOUNT = '[data-features-editorial]';
 
-  /* Defaults mirror the four homepage capabilities (core-capabilities legacy)
-     so the host can mount with no data-items. Sides alternate so row 1 is
-     image-right, row 2 image-left, etc. Each item carries a `tint` (hex)
-     used as the dither shader's foreground (and as the placeholder strip's
-     fill); rotating across brand colors so the four dot patterns read as a
-     series rather than a flat teal repeat. The 4th item has no real asset
-     yet and renders the placeholder strip. */
+  /* Defaults are the four homepage capabilities so the host can mount with
+     no data-items. Sides alternate so row 1 is image-right, row 2
+     image-left, etc. Each item carries a `tint` (hex) used as the dither
+     shader's foreground (and as the placeholder strip's fill); rotating
+     across brand colors so the four dot patterns read as a series rather
+     than a flat teal repeat. The 4th item has no real asset yet and
+     renders the placeholder strip. */
   const DEFAULT_ITEMS = [
     {
       title: 'Email Triage & Auto-Capture',
