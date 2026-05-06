@@ -70,8 +70,11 @@ function FooterShader({ imageHref }) {
         offsetX: -0.13,
         offsetY: -0.1,
         softness: 0.7,
-        intensity: 0.15,
-        noise: 0.5,
+        /* Lower intensity = flatter wave (less amplitude). 0.15 was bending
+           the wave deep into the lower half of the footer; 0.08 keeps the
+           wave shape but evens out the height variance. */
+        intensity: 0.08,
+        noise: 0.35,
         shape: "wave",
         colors: ["#777EDD", "#5CC1AB", "#D5FFFA"],
         colorBack: "#00000000",
@@ -84,19 +87,21 @@ function buildCopy() {
   const wrap = document.createElement("div");
   wrap.className = "site-footer__copy";
   wrap.innerHTML = `
-    <div class="site-footer__newsletter">
-      <p class="site-footer__newsletter-label">Join our newsletter for updates</p>
-      <form data-newsletter-signup novalidate>
-        <label for="newsletter-email" class="sr-only">Email address</label>
-        <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-        <button type="submit" aria-label="Subscribe">${ICON_ARROW}</button>
-      </form>
-      <div class="site-footer__nl-status" data-nl-status aria-live="polite"></div>
-      <p class="site-footer__nl-fineprint">By subscribing, you agree to our <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">privacy policy</a> and to receive email updates from us.</p>
-    </div>
-    <div class="site-footer__socials">
-      <a href="https://www.linkedin.com/company/renoverse-ai/" target="_blank" rel="noopener" aria-label="LinkedIn">${ICON_LINKEDIN}</a>
-      <a href="https://www.instagram.com/renoverse.ai" target="_blank" rel="noopener" aria-label="Instagram">${ICON_INSTAGRAM}</a>
+    <div class="site-footer__top-row">
+      <div class="site-footer__socials">
+        <a href="https://www.linkedin.com/company/renoverse-ai/" target="_blank" rel="noopener" aria-label="LinkedIn">${ICON_LINKEDIN}</a>
+        <a href="https://www.instagram.com/renoverse.ai" target="_blank" rel="noopener" aria-label="Instagram">${ICON_INSTAGRAM}</a>
+      </div>
+      <div class="site-footer__newsletter">
+        <p class="site-footer__newsletter-label">Join our newsletter for updates</p>
+        <form data-newsletter-signup novalidate>
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit" aria-label="Subscribe">${ICON_ARROW}</button>
+        </form>
+        <div class="site-footer__nl-status" data-nl-status aria-live="polite"></div>
+        <p class="site-footer__nl-fineprint">By subscribing, you agree to our <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">privacy policy</a> and to receive email updates from us.</p>
+      </div>
     </div>
     <div class="site-footer__legal">
       <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy</a>
