@@ -61,6 +61,11 @@
   --grad-light-blue:        linear-gradient(in oklab 180deg, var(--cream)   0%, var(--blue)  55%, var(--oxford) 100%);
   --grad-light-oxford:      linear-gradient(in oklab 180deg, var(--ice)     0%, var(--oxford) 55%, var(--cream) 100%);
 
+  /* Soft two-stop washes — quieter than the LIGHT three-stop set above.
+     Use these for section backgrounds that want a gentle tint shift rather
+     than a full hero-style gradient. */
+  --grad-azure-ice: linear-gradient(in oklab 180deg, var(--azure) 0%, var(--ice) 100%);
+
   /* Warm paper backdrop — paper-zone (team + final-CTA + footer) */
   --grad-paper-zone: radial-gradient(120% 80% at 50% 0%,
     var(--ice) 0%,
@@ -84,9 +89,9 @@
      Lead/Body/Small + Eyebrow are utility roles with their own families. */
   --fs-h1: clamp(48px, 7vw, 96px);   --lh-h1: 1.10;   /* Cormorant italic */
   --fs-h2: clamp(32px, 4vw, 52px);   --lh-h2: 1.10;   /* Cormorant italic, editorial */
-  --fs-h3: clamp(24px, 2.6vw, 36px); --lh-h3: 1.28;   /* Poppins 500, section header */
+  --fs-h3: clamp(16px, 1.3vw, 20px); --lh-h3: 1.32;   /* Poppins 500, section header */
   --fs-eyebrow: clamp(11px, 0.9vw, 13px); --lh-eyebrow: 1.20;
-  --fs-lead:    clamp(17px, 1.4vw, 20px); --lh-lead:    1.55;
+  --fs-lead:    clamp(15px, 1.1vw, 17px); --lh-lead:    1.55;
   --fs-body:    16px;                     --lh-body:    1.55;
   --fs-small:   12.5px;                   --lh-small:   1.5;
 

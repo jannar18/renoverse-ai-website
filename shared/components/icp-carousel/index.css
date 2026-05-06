@@ -212,13 +212,15 @@
   gap: 14px;
 }
 /* H3 role per STYLE_GUIDE — the carousel lead is the canonical H3 size
-   reference (section header) for the rest of the site. Poppins 500. */
+   reference (section header) for the rest of the site. Poppins 500,
+   set in all-caps with positive tracking. */
 .icp-carousel__lead {
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--fs-h3);
   line-height: var(--lh-h3);
-  letter-spacing: var(--ls-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #fff;
   margin: 0;
 }

@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
 <link rel="stylesheet" href="shared/components/icp-carousel/index.css">
 <link rel="stylesheet" href="shared/components/feature-highlights/index.css">
-<link rel="stylesheet" href="shared/components/core-capabilities/index.css">
+<link rel="stylesheet" href="shared/components/features-editorial/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <style>
   :root{
@@ -157,31 +157,30 @@
     margin:0;
   }
 
-  /* Intro sits flush-right per Phase 13 — short stack of two leads pushed
-     to the page's right edge, max 60ch for readability. */
-  .intro{text-align:right;padding-top:32px}
-  .intro .lead{max-width:60ch;margin-left:auto;margin-right:0}
-  .intro .lead + .lead{margin-top:20px}
-
-  /* ---------- capabilities section (H2 header + 2×2 core-capabilities grid) ----------
-     Phase 13: the editorial H2 moved up to head this section. The wrapper
-     paints a full-width warm-paper bg so the visual break from the white
-     intro section above is unambiguous. Phase 14: the alternating rows are
-     replaced with a 2×2 card grid (`core-capabilities`); the cards' own white
-     surface contrasts cleanly against the warm-paper section bg. */
+  /* ---------- capabilities section (H2 header + editorial-strip rows) ----------
+     Two-column header: editorial H2 on the left, the two intro leads on the
+     right (formerly the standalone `.intro` section above this one). The
+     warm-paper bg now covers both the framing copy AND the H2 + strip rows
+     so they read as one capability-set narrative. */
   .capabilities-section{
-    background:var(--paper-warm);
+    background:var(--grad-azure-ice);
   }
   .capabilities-section__header{
-    padding:clamp(80px,10vw,120px) var(--gutter) clamp(8px,1.5vw,16px);
+    padding:clamp(32px,4vw,56px) 0 clamp(8px,1.5vw,16px);
   }
+  /* Mirrors `.features-editorial__wrap` exactly (max-width container,
+     gutter padding) so the H2's left edge and the leads' right edge
+     line up with the strip-row content below. */
   .capabilities-section__header-wrap{
-    max-width:60ch;
+    max-width:var(--container);
     margin:0 auto;
-    text-align:center;
+    padding:0 var(--gutter);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:clamp(32px,5vw,72px);
+    align-items:start;
   }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment, centered
-     because this is a single editorial sentence acting as the section header. */
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment. */
   .capabilities-section h2{
     font-family:var(--font-serif);
     font-style:italic;
@@ -191,6 +190,22 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
+  }
+  /* Right-column lead stack — vertically anchored at the top of the row so
+     the first lead's baseline sits near the H2's first line. Body register
+     matches the rest of the page (Poppins, --fs-lead). The intro and its
+     leads fill the full column width so their right edge aligns with the
+     right edge of the strip-row content below — overrides the global
+     `p.lead { max-width: 46ch }` rule for this scope only. */
+  .capabilities-section__intro{max-width:none}
+  .capabilities-section__intro .lead{max-width:none}
+  .capabilities-section__intro .lead + .lead{margin-top:16px}
+
+  @media (max-width:860px){
+    .capabilities-section__header-wrap{
+      grid-template-columns:1fr;
+      gap:24px;
+    }
   }
 
   /* ---------- 4 features lives in shared/components/feature-highlights/ ---------- */
@@ -567,30 +582,26 @@
 <div data-stack-animation></div>
 <div style="height:100vh;background:#fff"></div>
 
-<!-- ========== INTRO ========== -->
-<section class="intro">
-  <div class="wrap">
-    <p class="lead">
-      Stop wasting hours navigating hundreds of endless emails during home construction projects.
-    </p>
-    <p class="lead">
-      Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
-    </p>
-  </div>
-</section>
-
-<!-- ========== CAPABILITIES (Phase 14: editorial H2 header → 2×2 core-capabilities grid) ==========
-     Wrapper section gives the H2 + the card grid a single warm-paper bg,
-     full-width, so the visual break from the white intro above is clear.
-     Four core capabilities as equal-weight cards (homepage teaser); the
-     alternating-features deep-dive variant lives on solutions.html. -->
+<!-- ========== CAPABILITIES (editorial-strip variant) ==========
+     Two-column header: H2 left + intro leads right. The warm-paper bg
+     spans both the framing copy and the alternating strip rows below.
+     Four core capabilities render as `features-editorial` (homepage
+     teaser); the full-width deep-dive lives on solutions.html. -->
 <section class="capabilities-section">
   <div class="capabilities-section__header">
     <div class="capabilities-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
+      <div class="capabilities-section__intro">
+        <p class="lead">
+          Stop wasting hours navigating hundreds of endless emails during home construction projects.
+        </p>
+        <p class="lead">
+          Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
+        </p>
+      </div>
     </div>
   </div>
-  <div data-core-capabilities></div>
+  <div data-features-editorial></div>
 </section>
 
 <!-- ========== ICP CAROUSEL ========== -->
@@ -680,7 +691,7 @@
 <script src="shared/components/halftone-video/index.js"></script>
 <script src="shared/components/icp-carousel/index.js"></script>
 <script src="shared/components/feature-highlights/index.js"></script>
-<script src="shared/components/core-capabilities/index.js"></script>
+<script src="shared/components/features-editorial/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 
 <script>
