@@ -649,7 +649,9 @@ Closed list of 7. Token names mirror the actual color stops in declared order �
 |---|---|
 | `--grad` / `.fx-grad` | Horizontal blue → aqua → teal — hairlines, accent rules, eyebrow underlines, the Renoverse logo. Not a section background. |
 
-**Direction rules:** vertical gradients are 180deg top-down — never reversed. Token names always describe stops in declared order (top stop first). Paper is a soft radial from top center. New gradients earn an addition only if no existing one fits.
+**Direction rules:** the 5 vertical tokens default to `180deg` top-down with stops in declared order — never reversed. The signature is `90deg` horizontal. Paper is a soft radial from top center.
+
+**Orientation variations are sanctioned.** The canonical 7 define **stop colors**; per-call-site CSS may apply those same stops at a different angle (diagonal) or geometry (radial) when the composition calls for it — the stops never change, only the orientation. *Live example:* the testimonial card on `index.html` uses the canonical `dark-oxford → teal → cream` stops at a `160deg` diagonal instead of `180deg` vertical, for editorial-card lean. **Drift = changing the stop colors. Re-orienting is not drift.**
 
 ### Effects kit (`shared/effects.css`)
 
