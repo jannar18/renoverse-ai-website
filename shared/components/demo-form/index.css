@@ -37,7 +37,7 @@
   isolation: isolate;
   padding: clamp(56px, 9vw, 128px) clamp(20px, 4vw, 56px);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   color: var(--df-ink);
   -webkit-font-smoothing: antialiased;
 }

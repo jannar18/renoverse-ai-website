@@ -48,19 +48,8 @@
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/demo-form/index.css">
 <style>
-  :root{
-    --ink:#0a0a0a;
-    --paper:#ffffff;
-    --paper-warm:#f5f1ec;
-    --text:#111;
-    --line:rgba(0,0,0,.12);
-    --azure:#7FE3CB;
-    --azure-deep:#5EC9B7;
-    --max:1240px;
-    --gutter:clamp(20px,4vw,48px);
-  }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--paper);color:var(--text)}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
   body{
     font-family:var(--font-sans);
     font-weight:400;
@@ -77,11 +66,11 @@
      padding here. Adding padding leaves a plain-white strip above the
      form's gradient that the transparent nav sits on, which reads as
      a header bug. */
-  .demo-page{ position:relative; background:var(--paper) }
+  .demo-page{ position:relative; background:var(--bg) }
 
   /* ---------- footer (matches index.html) ---------- */
   footer.site{background:#0a0a0a;color:#fff;padding:48px 0 56px;border-top:1px solid rgba(255,255,255,.12)}
-  footer.site .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  footer.site .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
   footer.site .row{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;align-items:start}
   footer.site .brand img{height:30px;width:auto;filter:brightness(0) invert(1)}
   footer.site .tagline{
