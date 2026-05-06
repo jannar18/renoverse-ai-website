@@ -81,17 +81,24 @@
     background:var(--paper);
   }
   .backstory .wrap{max-width:var(--container)}
-  /* Two-column grid: editorial H2 on the left, body paragraphs on the
-     right. Columns are equal-weight (1fr 1fr) and align to the top so
-     the H2 reads as a "headline pull-quote" against the running body. */
+  /* Stacked 2-column rows: each block has an editorial H2 on the left
+     and body copy on the right. Columns are equal-weight (1fr 1fr) and
+     top-aligned so the H2 reads as a "headline pull-quote" against the
+     running body. Rows are separated by a generous vertical gap so each
+     block reads as its own beat. */
   .backstory__inner{
+    display:flex;
+    flex-direction:column;
+    gap:clamp(56px,8vw,96px);
+  }
+  .backstory__block{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:clamp(32px,5vw,80px);
     align-items:start;
   }
   /* H2 role per STYLE_GUIDE — Cormorant italic 500, --fs-h2. Standalone
-     editorial sentence; left-aligned in its column. */
+     editorial label; left-aligned in its column. */
   .backstory h2{
     font-family:var(--font-serif);
     font-style:italic;
@@ -104,9 +111,9 @@
     max-width:18ch;
   }
   .backstory__stack{display:flex;flex-direction:column;gap:24px;max-width:60ch}
-  /* Stack ≤860px: collapse the two columns so H2 sits above the body. */
+  /* Stack ≤860px: collapse each block so the H2 sits above its body. */
   @media (max-width:860px){
-    .backstory__inner{grid-template-columns:1fr;gap:32px}
+    .backstory__block{grid-template-columns:1fr;gap:32px}
     .backstory h2{margin:0 0 clamp(24px,4vw,40px);max-width:24ch}
   }
   /* Lead role — first paragraph; softened ink, slightly larger. */
@@ -270,37 +277,44 @@
   </section>
 
   <!-- ========== BACKSTORY ==========
-       Long-form founding-story section. Copy is lorem ipsum placeholder
-       per Phase 16 — replace with Julianna/Nola's founding-story copy
-       when it lands. Structure (H2 + lead + body paragraphs) and the
-       64ch readable column will stay the same. -->
+       Two stacked 2-column rows: "Our approach" + blurb, then
+       "Our values" + blurb. Body copy is lorem ipsum placeholder per
+       Phase 16 — replace with the real approach / values copy when it
+       lands; structure stays the same. -->
   <section class="backstory">
     <div class="wrap">
       <div class="backstory__inner">
-        <h2>Renoverse was born out of a renovation.</h2>
-        <div class="backstory__stack">
-          <p class="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-            doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-            veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-          </p>
-          <p>
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
-            quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
-            porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-            adipisci velit.
-          </p>
+
+        <div class="backstory__block">
+          <h2>Our approach</h2>
+          <div class="backstory__stack">
+            <p class="lead">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </p>
+            <p>
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+          </div>
         </div>
+
+        <div class="backstory__block">
+          <h2>Our values</h2>
+          <div class="backstory__stack">
+            <p class="lead">
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+              doloremque laudantium, totam rem aperiam.
+            </p>
+            <p>
+              Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur
+              aut odit aut fugit, sed quia consequuntur magni dolores eos.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
