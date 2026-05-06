@@ -448,12 +448,12 @@
     const objHTML = objects.map(o => `
       <div class="icp-carousel__object ${o.cls}" aria-hidden="true">${o.svg}</div>
     `).join('');
-    /* Phase 13: panels render the in-role voice as a styled italic blockquote
-       (left-rule + italic) so it reads as the persona speaking, not marketing
-       copy. Older `copy` field is still accepted as a fallback for any host
-       page that hasn't migrated. */
+    /* Persona-voice quote renders as body copy wrapped in curly quotes —
+       same Poppins voice as `.icp-carousel__copy`, just quoted to signal the
+       role is speaking. Older `copy` field is still accepted as a fallback
+       for any host page that hasn't migrated. */
     const bodyHTML = p.quote
-      ? `<blockquote class="icp-carousel__quote">${p.quote}</blockquote>`
+      ? `<p class="icp-carousel__copy">“${p.quote}”</p>`
       : `<p class="icp-carousel__copy">${p.copy}</p>`;
     return `
       <article class="icp-carousel__panel" data-id="${p.id}">
