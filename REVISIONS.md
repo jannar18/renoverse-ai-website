@@ -110,7 +110,7 @@ Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-R
 ### F5 — Authoring docs (audience: non-technical teammates pasting into Claude.ai)
 
 1. **`EDITING.md`** — recipe book of common edits ("change a homepage headline", "swap a feature image", "add a person to the team", "change footer links"). Each recipe = file to point Claude at + copy-pasteable prompt template + what to look for in the preview to confirm. No engineer jargon.
-2. **`AGENTS.md`** — house rules pasted into Claude's context: token system, "match X" rule, halftone shader spec, component contract, breakpoint set. (Note: this file overlaps with what `CLAUDE.md` already does — decide whether to merge or split for the non-engineer audience.)
+2. **`AGENTS.md`** — house rules pasted into Claude.ai (the consumer chat) by non-technical teammates: token system, "match X" rule, halftone shader spec, component contract, breakpoint set. Distinct from `CLAUDE.md`: that one is the Claude Code agent's session protocol; this one is a copy-paste primer for editors who don't have agent tooling.
 3. **`README.md` rewrite** — short. What the site is + pointer to `EDITING.md` for editors and `AGENTS.md`/`CLAUDE.md` for AI.
 4. **Per-component `README.md` audit** — overlaps with F1.5 README backfill.
 
