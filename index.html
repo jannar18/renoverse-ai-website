@@ -155,26 +155,22 @@
 
   /* ---------- capabilities section (H2 header + 2x2 card grid) ----------
      Warm-paper bg covers the H2 above the cards and the card grid itself,
-     reading as one capability-set narrative. The H2 spans the container
-     width, lining up with the card grid's max-width below. */
+     reading as one capability-set narrative. The H2 is centered as a
+     single editorial sentence above the grid — the deliberate exception
+     authorized by STYLE_GUIDE for cards-2x2 section headings. */
   .capabilities-section{
     background:var(--grad-sky-blue-ice);
   }
   .capabilities-section__header{
     padding:clamp(40px,5vw,72px) 0 clamp(8px,1.5vw,16px);
   }
-  /* Two-column grid mirrors the card grid below (same gap), so the H2 in
-     the left column spans exactly the width of the left card column. */
   .capabilities-section__header-wrap{
     max-width:var(--container);
     margin:0 auto;
     padding:0 var(--gutter);
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:clamp(20px,2.4vw,32px);
   }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
-     Lives in column 1; column 2 stays empty. */
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment, centered
+     as a single editorial sentence above the cards-2x2 grid. */
   .capabilities-section h2{
     font-family:var(--font-serif);
     font-style:italic;
@@ -183,13 +179,9 @@
     line-height:var(--lh-h2);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0;
-  }
-
-  @media (max-width:860px){
-    .capabilities-section__header-wrap{
-      grid-template-columns:1fr;
-    }
+    text-align:center;
+    max-width:60ch;
+    margin:0 auto;
   }
 
   /* ---------- testimonial ----------
@@ -310,7 +302,8 @@
 </section>
 
 <!-- ========== CAPABILITIES (2x2 card grid) ==========
-     H2 spans the container width, lining up with the card grid below.
+     H2 is centered above the grid as a single editorial sentence — the
+     STYLE_GUIDE-authorized exception for cards-2x2 section headings.
      Warm-paper bg covers both H2 and grid as one capability-set narrative.
      Four core capabilities render as `product-features-cards-2x2` (homepage
      teaser). The 3-up "rest comes built-in" beat on solutions.html uses the
