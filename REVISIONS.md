@@ -17,7 +17,7 @@ References every session must respect:
 
 - [x] **2. "Built for firms managing complex processes and workflows." H2 centered in the capabilities section.** (PR #28)
 
-- [x] **5. Testimonial card scalable layout — works with photo, logo, or name-only.** Extracted to `shared/components/testimonial-card/` (full contract). Card keeps the canonical dark-oxford-blue → teal → cream gradient + warm grain (per operator: layout only; background and colors unchanged). Layout per wireframe: chunky Cormorant open-quote glyph upper-left, italic quote spans most of card width, bottom-right cluster (slot → divider → Name/Role/Company stack). Three modes via `data-image` / `data-logo` / neither; divider always present so the attribution column doesn't shift. Mounted on `index.html` via `data-testimonial-card`; inline `.testimonial-section` / `.testimonial` CSS removed. (PR pending)
+- [x] **5. Testimonial card scalable layout — works with photo, logo, or name-only.** (PR #29) Extracted to `shared/components/testimonial-card/` (full contract). Card keeps the canonical dark-oxford-blue → teal → cream gradient + warm grain (per operator: layout only; background and colors unchanged). Layout per wireframe: chunky Cormorant open-quote glyph upper-left, italic quote spans most of card width, bottom-right cluster (slot → divider → Name/Role/Company stack). Three modes via `data-image` / `data-logo` / neither; divider always present so the attribution column doesn't shift.
 
 - [x] **7. Footer text + newsletter field — color contrast fix to meet WCAG AA (≥ 4.5:1).** (PR #26)
 - [x] **8. Footer logo — smaller on desktop; never deforms / squashes on resize.** (PR #26)
@@ -127,5 +127,8 @@ Round 3 revisions shipped:
 - 7. Footer contrast → text moved to `--oxford-blue` for WCAG AA on the wave gradient (PR #26).
 - 8. Footer logo aspect-ratio + smaller-on-desktop, fixed via width-driven sizing (PR #26).
 - 9–13. Solutions hero rewrite + uniform image-right + Control eyebrow + 3x1 polish (PR #25).
+- 5. Testimonial card extracted to `shared/components/testimonial-card/` with scalable layout for photo / logo / name-only modes (PR #29).
 
 Token-system rename shipped alongside #7/#8 (PR #26): `--blue` → `--cool-blue`, `--dark-oxford` → `--dark-oxford-blue`, all gradient tokens / `.fx-*` classes / Tailwind aliases / style-guide tables updated in lockstep.
+
+Capabilities section padding tightening shipped alongside #5 (PR #29): removed `min-height:100vh + justify-content:center` from `product-features-cards-2x2` and reduced its top padding so the H2 sits behind the frosted nav at the natural cards-fill-screen scroll position.
