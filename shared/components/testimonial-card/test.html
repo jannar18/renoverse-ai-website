@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>testimonial-card — test</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600&family=Cormorant+Garamond:ital,wght@0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../effects.css">
+<link rel="stylesheet" href="./index.css">
+
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--white);color:var(--ink);font-family:var(--font-sans)}
+  .stage{max-width:var(--container);margin:0 auto;padding:48px var(--gutter);display:grid;gap:48px}
+  .label{font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:var(--xwide);text-transform:uppercase;color:var(--ink-soft);margin:0 0 12px}
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <section>
+    <p class="label">Mode 1 — logo</p>
+    <div data-testimonial-card
+         data-quote="Renoverse has proven to be an invaluable organizational tool for the entire team — client, builder, designer, and architect alike. Having a single, up-to-date set of drawings to reference, along with the ability to log decisions and selections in a searchable format, is incredibly powerful."
+         data-name="Sabrina Vogel"
+         data-role="Owner &amp; Principal"
+         data-company="SLC Architect"
+         data-logo="../../../assets/slc-logo.webp"
+         data-logo-alt="SLC Architect"></div>
+  </section>
+
+  <section>
+    <p class="label">Mode 2 — photo</p>
+    <div data-testimonial-card
+         data-quote="The team adopted it on day one. Three projects later, every selection, every revision, every approval lives in one place — and we never have to ask 'which version are we on?' anymore."
+         data-name="Marcus Lee"
+         data-role="Principal Designer"
+         data-company="Atelier North"
+         data-image="../../../assets/slc-logo.webp"
+         data-image-alt="Marcus Lee headshot placeholder"></div>
+  </section>
+
+  <section>
+    <p class="label">Mode 3 — name only</p>
+    <div data-testimonial-card
+         data-quote="Goodbye, hundreds of email threads, decision gaps, and endless admin. Reclaim your billable time and sanity on residential projects."
+         data-name="Jordan Park"
+         data-role="Project Manager"
+         data-company="Park &amp; Co. Builders"></div>
+  </section>
+
+</div>
+
+<script src="./index.js"></script>
+
+</body>
+</html>
