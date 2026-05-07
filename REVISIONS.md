@@ -32,9 +32,7 @@ References every session must respect:
 
 ### About
 
-- [ ] **14. Center the story section so it reads as a story (h2 → content → h2 → content, single column).**
-  - Files: `about.html` (`.backstory`, `.backstory__block`)
-  - Currently a two-column grid; change to a single centered column with comfortable measure.
+- [x] **14. Center the story section so it reads as a story (h2 → content → h2 → content, single column).** (PR #30) Backstory section converted from a 2-column grid to a single centered 60ch column; each block stacks H2 (centered, italic Cormorant — sanctioned single-editorial-sentence centered-H2 exception) above its body copy (left-aligned, per "no centered multi-line body copy outside a hero"). About page hero also centered to match the Solutions hero pattern (Round 3 #9): `.page-hero .wrap` is now `text-align:center`, H1 and subtitle share the center axis with `margin:0 auto` / `margin:24px auto 0`.
 
 ---
 
@@ -128,6 +126,7 @@ Round 3 revisions shipped:
 - 8. Footer logo aspect-ratio + smaller-on-desktop, fixed via width-driven sizing (PR #26).
 - 9–13. Solutions hero rewrite + uniform image-right + Control eyebrow + 3x1 polish (PR #25).
 - 5. Testimonial card extracted to `shared/components/testimonial-card/` with scalable layout for photo / logo / name-only modes (PR #29).
+- 14. About backstory → single centered 60ch column (h2 → content → h2 → content); About hero also centered to match the Solutions hero pattern (PR #30).
 
 Token-system rename shipped alongside #7/#8 (PR #26): `--blue` → `--cool-blue`, `--dark-oxford` → `--dark-oxford-blue`, all gradient tokens / `.fx-*` classes / Tailwind aliases / style-guide tables updated in lockstep.
 

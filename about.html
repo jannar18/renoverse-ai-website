@@ -57,10 +57,11 @@
 
   /* ---------- page hero (paper, no video) ----------
      Mirrors the Solutions page hero: flex column centered vertically,
-     content left-aligned (H1 + lead share the left axis). min-height is
-     capped below 100vh so the section beneath peeks into the first
-     viewport on entry — taller than a paper title block, shorter than
-     a full hero. */
+     content centered (H1 + lead share the center axis — sanctioned
+     "hero exception" for centered multi-line copy per STYLE_GUIDE).
+     min-height is capped below 100vh so the section beneath peeks
+     into the first viewport on entry — taller than a paper title
+     block, shorter than a full hero. */
   .page-hero{
     position:relative;
     isolation:isolate;
@@ -71,7 +72,7 @@
     display:flex;
     align-items:center;
   }
-  .page-hero .wrap{ width:100%; text-align:left; }
+  .page-hero .wrap{ width:100%; text-align:center; }
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
@@ -80,13 +81,15 @@
     line-height:var(--lh-h1);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0;
+    margin:0 auto;
     max-width:26ch;
   }
   /* Hero subtitle — Lead tier. Body font/size in the softer --ink-soft
-     shade so the subtitle sits visually below the H1. */
+     shade so the subtitle sits visually below the H1. Centered to
+     match the H1 axis (the only place on the site that authorizes
+     multi-line centered body copy). */
   .page-hero p{
-    margin:24px 0 0;
+    margin:24px auto 0;
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
@@ -96,33 +99,39 @@
   }
 
   /* ---------- backstory ----------
-     Long-form founding-story section. H2 standalone editorial sentence
-     (Cormorant italic 500) opens; a stack of body paragraphs follows
-     beneath. Real copy is pending (Phase 16: lorem ipsum placeholder for
-     v1, replace when Julianna/Nola hand off the founding story). */
+     Long-form founding-story section. Reads as a story: a single
+     centered column where each block is an editorial H2 (centered,
+     Cormorant italic 500 — qualifies for the "single editorial
+     sentence" centered-H2 exception per STYLE_GUIDE) followed by its
+     body paragraphs (left-aligned, 60ch measure). Blocks alternate
+     h2 → content → h2 → content down the page. Real copy is pending
+     (Phase 16: lorem ipsum placeholder for v1, replace when
+     Julianna/Nola hand off the founding story). */
   .backstory{
     padding:var(--section-y-tight) 0 var(--section-y);
     background:var(--beige);
   }
   .backstory .wrap{max-width:var(--container)}
-  /* Stacked 2-column rows: each block has an editorial H2 on the left
-     and body copy on the right. Columns are equal-weight (1fr 1fr) and
-     top-aligned so the H2 reads as a "headline pull-quote" against the
-     running body. Rows are separated by a generous vertical gap so each
-     block reads as its own beat. */
+  /* Single centered column at ~60ch — comfortable reading measure
+     for the long-form story. Generous vertical gap between blocks so
+     each beat lands. */
   .backstory__inner{
     display:flex;
     flex-direction:column;
     gap:clamp(56px,8vw,96px);
+    max-width:60ch;
+    margin:0 auto;
   }
+  /* Each block stacks h2 above its body; tighter gap so the H2 + copy
+     read as one beat. */
   .backstory__block{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:clamp(32px,5vw,80px);
-    align-items:start;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(20px,3vw,32px);
   }
-  /* H2 role per STYLE_GUIDE — Cormorant italic 500, --fs-h2. Standalone
-     editorial label; left-aligned in its column. */
+  /* H2 role per STYLE_GUIDE — Cormorant italic 500, --fs-h2.
+     Centered: each backstory H2 is a one- to three-word editorial
+     label, which is the sanctioned use of a centered H2. */
   .backstory h2{
     font-family:var(--font-serif);
     font-style:italic;
@@ -132,16 +141,12 @@
     letter-spacing:var(--ls-display);
     color:var(--ink);
     margin:0;
-    max-width:18ch;
+    text-align:center;
   }
-  .backstory__stack{display:flex;flex-direction:column;gap:24px;max-width:60ch}
-  /* Stack ≤860px: collapse each block so the H2 sits above its body. */
-  @media (max-width:860px){
-    .backstory__block{grid-template-columns:1fr;gap:32px}
-    .backstory h2{margin:0 0 clamp(24px,4vw,40px);max-width:24ch}
-  }
+  .backstory__stack{display:flex;flex-direction:column;gap:24px}
   /* Body paragraphs — Body color is --ink-soft site-wide; only headings
-     sit at full --ink. No separate Lead tier. */
+     sit at full --ink. Left-aligned within the centered column per the
+     "no centered multi-line body copy outside a hero" rule. */
   .backstory__stack p{
     font-family:var(--font-sans);
     font-size:var(--fs-body);
@@ -173,10 +178,11 @@
   </section>
 
   <!-- ========== BACKSTORY ==========
-       Two stacked 2-column rows: "Our approach" + blurb, then
-       "Our values" + blurb. Body copy is lorem ipsum placeholder per
-       Phase 16 — replace with the real approach / values copy when it
-       lands; structure stays the same. -->
+       Single centered column reading as a story: h2 → content →
+       h2 → content. Two blocks: "Our approach" then "Our values".
+       Body copy is lorem ipsum placeholder per Phase 16 — replace
+       with the real approach / values copy when it lands; structure
+       stays the same. -->
   <section class="backstory">
     <div class="wrap">
       <div class="backstory__inner">
