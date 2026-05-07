@@ -15,9 +15,7 @@ References every session must respect:
 
 ### Homepage
 
-- [ ] **2. "Built for firms managing complex processes and workflows." H2 centered in the capabilities section.**
-  - Files: `index.html` (`.capabilities-section__header` block)
-  - Style guide: H2 may be centered when used as a single editorial sentence.
+- [x] **2. "Built for firms managing complex processes and workflows." H2 centered in the capabilities section.** (PR #28)
 
 - [ ] **5. Testimonial card scalable layout — works with photo, logo, or name-only.**
   - Files: `index.html` (`.testimonial-section`, `.testimonial`)

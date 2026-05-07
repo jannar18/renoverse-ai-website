@@ -8,6 +8,12 @@ You are working on the Renoverse marketing site. Read the following docs in this
 
 ---
 
+## Sync discipline
+
+- **Start of session:** `git fetch && git status` to confirm local `main` is in sync with `origin/main`. If behind, `git pull` before doing anything else. A stale working tree is the most common cause of "this used to work" bugs (e.g. tokens that exist on remote main but not locally).
+- **After a PR merges:** immediately `git checkout main && git pull` so the next change starts from the merged state. Don't continue working on the merged feature branch.
+- **Exception:** if the operator explicitly says "don't merge yet" (or the PR is intentionally open), stay on the branch and skip the post-merge pull.
+
 ## House rules
 
 - **Tokens only.** No hex / rgb / font / spacing values outside `shared/tokens.css`. Single-component opaque-overlay exceptions are tolerated; flag any you have to introduce.
