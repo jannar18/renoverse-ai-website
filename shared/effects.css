@@ -4,13 +4,11 @@
    Source of truth: STYLE_GUIDE.md (Part I "Section signatures" + Part II "Effects kit").
 
    These utilities are the canonical implementations of the
-   brand's recurring surface treatments. They were lifted
-   directly out of the ICP carousel (which is the reference
-   composition — see `shared/components/icp-carousel/index.css`)
-   so any new section, page, or component can compose the same
-   visual world without re-deriving the parameters.
+   brand's recurring surface treatments, so any new section,
+   page, or component can compose the same visual world without
+   re-deriving the parameters.
 
-   COMPOSITION ORDER (bottom → top), as used in the carousel:
+   COMPOSITION ORDER (bottom → top):
      1. base color / gradient        (.fx-grad-*)
      2. dither dot-mask              (.fx-dither, on art/photo)
      3. halftone-dot bloom           (.fx-halftone-bloom)

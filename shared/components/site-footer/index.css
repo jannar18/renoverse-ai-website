@@ -1,8 +1,7 @@
 /* Renoverse — site-footer.
-   Monumental shared footer with shader background. The HalftoneDots layer
-   composites the photographic source over the warm paper backdrop; a
-   GrainGradient wave sits on top in mint/lavender/cream and washes into
-   the bottom edge.
+   Monumental shared footer with a wave GrainGradient shader background
+   in the brand trio (lavender / mint / cream) — the visual color closer
+   for the page.
 
    Layout, top → bottom:
      1. site-footer__newsletter — single-line mono label + inline arrow
@@ -24,36 +23,40 @@ footer.site-footer{
      breakpoint below collapses this to content-driven height. */
   min-height: 100vh;
   overflow: hidden;
-  /* Paper backdrop + a flat fallback gradient using GrainGradient's color
-     trio, so pages without WebGL still get a recognizable wash. */
-  background:
-    linear-gradient(160deg, rgba(119,126,221,0.18) 0%, rgba(92,193,171,0.30) 55%, rgba(213,255,250,0.55) 100%),
-    #F4F1EA;
+  /* Plain beige paper backdrop — matches the `--beige` edge stop of the
+     team-section paper variant above (homepage + about), so the seam
+     disappears and the wave gradient blooms up from a continuous beige
+     surface. The WebGL wave renders on top and is the visual story. */
+  background: var(--beige, #FAFAF7);
   color: #0a0a0a;
   isolation: isolate;
 }
 
-/* Shader root — fills the footer; the two children inside are absolute,
-   inset:0 so each layer covers the full footer area. */
+/* Shader root — fills the footer; the gradient layer inside is absolute,
+   inset:0 so it covers the full footer area. */
 .site-footer__shaders{
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
 }
-.site-footer__halftone,
 .site-footer__gradient{
   position: absolute;
   inset: 0;
 }
-/* Paper's shader components render a sized <canvas> — force them to fill
+/* Paper's shader component renders a sized <canvas> — force it to fill
    regardless of any intrinsic sizing the props might apply. */
-.site-footer__halftone > *,
 .site-footer__gradient > *{
   width: 100% !important;
   height: 100% !important;
 }
-.site-footer__gradient{ opacity: 0.9; }
+
+/* Paper-grain overlay — sits between the WebGL gradient (z:0) and the
+   copy stack (z:2). Picks up the canonical .fx-grain--ink recipe; the
+   class is just a hook for the z-index lock. */
+.site-footer__grain{
+  z-index: 1;
+}
 
 /* ---------- copy stack (bottom-anchored column) ----------
    Spacing here is per-section (margin-top on each child) instead of a
