@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/stack-animation/index.css">
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
-<link rel="stylesheet" href="shared/components/features-editorial/index.css">
+<link rel="stylesheet" href="shared/components/product-features-cards-2x2/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
@@ -121,30 +121,60 @@
     letter-spacing:var(--ls-display);
     margin:0 0 16px;
   }
-  /* ---------- capabilities section (H2 header + editorial-strip rows) ----------
-     Two-column header: editorial H2 on the left, the two intro leads on the
-     right (formerly the standalone `.intro` section above this one). The
-     warm-paper bg now covers both the framing copy AND the H2 + strip rows
-     so they read as one capability-set narrative. */
+  /* ---------- stack-tail intro ----------
+     Sits in the white space immediately below the stack-animation pin,
+     before the warm-paper capabilities section. Right-aligned editorial
+     intro that sets up the H2 + cards below. */
+  .stack-tail-intro{
+    background:var(--white);
+    padding:clamp(40px,5vw,72px) 0 clamp(40px,5vw,72px);
+  }
+  .stack-tail-intro__wrap{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 var(--gutter);
+  }
+  .stack-tail-intro__wrap p{
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:var(--fs-body);
+    line-height:var(--lh-body);
+    color:var(--ink-soft);
+    margin:0 0 0 auto;
+    max-width:60ch;
+    text-align:right;
+  }
+  .stack-tail-intro__wrap p + p{margin-top:16px}
+
+  @media (max-width:860px){
+    .stack-tail-intro__wrap p{
+      text-align:left;
+      margin-left:0;
+    }
+  }
+
+  /* ---------- capabilities section (H2 header + 2x2 card grid) ----------
+     Warm-paper bg covers the H2 above the cards and the card grid itself,
+     reading as one capability-set narrative. The H2 spans the container
+     width, lining up with the card grid's max-width below. */
   .capabilities-section{
     background:var(--grad-sky-blue-ice);
   }
   .capabilities-section__header{
-    padding:clamp(32px,4vw,56px) 0 clamp(8px,1.5vw,16px);
+    padding:clamp(40px,5vw,72px) 0 clamp(8px,1.5vw,16px);
   }
-  /* Mirrors `.features-editorial__wrap` exactly (max-width container,
-     gutter padding) so the H2's left edge and the leads' right edge
-     line up with the strip-row content below. */
+  /* Two-column grid mirrors the card grid below (same gap), so the H2 in
+     the left column spans exactly the width of the left card column. */
   .capabilities-section__header-wrap{
     max-width:var(--container);
     margin:0 auto;
     padding:0 var(--gutter);
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:clamp(32px,5vw,72px);
-    align-items:start;
+    gap:clamp(20px,2.4vw,32px);
   }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment. */
+  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment.
+     Lives in column 1; column 2 stays empty. */
   .capabilities-section h2{
     font-family:var(--font-serif);
     font-style:italic;
@@ -155,22 +185,10 @@
     color:var(--ink);
     margin:0;
   }
-  /* Right-column intro stack — Body paragraphs (Body color = --ink-soft
-     site-wide; only headings sit at full --ink). */
-  .capabilities-section__intro{
-    font-family:var(--font-sans);
-    font-weight:400;
-    font-size:var(--fs-body);
-    line-height:var(--lh-body);
-    color:var(--ink-soft);
-  }
-  .capabilities-section__intro p{margin:0}
-  .capabilities-section__intro p + p{margin-top:16px}
 
   @media (max-width:860px){
     .capabilities-section__header-wrap{
       grid-template-columns:1fr;
-      gap:24px;
     }
   }
 
@@ -276,26 +294,63 @@
      [data-stack-animation] from the host page. -->
 <div data-stack-animation></div>
 
-<!-- ========== CAPABILITIES (editorial-strip variant) ==========
-     Two-column header: H2 left + intro leads right. The warm-paper bg
-     spans both the framing copy and the alternating strip rows below.
-     Four core capabilities render as `features-editorial` (homepage
-     teaser); the full-width deep-dive lives on solutions.html. -->
+<!-- ========== STACK-TAIL INTRO ==========
+     Right-aligned editorial intro on white, sitting below the stack
+     animation and above the warm-paper capabilities section. Sets up the
+     H2 + cards that follow. -->
+<section class="stack-tail-intro">
+  <div class="stack-tail-intro__wrap">
+    <p>
+      Stop wasting hours navigating hundreds of endless emails during home construction projects.
+    </p>
+    <p>
+      Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
+    </p>
+  </div>
+</section>
+
+<!-- ========== CAPABILITIES (2x2 card grid) ==========
+     H2 spans the container width, lining up with the card grid below.
+     Warm-paper bg covers both H2 and grid as one capability-set narrative.
+     Four core capabilities render as `product-features-cards-2x2` (homepage
+     teaser). The 3-up "rest comes built-in" beat on solutions.html uses the
+     sibling `product-features-card-3x1` with taller proportions. -->
 <section class="capabilities-section">
   <div class="capabilities-section__header">
     <div class="capabilities-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
-      <div class="capabilities-section__intro">
-        <p>
-          Stop wasting hours navigating hundreds of endless emails during home construction projects.
-        </p>
-        <p>
-          Our AI-powered platform facilitates transparent workflow collaboration and decision logging at the design-plan level, so architects can focus on delivering a seamless experience for happier homeowner clients.
-        </p>
-      </div>
     </div>
   </div>
-  <div data-features-editorial></div>
+  <div data-product-features-cards-2x2
+       data-cta-href="solutions.html"
+       data-cta-label="See all features"
+       data-items='[
+         {
+           "title": "Email Triage & Auto-Capture",
+           "body": "The decisions buried in a 40-message chain don’t disappear. Ella AI automatically surfaces what matters — organized by project, ready to act on, with the information provenance one click away.",
+           "image": "assets/feature-email-triage.png",
+           "alt": "Renoverse Ella AI triage inbox surfacing decisions, questions, and action items extracted from project emails"
+         },
+         {
+           "title": "Decision Log & Audit Trail",
+           "body": "Know who decided what, when, and why — without anyone having to write it down. Every decision is captured, timestamped, and traceable back to its source from first log through final approval.",
+           "image": "assets/feature-decision-log.png",
+           "alt": "Renoverse decision log with timestamped audit trail tracing a backsplash tile selection from first log to final approval"
+         },
+         {
+           "title": "Intelligence Layer on Existing Stack",
+           "body": "Nothing gets replaced. Renoverse connects to Microsoft 365 tools and acts as the intelligent coordination layer on top so information flows between systems seamlessly.",
+           "image": "assets/feature-intelligence-layer.png",
+           "alt": "Renoverse Connectors page showing Gmail, Outlook, and other communication and storage integrations"
+         },
+         {
+           "title": "Controlled Stakeholder Access",
+           "body": "Control visibility with three access tiers: internal team, professional collaborators, and client — so private work stays private, and stakeholders and clients see exactly what they need, nothing more.",
+           "placeholder": true,
+           "placeholderTag": "Image placeholder",
+           "placeholderLabel": "Stakeholder access view"
+         }
+       ]'></div>
 </section>
 
 <!-- ========== TESTIMONIAL ========== -->
@@ -334,7 +389,7 @@
 <script src="shared/components/site-nav/index.js"></script>
 <script src="shared/components/stack-animation/index.js"></script>
 <script src="shared/components/halftone-video/index.js"></script>
-<script src="shared/components/features-editorial/index.js"></script>
+<script src="shared/components/product-features-cards-2x2/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 
 <script type="importmap">
