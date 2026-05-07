@@ -126,15 +126,12 @@
   margin-top: 32px;
 }
 
-/* Optional CTA — reuses the .btn .btn--frosted primitive from the ICP
-   carousel CTA. Local overrides only:
+/* Optional CTA — reuses the .btn .btn--frosted primitive. Local overrides:
      - Override .btn's default 24px all-sides margin: top 32px to separate
        from attribution; right/bottom/left 0 (no adjacent content needs
        tick-clearance protection on this side of the row).
-     - Tighten gap + right padding to seat the arrow puck snugly, matching
-       .icp-carousel__cta exactly.
-   The .team-section__cta-arrow recipe (24px aqua circle, 12x12 white svg)
-   mirrors .icp-carousel__cta-arrow verbatim. */
+     - 14px gap + 13px right padding to seat the arrow puck snugly.
+   .team-section__cta-arrow recipe: 24px aqua circle, 12x12 white svg. */
 .team-section__cta {
   margin: 32px 0 0 0;
   gap: 14px;
