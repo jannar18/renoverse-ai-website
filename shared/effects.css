@@ -33,9 +33,9 @@
 
 /* Vertical */
 .fx-grad-sky-blue-ice             { background: var(--grad-sky-blue-ice); }
-.fx-grad-dark-oxford-teal-cream   { background: var(--grad-dark-oxford-teal-cream); }
-.fx-grad-dark-oxford-azure-ice    { background: var(--grad-dark-oxford-azure-ice); }
-.fx-grad-dark-oxford-blue-cream   { background: var(--grad-dark-oxford-blue-cream); }
+.fx-grad-dark-oxford-blue-teal-cream   { background: var(--grad-dark-oxford-blue-teal-cream); }
+.fx-grad-dark-oxford-blue-azure-ice    { background: var(--grad-dark-oxford-blue-azure-ice); }
+.fx-grad-dark-oxford-blue-cool-blue-cream   { background: var(--grad-dark-oxford-blue-cool-blue-cream); }
 .fx-grad-cream-aqua-teal          { background: var(--grad-cream-aqua-teal); }
 
 /* Radial paper backdrop */

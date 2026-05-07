@@ -26,7 +26,7 @@
   --df-aqua: var(--aqua, #5EC9B7);
   --df-sky-blue: var(--sky-blue, #7FE3CB);
   --df-teal: var(--teal, #2D6F75);
-  --df-blue: var(--blue, #5BA7C9);
+  --df-cool-blue: var(--cool-blue, #5BA7C9);
   --df-line: var(--line, rgba(0,0,0,.10));
 
   position: relative;

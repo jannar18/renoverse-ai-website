@@ -26,14 +26,14 @@
   --teal: #2D6F75;           /* deep teal — emphasis */
 
   /* blue — secondary accent ramp (light → dark) */
-  --blue: #5BA7C9;           /* cool blue — gradient start / accent */
+  --cool-blue: #5BA7C9;      /* cool blue — gradient start / accent */
   --azure: #5D6FB8;          /* indigo blue (was named --oxford) */
   --oxford-blue: #022E41;    /* dark blue brand color (very dark navy) */
 
   /* dark navy used as the dark stop in vertical "ink → ___" gradients —
      the legacy ink color that the gradients still want even after the
      text --ink shifted to #0a0a0a. */
-  --dark-oxford: #0B1A2B;
+  --dark-oxford-blue: #0B1A2B;
 
   /* utility — single hairline tier (light grey, surface effect not font color) */
   --line: rgba(0, 0, 0, 0.10);
@@ -46,13 +46,13 @@
 
   /* Signature — horizontal blue → aqua → teal. Same gradient used in the
      Renoverse logo. Used for hairlines, accent rules, eyebrow underlines. */
-  --grad: linear-gradient(90deg, var(--blue) 0%, var(--aqua) 50%, var(--teal) 100%);
+  --grad: linear-gradient(90deg, var(--cool-blue) 0%, var(--aqua) 50%, var(--teal) 100%);
 
   /* Vertical gradients (oklab interpolation). */
   --grad-sky-blue-ice:           linear-gradient(in oklab 180deg, var(--sky-blue)    0%, var(--ice)  100%);                      /* capabilities-section */
-  --grad-dark-oxford-teal-cream: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--teal)  70%, var(--cream) 100%);   /* testimonial card + ICP project-managers */
-  --grad-dark-oxford-azure-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--azure) 72%, var(--ice)  100%);    /* ICP principal-architects */
-  --grad-dark-oxford-blue-cream: linear-gradient(in oklab 180deg, var(--dark-oxford) 0%, var(--blue)  70%, var(--cream) 100%);   /* ICP junior-designers */
+  --grad-dark-oxford-blue-teal-cream: linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--teal)  70%, var(--cream) 100%);   /* testimonial card + ICP project-managers */
+  --grad-dark-oxford-blue-azure-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--azure) 72%, var(--ice)  100%);    /* ICP principal-architects */
+  --grad-dark-oxford-blue-cool-blue-cream: linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--cool-blue)  70%, var(--cream) 100%);   /* ICP junior-designers */
   --grad-cream-aqua-teal:        linear-gradient(in oklab 180deg, var(--cream)       0%, var(--aqua) 55%, var(--teal)  100%);    /* features-alternating */
 
   /* Radial backdrop — soft warm-paper surface. Origin top-center, three
