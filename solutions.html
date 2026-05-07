@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/features-alternating/index.css">
+<link rel="stylesheet" href="shared/components/product-features-card-3x1/index.css">
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
   *{box-sizing:border-box}
@@ -99,99 +100,6 @@
     max-width:60ch;
   }
 
-  /* ---------- additional capabilities (3-up cards) ----------
-     Hierarchy beat: the 4 major capabilities live in the alternating
-     section above (full 100vh-per-row treatment). These 3 minor features
-     sit one notch lighter — image-on-top cards in a single row — so the
-     "4 main, 3 additional" split reads at a glance. Card surface mirrors
-     the homepage typology cards (.ty-card): rounded warm-paper container
-     with a frosted meta panel under a product-screenshot photo well. */
-  .additional{
-    background:var(--cream, #F2EBD8);
-    padding:clamp(72px,9vw,112px) 0 clamp(80px,10vw,120px);
-  }
-  .additional .head{
-    margin:0 auto clamp(40px,5vw,64px);
-    max-width:60ch;
-    text-align:center;
-    padding:0 var(--gutter);
-  }
-  /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment. */
-  .additional .head h2{
-    font-family:var(--font-serif);
-    font-style:italic;
-    font-weight:500;
-    font-size:var(--fs-h2);
-    line-height:var(--lh-h2);
-    letter-spacing:var(--ls-display);
-    color:var(--ink);
-    margin:0;
-  }
-  .additional .grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:clamp(20px,2.4vw,32px);
-    align-items:stretch;
-    max-width:var(--container);
-    margin:0 auto;
-    padding:0 var(--gutter);
-  }
-  .add-card{
-    display:flex;flex-direction:column;
-    border-radius:14px;
-    overflow:hidden;
-    isolation:isolate;
-    background:#ece7e1;
-    box-shadow:0 1px 0 rgba(11,26,43,.06), 0 18px 40px -22px rgba(11,26,43,.22);
-    color:var(--ink);
-  }
-  .add-card .shot{
-    position:relative;
-    aspect-ratio:1280/832;
-    background:#fff;
-    overflow:hidden;
-  }
-  .add-card .shot img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .add-card .meta{
-    position:relative;
-    flex:1;
-    padding:24px 22px 26px;
-    text-align:center;
-    color:var(--ink);
-    background:rgba(255,255,255,.55);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    border-top:1px solid rgba(255,255,255,.6);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
-  }
-  /* Card title — Body role with 600 weight emphasis (no dedicated card-title role). */
-  .add-card h3{
-    font-family:var(--font-sans);
-    font-size:var(--fs-body);
-    line-height:var(--lh-body);
-    font-weight:600;
-    letter-spacing:-.005em;
-    color:var(--ink);
-    margin:0 0 8px;
-  }
-  /* Card body text — Small role (compact paragraph inside a card). Body
-     color is --ink-soft site-wide; only headings sit at full --ink. */
-  .add-card .meta p{
-    font-family:var(--font-sans);
-    font-size:var(--fs-small);
-    line-height:var(--lh-small);
-    color:var(--ink-soft);
-    margin:0;
-  }
-
-  @media (max-width:960px){
-    .additional .grid{grid-template-columns:1fr;gap:24px;max-width:560px}
-  }
 </style>
 </head>
 <body>
@@ -276,39 +184,32 @@
        ]'></div>
 
   <!-- ========== ADDITIONAL CAPABILITIES (3-up) ==========
-       The "4 main, 3 additional" hierarchy beat. Cards mirror the homepage
-       typology card surface (warm-paper rounded container + frosted meta
-       under a product-screenshot photo well) so the visual weight sits one
-       step below the alternating rows above. Imagery from existing
-       pillar-* assets — collaborators / comments / tasks. -->
-  <section class="additional">
-    <div class="head">
-      <h2>And the rest comes built-in.</h2>
-    </div>
-    <div class="grid">
-      <article class="add-card">
-        <div class="shot"><img src="assets/pillar-collaborators.png" alt="Project collaborators panel showing architects, contractors, designers, and homeowners on a single project" loading="lazy" /></div>
-        <div class="meta">
-          <h3>Frictionless collaboration</h3>
-          <p>Consolidate communication in one unified workspace — so nothing gets lost across emails and texts.</p>
-        </div>
-      </article>
-      <article class="add-card">
-        <div class="shot"><img src="assets/pillar-comments.png" alt="Drawing v3 with anchored comments threaded against specific revisions" loading="lazy" /></div>
-        <div class="meta">
-          <h3>Version control</h3>
-          <p>Manage design plan revisions so all stakeholders collaborate on the correct set.</p>
-        </div>
-      </article>
-      <article class="add-card">
-        <div class="shot"><img src="assets/pillar-tasks.png" alt="Ella AI activity summary surfacing tasks, queries, and homeowner questions ready for review" loading="lazy" /></div>
-        <div class="meta">
-          <h3>AI assistant</h3>
-          <p>Automate repetitive admin, query project info & town documents, and field homeowner questions.</p>
-        </div>
-      </article>
-    </div>
-  </section>
+       The "4 main, 3 additional" hierarchy beat. Same product-features-card
+       primitive as the homepage 2x2, mounted with cols=3 + a heading slot
+       + no CTA (Solutions IS the destination — a self-loop CTA would be
+       redundant). The 3 cards reuse the existing pillar-* assets. -->
+  <div data-product-features-card-3x1
+       data-heading="And the rest comes built-in."
+       data-items='[
+         {
+           "title": "Frictionless collaboration",
+           "body": "Consolidate communication in one unified workspace — so nothing gets lost across emails and texts.",
+           "image": "assets/pillar-collaborators.png",
+           "alt": "Project collaborators panel showing architects, contractors, designers, and homeowners on a single project"
+         },
+         {
+           "title": "Version control",
+           "body": "Manage design plan revisions so all stakeholders collaborate on the correct set.",
+           "image": "assets/pillar-comments.png",
+           "alt": "Drawing v3 with anchored comments threaded against specific revisions"
+         },
+         {
+           "title": "AI assistant",
+           "body": "Automate repetitive admin, query project info & town documents, and field homeowner questions.",
+           "image": "assets/pillar-tasks.png",
+           "alt": "Ella AI activity summary surfacing tasks, queries, and homeowner questions ready for review"
+         }
+       ]'></div>
 
 </main>
 
@@ -319,6 +220,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="shared/components/site-nav/index.js"></script>
 <script src="shared/components/features-alternating/index.js"></script>
+<script src="shared/components/product-features-card-3x1/index.js"></script>
 
 <script type="importmap">
 {
