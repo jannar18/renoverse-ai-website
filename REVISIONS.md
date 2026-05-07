@@ -34,24 +34,11 @@ References every session must respect:
 
 ### Solutions
 
-- [ ] **9. Center the hero in space.**
-  - Files: `solutions.html` (`.page-hero .wrap`)
-  - Currently `text-align:left`; flip to centered.
-
-- [ ] **10. H1 → "Design more. Chase less."**
-  - Files: `solutions.html:117`
-  - Copy change only.
-
-- [ ] **11. Hero supporting copy → "Goodbye, hundreds of email threads, decision gaps, and endless admin. Reclaim your billable time and sanity on residential projects."**
-  - Files: `solutions.html:118-121`
-  - Copy change only.
-
-- [ ] **12. Image always right, copy always left across all four deep-dive features (drop the alternating layout).**
-  - Files: `solutions.html` mount data (`side: "image-left"` → `side: "image-right"` on rows 2 + 4); component-level: confirm `features-alternating` still supports per-row override or extend it to a non-alternating mode.
-  - Reason: dark-green strip + black copy on the alternating side fails contrast.
-
-- [ ] **13. Add "Control" eyebrow to the 4th feature (Controlled Stakeholder Access) so all four features share the same `eyebrow → title → bullets` shape.**
-  - Files: `solutions.html` mount data — 4th item is missing `eyebrow`.
+- [x] **9. Center the hero in space.** (PR #25)
+- [x] **10. H1 → "Design more. Chase less."** (PR #25)
+- [x] **11. Hero supporting copy → "Goodbye, hundreds of email threads, decision gaps, and endless admin. Reclaim your billable time and sanity on residential projects."** (PR #25)
+- [x] **12. Image always right, copy always left across all four deep-dive features (drop the alternating layout).** (PR #25)
+- [x] **13. Add "Control" eyebrow to the 4th feature (Controlled Stakeholder Access) so all four features share the same `eyebrow → title → bullets` shape.** (PR #25)
 
 ### About
 
@@ -146,3 +133,4 @@ Round 3 revisions shipped:
 - 3. Homepage 4-blocker (2×2) compacted, modeled after Solutions 3-up.
 - 4. ICP carousel cut (PR #21).
 - 6. Footer direction picked — gradient-only (PR #21).
+- 9–13. Solutions hero rewrite + uniform image-right + Control eyebrow + 3x1 polish (PR #25).

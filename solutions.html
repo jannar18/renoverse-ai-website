@@ -58,14 +58,10 @@
 
   /* ---------- page hero (paper, no video) ----------
      Solid-mode nav covers ~96px; pad the hero so the H1 clears the
-     floating frosted bar without overlap. Heroes are centered as a
-     block (H1 is centered as a defining property; the lead under it
-     follows the same axis to read as one composition). */
-  /* Hero composition mirrors the homepage hero: flex column centered
-     vertically, content left-aligned (H1 + lead share the left axis).
+     floating frosted bar without overlap. Centered as a block — H1 and
+     lead share a single centered axis to read as one composition.
      min-height is capped below 100vh so the first feature row's eyebrow +
-     H2 peek into the first viewport on entry, signaling the deep dive
-     below — taller than a paper title block, shorter than a full hero. */
+     H2 peek into the first viewport on entry. */
   .page-hero{
     position:relative;
     isolation:isolate;
@@ -76,7 +72,7 @@
     display:flex;
     align-items:center;
   }
-  .page-hero .wrap{ width:100%; text-align:left; }
+  .page-hero .wrap{ width:100%; text-align:center; }
   .page-hero h1{
     font-family:var(--font-serif);
     font-style:italic;
@@ -85,13 +81,13 @@
     line-height:var(--lh-h1);
     letter-spacing:var(--ls-display);
     color:var(--ink);
-    margin:0;
-    max-width:16ch;
+    margin:0 auto;
+    max-width:18ch;
   }
   /* Hero subtitle — Lead tier. Body font/size in the softer --ink-soft
      shade so the subtitle sits visually below the H1. */
   .page-hero p{
-    margin:24px 0 0;
+    margin:24px auto 0;
     font-family:var(--font-sans);
     font-weight:400;
     font-size:var(--fs-body);
@@ -114,22 +110,25 @@
   <!-- ========== PAGE HERO ========== -->
   <section class="page-hero">
     <div class="wrap">
-      <h1>One workspace.</h1>
+      <h1>Design more.<br>Chase less.</h1>
       <p>
-        Renoverse AI is the intelligent information management &amp; coordination layer
-        centralizing fragmented workflows so everyone knows where things stand.
+        Goodbye, hundreds of email threads, decision gaps, and endless admin.
+        Reclaim your billable time and sanity on residential projects.
       </p>
     </div>
   </section>
 
-  <!-- ========== CORE CAPABILITIES (alternating, deep dive) ==========
-       Phase 15: same alternating-features primitive used on the homepage,
-       but each row swaps body+CTA for three sub-bullets (label + body)
-       sourced from the Renoverse AI Platform Overview pages 5–8. CTAs
-       suppressed via data-cta-hidden — Solutions IS the deep dive page,
-       so per-row "See solutions" links would loop on themselves. The 4th
-       row (Controlled Stakeholder Access) uses a placeholder hash matching
-       the team-section media-ph until a real visual is designed. -->
+  <!-- ========== CORE CAPABILITIES (deep dive) ==========
+       Same features-alternating primitive as the homepage, but every row
+       is forced image-right. Reason: the dark-green strip + black copy on
+       the alternating side fails contrast on the rows where text would
+       sit on the dark half. Each row swaps body+CTA for three sub-bullets
+       (label + body) sourced from the Renoverse AI Platform Overview
+       pages 5–8. CTAs suppressed via data-cta-hidden — Solutions IS the
+       deep dive page, so per-row "See solutions" links would loop on
+       themselves. The 4th row (Controlled Stakeholder Access) uses a
+       placeholder hash matching the team-section media-ph until a real
+       visual is designed. -->
   <div data-features-alternating
        data-cta-hidden="1"
        data-items='[
@@ -150,7 +149,7 @@
            "title": "Decision Log & Audit Trail",
            "image": "assets/feature-decision-log.png",
            "alt": "Renoverse decision log with timestamped audit trail tracing a backsplash tile selection from first log to final approval",
-           "side": "image-left",
+           "side": "image-right",
            "bullets": [
              { "label": "Tracked Approvals", "body": "Every decision made within Renoverse is meticulously tracked, ensuring all approvals are logged and easily accessible for review, enhancing transparency among team members." },
              { "label": "Timestamped Decisions", "body": "With each decision timestamped, users can effortlessly identify when decisions were made, providing an accurate historical record that supports accountability and informed decision-making." },
@@ -170,8 +169,9 @@
            ]
          },
          {
+           "eyebrow": "Control",
            "title": "Controlled Stakeholder Access",
-           "side": "image-left",
+           "side": "image-right",
            "placeholder": true,
            "placeholderTag": "Image placeholder",
            "placeholderLabel": "Stakeholder access view",

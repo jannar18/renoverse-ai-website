@@ -64,9 +64,6 @@
   isolation: isolate;
   background: var(--cream);
   color: var(--ink);
-  box-shadow:
-    0 1px 0 rgba(11, 26, 43, 0.06),
-    0 18px 40px -22px rgba(11, 26, 43, 0.22);
 }
 
 .product-features-card-3x1__card-copy {
@@ -95,22 +92,19 @@
   margin: 0;
 }
 
-/* Aspect matches the native pillar-* PNGs (1280x832 ≈ 3:2) so the
-   product screenshots fill the well with no crop and no letterboxing. */
+/* Image renders at its natural aspect — no fixed well aspect, no crop.
+   The card-copy (flex:1) absorbs height variation between cards so the
+   well stays exactly tall enough for the full mockup. */
 .product-features-card-3x1__card-image {
   position: relative;
-  aspect-ratio: 1280 / 832;
   background: #fff;
-  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .product-features-card-3x1__card-image img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
+  width: 100%;
+  height: auto;
 }
 
 .product-features-card-3x1__card-image--ph {
