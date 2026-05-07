@@ -24,13 +24,8 @@ References every session must respect:
   - **Wireframe:** `assets/wireframes/testimonial-layout.png` (from product designer)
   - Layout: white card on dark backdrop. Top — large Cormorant italic quote with chunky serif open-quote glyph in upper-left, body spans most of the card width. Bottom-right cluster: optional logo/image slot (square) → vertical hairline divider → attribution stack (Name bold / Role regular / Company regular). The logo/image slot is optional — when omitted, the attribution sits flush against the divider; when a photo or company logo is provided, it fills the slot. Quote dominates; attribution cluster is small and tucked bottom-right.
 
-- [ ] **7. Footer text + newsletter field — color contrast fix to meet WCAG AA (≥ 4.5:1).**
-  - Files: `shared/components/site-footer/index.css`
-  - Style guide: contrast ratios in the accessibility section.
-
-- [ ] **8. Footer logo — smaller on desktop; never deforms / squashes on resize (R is squashed on mobile today).**
-  - Files: `shared/components/site-footer/index.css` (or `index.js` if SVG sizing lives there)
-  - Aspect-ratio must be preserved at every breakpoint.
+- [x] **7. Footer text + newsletter field — color contrast fix to meet WCAG AA (≥ 4.5:1).** (PR #26)
+- [x] **8. Footer logo — smaller on desktop; never deforms / squashes on resize.** (PR #26)
 
 ### Solutions
 
@@ -94,6 +89,7 @@ Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-R
 - Type-scale clamps confirmed across all four pages.
 - Token-only check: no hex/rgb anywhere outside `tokens.css` (allowable exception: opaque overlays inside a single component).
 - Add missing tokens for anything that had to be inlined.
+- **Reconcile the "Add a footer" section.** Still describes the pre-PR-#21 light/dark footer variants ("ink text" or "white text on `#0a0a0a`"); live footer is the wave-gradient variant with `--oxford-blue` text (post PR #26). Rewrite that section to document the current footer.
 
 ### F5 — Authoring docs (audience: non-technical teammates pasting into Claude.ai)
 
@@ -133,4 +129,8 @@ Round 3 revisions shipped:
 - 3. Homepage 4-blocker (2×2) compacted, modeled after Solutions 3-up.
 - 4. ICP carousel cut (PR #21).
 - 6. Footer direction picked — gradient-only (PR #21).
+- 7. Footer contrast → text moved to `--oxford-blue` for WCAG AA on the wave gradient (PR #26).
+- 8. Footer logo aspect-ratio + smaller-on-desktop, fixed via width-driven sizing (PR #26).
 - 9–13. Solutions hero rewrite + uniform image-right + Control eyebrow + 3x1 polish (PR #25).
+
+Token-system rename shipped alongside #7/#8 (PR #26): `--blue` → `--cool-blue`, `--dark-oxford` → `--dark-oxford-blue`, all gradient tokens / `.fx-*` classes / Tailwind aliases / style-guide tables updated in lockstep.
