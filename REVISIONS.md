@@ -21,7 +21,8 @@ References every session must respect:
 
 - [ ] **5. Testimonial card scalable layout — works with photo, logo, or name-only.**
   - Files: `index.html` (`.testimonial-section`, `.testimonial`)
-  - Need a flexible layout so the card uses the space well regardless of which assets are provided. Operator has a wire — pull it before implementing.
+  - **Wireframe:** `assets/wireframes/testimonial-layout.png` (from product designer)
+  - Layout: white card on dark backdrop. Top — large Cormorant italic quote with chunky serif open-quote glyph in upper-left, body spans most of the card width. Bottom-right cluster: optional logo/image slot (square) → vertical hairline divider → attribution stack (Name bold / Role regular / Company regular). The logo/image slot is optional — when omitted, the attribution sits flush against the divider; when a photo or company logo is provided, it fills the slot. Quote dominates; attribution cluster is small and tucked bottom-right.
 
 - [ ] **7. Footer text + newsletter field — color contrast fix to meet WCAG AA (≥ 4.5:1).**
   - Files: `shared/components/site-footer/index.css`
