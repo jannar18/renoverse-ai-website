@@ -75,8 +75,8 @@
           teal:          '#2D6F75',
           azure:         '#5D6FB8',
           'oxford-blue': '#022E41',
-          'dark-oxford': '#0B1A2B',
-          'brand-blue':  '#5BA7C9',
+          'dark-oxford-blue': '#0B1A2B',
+          'cool-blue':   '#5BA7C9',
           line:          'rgba(0,0,0,.10)',
         },
         fontFamily: {

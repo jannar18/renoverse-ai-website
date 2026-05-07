@@ -115,8 +115,8 @@ footer.site-footer{
 }
 
 /* Eyebrow role — JetBrains Mono uppercase, --xwide letter-spacing,
-   --fs-eyebrow size. Tinted to brand --teal per request (the whole footer
-   text + social icons share this color). */
+   --fs-eyebrow size. Ink for AA contrast on the lavender/mint/cream wave
+   gradient (--teal didn't clear 4.5:1 on the lavender stop). */
 .site-footer__newsletter-label{
   font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
   font-size: var(--fs-eyebrow, 12px);
@@ -124,7 +124,7 @@ footer.site-footer{
   font-weight: 500;
   letter-spacing: var(--xwide, 0.32em);
   text-transform: uppercase;
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   margin: 0;
   text-align: right;
 }
@@ -135,23 +135,23 @@ footer.site-footer{
   gap: 8px;
   width: 100%;
 }
-/* 8px radius, 14px font, 60% white fill, --aqua border (same
-   azure as the submit puck so the form reads as one unit), teal text
-   to match the rest of the footer copy. */
+/* 8px radius, 14px font, 60% white fill, --aqua border (kept as a
+   non-text brand detail so the form reads as one unit with the submit
+   puck). Ink text + ink-soft placeholder for AA contrast. */
 .site-footer__newsletter input[type="email"]{
   flex: 1 1 auto;
   min-width: 0;
   padding: 10px 14px;
   font-family: inherit;
   font-size: 14px;
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   background: rgba(255,255,255,0.6);
   border: 1px solid var(--aqua, #5EC9B7);
   border-radius: 8px;
   outline: none;
   transition: background .15s ease;
 }
-.site-footer__newsletter input[type="email"]::placeholder{ color: rgba(45,111,117,0.55); }
+.site-footer__newsletter input[type="email"]::placeholder{ color: var(--oxford-blue, #022E41); }
 .site-footer__newsletter input[type="email"]:focus{
   background: #fff;
 }
@@ -192,7 +192,7 @@ footer.site-footer{
   font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
   font-size: var(--fs-small, 12.5px);
   line-height: var(--lh-small, 1.5);
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   min-height: 1em;
   text-align: right;
   width: 100%;
@@ -204,26 +204,28 @@ footer.site-footer{
   display: none;
 }
 
-/* Fineprint — Small role in brand teal. */
+/* Fineprint — Small role. Full ink (not ink-soft) because small text
+   needs ≥4.5:1 — ink-soft drops below that on the lavender stop of the
+   wave gradient. */
 .site-footer__nl-fineprint{
   font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
   font-size: var(--fs-small, 12.5px);
   line-height: var(--lh-small, 1.5);
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   margin: 0;
   text-align: right;
   max-width: 36ch;
 }
 .site-footer__nl-fineprint a{
-  color: inherit;
+  color: var(--oxford-blue, #022E41);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.site-footer__nl-fineprint a:hover{ color: var(--ink, #0B1A2B); }
+.site-footer__nl-fineprint a:hover{ color: var(--teal, #2D6F75); }
 
 /* Plain SVG socials (no pill / no border). Top-level utility row — sits
-   above the divider line. Tinted brand --teal so they share the footer's
-   color story; hover darkens to ink for affordance. */
+   above the divider line. Ink for AA contrast on the wave gradient;
+   hover dips to teal for affordance. */
 .site-footer__socials{
   display: flex;
   gap: 18px;
@@ -232,18 +234,19 @@ footer.site-footer{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   transition: color .15s ease, transform .15s ease;
 }
-.site-footer__socials a:hover{ color: var(--ink, #0B1A2B); }
+.site-footer__socials a:hover{ color: var(--teal, #2D6F75); }
 .site-footer__socials svg{
   width: 20px;
   height: 20px;
   display: block;
 }
 
-/* Legal links — own row below the divider, right-aligned. Brand teal
-   text, ink on hover. */
+/* Legal links — own row below the divider, right-aligned. Ink for AA
+   contrast on the wave gradient; hover adds an underline + teal tint
+   for link affordance. */
 .site-footer__legal{
   display: flex;
   flex-wrap: wrap;
@@ -254,21 +257,24 @@ footer.site-footer{
   line-height: 1.4;
 }
 .site-footer__legal a{
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
   text-decoration: none;
   transition: color .15s ease;
 }
-.site-footer__legal a:hover{ color: var(--ink, #0B1A2B); }
+.site-footer__legal a:hover{
+  color: var(--teal, #2D6F75);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* Copyright — canonical Body role per style guide § Type scale: Poppins
-   400, --fs-body, --lh-body. Tinted brand --teal to match the rest of
-   the footer copy. */
+   400, --fs-body, --lh-body. Ink for AA contrast on the wave gradient. */
 .site-footer__copyright{
   font-family: var(--font-sans, 'Poppins', system-ui, sans-serif);
   font-size: var(--fs-body, 16px);
   line-height: var(--lh-body, 1.55);
   font-weight: 400;
-  color: var(--teal, #2D6F75);
+  color: var(--oxford-blue, #022E41);
 }
 
 /* ---------- bottom row (logo grounds left, copyright grounds right) ----
@@ -281,13 +287,19 @@ footer.site-footer{
   gap: 24px;
 }
 
+/* Logo wordmark is 4169×500 (~8.34:1). Size by width with height:auto so
+   the aspect-ratio is preserved at every breakpoint — height-driven
+   sizing collided with the page-level `img { max-width: 100% }` rule on
+   narrow viewports and squashed the wordmark. */
 .site-footer__brand{
   display: inline-block;
   line-height: 0;
+  max-width: 100%;
 }
 .site-footer__brand img{
-  height: clamp(64px, 8vw, 100px);
-  width: auto;
+  width: clamp(280px, 38vw, 560px);
+  max-width: 100%;
+  height: auto;
   display: block;
 }
 
