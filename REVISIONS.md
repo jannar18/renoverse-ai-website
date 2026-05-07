@@ -17,10 +17,7 @@ References every session must respect:
 
 - [x] **2. "Built for firms managing complex processes and workflows." H2 centered in the capabilities section.** (PR #28)
 
-- [ ] **5. Testimonial card scalable layout — works with photo, logo, or name-only.**
-  - Files: `index.html` (`.testimonial-section`, `.testimonial`)
-  - **Wireframe:** `assets/wireframes/testimonial-layout.png` (from product designer)
-  - Layout: white card on dark backdrop. Top — large Cormorant italic quote with chunky serif open-quote glyph in upper-left, body spans most of the card width. Bottom-right cluster: optional logo/image slot (square) → vertical hairline divider → attribution stack (Name bold / Role regular / Company regular). The logo/image slot is optional — when omitted, the attribution sits flush against the divider; when a photo or company logo is provided, it fills the slot. Quote dominates; attribution cluster is small and tucked bottom-right.
+- [x] **5. Testimonial card scalable layout — works with photo, logo, or name-only.** Extracted to `shared/components/testimonial-card/` (full contract). Card keeps the canonical dark-oxford-blue → teal → cream gradient + warm grain (per operator: layout only; background and colors unchanged). Layout per wireframe: chunky Cormorant open-quote glyph upper-left, italic quote spans most of card width, bottom-right cluster (slot → divider → Name/Role/Company stack). Three modes via `data-image` / `data-logo` / neither; divider always present so the attribution column doesn't shift. Mounted on `index.html` via `data-testimonial-card`; inline `.testimonial-section` / `.testimonial` CSS removed. (PR pending)
 
 - [x] **7. Footer text + newsletter field — color contrast fix to meet WCAG AA (≥ 4.5:1).** (PR #26)
 - [x] **8. Footer logo — smaller on desktop; never deforms / squashes on resize.** (PR #26)

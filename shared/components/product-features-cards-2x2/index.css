@@ -10,18 +10,9 @@
 
 .product-features-cards-2x2 {
   position: relative;
-  padding: clamp(40px, 5vw, 72px) 0 clamp(56px, 7vw, 88px);
+  padding: clamp(16px, 2vw, 32px) 0 clamp(56px, 7vw, 88px);
   font-family: var(--font-sans);
   color: var(--ink);
-}
-
-@media (min-width: 1024px) {
-  .product-features-cards-2x2 {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
 }
 
 .product-features-cards-2x2__wrap {
