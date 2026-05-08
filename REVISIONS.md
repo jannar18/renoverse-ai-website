@@ -73,6 +73,13 @@ F2 #4 — empty-alt sweep:
 F2 #5 — automated audit (axe / Lighthouse / Pa11y):
 - [x] Ran `pa11y@9.1.1 --standard WCAG2AA --threshold 0` on all 4 pages via local server. Raw output + summary in `notes/f2-audit/`. Findings collapsed to two AA-real issues (white-on-aqua text in `.btn--filled` + same Tailwind pattern in demo-form submit; aqua-on-white text in `.btn--white`) and 75 mock-UI false-positives inside the stack-animation scene.
 
+F2 #7 — screen reader spot-check:
+- [x] Operator-run VoiceOver walkthrough on macOS Safari, all four pages. Three findings, all fixed:
+  - **Halftone hero video announced as "image".** The WebGL canvas was being picked up by VO. Fixed by setting `aria-hidden="true"` on the host element inside `halftone-video/index.js` `mount()` so every consumer is silent automatically.
+  - **Stack-animation had no description for AT.** `aria-hidden` on the mock-UI scene left only the H2 "One workspace. Every detail." for SR users — they missed the "from many tools to one" narrative the animation conveys. Fixed by adding an `.sr-only` paragraph in the caption div with a description of what the animation depicts.
+  - **Hero had no description for AT.** Same shape as above — H1 alone didn't convey the brand-visual context. Fixed by adding an `.sr-only` paragraph in `index.html` describing the top-down collaboration scene.
+- Safari tab-order quirk surfaced (Safari excludes plain `<a>` from Tab unless `Settings → Advanced → "Press Tab to highlight each item"` is enabled). Not a markup bug — known browser default; SR users navigate via VO arrows + rotor anyway, and sighted-keyboard-only Safari users either know `Option+Tab` or have the setting on.
+
 F2 #6 — fixes from #5 punch list:
 - [x] `.btn--filled` rest+hover use `--ink` text on aqua / white (~9:1 / ~21:1). `.btn--white` rest uses `--teal` text on white (~5.1:1); hover swaps to teal-bg + white text (~5.5:1). `shared/button.css` updated; STYLE_GUIDE.md button-variant table updated to match.
 - [x] Demo-form submit + decorative checkmark pucks went `text-white` → `text-ink` in `shared/components/demo-form/index.js`.
