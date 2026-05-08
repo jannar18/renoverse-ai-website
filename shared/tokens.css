@@ -22,8 +22,8 @@
 
   /* aqua / teal — primary accent ramp (light → dark) */
   --sky-blue: #7FE3CB;       /* light aqua tint (was named --azure) */
-  --aqua: #5EC9B7;           /* mid aqua — primary CTA fill */
-  --teal: #2D6F75;           /* deep teal — emphasis */
+  --aqua: #5EC9B7;           /* mid aqua — gradients, hairlines, ticks, links on light surfaces */
+  --teal: #2D6F75;           /* deep teal — emphasis + primary CTA fill (AA against white text, ~5.5:1) */
 
   /* blue — secondary accent ramp (light → dark) */
   --cool-blue: #5BA7C9;      /* cool blue — gradient start / accent */

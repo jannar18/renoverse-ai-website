@@ -67,10 +67,10 @@ Pa11y will still flag the 3:1–4.5:1 range after this — that's the visual-fid
 
 ## F2 #6 — fixes applied
 
-- [x] **A11y-real fix.** Resolved `.btn--filled` white-on-aqua 2:1. Operator picked: keep aqua fill, change text to `--ink`. Applied to:
-  - `shared/button.css` — `.btn--filled` rest+hover use `--ink` text (~9:1 / ~21:1).
-  - `shared/button.css` — `.btn--white` rest uses `--teal` text on white (~5.1:1); hover swaps to teal-bg + white text (~5.5:1). Same root issue (aqua-on-white was 2:1).
-  - `shared/components/demo-form/index.js` — submit button `text-white` → `text-ink`, `hover:text-aqua` → `hover:text-ink`. Two decorative aqua-bg checkmark pucks also went `text-white` → `text-ink` for consistency.
+- [x] **A11y-real fix.** Resolved `.btn--filled` white-on-aqua 2:1 + `.btn--white` aqua-on-white 2:1. Approach: re-use existing `--teal` (#2D6F75) for the CTA fill — white-on-teal lands at ~5.5:1 (comfortable AA) and stays in the existing aqua/teal ramp without introducing a new token. Mid `--aqua` keeps its role as the brand surface color (gradients, ticks, hairlines, links). Files:
+  - `shared/tokens.css` — `--aqua` description updated to "gradients, hairlines, ticks, links on light surfaces" (no longer "primary CTA fill"); `--teal` description appended with "+ primary CTA fill (AA against white text, ~5.5:1)".
+  - `shared/button.css` — `.btn--filled` rest = teal + white (~5.5:1); hover = white + teal text (~5.5:1). `.btn--white` rest = white + teal text (~5.5:1); hover = teal + white (~5.5:1). Tick stays mid `--aqua` so the corner brackets read as the brand accent.
+  - `shared/components/demo-form/index.js` — submit button now `bg-teal text-white hover:bg-white hover:text-teal`. Decorative checkmark pucks also `bg-teal text-white`.
 - [x] **Mock-UI screen-reader fix.** Added `aria-hidden="true"` to `#stackScene` and `#callouts` in `shared/components/stack-animation/index.js`. The `<h2>` caption "One workspace. Every detail." sits in `.caption` (sibling, not descendant) and stays accessible to AT.
 - [x] **Mock-UI worst-offender contrast bumps.** Bumped 36 labels from <3:1 to AA-compliant (pa11y's recommended values, kept inside the existing color hue). Files: `shared/components/stack-animation/index.css` (.star, .label, .priority.exp, .reply-line, .compose-at, .compose-input, .upload-pill, .respond-btn, .ai-arrow) + `shared/components/stack-animation/index.js` (3× inline `style="color:#fbbc04"` → `#977000`). Labels already ≥3:1 stayed as-is per option A.
 - [x] **Heading-skip fix.** demo-form thank-you state `<h3>` → `<h2>` (`shared/components/demo-form/index.js:358`). Pre-fix, after submit, h1 ("Book a Demo") in the aside skipped to h3 in the success card.

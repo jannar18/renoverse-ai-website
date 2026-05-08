@@ -315,7 +315,7 @@
               'Pricing &amp; rollout plan in your inbox after.',
             ].map(t => `
               <li class="flex items-center gap-3 text-sm leading-snug text-ink">
-                <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-aqua text-ink">${CHECK}</span>
+                <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-teal text-white">${CHECK}</span>
                 <span>${t}</span>
               </li>`).join('')}
           </ul>
@@ -343,7 +343,7 @@
 
               <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
                 <button type="submit"
-                        class="inline-flex items-center justify-center border border-aqua bg-aqua px-[22px] py-[9px] text-[12px] font-medium uppercase tracking-[0.18em] text-ink transition-colors duration-300 hover:bg-white hover:text-ink focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-aqua/40"
+                        class="inline-flex items-center justify-center border border-teal bg-teal px-[22px] py-[9px] text-[12px] font-medium uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-white hover:text-teal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal/40"
                         style="font-family:'JetBrains Mono',ui-monospace,monospace;">
                   ${cta}
                 </button>
@@ -354,7 +354,7 @@
             </form>
 
             <div class="grid justify-items-start gap-3 px-1 py-2" role="status" aria-live="polite" data-success hidden>
-              <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-aqua text-ink">${CHECK_LG}</span>
+              <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-teal text-white">${CHECK_LG}</span>
               <h2 class="text-[clamp(22px,2.2vw,30px)] text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;line-height:1.1;letter-spacing:-.005em;">Thanks — we'll be in touch.</h2>
               <p class="max-w-[48ch] text-[15px] leading-relaxed text-ink-soft">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
             </div>
