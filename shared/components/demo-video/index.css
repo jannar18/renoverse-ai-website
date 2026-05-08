@@ -1,0 +1,85 @@
+/* Renoverse — Demo video.
+   Self-contained section that hosts a single product-demo video as a
+   centered card. Video is product UI (not stylized art), so it plays
+   unfiltered per the STYLE_GUIDE rule that product UI is sanctioned
+   to bypass the dither/halftone pass (Variation 4 footnote).
+
+   Surface: white — matches the .stack-tail-intro that precedes it on
+   the homepage so the intro + video read as one continuous white
+   narrative band before the sky-blue-ice capabilities reveal.
+
+   Frame: card recipe — 14px radius, soft shadow, isolation/overflow
+   hidden — matches the .ty-card visual language so the video reads
+   as a deliberate artifact on the page. */
+
+.demo-video-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--white);
+  /* Top padding is intentionally tight: when this section follows
+     a copy block on the same white surface (the homepage's
+     .stack-tail-intro), the intro's bottom padding is the entire
+     gap so the copy reads as a setup line directly above the
+     player. Bottom keeps the standard --section-y so the break
+     into the next section stays editorial. */
+  padding: 0 0 var(--section-y);
+}
+
+/* Standard --container (1240px) — same width as the capabilities
+   grid below, so the video aligns to the page's main reading
+   column rather than stretching wider. */
+.demo-video-section__wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* The card frame around the <video>. Recipe matches .ty-card / the
+   typology cards in index.html: 14px radius, soft drop shadow,
+   isolation + overflow hidden so the rounded corners actually clip
+   the video on iOS Safari. Aspect ratio fixed at 16:9 to match the
+   source (1920×1080) — the video sizes itself to fill. */
+.demo-video-section__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+  box-shadow:
+    0 1px 0 rgba(11, 26, 43, .06),
+    0 24px 56px -28px rgba(11, 26, 43, .35);
+}
+
+.demo-video-section__player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+  /* iOS Safari occasionally renders a hairline edge before the
+     poster paints; matching the frame radius keeps the corners
+     clean at the moment the video element first renders. */
+  border-radius: inherit;
+}
+
+/* Tablet / large phone — keep the 16:9 frame, just shrink the
+   bottom padding with the section-y-tight token. Top stays 0
+   so the intro/video coupling holds at all widths. */
+@media (max-width: 820px) {
+  .demo-video-section {
+    padding: 0 0 var(--section-y-tight);
+  }
+}
+
+/* Phones — slightly tighter frame radius reads better at small
+   widths where 14px starts to look chunky. */
+@media (max-width: 430px) {
+  .demo-video-section__frame {
+    border-radius: 10px;
+  }
+}
