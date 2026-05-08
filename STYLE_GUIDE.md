@@ -514,7 +514,7 @@ The brand has a **closed list of 7 gradients**: 5 vertical, 1 horizontal signatu
 | `dark-oxford-blue → teal → cream` | Testimonial card; ICP project-managers panel | `--grad-dark-oxford-blue-teal-cream` | `.fx-grad-dark-oxford-blue-teal-cream` |
 | `dark-oxford-blue → azure → ice` | ICP principal-architects panel | `--grad-dark-oxford-blue-azure-ice` | `.fx-grad-dark-oxford-blue-azure-ice` |
 | `dark-oxford-blue → cool-blue → cream` | ICP junior-designers panel | `--grad-dark-oxford-blue-cool-blue-cream` | `.fx-grad-dark-oxford-blue-cool-blue-cream` |
-| `cream → aqua → teal` | features-alternating row backdrop | `--grad-cream-aqua-teal` | `.fx-grad-cream-aqua-teal` |
+| `cream → aqua → teal` | product-feature-primary row backdrop | `--grad-cream-aqua-teal` | `.fx-grad-cream-aqua-teal` |
 
 #### Radial paper backdrop
 
@@ -748,7 +748,7 @@ The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.
 
 **Token / type:**
 - ICP carousel still inlines its dither mask and grain SVG. Lift each to the kit utilities (`.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. (Panel gradients are already canonical-token-driven post-Phase-2.) **(F1.5 component-library audit territory.)**
-- The four shader implementations (`halftone-video`, `icp-carousel`, `features-alternating`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)**
+- The four shader implementations (`halftone-video`, `icp-carousel`, `product-feature-primary`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)** Note: `icp-carousel` was cut in PR #21 and `features-editorial` was replaced in PR #22 — only `halftone-video` and `product-feature-primary` ship their shaders today, so the actual remaining DRY target is just those two.
 
 **Other:**
 - Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**

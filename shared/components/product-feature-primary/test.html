@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>product-feature-primary — test</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../effects.css">
+<link rel="stylesheet" href="../../button.css">
+<link rel="stylesheet" href="./index.css">
+
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--white);color:var(--ink);font-family:var(--font-sans)}
+  .stage{display:grid;gap:64px;padding:48px 0}
+  .label{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+    padding:0 var(--gutter);
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <section>
+    <p class="label">Mode 1 — homepage default (3 rows, alternating sides, body + per-row CTA)</p>
+    <div data-product-feature-primary></div>
+  </section>
+
+  <section>
+    <p class="label">Mode 2 — Solutions deep-dive (4 rows, all image-right, bullets, CTAs hidden, 4th row = placeholder)</p>
+    <div data-product-feature-primary
+         data-cta-hidden="1"
+         data-items='[
+           {
+             "eyebrow": "Capture",
+             "title": "Email Triage & Auto-Capture",
+             "image": "../../../assets/feature-email-triage.png",
+             "alt": "Renoverse Ella AI triage inbox",
+             "side": "image-right",
+             "bullets": [
+               { "label": "Automated Information Capture", "body": "Connect email to surface decisions, action items, and questions — organized by project." },
+               { "label": "Human-in-the-Loop Controls", "body": "Review the triage queue and approve, edit, or skip anything Ella AI surfaces." },
+               { "label": "Comprehensive Organization", "body": "Essential information stays organized and accessible." }
+             ]
+           },
+           {
+             "eyebrow": "Track",
+             "title": "Decision Log & Audit Trail",
+             "image": "../../../assets/feature-decision-log.png",
+             "alt": "Renoverse decision log with timestamped audit trail",
+             "side": "image-right",
+             "bullets": [
+               { "label": "Tracked Approvals", "body": "Every decision is logged and easily accessible for review." },
+               { "label": "Timestamped Decisions", "body": "Effortlessly identify when decisions were made." },
+               { "label": "Comprehensive Audit Trail", "body": "Captures all changes, creating a detailed history." }
+             ]
+           },
+           {
+             "eyebrow": "Connect",
+             "title": "Intelligence Layer on Existing Stack",
+             "image": "../../../assets/feature-intelligence-layer.png",
+             "alt": "Renoverse Connectors page",
+             "side": "image-right",
+             "bullets": [
+               { "label": "Existing Stack", "body": "Integrates with your current software tools." },
+               { "label": "Microsoft Integrations", "body": "Critical information is captured automatically from Microsoft email & tools." },
+               { "label": "Coordination Layer", "body": "Smart coordination layer over your existing infrastructure." }
+             ]
+           },
+           {
+             "eyebrow": "Control",
+             "title": "Controlled Stakeholder Access",
+             "side": "image-right",
+             "placeholder": true,
+             "placeholderTag": "Image placeholder",
+             "placeholderLabel": "Stakeholder access view",
+             "bullets": [
+               { "label": "Private Workspace", "body": "Dedicated team space — only authorized members access critical project details." },
+               { "label": "Professional Layer", "body": "Pro-to-pro collaboration without overwhelming context." },
+               { "label": "Client-Facing View", "body": "Tailored insights for clients while protecting internal discussions." }
+             ]
+           }
+         ]'></div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="./index.js"></script>
+
+</body>
+</html>

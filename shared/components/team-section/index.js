@@ -42,8 +42,9 @@
     linkLabel: ''
   };
 
-  /* Same chevron used by the ICP carousel + features-alternating CTAs —
-     keeps arrow language consistent across components. */
+  /* Same chevron used by the product-feature-primary CTAs —
+     keeps arrow language consistent across components. (ICP carousel was
+     cut in PR #21.) */
   const ARROW_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"><path d="M3 8h9M8 4l4 4-4 4"/></svg>`;
 
   function escape(s) {

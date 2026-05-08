@@ -53,7 +53,7 @@
   --grad-dark-oxford-blue-teal-cream: linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--teal)  70%, var(--cream) 100%);   /* testimonial card + ICP project-managers */
   --grad-dark-oxford-blue-azure-ice:  linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--azure) 72%, var(--ice)  100%);    /* ICP principal-architects */
   --grad-dark-oxford-blue-cool-blue-cream: linear-gradient(in oklab 180deg, var(--dark-oxford-blue) 0%, var(--cool-blue)  70%, var(--cream) 100%);   /* ICP junior-designers */
-  --grad-cream-aqua-teal:        linear-gradient(in oklab 180deg, var(--cream)       0%, var(--aqua) 55%, var(--teal)  100%);    /* features-alternating */
+  --grad-cream-aqua-teal:        linear-gradient(in oklab 180deg, var(--cream)       0%, var(--aqua) 55%, var(--teal)  100%);    /* product-feature-primary */
 
   /* Radial backdrop — soft warm-paper surface. Origin top-center, three
      stops from cool ice through warm cream to beige at the edges. Used by
