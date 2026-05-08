@@ -1022,6 +1022,7 @@
 
       <div class="caption" id="caption">
         <h2>One workspace. Every detail.</h2>
+        <p class="sr-only">An animation showing fragmented project tools — email threads, spreadsheets, documents, and notes — collapsing into a single Renoverse workspace where active projects, the decision log, file versions, and AI insights all sit in one place.</p>
       </div>
     </div>
   </section>

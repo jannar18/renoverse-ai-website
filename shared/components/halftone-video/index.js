@@ -142,6 +142,10 @@ void main(){
     if(host.dataset.halftoneMounted) return;
     host.dataset.halftoneMounted = '1';
 
+    /* Decorative brand visual — the H1/H2 next to it carries the page meaning,
+       and the WebGL canvas would otherwise be announced by SR as "image". */
+    host.setAttribute('aria-hidden', 'true');
+
     const src      = host.dataset.src;
     const front    = host.dataset.front    || '#2C6F75';
     const back     = host.dataset.back     || '#ffffff';
