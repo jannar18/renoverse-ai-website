@@ -1320,3 +1320,18 @@
   }
 
   /* ── OUTRO ───────────────────────────────────────── */
+
+  /* prefers-reduced-motion: collapse the 200vh scroll-pin window to a
+     single static stage. The JS skips setupTimeline() so no GSAP runs;
+     these rules give the user a clean static composition — the
+     Renoverse destination panel sits in the scene with its callouts,
+     while the five legacy source panels (Excel/AutoCAD/Bluebeam/Gmail/
+     Finder) hide since they only matter when the converge animation
+     plays. The pin-tail collapses too — no scroll runway needed without
+     a pin. */
+  @media (prefers-reduced-motion: reduce) {
+    .stack-section { height: auto; }
+    .stack-section .stack-stage { position: static; height: 100vh; }
+    .stack-section__pin-tail { display: none; }
+    .stack-section .panel:not(.panel--cal) { opacity: 0; }
+  }

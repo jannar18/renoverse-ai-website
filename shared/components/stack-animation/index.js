@@ -1025,6 +1025,14 @@
 
   function mount(target) {
     target.innerHTML = MARKUP;
+    /* prefers-reduced-motion: skip the GSAP timeline + ScrollTrigger pin
+       entirely. CSS @media rules at the bottom of index.css collapse the
+       section's 200vh pin window down to one stage and hide the source
+       panels so the Renoverse destination panel + callouts sit on their
+       own as a static composition (still readable without animation). */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     setupTimeline();
   }
 
