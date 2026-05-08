@@ -265,7 +265,7 @@
   // ---------- Markup ----------
   function buildMarkup(opts) {
     const eyebrow = opts.eyebrow || 'Book a demo';
-    const title   = opts.title   || 'Explore Renoverse';
+    const title   = opts.title   || 'Book a Demo';
     const lead    = opts.lead    || 'Walk through the studio with us. We\'ll tailor the demo to your firm — bring a current set of drawings and we\'ll show you how mark-ups, RFIs, and revisions live on a single sheet.';
     const cta     = opts.cta     || 'Get demo';
 
@@ -306,7 +306,7 @@
       <div class="relative mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
         <aside class="space-y-5 lg:col-span-5 lg:sticky lg:top-24">
           <p class="uppercase tracking-[0.32em] text-teal" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:clamp(13px,1vw,15px);">${eyebrow}</p>
-          <h2 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h2>
+          <h1 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h1>
           <p class="max-w-[46ch] text-base leading-relaxed text-ink-soft">${lead}</p>
           <ul role="list" class="mt-2 space-y-3.5">
             ${[

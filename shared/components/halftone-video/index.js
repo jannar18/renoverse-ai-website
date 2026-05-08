@@ -153,11 +153,13 @@ void main(){
     const grain    = parseFloat(host.dataset.grain    || '0.2');
     if(!src){ console.warn('halftone: missing data-src'); return; }
 
+    const reducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
     const video = document.createElement('video');
     video.src = src;
     video.muted = true;
     video.loop = true;
-    video.autoplay = true;
+    video.autoplay = !reducedMotion;
     video.playsInline = true;
     video.setAttribute('muted','');
     video.setAttribute('playsinline','');
@@ -257,6 +259,38 @@ void main(){
       metaReady = true;
       gl.uniform2f(uVideoSize, video.videoWidth || 1920, video.videoHeight || 1080);
     });
+
+    const t0 = performance.now();
+    function renderFrame(){
+      if(metaReady && video.readyState >= 2){
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+      }
+      gl.uniform1f(uTime, reducedMotion ? 0 : (performance.now() - t0) / 1000);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+    }
+
+    /* When reduced-motion is on, ResizeObserver also re-draws the static
+       halftone so it stays sharp through viewport changes. The animated
+       path doesn't need that hook because tick() re-draws every frame. */
+    if(typeof ResizeObserver !== 'undefined'){
+      new ResizeObserver(() => { resize(); if(reducedMotion) renderFrame(); }).observe(host);
+    } else {
+      window.addEventListener('resize', () => { resize(); if(reducedMotion) renderFrame(); });
+    }
+    resize();
+
+    if(reducedMotion){
+      /* prefers-reduced-motion: render the halftone of the first frame
+         once and stop. No autoplay (set above), no pointerdown/visibility
+         resume handlers, no RAF loop. The user sees a static halftone of
+         the video's first frame — brand visual preserved, no motion. */
+      video.addEventListener('loadeddata', renderFrame, { once: true });
+      return;
+    }
+
     const startPlayback = () => video.play().catch(() => {});
     startPlayback();
     // Some browsers require a user gesture; resume on first interaction.
@@ -265,24 +299,9 @@ void main(){
       if(document.visibilityState === 'visible') startPlayback();
     });
 
-    if(typeof ResizeObserver !== 'undefined'){
-      new ResizeObserver(resize).observe(host);
-    } else {
-      window.addEventListener('resize', resize);
-    }
-    resize();
-
-    const t0 = performance.now();
     function tick(){
       resize();
-      if(metaReady && video.readyState >= 2){
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-      }
-      gl.uniform1f(uTime, (performance.now() - t0) / 1000);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      renderFrame();
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);

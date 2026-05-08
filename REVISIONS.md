@@ -60,9 +60,9 @@ Coverage:
 - Tab order matches visual; no `tabindex > 0`.
 
 Known named blockers:
-- `demo.html` `<h1>` promotion.
-- Stack-animation `prefers-reduced-motion`.
-- Halftone-video `prefers-reduced-motion`.
+- [x] `demo.html` `<h1>` promotion. (PR #33) Promoted the demo-form's existing title `<h2>` to `<h1>` inside `shared/components/demo-form/index.js` rather than adding a separate page-level H1 — the form's title IS the page's primary heading; the thank-you state's `<h3>` stays as a sub-state heading.
+- [x] Stack-animation `prefers-reduced-motion`. (PR #33) `mount()` checks `matchMedia('(prefers-reduced-motion: reduce)')` and skips `setupTimeline()` (no GSAP, no ScrollTrigger pin, no scrub). CSS `@media reduce` rules collapse the 200vh pin window to a single static stage and hide the source panels so the Renoverse destination panel + callouts read as a static composition.
+- [x] Halftone-video `prefers-reduced-motion`. (PR #33) `mount()` reads reduced-motion at the top, sets `video.autoplay = !reducedMotion`, skips the playback handlers + RAF tick loop, and renders the halftone effect once on `loadeddata` so the user sees a static halftone of the video's first frame — brand visual preserved without motion.
 
 ### F3 — Mobile polish
 
