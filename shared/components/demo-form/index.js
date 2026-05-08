@@ -265,7 +265,7 @@
   // ---------- Markup ----------
   function buildMarkup(opts) {
     const eyebrow = opts.eyebrow || 'Book a demo';
-    const title   = opts.title   || 'Explore Renoverse';
+    const title   = opts.title   || 'Book a Demo';
     const lead    = opts.lead    || 'Walk through the studio with us. We\'ll tailor the demo to your firm — bring a current set of drawings and we\'ll show you how mark-ups, RFIs, and revisions live on a single sheet.';
     const cta     = opts.cta     || 'Get demo';
 
