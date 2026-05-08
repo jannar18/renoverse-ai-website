@@ -13,6 +13,10 @@ References every session must respect:
 
 10 outstanding items from the most recent feedback round. Tackle in any order; mark done with PR reference when shipped.
 
+### Homepage — new section
+
+- [ ] **Demo video section between stack-animation tail and capabilities.** New `shared/components/demo-video/` (full contract). Mounts on `[data-demo-video]` with `data-src` / `data-poster` / `data-mime` / `data-label`. Surface: `var(--white)` — matches the `.stack-tail-intro` above so the intro + video read as one continuous white band before the sky-blue-ice capabilities reveal. Frame: 14px-radius card + soft shadow per `.ty-card` recipe; aspect ratio 16:9; max-width `--container` (1240px) — aligned with the capabilities grid below. Native HTML5 controls; `preload="metadata"`; `playsinline`; no autoplay (source is a ~68s narrated walkthrough). Asset: `assets/demo-cran.mp4` (1920×1080, 6.7MB) + `assets/demo-cran-poster.jpg` (frame extracted at 0.5s).
+
 ### Homepage
 
 - [x] **2. "Built for firms managing complex processes and workflows." H2 centered in the capabilities section.** (PR #28)
