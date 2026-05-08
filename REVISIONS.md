@@ -40,9 +40,8 @@ References every session must respect:
 
 ### F1.5 — Component library tail (loudest violators already cleared)
 
-- [ ] README + `test.html` backfill for: `features-alternating`, `halftone-video`, `site-footer`, `site-nav` (the four still missing the contract).
-- [ ] Test fixtures should import `tokens.css` / `button.css` / `effects.css` so token-correctness is verifiable in isolation.
-- [ ] Mount-guard naming inconsistency (`data-fa-mounted` / `data-fh-mounted` / `data-fe-mounted` etc.) — flag-only per memory rule; operator picks the replacement.
+- [x] README + `test.html` backfill for `features-alternating` (renamed to `product-feature-primary`; new `README.md` + `test.html` shipped, test fixture imports `tokens.css` + `effects.css` + `button.css`). Operator confirmed `halftone-video`, `site-footer`, `site-nav` are good as-is and don't need the contract files. (PR #31)
+- [x] Mount-guard naming convention set: full unabbreviated component name (e.g. `data-product-feature-primary-mounted`), no two-letter prefixes. Saved as a feedback memory; future components follow this. Existing `data-fh-mounted` / `data-fe-mounted` / etc. on components we're keeping as-is stay until their next touch — not worth churn. (PR #31)
 
 ### F2 — ARIA + WCAG 2.1 AA compliance
 
