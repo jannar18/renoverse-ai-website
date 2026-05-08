@@ -33,7 +33,7 @@ This guide is written for **Claude**, to be referenced whenever someone asks for
   - [Wrap the bottom of a page in one warm zone](#wrap-multiple-sections-in-one-shared-paper-backdrop--make-the-bottom-of-the-page-feel-like-one-warm-zone)
   - [Add a footer (light or dark)](#add-a-footer--add-the-page-footer)
   - [Add a newsletter signup form](#add-a-newsletter-signup--add-an-inline-email-signup)
-  - [Add a product-feature scroll moment](#add-a-product-feature-scroll-moment--add-something-like-the-stack-animation)
+  - [Add a product-feature scroll moment](#add-a-product-feature-scroll-moment--add-something-like-the-product-features-animation)
   - [Add navigation](#add-navigation--change-the-nav)
 - **Style requests:**
   - [Use a specific gradient (dark teal, light azure, paper, etc.)](#use-the-dark-teal-gradient--use-the-light-azure-gradient--use-the-paper-gradient--etc)
@@ -306,7 +306,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 - Product highlight: large media block, dithered if photo (`.fx-dither.fx-dither--photo`), unfiltered if product UI. Can include a short autoplay-loop muted video for animated UI demos.
 - Surface: alternates per row between `.fx-grad-ice-cream-beige` (Quiet, blurb-only side) and a dark vertical gradient (`.fx-grad-dark-oxford-blue-teal-cream` or `.fx-grad-dark-oxford-blue-azure-ice` — pick one and stick with it for the whole section). The alternation between paper and dark gives the rhythm. Each *dark* row is the **Imagery signature** (gradient + grain + dithered media — the product highlight is the dithered art). Each *paper* row is **Quiet**. So per the four-signature taxonomy: **Quiet ↔ Imagery, alternating per row.** Don't add halftone bloom on top — that would push it to Editorial and overwhelm the alternation rhythm.
 - Spacing: each row is min `80vh` so each gets its own scroll moment without being pinned.
-- Animation: as each row enters the viewport, the *side that's currently coming in from off-screen* slides 32px from its outside edge with fade-in (600ms, ease-out). Don't pin-scroll these — the stack-animation already owns that slot.
+- Animation: as each row enters the viewport, the *side that's currently coming in from off-screen* slides 32px from its outside edge with fade-in (600ms, ease-out). Don't pin-scroll these — the product-features-animation already owns that slot.
 - Don't apply this to more than 3–4 features in one section. If the page needs more, switch to Variation 3 (stacked rows).
 
 #### Variation 5 — Full-screen single product highlight *— proposed, no mirror yet*
@@ -319,7 +319,7 @@ Two are already built; four are **proposed patterns** the system supports but no
 - Animation options:
   - *Static* — no animation, just the media holding the viewport.
   - *Parallax* — media scrolls at 0.6× the page rate so it feels weightier than its container.
-  - *Pinned scroll* — only if the stack-animation isn't already on the page. Same rule: one pinned moment per page, max.
+  - *Pinned scroll* — only if the product-features-animation isn't already on the page. Same rule: one pinned moment per page, max.
 
 #### Variation 6 — 2-up split *— proposed, no mirror yet*
 
@@ -448,7 +448,7 @@ The atomic pattern that lives inside typology cards but is reusable wherever a c
 
 Heading (H4) inside: Poppins 17px / 600 / `--ink`. Body: Poppins 14px / line-height 1.55 / `rgba(11,26,43,.78)`.
 
-**Don't drift `blur(18px)` or `saturate(140%)`** — those are the canonical values used for caption-over-photo throughout the brand. (The site's other frosted-glass call-sites use lighter blurs: `.btn` defaults to `blur(14px)`, and `.btn--frosted` and the stack-animation overlay both use `blur(6px)`. Captions are the heaviest tier — that's deliberate, so the caption reads as one weight even when the photo behind it is busy.)
+**Don't drift `blur(18px)` or `saturate(140%)`** — those are the canonical values used for caption-over-photo throughout the brand. (The site's other frosted-glass call-sites use lighter blurs: `.btn` defaults to `blur(14px)`, and `.btn--frosted` and the product-features-animation overlay both use `blur(6px)`. Captions are the heaviest tier — that's deliberate, so the caption reads as one weight even when the photo behind it is busy.)
 
 ### "Wrap multiple sections in one shared paper backdrop" / "Make the bottom of the page feel like one warm zone"
 
@@ -488,15 +488,15 @@ This is the small inline-form pattern — distinct from the demo-form's full car
 
 **Status message:** `aria-live="polite"` for screen readers; placeholder for "Thanks — we'll be in touch."
 
-### "Add a product feature scroll moment" / "Add something like the stack animation"
+### "Add a product-feature scroll moment" / "Add something like the product-features-animation"
 
-The site already has one big pinned-scroll product moment — the **stack-animation** component (`shared/components/stack-animation/`). It's a 200vh tall sticky-pinned section with a 3D stack of five legacy app panels (Excel, AutoCAD, Bluebeam, Finder, Gmail) collapsing into a single Renoverse panel.
+The site already has one big pinned-scroll product moment — the **product-features-animation** component (`shared/components/product-features-animation/`, formerly `stack-animation`). It's a 200vh tall sticky-pinned section with a 3D stack of five legacy app panels (Excel, AutoCAD, Bluebeam, Finder, Gmail) collapsing into a single Renoverse panel.
 
 **Use sparingly — one per page, max.** Pinned scrolls dominate the page rhythm; two on one page exhausts the reader.
 
-**Don't restyle without testing the sticky-nav interaction.** There's a documented historical conflict: the sticky nav's `top:0` competes with the stack-animation's pinned `top:0`, and ScrollTrigger's start calculation can land in the wrong place. See the memory note "sticky-nav-stack-animation-conflict" — Phase 1 + Phase 2 in `PLAN.md` are the two cleanup phases for this. If a request asks for the stack animation on a new page or with a sticky nav above it, raise the conflict and reach for the `--nav-height` token to offset ScrollTrigger.
+**Don't restyle without testing the sticky-nav interaction.** There's a documented historical conflict: the sticky nav's `top:0` competes with the product-features-animation's pinned `top:0`, and ScrollTrigger's start calculation can land in the wrong place. See the memory note "sticky-nav-product-features-animation-conflict" (filename retained as `sticky-nav-stack-animation-conflict` for history) — Phase 1 + Phase 2 in `PLAN.md` are the two cleanup phases for this. If a request asks for the product-features-animation on a new page or with a sticky nav above it, raise the conflict and reach for the `--nav-height` token to offset ScrollTrigger.
 
-**To use:** drop in `<div data-stack-animation></div>` on the page, plus the GSAP + ScrollTrigger CDN scripts and the component's CSS/JS. The component is self-contained — don't try to integrate page-level styles into it.
+**To use:** drop in `<div data-product-features-animation></div>` on the page, plus the GSAP + ScrollTrigger CDN scripts and the component's CSS/JS. The component is self-contained — don't try to integrate page-level styles into it.
 
 ### "Use a new color" / "Add a new accent"
 
@@ -514,7 +514,7 @@ The brand has a **closed list of 7 gradients**: 5 vertical, 1 horizontal signatu
 | `dark-oxford-blue → teal → cream` | Testimonial card; ICP project-managers panel | `--grad-dark-oxford-blue-teal-cream` | `.fx-grad-dark-oxford-blue-teal-cream` |
 | `dark-oxford-blue → azure → ice` | ICP principal-architects panel | `--grad-dark-oxford-blue-azure-ice` | `.fx-grad-dark-oxford-blue-azure-ice` |
 | `dark-oxford-blue → cool-blue → cream` | ICP junior-designers panel | `--grad-dark-oxford-blue-cool-blue-cream` | `.fx-grad-dark-oxford-blue-cool-blue-cream` |
-| `cream → aqua → teal` | product-feature-primary row backdrop | `--grad-cream-aqua-teal` | `.fx-grad-cream-aqua-teal` |
+| `cream → aqua → teal` | product-features-primary row backdrop | `--grad-cream-aqua-teal` | `.fx-grad-cream-aqua-teal` |
 
 #### Radial paper backdrop
 
@@ -740,7 +740,7 @@ When in doubt, mirror these working examples:
 | Demo / contact form (full card) | `shared/components/demo-form/` |
 | Team / about block | `shared/components/team-section/` |
 | Feature highlights row | `shared/components/feature-highlights/` |
-| Pinned-scroll product feature | `shared/components/stack-animation/` |
+| Pinned-scroll product feature | `shared/components/product-features-animation/` |
 
 ---
 
@@ -750,7 +750,7 @@ The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.
 
 **Token / type:**
 - ICP carousel still inlines its dither mask and grain SVG. Lift each to the kit utilities (`.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. (Panel gradients are already canonical-token-driven post-Phase-2.) **(F1.5 component-library audit territory.)**
-- The four shader implementations (`halftone-video`, `icp-carousel`, `product-feature-primary`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)** Note: `icp-carousel` was cut in PR #21 and `features-editorial` was replaced in PR #22 — only `halftone-video` and `product-feature-primary` ship their shaders today, so the actual remaining DRY target is just those two.
+- The four shader implementations (`halftone-video`, `icp-carousel`, `product-features-primary`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)** Note: `icp-carousel` was cut in PR #21 and `features-editorial` was replaced in PR #22 — only `halftone-video` and `product-features-primary` ship their shaders today, so the actual remaining DRY target is just those two.
 
 **Other:**
 - Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**

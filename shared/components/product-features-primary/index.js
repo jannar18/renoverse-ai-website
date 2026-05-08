@@ -1,6 +1,6 @@
 /* Renoverse — Product Feature (primary).
    Mounts an N-row alternating product-feature section into every
-   [data-product-feature-primary] on the page.
+   [data-product-features-primary] on the page.
 
    Hybrid of STYLE_GUIDE Variation 4 (alternating blurb + product highlight)
    and Variation 6 (2-up split): each row is split horizontally — text on
@@ -22,7 +22,7 @@
    per-row CTAs globally even on items without bullets.
 */
 (function () {
-  const MOUNT = '[data-product-feature-primary]';
+  const MOUNT = '[data-product-features-primary]';
 
   /* Default halftone source — the canonical brand halftone PNG (architectural
      render, lifted from the ICP carousel). Has strong tonal range, so reads
@@ -102,11 +102,11 @@
 
   function buildBullets(bullets) {
     return `
-      <ul class="product-feature-primary__bullets">
+      <ul class="product-features-primary__bullets">
         ${bullets.map((b) => `
-          <li class="product-feature-primary__bullet">
-            <p class="product-feature-primary__bullet-label">${escape(b.label || '')}</p>
-            <p class="product-feature-primary__bullet-body">${escape(b.body || '')}</p>
+          <li class="product-features-primary__bullet">
+            <p class="product-features-primary__bullet-label">${escape(b.label || '')}</p>
+            <p class="product-features-primary__bullet-body">${escape(b.body || '')}</p>
           </li>`).join('')}
       </ul>`;
   }
@@ -124,18 +124,18 @@
     const showCta = !hasBullets && !ctaHidden;
     const bodyOrBullets = hasBullets
       ? buildBullets(item.bullets)
-      : `<p class="product-feature-primary__body">${escape(item.body || '')}</p>`;
+      : `<p class="product-features-primary__body">${escape(item.body || '')}</p>`;
     const ctaMarkup = showCta
-      ? `<a class="btn btn--white product-feature-primary__cta" href="${escape(cta.href)}">
+      ? `<a class="btn btn--white product-features-primary__cta" href="${escape(cta.href)}">
            <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>
            ${escape(cta.label)}
-           <span class="product-feature-primary__cta-arrow">${ARROW_SVG}</span>
+           <span class="product-features-primary__cta-arrow">${ARROW_SVG}</span>
          </a>`
       : '';
     return `
-      <div class="product-feature-primary__blurb">
-        ${item.eyebrow ? `<p class="product-feature-primary__eyebrow">${escape(item.eyebrow)}</p>` : ''}
-        <h2 class="product-feature-primary__title">${escape(item.title)}</h2>
+      <div class="product-features-primary__blurb">
+        ${item.eyebrow ? `<p class="product-features-primary__eyebrow">${escape(item.eyebrow)}</p>` : ''}
+        <h2 class="product-features-primary__title">${escape(item.title)}</h2>
         ${bodyOrBullets}
         ${ctaMarkup}
       </div>`;
@@ -150,9 +150,9 @@
       const tag = escape(item.placeholderTag || 'Image placeholder');
       const label = escape(item.placeholderLabel || '');
       return `
-        <div class="product-feature-primary__media">
-          <div class="product-feature-primary__media-frame product-feature-primary__media-frame--ph">
-            <div class="product-feature-primary__media-ph">
+        <div class="product-features-primary__media">
+          <div class="product-features-primary__media-frame product-features-primary__media-frame--ph">
+            <div class="product-features-primary__media-ph">
               <div>
                 <span class="tag">${tag}</span>
                 ${label ? `<small>${label}</small>` : ''}
@@ -162,8 +162,8 @@
         </div>`;
     }
     return `
-      <div class="product-feature-primary__media">
-        <div class="product-feature-primary__media-frame">
+      <div class="product-features-primary__media">
+        <div class="product-features-primary__media-frame">
           <img src="${escape(item.image)}" alt="${escape(item.alt || '')}" loading="lazy" />
         </div>
       </div>`;
@@ -182,7 +182,7 @@
        No grain on the row — grain (fx-grain--ink, multiply blend) was tinting
        the white-side of every row grey; the user wants pure white there. */
     return `
-      <div class="product-feature-primary__row" data-row-side="${side}">
+      <div class="product-features-primary__row" data-row-side="${side}">
         ${first}
         ${second}
       </div>`;
@@ -203,7 +203,7 @@
       gl.shaderSource(s, src);
       gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-        console.warn('product-feature-primary shader compile error:', gl.getShaderInfoLog(s));
+        console.warn('product-features-primary shader compile error:', gl.getShaderInfoLog(s));
       }
       return s;
     }
@@ -254,7 +254,7 @@
     gl.attachShader(prog, frag);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      console.warn('product-feature-primary shader link error:', gl.getProgramInfoLog(prog));
+      console.warn('product-features-primary shader link error:', gl.getProgramInfoLog(prog));
       return;
     }
     gl.useProgram(prog);
@@ -342,10 +342,10 @@
        across the whole section instead of per-panel. */
     const halftoneSrc = items[0].halftoneImage || DEFAULT_HALFTONE;
     return `
-      <section class="product-feature-primary">
-        <span class="product-feature-primary__panel-strip" aria-hidden="true"></span>
-        <span class="product-feature-primary__halftone" aria-hidden="true" style="background-image:url('${escape(halftoneSrc)}')"></span>
-        <canvas class="product-feature-primary__shader" aria-hidden="true" data-halftone-src="${escape(halftoneSrc)}"></canvas>
+      <section class="product-features-primary">
+        <span class="product-features-primary__panel-strip" aria-hidden="true"></span>
+        <span class="product-features-primary__halftone" aria-hidden="true" style="background-image:url('${escape(halftoneSrc)}')"></span>
+        <canvas class="product-features-primary__shader" aria-hidden="true" data-halftone-src="${escape(halftoneSrc)}"></canvas>
         ${items.map((item) => buildRow(item, cta, ctaHidden)).join('')}
       </section>`;
   }
@@ -357,10 +357,10 @@
 
     window.gsap.registerPlugin(window.ScrollTrigger);
 
-    host.querySelectorAll('.product-feature-primary__row').forEach((row) => {
+    host.querySelectorAll('.product-features-primary__row').forEach((row) => {
       const side = row.getAttribute('data-row-side');
-      const media = row.querySelector('.product-feature-primary__media');
-      const blurb = row.querySelector('.product-feature-primary__blurb');
+      const media = row.querySelector('.product-features-primary__media');
+      const blurb = row.querySelector('.product-features-primary__blurb');
       if (!media || !blurb) return;
 
       const mediaXFrom = side === 'image-left' ? -32 : 32;
@@ -381,12 +381,12 @@
   }
 
   function mount(host) {
-    if (host.dataset.productFeaturePrimaryMounted === '1') return;
-    host.dataset.productFeaturePrimaryMounted = '1';
+    if (host.dataset.productFeaturesPrimaryMounted === '1') return;
+    host.dataset.productFeaturesPrimaryMounted = '1';
     host.innerHTML = buildMarkup(readItems(host), readCta(host), readCtaHidden(host));
     /* Boot the WebGL halftone shader on each row's canvas. Source URL is
        carried via data-halftone-src so each row can use its own image. */
-    host.querySelectorAll('.product-feature-primary__shader').forEach((canvas) => {
+    host.querySelectorAll('.product-features-primary__shader').forEach((canvas) => {
       const src = canvas.getAttribute('data-halftone-src');
       if (src) setupHalftoneShader(canvas, src);
     });

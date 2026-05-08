@@ -1,5 +1,5 @@
-/* Renoverse — Product feature: stack-and-collapse animation
-   Mounts into the first element with [data-stack-animation].
+/* Renoverse — Product features: stack-and-collapse animation
+   Mounts into the first element with [data-product-features-animation].
    Requires GSAP + ScrollTrigger to be loaded before this script. */
 (function () {
   const FLOORPLAN_URL = new URL('floorplan.png', document.currentScript.src).href;
@@ -1165,7 +1165,7 @@
     init();
   }
   function init() {
-    const target = document.querySelector('[data-stack-animation]');
+    const target = document.querySelector('[data-product-features-animation]');
     if (target) mount(target);
   }
 })();
