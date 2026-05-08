@@ -117,11 +117,123 @@
 <script src="shared/components/site-nav/index.js"></script>
 <script src="shared/components/demo-form/index.js"></script>
 <script>
-  // Hook submission for now — log to console. Swap for a real backend
-  // once the endpoint is decided (see NOTES.md → Demo flow).
-  document.addEventListener('demo-form:submit', (e) => {
-    console.log('[demo] submission:', e.detail.values);
-  });
+  /* Demo form → HubSpot Forms Submissions API.
+
+     The demo-form component is backend-agnostic: it fires a
+     `demo-form:submit` CustomEvent with `{detail:{values}}` on a valid
+     submit. Here we map those values onto the matching HubSpot form
+     and POST to the public no-auth submissions endpoint.
+
+     The HubSpot form is multi-object — most fields land on the Contact
+     (objectTypeId 0-1), but Address 2 is wired to the Company (0-2)
+     in HubSpot's form config, so we honour that per-field. State is
+     stored as a full name (e.g. "California"), not a 2-letter code,
+     so we map abbreviations on the way out.
+
+     Spam protection: an off-screen honeypot (`company_website`)
+     dropped into the form post-mount. Bots auto-fill every input
+     including hidden ones; if it arrives populated we discard the
+     submission silently.
+
+     The component already swapped the card to its thank-you state
+     by the time we get the event, so submission is fire-and-forget
+     from the user's perspective. Network failures are logged for
+     debugging but not surfaced — HubSpot's endpoint is stable, and
+     a stuck "submitting…" UX is worse than the rare lost lead. */
+  (function () {
+    var HS_PORTAL_ID = '46833024';
+    var HS_DEMO_FORM_ID = 'a9cdae0d-abb1-469b-87d5-20c3ce7a9d92';
+    var HS_SUBMIT_URL = 'https://api.hsforms.com/submissions/v3/integration/submit/'
+                      + HS_PORTAL_ID + '/' + HS_DEMO_FORM_ID;
+
+    // HubSpot's `state_dropdown` property stores full state names.
+    var STATE_NAMES = {
+      AL:'Alabama', AK:'Alaska', AZ:'Arizona', AR:'Arkansas', CA:'California',
+      CO:'Colorado', CT:'Connecticut', DE:'Delaware', DC:'District of Columbia',
+      FL:'Florida', GA:'Georgia', HI:'Hawaii', ID:'Idaho', IL:'Illinois',
+      IN:'Indiana', IA:'Iowa', KS:'Kansas', KY:'Kentucky', LA:'Louisiana',
+      ME:'Maine', MD:'Maryland', MA:'Massachusetts', MI:'Michigan', MN:'Minnesota',
+      MS:'Mississippi', MO:'Missouri', MT:'Montana', NE:'Nebraska', NV:'Nevada',
+      NH:'New Hampshire', NJ:'New Jersey', NM:'New Mexico', NY:'New York',
+      NC:'North Carolina', ND:'North Dakota', OH:'Ohio', OK:'Oklahoma', OR:'Oregon',
+      PA:'Pennsylvania', RI:'Rhode Island', SC:'South Carolina', SD:'South Dakota',
+      TN:'Tennessee', TX:'Texas', UT:'Utah', VT:'Vermont', VA:'Virginia',
+      WA:'Washington', WV:'West Virginia', WI:'Wisconsin', WY:'Wyoming'
+    };
+
+    function readHutk() {
+      var m = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+      return m ? m[1] : undefined;
+    }
+
+    function injectHoneypot() {
+      var formEl = document.querySelector('[data-demo-form] form');
+      if (!formEl || formEl.querySelector('[name="company_website"]')) return;
+      var hp = document.createElement('input');
+      hp.type = 'text';
+      hp.name = 'company_website';
+      hp.tabIndex = -1;
+      hp.autocomplete = 'off';
+      hp.setAttribute('aria-hidden', 'true');
+      hp.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
+      formEl.appendChild(hp);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', injectHoneypot);
+    } else {
+      injectHoneypot();
+    }
+
+    document.addEventListener('demo-form:submit', function (e) {
+      var v = (e.detail && e.detail.values) || {};
+
+      if (v.company_website) {
+        console.warn('[demo-form] honeypot tripped — dropping submission');
+        return;
+      }
+
+      var fields = [
+        { objectTypeId: '0-1', name: 'firstname',      value: v.firstName },
+        { objectTypeId: '0-1', name: 'lastname',       value: v.lastName },
+        { objectTypeId: '0-1', name: 'email',          value: v.email },
+        { objectTypeId: '0-1', name: 'phone',          value: v.phone },
+        { objectTypeId: '0-1', name: 'role',           value: v.role },
+        { objectTypeId: '0-1', name: 'company',        value: v.firmName },
+        { objectTypeId: '0-1', name: 'address',        value: v.address1 },
+        { objectTypeId: '0-2', name: 'address2',       value: v.address2 },
+        { objectTypeId: '0-1', name: 'city',           value: v.city },
+        { objectTypeId: '0-1', name: 'state_dropdown', value: STATE_NAMES[v.state] || v.state },
+        { objectTypeId: '0-1', name: 'zip',            value: v.zip }
+      ].filter(function (f) {
+        return f.value != null && String(f.value).trim() !== '';
+      });
+
+      var hutk = readHutk();
+      var body = {
+        fields: fields,
+        context: {
+          pageUri: location.href,
+          pageName: document.title
+        }
+      };
+      if (hutk) body.context.hutk = hutk;
+
+      fetch(HS_SUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+        .then(function (res) {
+          if (res.ok) return;
+          return res.text().catch(function () { return ''; }).then(function (txt) {
+            console.error('[demo-form] HubSpot rejected', res.status, txt);
+          });
+        })
+        .catch(function (err) {
+          console.error('[demo-form] network error', err);
+        });
+    });
+  })();
 </script>
 
 <script type="importmap">
