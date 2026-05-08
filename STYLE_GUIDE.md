@@ -170,7 +170,7 @@ If the request is for a "highlight section" without imagery, drop layer 3 — th
 
 ### "I need a new button"
 
-Default to `.btn .btn--filled` — azure rectangle, white text, four corner ticks. This is the brand's primary CTA voice (homepage final CTA, hero CTA, footer Subscribe).
+Default to `.btn .btn--filled` — aqua rectangle, ink text, four corner ticks. This is the brand's primary CTA voice (homepage final CTA, hero CTA, footer Subscribe).
 
 | Where it sits | Variant | Notes |
 |---|---|---|
@@ -671,10 +671,12 @@ The **WebGL halftone-video shader** ([`shared/components/halftone-video/`](./sha
 
 | Class | Look | Use |
 |---|---|---|
-| `.btn .btn--filled` | Azure rect, white text, corner ticks | **Default CTA on light surfaces.** Hero, final-CTA, footer subscribe |
+| `.btn .btn--filled` | Aqua rect, ink text, corner ticks | **Default CTA on light surfaces.** Hero, final-CTA, footer subscribe |
 | `.btn .btn--frosted` | Frosted glass + grain | **CTA on dark / photo surfaces.** ICP carousel CTAs, nav button over hero video |
-| `.btn .btn--white` | White fill, azure outline + text | Secondary action on light surfaces |
-| `.btn .btn--filled` (no `.tk` spans) | Same azure fill, no corner ticks | In-card variant for forms. Used by the demo-form (rendered via Tailwind utilities so the drop-in component doesn't depend on `button.css`). |
+| `.btn .btn--white` | White fill, aqua tick/border + teal text | Secondary action on light surfaces |
+| `.btn .btn--filled` (no `.tk` spans) | Same aqua fill + ink text, no corner ticks | In-card variant for forms. Used by the demo-form (rendered via Tailwind utilities so the drop-in component doesn't depend on `button.css`). |
+
+**WCAG 2.1 AA pairings.** White on `--aqua` and aqua-text on white both land at ~2:1 — they fail AA. The compliant pairings are **`--ink` (#0a0a0a) on `--aqua`** (~9:1) and **`--teal` (#2D6F75) on white** (~5.1:1); both stay inside the aqua/teal brand ramp so the visual identity is preserved. Use these — never white-on-aqua or aqua-on-white for text.
 
 Every `.btn` reserves 24px clearance around itself for the hover-state ticks. Two side-by-side need ≥ 36px gap.
 

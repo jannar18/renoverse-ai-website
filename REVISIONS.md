@@ -60,9 +60,25 @@ Coverage:
 - Tab order matches visual; no `tabindex > 0`.
 
 Known named blockers:
-- [x] `demo.html` `<h1>` promotion. (PR #33) Promoted the demo-form's existing title `<h2>` to `<h1>` inside `shared/components/demo-form/index.js` rather than adding a separate page-level H1 — the form's title IS the page's primary heading; the thank-you state's `<h3>` stays as a sub-state heading.
+- [x] `demo.html` `<h1>` promotion. (PR #33) Promoted the demo-form's existing title `<h2>` to `<h1>` inside `shared/components/demo-form/index.js` rather than adding a separate page-level H1 — the form's title IS the page's primary heading.
 - [x] Stack-animation `prefers-reduced-motion`. (PR #33) `mount()` checks `matchMedia('(prefers-reduced-motion: reduce)')` and skips `setupTimeline()` (no GSAP, no ScrollTrigger pin, no scrub). CSS `@media reduce` rules collapse the 200vh pin window to a single static stage and hide the source panels so the Renoverse destination panel + callouts read as a static composition.
 - [x] Halftone-video `prefers-reduced-motion`. (PR #33) `mount()` reads reduced-motion at the top, sets `video.autoplay = !reducedMotion`, skips the playback handlers + RAF tick loop, and renders the halftone effect once on `loadeddata` so the user sees a static halftone of the video's first frame — brand visual preserved without motion.
+
+F2 #3 — heading-level audit on rendered pages:
+- [x] Audited rendered heading outline on all 4 pages (page HTML + component-injected headings). Found one violation: demo-form's thank-you state used `<h3>` while the page `<h1>` "Book a Demo" stayed in the DOM after submit, making it a h1→h3 skip. Fixed in `shared/components/demo-form/index.js:358` (h3 → h2).
+
+F2 #4 — empty-alt sweep:
+- [x] Swept every `<img>` across HTML pages + component JS templates + test.html. **Clean** — every rendered `<img>` has descriptive non-empty alt text. Placeholder rows (e.g. card 4 of `product-features-cards-2x2`, row 4 of `product-feature-primary`) render a placeholder `<div>`, no `<img>`.
+
+F2 #5 — automated audit (axe / Lighthouse / Pa11y):
+- [x] Ran `pa11y@9.1.1 --standard WCAG2AA --threshold 0` on all 4 pages via local server. Raw output + summary in `notes/f2-audit/`. Findings collapsed to two AA-real issues (white-on-aqua text in `.btn--filled` + same Tailwind pattern in demo-form submit; aqua-on-white text in `.btn--white`) and 75 mock-UI false-positives inside the stack-animation scene.
+
+F2 #6 — fixes from #5 punch list:
+- [x] `.btn--filled` rest+hover use `--ink` text on aqua / white (~9:1 / ~21:1). `.btn--white` rest uses `--teal` text on white (~5.1:1); hover swaps to teal-bg + white text (~5.5:1). `shared/button.css` updated; STYLE_GUIDE.md button-variant table updated to match.
+- [x] Demo-form submit + decorative checkmark pucks went `text-white` → `text-ink` in `shared/components/demo-form/index.js`.
+- [x] Stack-animation `#stackScene` and `#callouts` now `aria-hidden="true"`. The `<h2>` caption is a sibling of the scene (in `.caption`), so it stays accessible.
+- [x] 36 mock-UI labels under 3:1 bumped to AA in `shared/components/stack-animation/index.css` + 3× inline-styled chevrons in `shared/components/stack-animation/index.js`. Labels already ≥3:1 left as-is to preserve mock-UI fidelity (option A).
+- [x] **Re-verified.** Pa11y post-fix: solutions/about/demo = 0 findings; index = 40 (down from 76), all between 3.03:1 and 4.48:1, all inside the `aria-hidden` mock UI. Documented as a known pa11y false-positive (static analyzer doesn't honor aria-hidden) in `notes/f2-audit/SUMMARY.md`.
 
 ### F3 — Mobile polish
 

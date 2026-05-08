@@ -2,9 +2,14 @@
    .btn — Renoverse bracket-corner button component
    ============================================================
    VARIANTS
-     .btn--filled   — pre-filled azure with white text, hover swaps to white
-     .btn--white    — white fill, azure outline + text, hover fills azure
+     .btn--filled   — aqua fill with ink text, hover swaps to white fill (ink stays)
+     .btn--white    — white fill, teal text + aqua tick/border, hover fills teal w/ white text
      .btn--frosted  — frosted glass + paper-grain shader, white text (dark surfaces)
+
+   WCAG 2.1 AA: every state in --filled and --white meets 4.5:1.
+   Aqua (#5EC9B7) is too light to carry white text or be carried as text on
+   white (~2:1). Ink-on-aqua and teal-on-white are the AA-compliant pairings
+   that preserve the aqua brand language.
 
    MARKUP
      <a class="btn btn--filled" href="#">
@@ -94,30 +99,33 @@
 
 /* ----------- variants ----------- */
 
-/* WHITE — white fill, azure outline + text → hover fills azure */
+/* WHITE — white fill, teal text + aqua tick/border → hover fills teal w/ white text.
+   Was aqua text on white (~2:1, AA fail); teal text is the aqua-ramp sibling that
+   passes AA on white (~5.1:1) without losing the brand accent. */
 .btn--white{
   --tick: var(--aqua, #5EC9B7);
   background: #fff;
   border-color: var(--aqua, #5EC9B7);
-  color: var(--aqua, #5EC9B7);
+  color: var(--teal, #2D6F75);
 }
 .btn--white:hover{
-  background: var(--aqua, #5EC9B7);
-  border-color: var(--aqua, #5EC9B7);
+  background: var(--teal, #2D6F75);
+  border-color: var(--teal, #2D6F75);
   color: #fff;
 }
 
-/* FILLED — pre-filled azure with white text → hover swaps to white fill */
+/* FILLED — aqua fill with ink text → hover swaps to white fill (ink stays).
+   Was white text on aqua (~2:1, AA fail); ink on aqua is ~9:1 and on white is ~21:1. */
 .btn--filled{
   --tick: var(--aqua, #5EC9B7);
   background: var(--aqua, #5EC9B7);
   border-color: var(--aqua, #5EC9B7);
-  color: #fff;
+  color: var(--ink, #0a0a0a);
 }
 .btn--filled:hover{
   background: #fff;
   border-color: var(--aqua, #5EC9B7);
-  color: var(--aqua, #5EC9B7);
+  color: var(--ink, #0a0a0a);
 }
 
 /* FROSTED — cream-tinted glass for dark surfaces.
