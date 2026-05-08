@@ -46,7 +46,7 @@
           </button>
         </div>
       </div>
-      <div class="nav-sheet" id="nav-sheet" aria-hidden="true">
+      <div class="nav-sheet" id="nav-sheet" role="dialog" aria-modal="true" aria-label="Site navigation" aria-hidden="true">
         <div class="nav-sheet__inner">
           <nav class="nav-sheet__links" aria-label="Mobile menu">
             <a href="index.html">Home</a>
@@ -157,8 +157,32 @@
       if (e.target.closest('a')) close();
     });
 
+    // Keyboard handling while the sheet is open: Escape closes, and Tab is
+    // trapped to cycle through the sheet's focusables so a keyboard user
+    // can't accidentally land on the skip-link or page chrome behind the
+    // (visually-covering) sheet.
+    const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])';
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && target.classList.contains('is-menu-open')) close();
+      if (!target.classList.contains('is-menu-open')) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      const focusables = sheet.querySelectorAll(FOCUSABLE_SELECTOR);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (!sheet.contains(active)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+        return;
+      }
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
 
     // Auto-close when viewport widens past the mobile breakpoint so the
@@ -175,6 +199,12 @@
     if (target.dataset.siteNavMounted) return;
     target.dataset.siteNavMounted = '1';
     target.classList.add('site-nav');
+    // Disambiguate the outer nav landmark — when the mobile sheet is open,
+    // the page has two <nav> elements (outer site-nav + inner sheet menu).
+    // The inner one is "Mobile menu"; this one is "Primary".
+    if (!target.hasAttribute('aria-label')) {
+      target.setAttribute('aria-label', 'Primary');
+    }
     target.innerHTML = template({ logoSrc: target.dataset.logoSrc });
     attachScrollState(target);
     attachMobileMenu(target);
