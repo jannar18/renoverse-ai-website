@@ -1,4 +1,4 @@
-# stack-animation
+# product-features-animation
 
 Scroll-driven "stack and converge" sequence: five legacy tool dashboards
 (Excel, AutoCAD, Bluebeam, Finder, Gmail) start exploded around the viewport,
@@ -10,13 +10,13 @@ floating feature callouts.
 In the host page `<head>`:
 
 ```html
-<link rel="stylesheet" href="../shared/components/stack-animation/index.css">
+<link rel="stylesheet" href="../shared/components/product-features-animation/index.css">
 ```
 
 In the host page `<body>`, where the section should render:
 
 ```html
-<div data-stack-animation></div>
+<div data-product-features-animation></div>
 ```
 
 Before `</body>`, after GSAP + ScrollTrigger:
@@ -24,7 +24,7 @@ Before `</body>`, after GSAP + ScrollTrigger:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="../shared/components/stack-animation/index.js"></script>
+<script src="../shared/components/product-features-animation/index.js"></script>
 ```
 
 ## Knobs

@@ -1,4 +1,4 @@
-# product-feature-primary
+# product-features-primary
 
 The site's primary product-feature section: an N-row alternating layout with a horizontally split background — text on the white half, image on a `cream → aqua → teal` gradient panel that bleeds to the viewport edge. The dark/right side carries the canonical halftone signature (CSS dot-mask + WebGL shader, same recipe as the carousel) and the row's image floats on top in a white-card frame.
 
@@ -7,7 +7,7 @@ Currently mounted only on the Solutions deep-dive (4 rows, bullets mode, CTAs su
 ## Mount
 
 ```html
-<div data-product-feature-primary
+<div data-product-features-primary
      data-cta-href="solutions.html"
      data-cta-label="See solutions"
      data-items='[
@@ -57,7 +57,7 @@ Currently mounted only on the Solutions deep-dive (4 rows, bullets mode, CTAs su
 
 ## Mount guard
 
-`data-product-feature-primary-mounted="1"` is set on the host element after the first mount to make the boot idempotent. Per the project rule on unabbreviated identifiers, this matches the directory name literally instead of using a short prefix.
+`data-product-features-primary-mounted="1"` is set on the host element after the first mount to make the boot idempotent. Per the project rule on unabbreviated identifiers, this matches the directory name literally instead of using a short prefix.
 
 ## Notes
 

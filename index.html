@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="shared/effects.css">
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
-<link rel="stylesheet" href="shared/components/stack-animation/index.css">
+<link rel="stylesheet" href="shared/components/product-features-animation/index.css">
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
 <link rel="stylesheet" href="shared/components/product-features-cards-2x2/index.css">
 <link rel="stylesheet" href="shared/components/testimonial-card/index.css">
@@ -123,8 +123,8 @@
     margin:0 0 16px;
   }
   /* ---------- stack-tail intro ----------
-     Sits in the white space immediately below the stack-animation pin,
-     before the warm-paper capabilities section. Right-aligned editorial
+     Sits in the white space immediately below the product-features-animation pin,
+     before the warm-paper product-features-section. Right-aligned editorial
      intro that sets up the H2 + cards below. */
   .stack-tail-intro{
     background:var(--white);
@@ -154,25 +154,25 @@
     }
   }
 
-  /* ---------- capabilities section (H2 header + 2x2 card grid) ----------
+  /* ---------- product-features section (H2 header + 2x2 card grid) ----------
      Warm-paper bg covers the H2 above the cards and the card grid itself,
-     reading as one capability-set narrative. The H2 is centered as a
+     reading as one product-features narrative. The H2 is centered as a
      single editorial sentence above the grid — the deliberate exception
      authorized by STYLE_GUIDE for cards-2x2 section headings. */
-  .capabilities-section{
+  .product-features-section{
     background:var(--grad-sky-blue-ice);
   }
-  .capabilities-section__header{
+  .product-features-section__header{
     padding:clamp(40px,5vw,72px) 0 clamp(8px,1.5vw,16px);
   }
-  .capabilities-section__header-wrap{
+  .product-features-section__header-wrap{
     max-width:var(--container);
     margin:0 auto;
     padding:0 var(--gutter);
   }
   /* H2 role per STYLE_GUIDE — Cormorant italic editorial moment, centered
      as a single editorial sentence above the cards-2x2 grid. */
-  .capabilities-section h2{
+  .product-features-section h2{
     font-family:var(--font-serif);
     font-style:italic;
     font-weight:500;
@@ -217,17 +217,17 @@
   </div>
 </section>
 
-<!-- ========== PRODUCT FEATURE: stack-and-collapse animation ==========
+<!-- ========== PRODUCT FEATURES: stack-and-collapse animation ==========
      The component renders the pinned 200vh stage *plus* a 100vh tail spacer
      (`.stack-section__pin-tail`) so the ScrollTrigger pin has the runway it
      needs to release cleanly before the next section enters. Tail spacer is
      transparent — inherits the page surface — so don't paint anything onto
-     [data-stack-animation] from the host page. -->
-<div data-stack-animation></div>
+     [data-product-features-animation] from the host page. -->
+<div data-product-features-animation></div>
 
 <!-- ========== STACK-TAIL INTRO ==========
-     Right-aligned editorial intro on white, sitting below the stack
-     animation and above the warm-paper capabilities section. Sets up the
+     Right-aligned editorial intro on white, sitting below the product-features
+     animation and above the warm-paper product-features-section. Sets up the
      H2 + cards that follow. -->
 <section class="stack-tail-intro">
   <div class="stack-tail-intro__wrap">
@@ -240,16 +240,16 @@
   </div>
 </section>
 
-<!-- ========== CAPABILITIES (2x2 card grid) ==========
+<!-- ========== PRODUCT FEATURES (2x2 card grid) ==========
      H2 is centered above the grid as a single editorial sentence — the
      STYLE_GUIDE-authorized exception for cards-2x2 section headings.
-     Warm-paper bg covers both H2 and grid as one capability-set narrative.
-     Four core capabilities render as `product-features-cards-2x2` (homepage
+     Warm-paper bg covers both H2 and grid as one product-features narrative.
+     Four core features render as `product-features-cards-2x2` (homepage
      teaser). The 3-up "rest comes built-in" beat on solutions.html uses the
      sibling `product-features-card-3x1` with taller proportions. -->
-<section class="capabilities-section">
-  <div class="capabilities-section__header">
-    <div class="capabilities-section__header-wrap">
+<section class="product-features-section">
+  <div class="product-features-section__header">
+    <div class="product-features-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
     </div>
   </div>
@@ -310,7 +310,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="shared/components/site-nav/index.js"></script>
-<script src="shared/components/stack-animation/index.js"></script>
+<script src="shared/components/product-features-animation/index.js"></script>
 <script src="shared/components/halftone-video/index.js"></script>
 <script src="shared/components/product-features-cards-2x2/index.js"></script>
 <script src="shared/components/testimonial-card/index.js"></script>

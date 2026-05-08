@@ -15,7 +15,7 @@ Static marketing site for Renoverse AI. Plain HTML/CSS/JS, no build step.
     └── components/
         ├── site-nav/
         ├── halftone-video/
-        ├── stack-animation/
+        ├── product-features-animation/
         ├── feature-highlights/
         ├── icp-carousel/
         ├── team-section/

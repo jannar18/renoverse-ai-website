@@ -30,7 +30,7 @@ const ICON_INSTAGRAM =
   '<circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>' +
   '</svg>';
 /* Canonical brand arrow — same path used by the team section and the
-   product-feature-primary CTA arrow pucks. (ICP carousel was cut in PR #21.) */
+   product-features-primary CTA arrow pucks. (ICP carousel was cut in PR #21.) */
 const ICON_ARROW =
   '<svg viewBox="0 0 16 16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" aria-hidden="true">' +
   '<path d="M3 8h9M8 4l4 4-4 4"/>' +
