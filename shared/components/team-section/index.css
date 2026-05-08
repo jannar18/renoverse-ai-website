@@ -131,7 +131,9 @@
        from attribution; right/bottom/left 0 (no adjacent content needs
        tick-clearance protection on this side of the row).
      - 14px gap + 13px right padding to seat the arrow puck snugly.
-   .team-section__cta-arrow recipe: 24px aqua circle, 12x12 white svg. */
+   .team-section__cta-arrow recipe: 24px teal circle, 12x12 white svg
+   (was aqua — switched to teal for AA contrast against the white SVG arrow,
+   matched to the .btn--filled / .btn--white CTA fill color). */
 .team-section__cta {
   margin: 32px 0 0 0;
   gap: 14px;
@@ -142,7 +144,7 @@
   width: 24px;
   height: 24px;
   border-radius: 999px;
-  background: var(--aqua);
+  background: var(--teal);
   display: inline-flex;
   align-items: center;
   justify-content: center;

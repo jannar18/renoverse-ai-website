@@ -273,7 +273,7 @@
     font-size: 6.5px; font-weight: 800; letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .stack-section .xl-doc-table .priority.exp { color: #f5a623; }
+  .stack-section .xl-doc-table .priority.exp { color: #a76800; } /* AA: was #f5a623 (2.03:1 vs white), pa11y rec */
   .stack-section .xl-doc-table .priority.crit { color: #c0392b; }
   .stack-section .xl-doc-table .priority.std { color: #1a1a1a; }
 
@@ -518,8 +518,8 @@
     font-size: 8px;
   }
   .stack-section .gm-row.unread { font-weight: 700; background: #fff; }
-  .stack-section .gm-row .star { color: #dadce0; }
-  .stack-section .gm-row .label { color: #d4ad2a; }
+  .stack-section .gm-row .star { color: #74767a; } /* AA: was #dadce0 (1.37:1 vs white), pa11y rec */
+  .stack-section .gm-row .label { color: #947200; } /* AA: was #d4ad2a (2.14:1 vs white), pa11y rec */
   /* Anonymized content — bars instead of real text */
   .stack-section .gm-row .bar {
     height: 7px; border-radius: 2px;
@@ -887,7 +887,7 @@
   .stack-section .rv-comment .text-bar.w60 { width: 60%; }
   .stack-section .rv-comment .reply-line {
     font-size: 7px;
-    color: #16d1c5;
+    color: #00857d; /* AA: was #16d1c5 (1.92:1 vs white), pa11y rec */
     margin-top: 2px;
   }
 
@@ -906,13 +906,13 @@
   }
   .stack-section .rv-compose .compose-at {
     font-size: 10px;
-    color: #b0b6bf;
+    color: #717780; /* AA: was #b0b6bf (2.04:1 vs white), pa11y rec */
     line-height: 1;
     text-align: center;
   }
   .stack-section .rv-compose .compose-input {
     font-size: 8.5px;
-    color: #b0b6bf;
+    color: #717780; /* AA: was #b0b6bf (2.04:1 vs white), pa11y rec */
     line-height: 1;
     display: flex;
     align-items: center;
@@ -1040,7 +1040,7 @@
   .stack-section .callout-h .ai-spark { color: #16d1c5; font-size: 10px; }
   .stack-section .callout-h .h-spacer { flex: 1; }
   .stack-section .upload-pill {
-    background: #16d1c5;
+    background: #00857d; /* AA: was #16d1c5 (1.92:1 vs white text), pa11y rec — bg darkened so white text passes */
     color: #fff;
     border-radius: 8px;
     padding: 2px 7px;
@@ -1171,7 +1171,7 @@
     color: #1a4d8f;
     display: flex; align-items: center; gap: 5px;
   }
-  .stack-section .callout-ai-row .ai-arrow { color: #7faff5; }
+  .stack-section .callout-ai-row .ai-arrow { color: #1a4d8f; } /* AA: was #7faff5 (2.1:1 vs white), matched to parent .callout-ai-row navy */
 
   .stack-section .callout--projects {
     width: 210px;
@@ -1275,7 +1275,7 @@
   .stack-section .snapshot-card .bar.w90 { width: 90%; }
   .stack-section .snapshot-card .bar.w75 { width: 75%; }
   .stack-section .snapshot-card .respond-btn {
-    background: #16d1c5;
+    background: #00857d; /* AA: was #16d1c5 (1.92:1 vs white text), pa11y rec — bg darkened so white text passes */
     color: #fff;
     border-radius: 8px;
     padding: 3px 8px;

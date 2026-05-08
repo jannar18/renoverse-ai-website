@@ -6,7 +6,11 @@
   const MARKUP = `
   <section class="stack-section" id="stackSection">
     <div class="stack-stage">
-      <div class="stack-scene" id="stackScene">
+      <!-- aria-hidden: the scene is a stylized graphic depicting product UI.
+           Screen readers get the captioned summary via the <h2> at the bottom
+           ("One workspace. Every detail."); the 75+ pa11y contrast findings
+           inside this scene are mock-UI text not meant to be read out. -->
+      <div class="stack-scene" id="stackScene" aria-hidden="true">
 
         <!-- Order matters: deepest (back) first, frontmost last. -->
 
@@ -546,7 +550,7 @@
                   <span class="time-bar"></span>
                 </div>
                 <div class="gm-row">
-                  <span class="star">☆</span><span class="label" style="color:#fbbc04">›</span>
+                  <span class="star">☆</span><span class="label" style="color:#977000">›</span>
                   <span class="bar sender-bar" style="width:58%"></span>
                   <span class="bar subj-bar" style="width:88%"></span>
                   <span class="time-bar"></span>
@@ -564,13 +568,13 @@
                   <span class="time-bar"></span>
                 </div>
                 <div class="gm-row">
-                  <span class="star">☆</span><span class="label" style="color:#fbbc04">›</span>
+                  <span class="star">☆</span><span class="label" style="color:#977000">›</span>
                   <span class="bar sender-bar" style="width:55%"></span>
                   <span class="bar subj-bar" style="width:90%"></span>
                   <span class="time-bar"></span>
                 </div>
                 <div class="gm-row">
-                  <span class="star">☆</span><span class="label" style="color:#fbbc04">›</span>
+                  <span class="star">☆</span><span class="label" style="color:#977000">›</span>
                   <span class="bar sender-bar" style="width:42%"></span>
                   <span class="bar subj-bar" style="width:70%"></span>
                   <span class="time-bar"></span>
@@ -930,8 +934,9 @@
 
       </div>
 
-      <!-- Floating feature callouts — animate in after the main reveal -->
-      <div class="callouts" id="callouts">
+      <!-- Floating feature callouts — animate in after the main reveal.
+           aria-hidden: same rationale as #stackScene above — decorative mock UI. -->
+      <div class="callouts" id="callouts" aria-hidden="true">
         <div class="callout callout--files">
           <div class="callout-h">
             <span>📁 Project Files</span>

@@ -23,8 +23,8 @@
    be set together for the optional CTA to render.
 
    The CTA reuses the .btn primitive from shared/button.css with the same
-   markup as the ICP carousel CTA (4x .tk corner ticks + aqua arrow puck),
-   variant .btn--white (white fill + aqua text) for the paper variant.
+   markup as the ICP carousel CTA (4x .tk corner ticks + teal arrow puck),
+   variant .btn--white (white fill + teal text) for the paper variant.
    Swap to .btn--frosted on dark surfaces.
 */
 (function () {
@@ -100,9 +100,9 @@
       ? `<p class="team-section__role">${escape(cfg.role)}</p>` : '';
     const attribution = (names || role)
       ? `<div class="team-section__attribution">${names}${role}</div>` : '';
-    /* Reuses the .btn primitive (4x .tk corner ticks + aqua arrow puck) from
+    /* Reuses the .btn primitive (4x .tk corner ticks + teal arrow puck) from
        the ICP carousel CTA, but swaps to .btn--white for the paper variant:
-       white fill, aqua text/border/ticks. */
+       white fill, teal text/border/ticks. */
     const link = (cfg.linkHref && cfg.linkLabel)
       ? `<a class="btn btn--white team-section__cta" href="${escape(cfg.linkHref)}">
            <span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>

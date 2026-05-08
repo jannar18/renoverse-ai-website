@@ -170,7 +170,7 @@ If the request is for a "highlight section" without imagery, drop layer 3 — th
 
 ### "I need a new button"
 
-Default to `.btn .btn--filled` — azure rectangle, white text, four corner ticks. This is the brand's primary CTA voice (homepage final CTA, hero CTA, footer Subscribe).
+Default to `.btn .btn--filled` — teal rectangle, white text, four corner ticks. This is the brand's primary CTA voice (homepage final CTA, hero CTA, footer Subscribe).
 
 | Where it sits | Variant | Notes |
 |---|---|---|
@@ -598,8 +598,8 @@ Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` 
 | Token | What it's for |
 |---|---|
 | `--sky-blue` `#7FE3CB` | Light aqua tint. |
-| `--aqua` `#5EC9B7` | Mid aqua — primary CTA fill, button ticks, links on light surfaces. |
-| `--teal` `#2D6F75` | Deep teal — editorial italic accents (closers, link emphasis). |
+| `--aqua` `#5EC9B7` | Mid aqua — gradients, hairlines, button corner ticks, links on light surfaces. Never under or over text (~2:1 against white, AA fail). |
+| `--teal` `#2D6F75` | Deep teal — editorial italic accents (closers, link emphasis) **and primary CTA fill** (white text on teal at ~5.5:1, AA). |
 
 **Blue ramp** (secondary accent — light → dark):
 
@@ -616,7 +616,7 @@ Two ink shades on light surfaces (`--ink` for headings + emphasis, `--ink-soft` 
 |---|---|
 | `--line` `rgba(0,0,0,.10)` | Hairline dividers. Single tier. |
 
-Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` for headings + bold emphasis → `--aqua` for action → `--teal` for editorial emphasis or links.
+Reach order when picking: `--ink-soft` for paragraph copy (default) → `--ink` for headings + bold emphasis → `--teal` for action / CTAs (text-bearing) and editorial emphasis → `--aqua` for action surfaces (gradients, ticks, hairlines, links).
 
 ### Gradient tokens & utilities
 
@@ -671,10 +671,12 @@ The **WebGL halftone-video shader** ([`shared/components/halftone-video/`](./sha
 
 | Class | Look | Use |
 |---|---|---|
-| `.btn .btn--filled` | Azure rect, white text, corner ticks | **Default CTA on light surfaces.** Hero, final-CTA, footer subscribe |
-| `.btn .btn--frosted` | Frosted glass + grain | **CTA on dark / photo surfaces.** ICP carousel CTAs, nav button over hero video |
-| `.btn .btn--white` | White fill, azure outline + text | Secondary action on light surfaces |
-| `.btn .btn--filled` (no `.tk` spans) | Same azure fill, no corner ticks | In-card variant for forms. Used by the demo-form (rendered via Tailwind utilities so the drop-in component doesn't depend on `button.css`). |
+| `.btn .btn--filled` | Teal rect, white text, teal corner ticks | **Default CTA on light surfaces.** Hero, final-CTA, footer subscribe |
+| `.btn .btn--frosted` | Frosted glass + grain (aqua tick on dark) | **CTA on dark / photo surfaces.** ICP carousel CTAs, nav button over hero video |
+| `.btn .btn--white` | White fill, teal outline + text, teal tick | Secondary action on light surfaces |
+| `.btn .btn--filled` (no `.tk` spans) | Same teal fill + white text, no corner ticks | In-card variant for forms. Used by the demo-form (rendered via Tailwind utilities so the drop-in component doesn't depend on `button.css`). |
+
+**WCAG 2.1 AA.** White on `--aqua` and aqua-text on white both land at ~2:1 (AA fail). CTAs use `--teal` (#2D6F75) at every text-bearing surface — ~5.5:1 against white. Mid `--aqua` (#5EC9B7) stays the brand surface color (gradients, hairlines, corner ticks, body links on light surfaces) — it's never carrying or carried by text.
 
 Every `.btn` reserves 24px clearance around itself for the hover-state ticks. Two side-by-side need ≥ 36px gap.
 

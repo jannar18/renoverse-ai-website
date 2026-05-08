@@ -2,9 +2,17 @@
    .btn — Renoverse bracket-corner button component
    ============================================================
    VARIANTS
-     .btn--filled   — pre-filled azure with white text, hover swaps to white
-     .btn--white    — white fill, azure outline + text, hover fills azure
+     .btn--filled   — pre-filled teal with white text, hover swaps to white
+     .btn--white    — white fill, teal outline + text, hover fills teal
      .btn--frosted  — frosted glass + paper-grain shader, white text (dark surfaces)
+
+   WCAG 2.1 AA: every state in --filled and --white meets 4.5:1.
+   The mid `--aqua` (#5EC9B7) is too light to carry white text or be carried
+   as text on white (~2:1). The CTA pair uses `--teal` (#2D6F75) for fills,
+   borders, ticks, and hover text — white-on-teal / teal-on-white land at
+   ~5.5:1, AA-compliant. Mid `--aqua` stays the brand surface color
+   (gradients, hairlines, body links) and the .btn--frosted tick on dark
+   surfaces.
 
    MARKUP
      <a class="btn btn--filled" href="#">
@@ -16,7 +24,7 @@
      </a>
 
    TOKENS (with fallbacks — define on :root to override)
-     --aqua        (#5EC9B7)   ← used for fills, ticks, borders
+     --teal        (#2D6F75)   ← used for fills, ticks, borders, hover text
      --ink         (#0a0a0a)
 
    ⚠️  SPACING RULE — REQUIRED MARGIN
@@ -94,30 +102,32 @@
 
 /* ----------- variants ----------- */
 
-/* WHITE — white fill, azure outline + text → hover fills azure */
+/* WHITE — white fill, teal outline + text + teal tick → hover fills teal.
+   Mid aqua text on white was ~2:1 (AA fail); teal is ~5.5:1. */
 .btn--white{
-  --tick: var(--aqua, #5EC9B7);
+  --tick: var(--teal, #2D6F75);
   background: #fff;
-  border-color: var(--aqua, #5EC9B7);
-  color: var(--aqua, #5EC9B7);
+  border-color: var(--teal, #2D6F75);
+  color: var(--teal, #2D6F75);
 }
 .btn--white:hover{
-  background: var(--aqua, #5EC9B7);
-  border-color: var(--aqua, #5EC9B7);
+  background: var(--teal, #2D6F75);
+  border-color: var(--teal, #2D6F75);
   color: #fff;
 }
 
-/* FILLED — pre-filled azure with white text → hover swaps to white fill */
+/* FILLED — teal fill with white text + teal tick → hover swaps to white fill,
+   teal text. Mid aqua + white was ~2:1 (AA fail); teal + white is ~5.5:1. */
 .btn--filled{
-  --tick: var(--aqua, #5EC9B7);
-  background: var(--aqua, #5EC9B7);
-  border-color: var(--aqua, #5EC9B7);
+  --tick: var(--teal, #2D6F75);
+  background: var(--teal, #2D6F75);
+  border-color: var(--teal, #2D6F75);
   color: #fff;
 }
 .btn--filled:hover{
   background: #fff;
-  border-color: var(--aqua, #5EC9B7);
-  color: var(--aqua, #5EC9B7);
+  border-color: var(--teal, #2D6F75);
+  color: var(--teal, #2D6F75);
 }
 
 /* FROSTED — cream-tinted glass for dark surfaces.
