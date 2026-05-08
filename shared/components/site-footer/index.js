@@ -100,24 +100,80 @@ function buildCopy() {
   return wrap;
 }
 
-/* Same placeholder behaviour the previous inline page-level scripts had:
-   intercept submit, validate format, show a confirmation. Replace with
-   the real backend when one is chosen. */
+/* POSTs to HubSpot's Forms Submissions API. The endpoint is public and
+   no-auth — portal/form IDs are the identifiers, the same way HubSpot's
+   own embed snippet exposes them. The form is single-field (just email,
+   on the Contact object) per the live HubSpot config. */
+const HS_NEWSLETTER_URL =
+  "https://api.hsforms.com/submissions/v3/integration/submit/46833024/c2ccee79-4704-4c56-91a9-de2fa946ab7c";
+
+function readHutk() {
+  const m = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+  return m ? m[1] : undefined;
+}
+
 function attachNewsletterHandler(host) {
   const form = host.querySelector("[data-newsletter-signup]");
   if (!form) return;
   const status = host.querySelector("[data-nl-status]");
   const input = form.querySelector('input[type="email"]');
+
+  /* Off-screen honeypot — bots auto-fill every field including hidden
+     ones; real users never see or focus this. */
+  const hp = document.createElement("input");
+  hp.type = "text";
+  hp.name = "company_website";
+  hp.tabIndex = -1;
+  hp.autocomplete = "off";
+  hp.setAttribute("aria-hidden", "true");
+  hp.style.cssText =
+    "position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
+  form.appendChild(hp);
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    if (hp.value) {
+      /* Drop silently but mimic success so the bot has no signal. */
+      if (status) status.textContent = "Thanks — we’ll be in touch.";
+      form.reset();
+      return;
+    }
+
     const email = (input.value || "").trim();
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!ok) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       if (status) status.textContent = "Please enter a valid email.";
       return;
     }
-    if (status) status.textContent = "Thanks — we’ll be in touch.";
-    form.reset();
+
+    if (status) status.textContent = "Subscribing…";
+
+    const body = {
+      fields: [{ objectTypeId: "0-1", name: "email", value: email }],
+      context: { pageUri: location.href, pageName: document.title },
+    };
+    const hutk = readHutk();
+    if (hutk) body.context.hutk = hutk;
+
+    fetch(HS_NEWSLETTER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          if (status) status.textContent = "Thanks — we’ll be in touch.";
+          form.reset();
+          return;
+        }
+        const txt = await res.text().catch(() => "");
+        console.error("[newsletter] HubSpot rejected", res.status, txt);
+        if (status) status.textContent = "Something went wrong — try again in a moment.";
+      })
+      .catch((err) => {
+        console.error("[newsletter] network error", err);
+        if (status) status.textContent = "Network error — please try again.";
+      });
   });
 }
 
