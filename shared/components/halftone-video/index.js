@@ -58,7 +58,7 @@
     canvas.className = 'halftone-canvas';
     host.appendChild(canvas);
 
-    window.HalftoneShader.attach(canvas, {
+    const handle = window.HalftoneShader.attach(canvas, {
       source: { type: 'video', element: video, src },
       mode: 'composite',
       front:          host.dataset.front || C.front,
@@ -72,10 +72,28 @@
       animated: true,
     });
 
+    /* WebGL2-unavailable fallback. When the shared shader can't get a
+       WebGL2 context (older Safari, locked-down enterprise browsers,
+       WebGL disabled, hardware-accel off), it returns null and hides
+       its canvas. Without an override, the hero would render as bare
+       white — H1 + subtitle still legible but the brand visual is
+       gone. Promote the raw video to take the canvas's place: the
+       video already exists in the DOM (created above), is autoplay-
+       muted-loop, just sized 1×1 + opacity 0 by default. The
+       `halftone-video--fallback` class swaps it to fill the host
+       (CSS in index.css). The user gets the video without the
+       brand halftone overlay — a meaningful degrade rather than a
+       blank surface. */
+    if (!handle) {
+      host.classList.add('halftone-video--fallback');
+    }
+
     /* The shared module's source.element branch doesn't drive playback
        (we passed in our own <video>), so kick it off here. Same shape
        as the previous pre-extraction implementation: autoplay where
-       allowed, resume on first pointerdown, resume on visibility. */
+       allowed, resume on first pointerdown, resume on visibility. Runs
+       regardless of shader success — the video plays whether it's
+       being sampled by the shader or shown raw as fallback. */
     const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     if (!reduced) {
       const startPlayback = () => video.play().catch(() => {});
@@ -86,6 +104,13 @@
       });
     } else {
       video.autoplay = false;
+      /* Reduced-motion + WebGL2 fallback: pause on the first frame so
+         users with reduce-motion don't get autoplaying video either. */
+      if (!handle) {
+        video.addEventListener('loadeddata', () => {
+          try { video.pause(); } catch (_) {}
+        }, { once: true });
+      }
     }
   }
 
