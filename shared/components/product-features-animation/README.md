@@ -31,12 +31,15 @@ Before `</body>`, after GSAP + ScrollTrigger:
 
 Direct edits to `index.css` / `index.js`:
 
-- **Section height** — `.stack-section { height: 300vh }` controls how much
-  scroll the pinned timeline consumes. ScrollTrigger's `end: '+=300%'` is
-  matched to this; change them together if you want a longer/shorter beat.
+- **Section height** — `.stack-section { height: 200vh }` (desktop) controls
+  how much scroll the pinned timeline consumes; the mobile override at
+  `@media (max-width: 820px)` shortens it to `130vh` since the orbital
+  callouts are hidden at that width. ScrollTrigger's `end` is wired to the
+  section height — change them together if you want a longer/shorter beat.
 - **Caption copy** — bottom of the markup template in `index.js`
-  (`<h1>One workspace.<br/><span class="muted">Every detail.</span></h1>`).
-- **Background** — `.stack-section { background: #fff }`.
+  (`<h2>One workspace. Every detail.</h2>` inside `.caption`). Promoted from
+  `<h1>` to `<h2>` per F2 a11y — the page H1 lives elsewhere.
+- **Background** — `.stack-section { background: var(--white) }`.
 
 ## Root class
 
