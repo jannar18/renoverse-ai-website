@@ -78,7 +78,7 @@ Every section of every page is listed here with its file pointer and a snippet o
 - **Stack-tail intro** — `<section class="stack-tail-intro">` in `index.html`
   - 2 paragraphs of body copy directly above the 2x2 grid.
 
-- **Capabilities 2x2 grid** — `<div data-product-features-cards-2x2>` in `index.html`
+- **Product feature highlights 2x2** — `<div data-product-features-cards data-cols="2">` in `index.html`
   - h2 (above the grid): *"Built for firms managing complex processes and workflows."*
   - 4 cards in `data-items='[...]'`:
     1. *Email Triage & Auto-Capture*
@@ -101,7 +101,7 @@ Every section of every page is listed here with its file pointer and a snippet o
   - h1: *"Design more.<br>Chase less."*
   - subhead: *"Goodbye, hundreds of email threads, decision gaps, and endless admin..."*
 
-- **Core capabilities (4 deep-dive rows)** — `<div data-product-features-primary>` in `solutions.html`
+- **Product features primary (4 deep-dive rows)** — `<div data-product-features-primary>` in `solutions.html`
   - 4 rows in `data-items='[...]'`, each with eyebrow + title + 3 bullets (label + body):
     1. *Capture* — Email Triage & Auto-Capture
     2. *Track* — Decision Log & Audit Trail
@@ -109,7 +109,7 @@ Every section of every page is listed here with its file pointer and a snippet o
     4. *Control* — Controlled Stakeholder Access
   - Each row's `image` field points to an asset in `assets/`.
 
-- **Additional capabilities (3-up)** — `<div data-product-features-card-3x1>` in `solutions.html`
+- **Product feature highlights 3x1** — `<div data-product-features-cards data-cols="3">` in `solutions.html`
   - Heading: *"And the rest comes built-in."*
   - 3 cards in `data-items='[...]'`: Frictionless collaboration, Version control, AI assistant.
 
@@ -168,9 +168,9 @@ The simplest case: one headline, one paragraph, one label.
 
 ### Pattern B — Edit one entry inside a JSON-array data attribute
 
-When a section has multiple cards/rows in a single `data-items` attribute (capabilities cards, deep-dive feature rows). You count entries from the top.
+When a section has multiple cards/rows in a single `data-items` attribute (product-feature cards, deep-dive feature rows). You count entries from the top.
 
-> In `index.html`, find `<div data-product-features-cards-2x2 ...>`. The `data-items='[...]'` attribute is a JSON array, one entry per card. Update **card #2's** `title` and `body` to:
+> In `index.html`, find `<div data-product-features-cards data-cols="2" ...>`. The `data-items='[...]'` attribute is a JSON array, one entry per card. Update **card #2's** `title` and `body` to:
 > - title: **"[new title]"**
 > - body: **"[new body, 1–2 sentences]"**
 >
@@ -204,9 +204,9 @@ Some edits need matching changes in two spots — the SEO metadata (title appear
 
 Replacing an asset is half-Claude, half-file-system: you put the new file in `assets/` and either point the data attribute at it (most cases) or replace the existing file by name.
 
-**Replace a feature image** (e.g. one of the capabilities cards):
+**Replace a feature image** (e.g. one of the product-feature cards):
 1. Place your new image (PNG / AVIF / WebP) in `assets/`.
-2. In Claude.ai, attach the relevant page (e.g. `index.html`) and prompt: *"In the `data-items` JSON for `<div data-product-features-cards-2x2>`, change card #2's `image` field to `assets/[your-new-filename]`."*
+2. In Claude.ai, attach the relevant page (e.g. `index.html`) and prompt: *"In the `data-items` JSON for `<div data-product-features-cards data-cols="2">`, change card #2's `image` field to `assets/[your-new-filename]`."*
 3. Refresh the page.
 
 **Replace the homepage hero video** (`assets/hero.mp4`):
