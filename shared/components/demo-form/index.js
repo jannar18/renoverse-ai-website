@@ -503,6 +503,14 @@
     target.setAttribute('aria-label', target.getAttribute('aria-label') || 'Request a Renoverse demo');
     target.innerHTML = buildMarkup(readOpts(target));
     bindForm(target);
+    /* Signal to host pages that the form is in the DOM and bound, so
+       integrations (HubSpot wiring, honeypot injection) can attach
+       without depending on script-tag ordering. Bubbles so a listener
+       on `document` catches it. */
+    target.dispatchEvent(new CustomEvent('demo-form:mounted', {
+      detail: { root: target },
+      bubbles: true,
+    }));
   }
 
   function init() {
