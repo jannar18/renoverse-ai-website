@@ -59,6 +59,16 @@ function FooterShader() {
       intensity: 0.08,
       noise: 0.35,
       shape: "wave",
+      /* Sanctioned palette exception per AGENTS.md house rule "Tokens
+         only" / STYLE_GUIDE Part III "Palette is closed."
+         The wave shader takes a triadic input that doesn't map to the
+         brand ramp — it needs a *contrasting* lavender/mint/cream triad
+         to read as one decorative gradient closer (the brand's own ink
+         + aqua + teal would muddy because they all sit in the
+         cool-blue half of the wheel). These three are scoped to this
+         single shader call site, never used as text or surface color
+         elsewhere, and intentionally not lifted to tokens.css. If the
+         palette ever opens up to include a "wave trio," promote here. */
       colors: ["#777EDD", "#5CC1AB", "#D5FFFA"],
       colorBack: "#00000000",
     })

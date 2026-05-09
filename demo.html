@@ -166,8 +166,7 @@
       return m ? m[1] : undefined;
     }
 
-    function injectHoneypot() {
-      var formEl = document.querySelector('[data-demo-form] form');
+    function injectHoneypot(formEl) {
       if (!formEl || formEl.querySelector('[name="company_website"]')) return;
       var hp = document.createElement('input');
       hp.type = 'text';
@@ -178,10 +177,28 @@
       hp.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
       formEl.appendChild(hp);
     }
+
+    /* Wait for the demo-form component to signal it's mounted instead
+       of racing the DOMContentLoaded queue. The component dispatches
+       `demo-form:mounted` (bubbling) right after innerHTML + bindForm.
+       If this script loads after a synchronous mount (rare — would
+       require demo-form/index.js to defer to next microtask), retry
+       once on DOMContentLoaded as a safety net. */
+    document.addEventListener('demo-form:mounted', function (e) {
+      var root = (e.detail && e.detail.root) || document.querySelector('[data-demo-form]');
+      var formEl = root && root.querySelector('form');
+      injectHoneypot(formEl);
+    });
+    /* Defensive fallback for hosts where the mount fired before this
+       listener attached (e.g. script reordering). */
+    function tryLateInjection() {
+      var formEl = document.querySelector('[data-demo-form] form');
+      if (formEl) injectHoneypot(formEl);
+    }
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', injectHoneypot);
+      document.addEventListener('DOMContentLoaded', tryLateInjection);
     } else {
-      injectHoneypot();
+      tryLateInjection();
     }
 
     document.addEventListener('demo-form:submit', function (e) {

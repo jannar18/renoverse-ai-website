@@ -346,33 +346,62 @@ void main(){
     const animated = opts.animated == null ? animatedDefault : !!opts.animated;
     const willLoop = animated && !reducedMotion;
 
+    /* Track every external hook we install so destroy() can release
+       them. Without these, calling destroy() while the RAF loop is
+       running drives the next tick into a deleted WebGL program; the
+       document-level pointerdown / visibilitychange listeners would
+       also leak across remount cycles. */
+    let disposed = false;
+    let rafId = 0;
+    let resizeObserver = null;
+    let resizeListener = null;
+    const docListeners = [];
+
     if (typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(() => { resize(); if (!willLoop) render(); }).observe(canvas);
+      resizeObserver = new ResizeObserver(() => {
+        if (disposed) return;
+        resize();
+        if (!willLoop) render();
+      });
+      resizeObserver.observe(canvas);
     } else {
-      window.addEventListener('resize', () => { resize(); if (!willLoop) render(); });
+      resizeListener = () => {
+        if (disposed) return;
+        resize();
+        if (!willLoop) render();
+      };
+      window.addEventListener('resize', resizeListener);
     }
 
     // Video-specific: handle autoplay + gesture + visibility.
     if (video && !src.element) {
-      const startPlayback = () => video.play().catch(() => {});
+      const startPlayback = () => {
+        if (disposed) return;
+        video.play().catch(() => {});
+      };
       if (!reducedMotion) {
         startPlayback();
-        document.addEventListener('pointerdown', startPlayback, { once: true });
-        document.addEventListener('visibilitychange', () => {
+        const onPointerDown = () => startPlayback();
+        const onVisibility = () => {
           if (document.visibilityState === 'visible') startPlayback();
-        });
+        };
+        document.addEventListener('pointerdown', onPointerDown, { once: true });
+        document.addEventListener('visibilitychange', onVisibility);
+        docListeners.push(['pointerdown', onPointerDown]);
+        docListeners.push(['visibilitychange', onVisibility]);
       } else {
         // Render the halftone of the first frame once and stop.
         video.addEventListener('loadeddata', render, { once: true });
       }
     }
 
-    // Animated path: RAF loop.
+    // Animated path: RAF loop. Captures rafId so destroy() can cancel it.
     if (willLoop) {
       (function tick() {
+        if (disposed) return;
         resize();
         render();
-        requestAnimationFrame(tick);
+        rafId = requestAnimationFrame(tick);
       })();
     }
 
@@ -382,6 +411,23 @@ void main(){
       video,
       image,
       destroy() {
+        disposed = true;
+        if (rafId) {
+          try { cancelAnimationFrame(rafId); } catch (_) {}
+          rafId = 0;
+        }
+        if (resizeObserver) {
+          try { resizeObserver.disconnect(); } catch (_) {}
+          resizeObserver = null;
+        }
+        if (resizeListener) {
+          try { window.removeEventListener('resize', resizeListener); } catch (_) {}
+          resizeListener = null;
+        }
+        while (docListeners.length) {
+          const [type, fn] = docListeners.pop();
+          try { document.removeEventListener(type, fn); } catch (_) {}
+        }
         try { gl.deleteProgram(prog); } catch (_) {}
         try { gl.deleteBuffer(buf); } catch (_) {}
         try { gl.deleteTexture(tex); } catch (_) {}
