@@ -115,6 +115,33 @@ Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-R
 
 (`AGENTS.md` already exists at the repo root — house rules + session protocol — and is the universal AI agent doc convention.)
 
+### F5.5 — Critical-review follow-ups (post-F5 hygiene + cleanup)
+
+Source: `notes/CR-RENOVERSE-Claude-Critical-overall-20260509-1806.md`. Four PRs grouped by theme.
+
+#### Hygiene PR — mount-guards, breakpoint, dead CSS, token gaps
+
+- [ ] **Mount-guard sweep — full unabbreviated names.** Per the PR #31 convention, four components needed fixes: `testimonial-card`, `product-features-cards-2x2`, `product-features-card-3x1` had a generic `data-mounted='1'` (collision-prone — global attribute name); `product-features-animation` had no guard at all. All four now use `data-<component-name>-mounted='1'`.
+- [ ] **`site-nav` JS/CSS breakpoint reconciliation.** `MOBILE_MAX = 880` in `index.js` was stale post-PR #44 (CSS `@media` already at 820). Real UX bug between 821–880px: hamburger toggle hidden by CSS but JS still treated layout as mobile, and the menu auto-close listened on `(min-width: 881px)` so a sheet opened sub-820 wouldn't close on resize. Constant + comment now match the CSS at 820.
+- [ ] **`site-nav` dead-CSS removal.** `.dropdown`, `.dropdown-menu`, `.dt` rules were ~50 lines of dead weight — the JS template renders no dropdowns. All dropdown selectors removed; surviving rules cleaned of stray `.dt` references.
+- [ ] **`tokens.css` `--nav-height` annotation.** Dropped the `(Phase 1)` parenthetical — sticky nav shipped in PR #44.
+- [ ] **`product-features-animation` stale comment.** "≤860px" callout at the responsive media query updated to "≤820px" to match the actual rule (already at 820 since PR #44).
+- [ ] **`button.css` token gaps from F4 sweep.** F4 token-only sweep didn't include `button.css`; two `background: #fff` literals (`.btn--white` rest, `.btn--filled` hover) swapped to `var(--white, #fff)`. The remaining `#fff` are sanctioned text-on-dark-surface uses per STYLE_GUIDE Part III.
+- [ ] **`site-footer__legal` font-size literal.** `12px` → `var(--fs-small, 12.5px)` to align with the type-scale token.
+
+#### Cards unification PR — collapse cards-2x2 + card-3x1 into one parameterized component
+
+- [ ] Per AGENTS.md house rule "match X = same primitive parameterized": `product-features-cards-2x2` and `product-features-card-3x1` are 95% the same component. Unifying into one `product-features-cards` with `data-cols`, optional `data-heading`, optional `data-cta-href`/`data-cta-label`. Replaces both mount points in `index.html` + `solutions.html`.
+
+#### Tailwind drop PR — remove Play CDN from demo
+
+- [ ] Per Tailwind's own production guidance, the Play CDN doesn't belong on `demo.html`. Inlining the demo-form's actual utility-class set as plain CSS in `demo-form/index.css` and removing both the `<script src="https://cdn.tailwindcss.com...">` from `demo.html` and the auto-injection in `demo-form/index.js`. Removes one external CDN dependency, kills the in-browser JIT layout flash, eliminates the triple-token-duplication (tokens.css ↔ demo.html `<head>` ↔ demo-form/index.js Tailwind config).
+
+#### STYLE_GUIDE.md surgical pass + AGENTS.md contract wording
+
+- [ ] **STYLE_GUIDE.md broken refs.** The guide currently confidently references several components and CSS classes that no longer exist: `shared/components/icp-carousel/` (deleted PR #21), `shared/components/feature-highlights/` (never created post-rename), `PLAN.md` (doesn't exist), `.ty-card` / `.testimonial-section` / `.cta` / `.stats` / `.typology .closer` / `.paper-zone` (none on any current page). Surgical pass: replace dead refs with current components, update the reference compositions table, strike the stale drift items at the top + bottom (`#main` skip-link, sticky-nav, token references already shipped; newsletter `<label for>` already shipped in F2). Keep recipe voice/structure intact — full restructure is deferred to the operator's new design-parameters method.
+- [ ] **`AGENTS.md` contract wording.** Line 7 currently claims "Every component ships `index.css` + `index.js` + `README.md` + `test.html`." Three components have an operator-confirmed waiver (`halftone-video`, `site-footer`, `site-nav`). Rewording to match `README.md`'s "for most" hedge + add an explicit waiver note.
+
 ---
 
 ## Deferred (post-launch)

@@ -1336,7 +1336,7 @@
     .stack-section .panel:not(.panel--cal) { opacity: 0; }
   }
 
-  /* ≤860px: keep the GSAP converge animation (sources fanning in to form
+  /* ≤820px: keep the GSAP converge animation (sources fanning in to form
      the Renoverse dashboard — the "many tools to one workspace" beat),
      but hide the orbital callouts. The callouts are positioned with
      desktop offsets (e.g. calc(50% - 460px)) and overflow the viewport

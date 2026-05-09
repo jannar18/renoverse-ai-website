@@ -96,5 +96,5 @@
   --gutter:    clamp(20px, 4vw, 56px);       /* page side-padding */
   --section-y: clamp(72px, 9vw, 112px);      /* default vertical section padding */
   --section-y-tight: clamp(48px, 6vw, 80px); /* condensed sections (intro, stats) */
-  --nav-height: 72px;                        /* sticky-nav offset (Phase 1) */
+  --nav-height: 72px;                        /* sticky-nav offset */
 }
