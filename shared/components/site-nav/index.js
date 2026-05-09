@@ -21,9 +21,9 @@
   // to the frosted state. Small enough that the change registers as
   // soon as they leave the hero landing position.
   const SCROLL_THRESHOLD = 50;
-  // Mobile breakpoint — mirrors the CSS @media (max-width: 880px) rule
+  // Mobile breakpoint — mirrors the CSS @media (max-width: 820px) rule
   // that hides .nav-links and shows the hamburger toggle.
-  const MOBILE_MAX = 880;
+  const MOBILE_MAX = 820;
 
   const TICKS = '<span class="tk tl"></span><span class="tk tr"></span><span class="tk br"></span><span class="tk bl"></span>';
 

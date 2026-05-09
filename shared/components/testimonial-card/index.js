@@ -91,8 +91,8 @@
   }
 
   function mount(host) {
-    if (host.dataset.mounted === '1') return;
-    host.dataset.mounted = '1';
+    if (host.dataset.testimonialCardMounted === '1') return;
+    host.dataset.testimonialCardMounted = '1';
     host.innerHTML = buildMarkup(host);
   }
 

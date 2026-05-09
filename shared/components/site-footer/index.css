@@ -253,7 +253,7 @@ footer.site-footer{
   gap: 22px;
   justify-content: flex-end;
   font-family: "Poppins", system-ui, sans-serif;
-  font-size: 12px;
+  font-size: var(--fs-small, 12.5px);
   line-height: 1.4;
 }
 .site-footer__legal a{
