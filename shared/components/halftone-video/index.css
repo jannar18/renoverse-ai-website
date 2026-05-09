@@ -18,3 +18,18 @@
   width:100%;
   height:100%;
 }
+
+/* Fallback when WebGL2 is unavailable (`halftone-shader.js` returns
+   null and hides its canvas). The component-side JS adds the
+   `halftone-video--fallback` class on the host so we can promote the
+   raw video to fill the hero in place of the shader output. The
+   user gets the project video at full size — no brand halftone, but
+   no blank surface either. */
+[data-halftone-video].halftone-video--fallback > video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:1;
+  object-fit:cover;
+}
