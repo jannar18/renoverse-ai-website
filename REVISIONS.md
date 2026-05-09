@@ -117,30 +117,47 @@ Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-R
 
 ### F5.5 — Critical-review follow-ups (post-F5 hygiene + cleanup)
 
-Source: `notes/CR-RENOVERSE-Claude-Critical-overall-20260509-1806.md`. Four PRs grouped by theme.
+Source: `notes/CR-RENOVERSE-Claude-Critical-overall-20260509-1806.md`. Six PRs grouped by theme — all merged 2026-05-09.
 
 #### Hygiene PR — mount-guards, breakpoint, dead CSS, token gaps
 
-- [ ] **Mount-guard sweep — full unabbreviated names.** Per the PR #31 convention, four components needed fixes: `testimonial-card`, `product-features-cards-2x2`, `product-features-card-3x1` had a generic `data-mounted='1'` (collision-prone — global attribute name); `product-features-animation` had no guard at all. All four now use `data-<component-name>-mounted='1'`.
-- [ ] **`site-nav` JS/CSS breakpoint reconciliation.** `MOBILE_MAX = 880` in `index.js` was stale post-PR #44 (CSS `@media` already at 820). Real UX bug between 821–880px: hamburger toggle hidden by CSS but JS still treated layout as mobile, and the menu auto-close listened on `(min-width: 881px)` so a sheet opened sub-820 wouldn't close on resize. Constant + comment now match the CSS at 820.
-- [ ] **`site-nav` dead-CSS removal.** `.dropdown`, `.dropdown-menu`, `.dt` rules were ~50 lines of dead weight — the JS template renders no dropdowns. All dropdown selectors removed; surviving rules cleaned of stray `.dt` references.
-- [ ] **`tokens.css` `--nav-height` annotation.** Dropped the `(Phase 1)` parenthetical — sticky nav shipped in PR #44.
-- [ ] **`product-features-animation` stale comment.** "≤860px" callout at the responsive media query updated to "≤820px" to match the actual rule (already at 820 since PR #44).
-- [ ] **`button.css` token gaps from F4 sweep.** F4 token-only sweep didn't include `button.css`; two `background: #fff` literals (`.btn--white` rest, `.btn--filled` hover) swapped to `var(--white, #fff)`. The remaining `#fff` are sanctioned text-on-dark-surface uses per STYLE_GUIDE Part III.
-- [ ] **`site-footer__legal` font-size literal.** `12px` → `var(--fs-small, 12.5px)` to align with the type-scale token.
+- [x] **Mount-guard sweep — full unabbreviated names.** (PR #48) Per the PR #31 convention, four components needed fixes: `testimonial-card`, `product-features-cards-2x2`, `product-features-card-3x1` had a generic `data-mounted='1'` (collision-prone — global attribute name); `product-features-animation` had no guard at all. All four now use `data-<component-name>-mounted='1'`. (cards-2x2 + card-3x1 subsequently retired in PR #49.)
+- [x] **`site-nav` JS/CSS breakpoint reconciliation.** (PR #48) `MOBILE_MAX = 880` in `index.js` was stale post-PR #44 (CSS `@media` already at 820). Real UX bug between 821–880px: hamburger toggle hidden by CSS but JS still treated layout as mobile, and the menu auto-close listened on `(min-width: 881px)` so a sheet opened sub-820 wouldn't close on resize. Constant + comment now match the CSS at 820.
+- [x] **`site-nav` dead-CSS removal.** (PR #48) `.dropdown`, `.dropdown-menu`, `.dt` rules were ~50 lines of dead weight — the JS template renders no dropdowns. All dropdown selectors removed; surviving rules cleaned of stray `.dt` references.
+- [x] **`tokens.css` `--nav-height` annotation.** (PR #48) Dropped the `(Phase 1)` parenthetical — sticky nav shipped in PR #44.
+- [x] **`product-features-animation` stale comment.** (PR #48) "≤860px" callout at the responsive media query updated to "≤820px" to match the actual rule (already at 820 since PR #44).
+- [x] **`button.css` token gaps from F4 sweep.** (PR #48) F4 token-only sweep didn't include `button.css`; two `background: #fff` literals (`.btn--white` rest, `.btn--filled` hover) swapped to `var(--white, #fff)`. The remaining `#fff` are sanctioned text-on-dark-surface uses per STYLE_GUIDE Part III.
+- [x] **`site-footer__legal` font-size literal.** (PR #48) `12px` → `var(--fs-small, 12.5px)` to align with the type-scale token.
 
 #### Cards unification PR — collapse cards-2x2 + card-3x1 into one parameterized component
 
-- [ ] Per AGENTS.md house rule "match X = same primitive parameterized": `product-features-cards-2x2` and `product-features-card-3x1` are 95% the same component. Unifying into one `product-features-cards` with `data-cols`, optional `data-heading`, optional `data-cta-href`/`data-cta-label`. Replaces both mount points in `index.html` + `solutions.html`.
+- [x] **Cards unification.** (PR #49) Per AGENTS.md house rule "match X = same primitive parameterized": `product-features-cards-2x2` and `product-features-card-3x1` were 95% the same component. Unified into one `product-features-cards` with `data-cols="2|3"` keying off two visual presets — compact (homepage 2×2, drop-shadow, 3:1 cropped image strip, Small-body register) vs breathing (Solutions 3-up, flat cream card, natural-aspect image, full Body register). Optional `data-heading` and `data-cta-href`/`data-cta-label`. Both old directories deleted; both mount points in `index.html` + `solutions.html` updated. Net −198 LOC.
 
 #### Tailwind drop PR — remove Play CDN from demo
 
-- [ ] Per Tailwind's own production guidance, the Play CDN doesn't belong on `demo.html`. Inlining the demo-form's actual utility-class set as plain CSS in `demo-form/index.css` and removing both the `<script src="https://cdn.tailwindcss.com...">` from `demo.html` and the auto-injection in `demo-form/index.js`. Removes one external CDN dependency, kills the in-browser JIT layout flash, eliminates the triple-token-duplication (tokens.css ↔ demo.html `<head>` ↔ demo-form/index.js Tailwind config).
+- [x] **Tailwind drop.** (PR #50) Per Tailwind's own production guidance, the Play CDN didn't belong on `demo.html`. Refactored `demo-form` to plain CSS using BEM-scoped class names under `.demo-form__*`. Visual recipe (colors, spacing, focus rings, hover states, error styling) preserved exactly. Removed `cdn.tailwindcss.com` script tag + inline `window.tailwind.config` block from `demo.html`, plus `TW_CDN`/`TW_CONFIG`/`ensureTailwind()` from `demo-form/index.js`. Eliminates one runtime CDN dependency, the in-browser JIT layout flash, and the triple-token duplication (tokens.css ↔ demo.html ↔ demo-form/index.js). Side fix: `demo.html` font URL standardized to include the Poppins italic axis (was `wght@300;...;700` only).
 
-#### STYLE_GUIDE.md surgical pass + AGENTS.md contract wording
+#### Robustness PR — shader cleanup, honeypot ordering, wave palette note
 
-- [ ] **STYLE_GUIDE.md broken refs.** The guide currently confidently references several components and CSS classes that no longer exist: `shared/components/icp-carousel/` (deleted PR #21), `shared/components/feature-highlights/` (never created post-rename), `PLAN.md` (doesn't exist), `.ty-card` / `.testimonial-section` / `.cta` / `.stats` / `.typology .closer` / `.paper-zone` (none on any current page). Surgical pass: replace dead refs with current components, update the reference compositions table, strike the stale drift items at the top + bottom (`#main` skip-link, sticky-nav, token references already shipped; newsletter `<label for>` already shipped in F2). Keep recipe voice/structure intact — full restructure is deferred to the operator's new design-parameters method.
-- [ ] **`AGENTS.md` contract wording.** Line 7 currently claims "Every component ships `index.css` + `index.js` + `README.md` + `test.html`." Three components have an operator-confirmed waiver (`halftone-video`, `site-footer`, `site-nav`). Rewording to match `README.md`'s "for most" hedge + add an explicit waiver note.
+- [x] **Halftone shader `destroy()` actually cleans up.** (PR #52) Previously `destroy()` deleted the WebGL program but the RAF loop kept rendering against the deleted program, and the document-level `pointerdown`/`visibilitychange` listeners attached for video playback were never removed. Latent today (no consumer calls destroy), but a future remount cycle would emit WebGL errors and leak listeners. Now: a `disposed` flag short-circuits the RAF tick, the `ResizeObserver`/window resize listener is disconnected, every document-level listener tracked at attach time is removed, and the GL resources are deleted.
+- [x] **Demo-form mount signal + honeypot listens for it.** (PR #52) `demo.html`'s honeypot injection used to depend on script-tag ordering (querying for the form on `DOMContentLoaded`, silently no-op if not yet mounted). `demo-form` now dispatches a bubbling `demo-form:mounted` `CustomEvent`; honeypot listens for that event with a defensive late-injection fallback on `DOMContentLoaded`.
+- [x] **Wave-gradient hexes documented as sanctioned exception.** (PR #52) `site-footer/index.js` used three hardcoded hexes (`#777EDD`/`#5CC1AB`/`#D5FFFA`) without a note explaining why they bypassed `AGENTS.md` "Tokens only" / `STYLE_GUIDE` Part III "Palette is closed." Inline comment added explaining the contrasting-triad rationale (the brand ramp sits in the cool-blue half of the wheel and would muddy in the wave shader); scoped to this single shader call site.
+
+#### Docs PR — STYLE_GUIDE.md surgical pass + AGENTS.md contract wording
+
+- [x] **STYLE_GUIDE.md broken refs.** (PR #51) The guide had been confidently pointing contributors at components and CSS classes that no longer exist: `shared/components/icp-carousel/` (deleted PR #21), `shared/components/feature-highlights/` (never created post-rename), `PLAN.md` (doesn't exist), `.ty-card` / `.testimonial-section` / `.cta` / `.stats` / `.typology .closer` / `.paper-zone` (none on any current page). Surgical pass: replaced dead refs with current components (`product-features-primary`, `product-features-cards`, `testimonial-card`), updated the reference compositions table, replaced the stale "current state vs intended state" drift table with a one-paragraph "cleanup arc has shipped" summary, dropped stale `(Phase N target)` annotations. Recipes/voice/structure preserved — full restructure deferred to the operator's upcoming new design-parameters method.
+- [x] **`AGENTS.md` contract wording.** (PR #51) Line 7 wording: "Every component ships..." → "Most components ship..." with explicit waiver for `halftone-video` / `site-footer` / `site-nav` per the operator-confirmed PR #31 decision. Aligns with `README.md` ("for most"). End-of-session "Component changes" rule got an explicit `Waiver` bullet so future sessions don't reflexively backfill `README.md` / `test.html` on a touch.
+
+#### Hero fallback PR — WebGL2-unavailable degrade
+
+- [x] **Hero shows raw video when WebGL2 unavailable.** (PR #53) Previously, browsers without WebGL2 (older Safari, locked-down enterprise Chrome/Edge, WebGL disabled) saw a blank white hero — `halftone-shader.js` returned null and hid the canvas, but the consumer didn't override anything, leaving the video element at its hidden 1×1 footprint. Now: `halftone-video` captures the `attach()` return; if null, adds a `halftone-video--fallback` class on the host, and CSS swaps the existing `<video>` element to fill the host (`position:absolute; inset:0; width:100%; height:100%; object-fit:cover`). Users get the project video at full size — no brand halftone overlay, but a meaningful degrade rather than a blank surface. Reduced-motion + fallback combo: video pauses on `loadeddata` so reduce-motion users get a still first frame.
+
+#### Deferred from the same review
+
+These remain on the backlog; intentionally not addressed in F5.5.
+
+- [ ] **SRI on CDN scripts** (Critical review Potential #10). Manual hash maintenance on every dep upgrade isn't worth it on a static GitHub Pages site without a build pipeline. Worth revisiting at F6 cutover.
+- [ ] **`product-features-animation` `.stack-*` class prefix rename** (Critical review Potential #15). Operator-grandfathered per PR #31 ("stays until next touch, not worth churn"). The component was renamed from `stack-animation` but its internal CSS class names (`.stack-section`, `.stack-stage`, `.stack-scene`, `.stack-section__pin-tail`) still use the old prefix.
 
 ---
 
