@@ -20,7 +20,7 @@
   /* Scoped fallbacks — used by the background layers and iti reskin
      so the component looks correct even if the host page hasn't
      loaded shared/tokens.css. */
-  --df-ink: var(--ink, #0B1A2B);
+  --df-ink: var(--ink, #0a0a0a);
   --df-cream: var(--cream, #F2EBD8);
   --df-ice: var(--ice, #E5F4F1);
   --df-aqua: var(--aqua, #5EC9B7);

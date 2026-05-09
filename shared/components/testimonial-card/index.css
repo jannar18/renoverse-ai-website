@@ -22,7 +22,7 @@
 
 .testimonial-card {
   position: relative;
-  color: #fff;
+  color: var(--white);
   border-radius: 14px;
   overflow: hidden;
   isolation: isolate;
@@ -64,7 +64,7 @@
   font-style: normal;
   font-size: clamp(96px, 12vw, 160px);
   line-height: .8;
-  color: #fff;
+  color: var(--white);
   user-select: none;
 }
 
@@ -80,7 +80,7 @@
   font-size: clamp(22px, 2.4vw, 32px);
   line-height: 1.35;
   letter-spacing: var(--ls-display);
-  color: #fff;
+  color: var(--white);
   max-width: 60ch;
 }
 
@@ -156,7 +156,7 @@
   font-weight: 600;
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  color: #fff;
+  color: var(--white);
 }
 
 /* Role / Company lines — Small role on dark surface. */
@@ -166,7 +166,7 @@
   font-weight: 400;
   font-size: var(--fs-small);
   line-height: var(--lh-small);
-  color: #fff;
+  color: var(--white);
 }
 
 /* Tablet → phone — collapse to a single column so the open-quote

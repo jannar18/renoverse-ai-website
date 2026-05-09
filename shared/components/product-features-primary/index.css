@@ -20,7 +20,7 @@
   isolation: isolate;
   font-family: var(--font-sans);
   color: var(--ink);
-  background: #fff;
+  background: var(--white);
 }
 
 /* Unified gradient strip + halftone + shader — all three sit at the section
@@ -217,7 +217,7 @@
   max-width: 720px;
   border-radius: 12px;
   overflow: hidden;
-  background: #fff;
+  background: var(--white);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, .12),
     0 40px 100px -30px rgba(0, 0, 0, .55);
@@ -229,7 +229,7 @@
   max-height: clamp(380px, 60vh, 640px);
   height: auto;
   width: auto;
-  background: #fff;
+  background: var(--white);
 }
 
 /* Placeholder media frame — keep the frame's rounded corners + shadow so the
@@ -309,7 +309,7 @@
   justify-content: center;
   flex-shrink: 0;
 }
-.product-features-primary__cta-arrow svg { width: 12px; height: 12px; stroke: #fff; }
+.product-features-primary__cta-arrow svg { width: 12px; height: 12px; stroke: var(--white); }
 
 /* ---------- responsive ---------- */
 
