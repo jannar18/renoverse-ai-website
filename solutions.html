@@ -39,7 +39,7 @@
 <link rel="stylesheet" href="shared/button.css">
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/product-features-primary/index.css">
-<link rel="stylesheet" href="shared/components/product-features-card-3x1/index.css">
+<link rel="stylesheet" href="shared/components/product-features-cards/index.css">
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
 <style>
   *{box-sizing:border-box}
@@ -184,11 +184,12 @@
        ]'></div>
 
   <!-- ========== ADDITIONAL CAPABILITIES (3-up) ==========
-       The "4 main, 3 additional" hierarchy beat. Same product-features-card
+       The "4 main, 3 additional" hierarchy beat. Same product-features-cards
        primitive as the homepage 2x2, mounted with cols=3 + a heading slot
        + no CTA (Solutions IS the destination — a self-loop CTA would be
        redundant). The 3 cards reuse the existing pillar-* assets. -->
-  <div data-product-features-card-3x1
+  <div data-product-features-cards
+       data-cols="3"
        data-heading="And the rest comes built-in."
        data-items='[
          {
@@ -221,7 +222,7 @@
 <script src="shared/components/site-nav/index.js"></script>
 <script src="shared/halftone-shader.js"></script>
 <script src="shared/components/product-features-primary/index.js"></script>
-<script src="shared/components/product-features-card-3x1/index.js"></script>
+<script src="shared/components/product-features-cards/index.js"></script>
 
 <script type="importmap">
 {

@@ -40,7 +40,7 @@
 <link rel="stylesheet" href="shared/components/site-nav/index.css">
 <link rel="stylesheet" href="shared/components/product-features-animation/index.css">
 <link rel="stylesheet" href="shared/components/halftone-video/index.css">
-<link rel="stylesheet" href="shared/components/product-features-cards-2x2/index.css">
+<link rel="stylesheet" href="shared/components/product-features-cards/index.css">
 <link rel="stylesheet" href="shared/components/testimonial-card/index.css">
 <link rel="stylesheet" href="shared/components/team-section/index.css">
 <link rel="stylesheet" href="shared/components/site-footer/index.css">
@@ -242,18 +242,19 @@
 
 <!-- ========== PRODUCT FEATURES (2x2 card grid) ==========
      H2 is centered above the grid as a single editorial sentence — the
-     STYLE_GUIDE-authorized exception for cards-2x2 section headings.
+     STYLE_GUIDE-authorized exception for the cards-2x2 section heading.
      Warm-paper bg covers both H2 and grid as one product-features narrative.
-     Four core features render as `product-features-cards-2x2` (homepage
-     teaser). The 3-up "rest comes built-in" beat on solutions.html uses the
-     sibling `product-features-card-3x1` with taller proportions. -->
+     Four core features render as `product-features-cards` in the
+     compact (data-cols=2) preset. The 3-up "rest comes built-in" beat
+     on solutions.html mounts the same component with data-cols=3. -->
 <section class="product-features-section">
   <div class="product-features-section__header">
     <div class="product-features-section__header-wrap">
       <h2>Built for firms managing complex processes and workflows.</h2>
     </div>
   </div>
-  <div data-product-features-cards-2x2
+  <div data-product-features-cards
+       data-cols="2"
        data-cta-href="solutions.html"
        data-cta-label="See all features"
        data-items='[
@@ -313,7 +314,7 @@
 <script src="shared/components/product-features-animation/index.js"></script>
 <script src="shared/halftone-shader.js"></script>
 <script src="shared/components/halftone-video/index.js"></script>
-<script src="shared/components/product-features-cards-2x2/index.js"></script>
+<script src="shared/components/product-features-cards/index.js"></script>
 <script src="shared/components/testimonial-card/index.js"></script>
 <script src="shared/components/team-section/index.js"></script>
 

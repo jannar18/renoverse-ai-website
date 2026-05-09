@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>product-features-cards-2x2 — test</title>
+<title>product-features-cards — test</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,12 +20,23 @@
   .host-paper-warm{
     background:radial-gradient(120% 80% at 50% 0%, var(--ice) 0%, var(--cream) 45%, var(--beige) 100%);
   }
+  .test-label{
+    font-family:var(--font-mono);
+    font-size:var(--fs-eyebrow);
+    letter-spacing:var(--xwide);
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:24px var(--gutter) 8px;
+  }
 </style>
 </head>
 <body>
 
+<!-- 2-col compact preset (homepage core capabilities) -->
+<p class="test-label">data-cols="2" — homepage compact preset</p>
 <div class="host-paper-warm">
-  <div data-product-features-cards-2x2
+  <div data-product-features-cards
+       data-cols="2"
        data-cta-href="#"
        data-cta-label="See all features"
        data-items='[
@@ -56,6 +67,32 @@
          }
        ]'></div>
 </div>
+
+<!-- 3-col breathing preset (Solutions "rest comes built-in") -->
+<p class="test-label">data-cols="3" — Solutions breathing preset</p>
+<div data-product-features-cards
+     data-cols="3"
+     data-heading="And the rest comes built-in."
+     data-items='[
+       {
+         "title": "Frictionless collaboration",
+         "body": "Consolidate communication in one unified workspace — so nothing gets lost across emails and texts.",
+         "image": "../../../assets/pillar-collaborators.png",
+         "alt": "Project collaborators panel"
+       },
+       {
+         "title": "Version control",
+         "body": "Manage design plan revisions so all stakeholders collaborate on the correct set.",
+         "image": "../../../assets/pillar-comments.png",
+         "alt": "Drawing v3 with anchored comments"
+       },
+       {
+         "title": "AI assistant",
+         "body": "Automate repetitive admin, query project info & town documents, and field homeowner questions.",
+         "image": "../../../assets/pillar-tasks.png",
+         "alt": "Ella AI activity summary"
+       }
+     ]'></div>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
