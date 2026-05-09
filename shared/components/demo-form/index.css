@@ -1,26 +1,23 @@
 /* Renoverse — Demo request form.
-   The component is built with Tailwind utility classes (loaded via the
-   Play CDN with the @tailwindcss/forms plugin); this stylesheet only
-   carries the few things utilities can't easily express:
+   Self-contained, no Tailwind dependency. Replaces the previous
+   Tailwind-Play-CDN approach with plain CSS so the demo page works
+   without a runtime JIT compile (and so changing brand tokens means
+   editing one place — shared/tokens.css — instead of three).
 
-     1. Layered halftone-paper background treatment (.demo-form__bg*)
-     2. The demo-form root's positioning + scoped CSS-var fallback for
-        hosts that don't render Tailwind
-     3. The intl-tel-input reskin so the phone widget matches the
-        Tailwind form aesthetic
+   Layout:
+     [data-demo-form] is the host. CSS targets the inner classes the
+     component injects via index.js. BEM under .demo-form__* throughout.
 */
 
-/* Restore the [hidden] attribute as the source of truth — Tailwind's
-   `flex` / `grid` / `block` utilities otherwise override its
-   display:none. We apply it scoped so it can't bleed beyond the
-   component. */
+/* Restore the [hidden] attribute as the source of truth — scoped so it
+   can't bleed beyond the component. */
 .demo-form [hidden] { display: none !important; }
 
 .demo-form {
-  /* Scoped fallbacks — used by the background layers and iti reskin
-     so the component looks correct even if the host page hasn't
-     loaded shared/tokens.css. */
+  /* Scoped fallbacks — the component renders correctly even if the host
+     page hasn't loaded shared/tokens.css. */
   --df-ink: var(--ink, #0a0a0a);
+  --df-ink-soft: var(--ink-soft, #3a3a3a);
   --df-cream: var(--cream, #F2EBD8);
   --df-ice: var(--ice, #E5F4F1);
   --df-aqua: var(--aqua, #5EC9B7);
@@ -28,16 +25,28 @@
   --df-teal: var(--teal, #2D6F75);
   --df-cool-blue: var(--cool-blue, #5BA7C9);
   --df-line: var(--line, rgba(0,0,0,.10));
+  --df-white: var(--white, #ffffff);
+
+  /* Error colors — kept local; not part of the brand palette. The form's
+     invalid/notice states need a recognizable red, but the palette is
+     closed (per STYLE_GUIDE Part III) so these are scoped to the form. */
+  --df-error: #f43f5e;        /* rose-500 — invalid ring */
+  --df-error-text: #e11d48;   /* rose-600 — hint text */
+  --df-error-fg: #be123c;     /* rose-700 — notice text */
+  --df-error-bg: #fff1f2;     /* rose-50  — notice bg */
+  --df-error-border: #fecdd3; /* rose-200 — notice border */
+
+  /* shadow-card recipe lifted from the previous Tailwind theme extend. */
+  --df-shadow-card:
+    0 30px 60px -30px rgba(11,26,43,.18),
+    0 8px 20px -10px rgba(11,26,43,.08);
 
   position: relative;
   display: block;
   isolation: isolate;
   /* Top padding floors at 96px (= --nav-height 72px + ~24px breathing
-     room) so the eyebrow/H1/checklist sit cleanly below the fixed nav
-     at all widths. Previous 56px floor caused the third checklist
-     bullet to wedge against the nav baseline at narrow widths during
-     scroll. Bottom keeps the original 56–128px clamp — no nav
-     clearance needed under the form. */
+     room) so the eyebrow / H1 / checklist sit cleanly below the fixed
+     nav at all widths. Bottom keeps the original 56–128px clamp. */
   padding: clamp(96px, 9vw, 128px) clamp(20px, 4vw, 56px) clamp(56px, 9vw, 128px);
   font-family: var(--font-sans);
   font-weight: 400;
@@ -45,12 +54,14 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Background treatment ---------- */
+/* ---------- Background treatment (unchanged from prior version) ---- */
 
-/* Canonical radial backdrop — `--grad-ice-cream-beige`. Fallback inlines
-   the same recipe with hex literals so the component renders correctly
-   on hosts that don't load shared/tokens.css. */
 .demo-form__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
   background: var(--grad-ice-cream-beige,
     radial-gradient(120% 80% at 50% 0%,
       #E5F4F1 0%,
@@ -103,9 +114,389 @@
   background: radial-gradient(circle, rgba(91,167,201,.45), transparent 65%);
 }
 
+/* ---------- Layout: 12-col grid (5+7), stacks at <1024px ---------- */
+
+.demo-form__layout {
+  position: relative;
+  margin: 0 auto;
+  max-width: 80rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .demo-form__layout {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 64px;
+  }
+}
+
+/* ---------- Aside (left column: eyebrow + H1 + lead + checklist) --- */
+
+.demo-form__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .demo-form__aside {
+    grid-column: span 5;
+    position: sticky;
+    top: 96px;
+  }
+}
+
+.demo-form__eyebrow {
+  margin: 0;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-weight: 500;
+  font-size: clamp(13px, 1vw, 15px);
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--df-teal);
+}
+
+.demo-form__title {
+  margin: 0;
+  font-family: var(--font-serif, 'Cormorant Garamond', Georgia, serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(44px, 5.6vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--df-ink);
+}
+
+.demo-form__lead {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.625;
+  color: var(--df-ink-soft);
+}
+
+.demo-form__checklist {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.demo-form__checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.375;
+  color: var(--df-ink);
+}
+
+.demo-form__check {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--df-teal);
+  color: var(--df-white);
+}
+
+.demo-form__check svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Form section (right column: card with form + success) -- */
+
+.demo-form__form-section {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .demo-form__form-section {
+    grid-column: span 7;
+  }
+}
+
+.demo-form__card {
+  border-radius: 24px;
+  background: var(--df-white);
+  box-shadow:
+    inset 0 0 0 1px var(--df-line),
+    var(--df-shadow-card);
+  padding: 24px;
+}
+
+@media (min-width: 640px) {
+  .demo-form__card { padding: 40px; }
+}
+
+/* Inline error banner above the form when validation fails on submit. */
+.demo-form__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--df-error-bg);
+  color: var(--df-error-fg);
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: inset 0 0 0 1px var(--df-error-border);
+}
+
+.demo-form__notice-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--df-error);
+}
+
+/* ---------- The form itself ---------- */
+
+.demo-form__form {
+  display: grid;
+  gap: 28px;
+}
+
+/* Section legend ("Firm address") — same eyebrow voice as the aside. */
+.demo-form__legend {
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--df-teal);
+  padding: 0;
+  margin: 0;
+  /* legend in a fieldset.contents — display:contents removes default
+     spacing from fieldset; legend inherits from its grid context. */
+}
+
+/* Pull the firm-address field grid up against the legend so they read
+   as a labeled block. */
+.demo-form__field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.demo-form__field-grid--inset { margin-top: -12px; }
+
+/* Each field — span 1 by default, span 2 via modifier. */
+.demo-form__field {
+  min-width: 0;
+  grid-column: span 2;
+}
+@media (min-width: 640px) {
+  .demo-form__field { grid-column: span 1; }
+  .demo-form__field--span2 { grid-column: span 2; }
+}
+/* Phone field is always span 2 (parent .demo-form__field-grid is fine
+   with this — no breakpoint override needed). */
+.demo-form__field--full { grid-column: span 2; }
+
+.demo-form__label {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--df-ink);
+}
+
+.demo-form__req {
+  color: var(--df-teal);
+}
+
+/* Input + select share the same shell. The pin-style focus ring is an
+   inset 2px box-shadow in --df-teal (matches Tailwind's
+   focus:ring-inset focus:ring-teal). Invalid is the same shell with a
+   1px rose ring; on focus, 2px rose. */
+.demo-form__input,
+.demo-form__select {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--df-white);
+  color: var(--df-ink);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  box-shadow: inset 0 0 0 1px var(--df-line);
+  transition: box-shadow .15s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.demo-form__input::placeholder {
+  color: rgba(10, 10, 10, .35);
+}
+
+.demo-form__input:focus,
+.demo-form__select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--df-teal);
+}
+
+.demo-form__input[aria-invalid="true"],
+.demo-form__select[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--df-error);
+}
+.demo-form__input[aria-invalid="true"]:focus,
+.demo-form__select[aria-invalid="true"]:focus {
+  box-shadow: inset 0 0 0 2px var(--df-error);
+}
+
+.demo-form__select {
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.demo-form__select-wrap {
+  position: relative;
+  margin-top: 6px;
+}
+
+/* The chevron is rendered as an absolutely-positioned svg inside
+   .demo-form__select-wrap. Inputs get no margin-top inside the wrap
+   because the wrap already handles spacing. */
+.demo-form__select-wrap > .demo-form__select { margin-top: 0; }
+
+.demo-form__select-chevron {
+  position: absolute;
+  inset-block: 0;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: var(--df-ink);
+}
+.demo-form__select-chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Hint line below an input. Hidden by default; surfaced when JS sets
+   data-error or shows a tip. */
+.demo-form__hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.375;
+  color: var(--df-ink-soft);
+}
+.demo-form__hint[data-error="true"] {
+  color: var(--df-error-text);
+}
+
+/* ---------- Form footer (submit + privacy) ---------- */
+
+.demo-form__form-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+/* In-card .btn--filled visual recipe — teal rect, white text, mono
+   uppercase, no corner ticks. Per STYLE_GUIDE Part II "in-card
+   variant" the form button matches .btn--filled exactly. Hover swaps
+   to white fill + teal text. Focus-visible adds a 4px teal/40 ring. */
+.demo-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--df-teal);
+  background: var(--df-teal);
+  color: var(--df-white);
+  padding: 9px 22px;
+  font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+.demo-form__submit:hover {
+  background: var(--df-white);
+  color: var(--df-teal);
+}
+.demo-form__submit:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(45, 111, 117, 0.4);
+}
+
+.demo-form__privacy {
+  margin: 0 0 0 auto;
+  max-width: 260px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: right;
+  color: var(--df-ink-soft);
+}
+.demo-form__privacy a {
+  color: var(--df-teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- Success state (replaces the form on submit) ---------- */
+
+.demo-form__success {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: 8px 4px;
+}
+
+.demo-form__success-check {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--df-teal);
+  color: var(--df-white);
+}
+.demo-form__success-check svg {
+  width: 20px;
+  height: 20px;
+}
+
+.demo-form__success-title {
+  margin: 0;
+  font-family: var(--font-serif, 'Cormorant Garamond', Georgia, serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  color: var(--df-ink);
+}
+
+.demo-form__success-body {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 15px;
+  line-height: 1.625;
+  color: var(--df-ink-soft);
+}
+
 /* ---------- intl-tel-input reskin ----------
-   Matches the Tailwind input look: rounded-lg corners, ring-line
-   border, ice-tinted dial-code chunk, focus ring in teal. */
+   Matches the form input look: rounded-lg corners, line-token border,
+   ice-tinted dial-code chunk, focus ring in teal. */
 
 .demo-form .iti {
   width: 100%;
@@ -154,4 +545,18 @@
   border: 0;
   border-bottom: 1px solid var(--df-line);
   padding: 10px 12px;
+}
+
+/* ---------- Visually-hidden helper (sr-only) ---------- */
+
+.demo-form .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
