@@ -106,7 +106,7 @@
    Mid aqua text on white was ~2:1 (AA fail); teal is ~5.5:1. */
 .btn--white{
   --tick: var(--teal, #2D6F75);
-  background: #fff;
+  background: var(--white, #fff);
   border-color: var(--teal, #2D6F75);
   color: var(--teal, #2D6F75);
 }
@@ -125,7 +125,7 @@
   color: #fff;
 }
 .btn--filled:hover{
-  background: #fff;
+  background: var(--white, #fff);
   border-color: var(--teal, #2D6F75);
   color: var(--teal, #2D6F75);
 }

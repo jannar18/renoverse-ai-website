@@ -1030,6 +1030,8 @@
 `;
 
   function mount(target) {
+    if (target.dataset.productFeaturesAnimationMounted === '1') return;
+    target.dataset.productFeaturesAnimationMounted = '1';
     target.innerHTML = MARKUP;
     /* prefers-reduced-motion: skip the GSAP timeline + ScrollTrigger pin
        entirely. CSS @media rules at the bottom of index.css collapse the

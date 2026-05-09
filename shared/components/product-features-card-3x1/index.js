@@ -112,8 +112,8 @@
   }
 
   function mount(host) {
-    if (host.dataset.mounted === '1') return;
-    host.dataset.mounted = '1';
+    if (host.dataset.productFeaturesCard3x1Mounted === '1') return;
+    host.dataset.productFeaturesCard3x1Mounted = '1';
     host.innerHTML = buildMarkup(readItems(host), readHeading(host));
     animate(host);
   }
