@@ -1335,3 +1335,30 @@
     .stack-section__pin-tail { display: none; }
     .stack-section .panel:not(.panel--cal) { opacity: 0; }
   }
+
+  /* ≤860px: keep the GSAP converge animation (sources fanning in to form
+     the Renoverse dashboard — the "many tools to one workspace" beat),
+     but hide the orbital callouts. The callouts are positioned with
+     desktop offsets (e.g. calc(50% - 460px)) and overflow the viewport
+     at tablet/phone widths; the converge itself works fine because the
+     stage clips overflow and the source panels just animate in from
+     offscreen positions.
+
+     Section height shortened from 200vh → 130vh because the desktop
+     runway was sized for the full converge + callout-pop-in payload
+     (~2 timeline units). With callouts hidden, only the converge beat
+     (~58% of the timeline) does visible work. 130vh keeps the converge
+     legible without too much trailing dead scroll while the dashboard
+     sits pinned.
+
+     Pin-tail stays at 100vh — DON'T shorten it. With pinSpacing:false
+     the pin-tail is the buffer that prevents the next section from
+     climbing into the viewport while the stage is still pinned. The
+     math: the next section enters the viewport at scroll = (section +
+     tail) - 100vh; the pin ends at scroll = section. Setting tail =
+     100vh makes those equal, so the pin releases exactly as the next
+     section starts entering. tail < 100vh causes visible underlap. */
+  @media (max-width: 860px) {
+    .stack-section { height: 130vh; }
+    .stack-section .callouts { display: none; }
+  }
