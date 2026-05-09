@@ -147,7 +147,7 @@
   }
   .stack-tail-intro__wrap p + p{margin-top:16px}
 
-  @media (max-width:860px){
+  @media (max-width:820px){
     .stack-tail-intro__wrap p{
       text-align:left;
       margin-left:0;
@@ -191,10 +191,10 @@
      `data-theme="paper"` makes the team-section own its paper-gradient
      surface + ink grain — no outer .paper-zone wrapper needed. */
 
-  /* ---------- responsive ---------- */
-  @media (max-width:960px){
-    .hero h1{font-size:48px}
-  }
+  /* ---------- responsive ----------
+     `--fs-h1: clamp(48px, 7vw, 96px)` already floors at 48px and provides
+     smooth fluid scaling — no page-level breakpoint override needed for
+     the homepage hero. */
 </style>
 </head>
 <body>

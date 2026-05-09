@@ -58,12 +58,17 @@
 }
 
 /* Frosted floating-bar state — also applied via data-mode="solid".
-   Matches .btn--frosted (cream-tinted glass + blur(6px)) so the nav
-   reads as the same material as the carousel "Learn more" button.
+   Same cream-tinted-glass + blur(6px) recipe as .btn--frosted, but
+   uses .btn--frosted's *hover*-state opacity (.16) at rest. Rationale:
+   the nav is always-engaged (it's persistent, interactive chrome),
+   whereas a button is only engaged on hover — so the always-on
+   variant should sit at the engaged opacity to maintain a consistent
+   glass weight regardless of what's behind it (hero halftone-video
+   varies frame-to-frame; .08 was unreliable at 4.5:1).
    Border uses a soft white line (vs. .btn--frosted's azure) so the
    nav's chrome stays neutral over any backdrop. */
 .site-nav.is-scrolled .nav-inner{
-  background:rgba(242,234,216,.08);
+  background:rgba(242,234,216,.16);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   border-color:rgba(255,255,255,.55);
@@ -235,7 +240,7 @@
    reads cleanly above the sheet — even on hero pages where the bar
    would otherwise still be transparent. */
 .site-nav.is-menu-open .nav-inner{
-  background:rgba(242,234,216,.08);
+  background:rgba(242,234,216,.16);
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
   border-color:rgba(255,255,255,.55);
@@ -302,7 +307,7 @@
 .site-nav.is-menu-open.is-dark .nav-brand img{filter:none}
 .site-nav.is-menu-open.is-dark .nav-toggle{color:#222}
 
-@media (max-width:880px){
+@media (max-width:820px){
   .site-nav .nav-links{display:none}
   .site-nav .nav-toggle{display:inline-block}
   /* The desktop CTA is exposed inside the sheet on mobile, so hide
