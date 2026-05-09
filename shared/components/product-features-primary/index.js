@@ -65,11 +65,11 @@
      identical across the two components. */
   const ARROW_SVG = `<svg viewBox="0 0 16 16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"><path d="M3 8h9M8 4l4 4-4 4"/></svg>`;
 
-  /* WebGL halftone shader tint — matches the ICP carousel's "builders" panel
-     (the teal panel uses this exact tint). vec3 RGB in 0..1 range. The
-     shader emits dots in this color, blended over the gradient via
-     mix-blend-mode: overlay (set in CSS). */
-  const SHADER_TINT = [0.227, 0.122, 0.071];
+  /* WebGL halftone tint — passed to the shared halftone shader as the
+     dot front color. CSS blends the canvas via mix-blend-mode: overlay
+     at .15 opacity (see index.css), so this hex is the pre-blend tint
+     that renders teal-ish over the warm-paper gradient strip. */
+  const SHADER_TINT = '#3A1F12';
 
   function escape(s) {
     return String(s)
@@ -188,150 +188,13 @@
       </div>`;
   }
 
-  /* ===== WebGL halftone shader =====
-     Per-cell sampling of the source image, dot radius scales with darkness,
-     tinted, composited via mix-blend-mode: overlay (set in CSS). Lifted
-     from the ICP carousel and stripped down — no tint animation since each
-     row uses one static tint. */
-  function setupHalftoneShader(canvas, sourceUrl) {
-    const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true })
-            || canvas.getContext('experimental-webgl');
-    if (!gl) { canvas.style.display = 'none'; return; }
-
-    function compile(type, src) {
-      const s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-        console.warn('product-features-primary shader compile error:', gl.getShaderInfoLog(s));
-      }
-      return s;
-    }
-
-    const vert = compile(gl.VERTEX_SHADER, `
-      attribute vec2 a_pos;
-      varying vec2 v_uv;
-      void main() {
-        v_uv = vec2(a_pos.x * 0.5 + 0.5, 1.0 - (a_pos.y * 0.5 + 0.5));
-        gl_Position = vec4(a_pos, 0.0, 1.0);
-      }
-    `);
-
-    const frag = compile(gl.FRAGMENT_SHADER, `
-      precision mediump float;
-      uniform sampler2D u_tex;
-      uniform vec2 u_resolution;
-      uniform vec2 u_imgSize;
-      uniform float u_cell;
-      uniform vec3 u_tint;
-      varying vec2 v_uv;
-
-      vec2 coverUV(vec2 uv, vec2 res, vec2 img) {
-        float sR = res.x / res.y;
-        float iR = img.x / img.y;
-        vec2 scale = (sR < iR) ? vec2(iR / sR, 1.0) : vec2(1.0, sR / iR);
-        return (uv - 0.5) / scale + 0.5;
-      }
-
-      void main() {
-        vec2 px = v_uv * u_resolution;
-        vec2 cellOrigin = floor(px / u_cell) * u_cell;
-        vec2 cellCenterPx = cellOrigin + vec2(u_cell * 0.5);
-        vec2 sampleUV = coverUV(cellCenterPx / u_resolution, u_resolution, u_imgSize);
-        sampleUV = clamp(sampleUV, 0.0, 1.0);
-        vec4 col = texture2D(u_tex, sampleUV);
-        float lum = dot(col.rgb, vec3(0.299, 0.587, 0.114));
-        float maxR = u_cell * 0.55;
-        float r = (1.0 - lum) * maxR;
-        float dist = length(px - cellCenterPx);
-        float t = smoothstep(r + 0.7, r - 0.7, dist);
-        gl_FragColor = vec4(u_tint, t);
-      }
-    `);
-
-    const prog = gl.createProgram();
-    gl.attachShader(prog, vert);
-    gl.attachShader(prog, frag);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      console.warn('product-features-primary shader link error:', gl.getProgramInfoLog(prog));
-      return;
-    }
-    gl.useProgram(prog);
-
-    const quad = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1,  1, -1, -1,  1,
-      -1,  1,  1, -1,  1,  1
-    ]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(prog, 'a_pos');
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-    const uTex  = gl.getUniformLocation(prog, 'u_tex');
-    const uRes  = gl.getUniformLocation(prog, 'u_resolution');
-    const uImg  = gl.getUniformLocation(prog, 'u_imgSize');
-    const uCell = gl.getUniformLocation(prog, 'u_cell');
-    const uTint = gl.getUniformLocation(prog, 'u_tint');
-
-    const tex = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-                  new Uint8Array([128, 128, 128, 255]));
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-    let imgW = 1, imgH = 1, ready = false;
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-      imgW = img.naturalWidth;
-      imgH = img.naturalHeight;
-      ready = true;
-      render();
-    };
-    img.onerror = () => { canvas.style.display = 'none'; };
-    img.src = sourceUrl;
-
-    function render() {
-      if (!ready) return;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.useProgram(prog);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.uniform1i(uTex, 0);
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform2f(uImg, imgW, imgH);
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      gl.uniform1f(uCell, 7.0 * dpr);
-      gl.uniform3f(uTint, SHADER_TINT[0], SHADER_TINT[1], SHADER_TINT[2]);
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-
-    function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.round(canvas.clientWidth * dpr);
-      const h = Math.round(canvas.clientHeight * dpr);
-      if (w !== canvas.width || h !== canvas.height) {
-        canvas.width = w;
-        canvas.height = h;
-      }
-      render();
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-  }
+  /* WebGL halftone shader is the shared primitive at shared/halftone-shader.js.
+     This component used to inline its own square-grid WebGL1 implementation;
+     now it consumes the same hex-grid Paper Hero-Teal canon as halftone-video.
+     The `mode: 'overlay'` branch outputs vec4(tint, alpha) with a transparent
+     background — index.css's mix-blend-mode: overlay + opacity .15 then
+     blends those tinted dots onto the underlying gradient strip + halftone
+     PNG layers. Page must load shared/halftone-shader.js before this file. */
 
   function buildMarkup(items, cta, ctaHidden) {
     /* All three background layers — gradient strip, CSS halftone, WebGL
@@ -384,12 +247,23 @@
     if (host.dataset.productFeaturesPrimaryMounted === '1') return;
     host.dataset.productFeaturesPrimaryMounted = '1';
     host.innerHTML = buildMarkup(readItems(host), readCta(host), readCtaHidden(host));
-    /* Boot the WebGL halftone shader on each row's canvas. Source URL is
+    /* Boot the shared halftone shader on each row's canvas. Source URL is
        carried via data-halftone-src so each row can use its own image. */
-    host.querySelectorAll('.product-features-primary__shader').forEach((canvas) => {
-      const src = canvas.getAttribute('data-halftone-src');
-      if (src) setupHalftoneShader(canvas, src);
-    });
+    if (!window.HalftoneShader) {
+      console.error('product-features-primary: shared/halftone-shader.js not loaded');
+    } else {
+      host.querySelectorAll('.product-features-primary__shader').forEach((canvas) => {
+        const src = canvas.getAttribute('data-halftone-src');
+        if (!src) return;
+        window.HalftoneShader.attach(canvas, {
+          source: { type: 'image', src },
+          mode: 'overlay',
+          front: SHADER_TINT,
+          /* cell/radius/contrast/grain default to the canonical Paper
+             Hero-Teal preset — no per-instance overrides needed. */
+        });
+      });
+    }
     animate(host);
   }
 

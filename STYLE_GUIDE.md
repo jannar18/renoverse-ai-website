@@ -750,7 +750,7 @@ The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.
 
 **Token / type:**
 - ICP carousel still inlines its dither mask and grain SVG. Lift each to the kit utilities (`.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. (Panel gradients are already canonical-token-driven post-Phase-2.) **(F1.5 component-library audit territory.)**
-- The four shader implementations (`halftone-video`, `icp-carousel`, `product-features-primary`, `features-editorial`) are not yet a shared primitive. The "match X = same primitive, parameterized" rule says they should be. **(F1.5.)** Note: `icp-carousel` was cut in PR #21 and `features-editorial` was replaced in PR #22 — only `halftone-video` and `product-features-primary` ship their shaders today, so the actual remaining DRY target is just those two.
+- ~~The four shader implementations (`halftone-video`, `icp-carousel`, `product-features-primary`, `features-editorial`) are not yet a shared primitive.~~ **Resolved (PR #45).** Single source of truth lives at [`shared/halftone-shader.js`](./shared/halftone-shader.js): WebGL2 hex-grid halftone with the canonical Paper Hero-Teal preset (Cover, Hex, Inverted Off, 1%/120%/40%, #2C6F75, 20% grain) baked in as defaults. Both consumers (`halftone-video`, `product-features-primary`) call `HalftoneShader.attach(canvas, options)` with their per-instance overrides (front color, source type video/image, mode composite/overlay). Adding a new halftone surface = mount the shared primitive with the right options; never re-implement the shader.
 
 **Other:**
 - Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**
