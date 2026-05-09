@@ -32,7 +32,13 @@
   position: relative;
   display: block;
   isolation: isolate;
-  padding: clamp(56px, 9vw, 128px) clamp(20px, 4vw, 56px);
+  /* Top padding floors at 96px (= --nav-height 72px + ~24px breathing
+     room) so the eyebrow/H1/checklist sit cleanly below the fixed nav
+     at all widths. Previous 56px floor caused the third checklist
+     bullet to wedge against the nav baseline at narrow widths during
+     scroll. Bottom keeps the original 56–128px clamp — no nav
+     clearance needed under the form. */
+  padding: clamp(96px, 9vw, 128px) clamp(20px, 4vw, 56px) clamp(56px, 9vw, 128px);
   font-family: var(--font-sans);
   font-weight: 400;
   color: var(--df-ink);

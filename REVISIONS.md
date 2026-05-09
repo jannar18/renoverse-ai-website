@@ -93,12 +93,12 @@ Walk every page top-to-bottom at the standard breakpoint set: **1440 / 1280 / 10
 
 Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-RENOVERSE-MobileVideo-20260506-131237.md`):
 
-- Stack-animation has no responsive rules; popups overflow at phone width.
-- Footer wordmark sized ~100% of viewport width; squashes the logo on mobile (overlaps with #8 above).
-- Demo page: insufficient padding above the form; nav covers the third checkmark bullet during scroll.
-- Frosted-nav contrast over hero video varies frame-to-frame.
-- Components disagree on the "tablet → mobile" breakpoint by 20–100px (860 / 880 / 960). Pick one and propagate.
-- Page-level mobile rules in `index.html`, `solutions.html`, `about.html` should move into the relevant components.
+- [x] **Stack-animation responsive rules.** (PR #42) `product-features-animation` (renamed from stack-animation) now hides orbital callouts and shortens the section to 130vh at the mobile breakpoint; the 5→1 source-panel converge animation still plays.
+- [x] **Footer wordmark mobile aspect-ratio.** (PR #26) Footer logo width-driven sizing fixes the squash; covered alongside Round 3 #8.
+- [x] **Demo page top-padding clearance.** (PR #44) `demo-form` top padding floors at 96px (= `--nav-height` 72px + ~24px breathing room) instead of 56px, so the eyebrow / H1 / third checklist bullet sit cleanly below the fixed nav at all widths. Form bottom padding unchanged (no nav clearance needed).
+- [x] **Frosted-nav contrast over hero halftone-video.** (PR #44) `.site-nav.is-scrolled .nav-inner` and `.is-menu-open .nav-inner` background opacity bumped from `.08` → `.16` (matching `.btn--frosted:hover`). Same cream-tinted-glass recipe; the nav is always-engaged so it sits at the engaged-state opacity. Restores reliable 4.5:1 contrast independent of frame brightness.
+- [x] **Breakpoint reconciliation to 820.** (PR #44) Every off-grid `860px` and `880px` `@media` rule normalized to `820px` (the canonical portrait-tablet boundary from the standard set): `product-features-animation`, `product-features-cards-2x2`, `product-features-card-3x1`, `product-features-primary`, `team-section`, `site-nav`, `site-footer`. `testimonial-card` was already at 820. Also `index.html` page-level `.stack-tail-intro` rule moved 860→820.
+- [x] **Page-level mobile rules cleanup.** (PR #44) `index.html` had two off-grid page-level `@media` rules: `.stack-tail-intro` at 860 (now 820) and `.hero h1{font-size:48px}` at 960 (removed — `--fs-h1: clamp(48px, 7vw, 96px)` already floors at 48px and provides smoother fluid scaling without flattening the type scale at 820/768/430/390/360). `solutions.html` / `about.html` / `demo.html` had no page-level `@media` rules. The remaining `.stack-tail-intro` rule is small and homepage-specific; future polish could extract that bridge element to a component, but a pure-data layout flip at one breakpoint isn't worth a new component contract.
 
 ### F4 — Style finalization
 

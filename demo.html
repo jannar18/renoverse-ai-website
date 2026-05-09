@@ -90,11 +90,11 @@
   a{color:inherit;text-decoration:none}
 
   /* ---------- demo page shell ---------- */
-  /* The form already has ~56–128px of internal top padding, which is
-     plenty of clearance for the absolute nav — so we don't add any
-     padding here. Adding padding leaves a plain-white strip above the
-     form's gradient that the transparent nav sits on, which reads as
-     a header bug. */
+  /* The form's internal padding (clamp(96px, 9vw, 128px) on top) handles
+     the fixed-nav clearance — the 96px floor matches --nav-height (72px)
+     + ~24px breathing room. We don't add page-level padding because that
+     would leave a plain-white strip above the form's gradient that the
+     transparent nav sits on, which reads as a header bug. */
   .demo-page{ position:relative; background:var(--white) }
 
 </style>

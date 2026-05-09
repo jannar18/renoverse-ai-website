@@ -313,7 +313,7 @@
 
 /* ---------- responsive ---------- */
 
-@media (max-width: 860px) {
+@media (max-width: 820px) {
   .product-features-primary__row,
   .product-features-primary__row[data-row-side="image-left"],
   .product-features-primary__row[data-row-side="image-right"] {

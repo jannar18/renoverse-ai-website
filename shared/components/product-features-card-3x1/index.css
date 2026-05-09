@@ -142,7 +142,7 @@
   opacity: 0.85;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 820px) {
   .product-features-card-3x1__grid {
     grid-template-columns: 1fr;
     max-width: 560px;
