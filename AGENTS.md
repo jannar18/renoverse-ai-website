@@ -4,7 +4,7 @@ You are working on the Renoverse marketing site. Read the following docs in this
 
 1. **`REVISIONS.md`** — current priority list. Top of the doc is the active work.
 2. **`STYLE_GUIDE.md`** — colors, fonts, gradients, typography, button recipes, alignment rules. All styling decisions trace back here.
-3. **`shared/components/`** — the component library. Every component ships `index.css` + `index.js` + `README.md` + `test.html` and mounts via `data-*` hooks.
+3. **`shared/components/`** — the component library. Most components ship the full contract — `index.css` + `index.js` + `README.md` + `test.html` — and mount via `data-*` hooks. Three components ship `index.css` + `index.js` only by operator decision (`halftone-video`, `site-footer`, `site-nav`); see the end-of-session "Component changes" rule below for when this waiver applies.
 
 ---
 
@@ -33,6 +33,7 @@ Before wrapping any session that touched the site, run through this checklist:
 If any component was created or edited:
 - The change must end the session inside `shared/components/<component>/`.
 - Confirm the contract is intact: `index.css` + `index.js` + `README.md` + `test.html`. Backfill anything missing for components you touched.
+- **Waiver**: `halftone-video`, `site-footer`, and `site-nav` ship `index.css` + `index.js` only (operator decision, PR #31). Don't add a `README.md` / `test.html` to those three on a touch. New components default to the full contract.
 - New behavior that doesn't fit the existing component → create a new component (with the full contract) rather than scattering page-local CSS / JS.
 
 ### 2. Style-guide conformance

@@ -6,9 +6,10 @@ This guide is written for **Claude**, to be referenced whenever someone asks for
 - [`shared/tokens.css`](./shared/tokens.css) — all colors, type, spacing, gradients
 - [`shared/effects.css`](./shared/effects.css) — surface treatments (grain, dither, halftone bloom, gradients) as utility classes
 - [`shared/button.css`](./shared/button.css) — button variants
-- [`shared/components/icp-carousel/`](./shared/components/icp-carousel/) — **the reference composition** for the brand's full effect stack
+- [`shared/halftone-shader.js`](./shared/halftone-shader.js) — the canonical brand WebGL halftone primitive (Paper Hero–Teal preset baked in as defaults)
+- [`shared/components/product-features-primary/`](./shared/components/product-features-primary/) — **the reference composition** for the brand's full effect stack (gradient strip + dithered halftone PNG + WebGL halftone shader + grain). Mirror its layer order when building new full-stack sections.
 
-**About "Phase X" references:** this guide and `tokens.css` mention things like "Phase 1," "Phase 4," "Phase 8." Those refer to the phased work plan in [`PLAN.md`](./PLAN.md) — the 9-phase roadmap for cleaning up the site against this guide. When a recipe says "Phase 4 target" or "in-card variant is Phase 8," it means *the rule is correct now but the cleanup hasn't shipped yet*. Don't propagate the live page's pre-cleanup state forward.
+**About historical "Phase X" references:** older revisions of this guide referred to a now-retired phased cleanup plan (`PLAN.md`). Most of those phases have shipped; the current priority list lives in [`REVISIONS.md`](./REVISIONS.md). If you spot a stale "Phase N target" annotation here, treat it as historical and surface the discrepancy.
 
 ---
 
@@ -18,7 +19,7 @@ This guide is written for **Claude**, to be referenced whenever someone asks for
 
 - **What kind of section is this?** → [Section signatures](#section-signatures-the-primary-mental-model) (Quiet, Imagery, Spotlight, Editorial)
 - **Common things to add:**
-  - [Make a new highlight section like the ICP carousel](#make-a-new-section-like-the-icp-carousel--add-a-new-highlight-section)
+  - [Make a new highlight section with the brand's full effect stack](#make-a-new-highlight-section-with-the-brands-full-effect-stack)
   - [Add a button](#i-need-a-new-button)
   - [Add a testimonial / customer quote](#add-a-testimonial--customer-quote)
   - [Add a hero (with video)](#add-a-hero-video-to-a-new-page--add-a-hero-like-the-homepage)
@@ -43,22 +44,15 @@ This guide is written for **Claude**, to be referenced whenever someone asks for
 - **Reference (when implementing):** [Part II — Reference layer](#part-ii--reference-layer) (type scale, color tokens, gradient table, effects kit, button variants, layout tokens, a11y primitives)
 - **What Claude pushes back on:** [Part III](#part-iii--things-claude-pushes-back-on)
 - **Mirror examples (when in doubt, copy these):** [Part IV — Reference compositions](#part-iv--reference-compositions)
-- **Known drift (cleanup work, Phase 4):** [Drift list](#known-drift-to-clean-up-later-phase-4)
+- **Known drift / open follow-ups:** [Drift list](#known-drift-to-clean-up-later)
 
 ---
 
 ## Important: current state vs. intended state
 
-This guide describes the **intended end-state** of the site — the rules new work should follow. Some rules are not yet reflected on the live `index.html` and `demo.html` because the relevant cleanup is queued in [`PLAN.md`](./PLAN.md). When you see a recipe or rule, treat it as authoritative — *don't* copy patterns from the live pages that contradict it. Specifically:
+This guide describes the **intended end-state** of the site — the rules new work should follow. Treat each recipe or rule as authoritative — when something on a live page disagrees with this guide, the live page is drift, not precedent. Don't propagate drift forward.
 
-| Rule (intended state) | Live-page state today | Cleanup phase |
-|---|---|---|
-| Every page has a `skip-link` as the first focusable element + `id="main"` on the main content target | Neither page has either | Phase 1 |
-| Sticky nav with backdrop blur over hero + pinned scrolls | Currently absolute-positioned | Phase 1 |
-| Body copy is left-aligned; centered multi-line copy is push-back-worthy | `.intro` and `.typology .head` in `index.html` are still centered | Phase 4 |
-| Components reference `--fs-*` and `--ink` tokens, not local copies | `index.html`/`demo.html` `:root` redeclare `--ink` as `#0a0a0a`; hero `h1`/`h2` hand-author sizes; `feature-highlights` and `demo-form` use local `--fh-*` / `--df-*` namespaces | Phase 4 |
-
-**Rule of thumb:** when a non-technical user asks for new work, this guide is the source of truth. When the live pages disagree with the guide, the live pages are drift, not precedent. Don't propagate drift forward.
+The pre-launch cleanup arc (skip-links + `id="main"` on every page, sticky frosted nav, token-driven `--fs-*`/`--ink` references, single canonical footer, shared halftone shader primitive, etc.) has shipped — the live pages now match the guide on those axes. Open follow-ups (always shorter than the list of what's done) live in [`REVISIONS.md`](./REVISIONS.md).
 
 ---
 
@@ -89,10 +83,10 @@ On top of the baseline, there are two **optional layers**: a dithered SVG/photo,
 
 | Signature | Where it lives in the codebase today |
 |---|---|
-| Quiet | feature-highlights row, intro section *(demo-form is intended Quiet but currently bypasses the kit — see drift list)* |
+| Quiet | `product-features-cards` (homepage 2×2 + Solutions 3-up presets), `team-section` paper variant, `backstory` section on About |
 | Imagery | (no live mirror yet — see code skeleton below) |
-| Spotlight | the homepage `.testimonial-section` (gradient + grain) |
-| Editorial | the ICP carousel panels |
+| Spotlight | `testimonial-card` (homepage; gradient + grain) |
+| Editorial | `product-features-primary` (Solutions; gradient strip + dithered halftone PNG + WebGL halftone shader + grain — the full stack) |
 
 If someone asks for a section type that doesn't fit one of these signatures, **push back** and ask which signature they're imagining. Don't invent a fifth — the constraint is what keeps the brand coherent.
 
@@ -153,20 +147,20 @@ In practice, replace the inline mask CSS with `.fx-dither.fx-dither--photo` on t
 
 For each request below: what the human probably means, which signature it is, and what to mirror.
 
-### "Make a new section like the ICP carousel" / "Add a new highlight section"
+### "Make a new highlight section with the brand's full effect stack"
 
-This is the **Editorial signature** — the full layer stack. The carousel is the reference. Mirror its layer stack:
+This is the **Editorial signature** — the full layer stack. The live reference is `product-features-primary` (Solutions feature rows): one continuous gradient, halftone PNG layer, WebGL halftone shader, and grain spanning the whole section. Mirror its layer stack:
 
 1. **Host element** — `position: relative; isolation: isolate; overflow: hidden;` so blends and masks don't leak.
-2. **Base gradient** — one of the three **dark vertical gradients** (`.fx-grad-dark-oxford-blue-teal-cream`, `.fx-grad-dark-oxford-blue-azure-ice`, `.fx-grad-dark-oxford-blue-cool-blue-cream`). All three go dark-oxford-blue → accent → tint, top-down — that vertical movement is what makes panels feel like one family.
+2. **Base gradient** — one of the three **dark vertical gradients** (`.fx-grad-dark-oxford-blue-teal-cream`, `.fx-grad-dark-oxford-blue-azure-ice`, `.fx-grad-dark-oxford-blue-cool-blue-cream`). All three go dark-oxford-blue → accent → tint, top-down — that vertical movement is what makes panels feel like one family. (For "highlight without imagery" — Spotlight signature — `--grad-dark-oxford-blue-teal-cream` at a `160deg` diagonal is what `testimonial-card` uses; both are sanctioned.)
 3. **Dithered photo** — positioned `<div>` with the photo as `background-image`, classes `.fx-dither.fx-dither--photo`. Tune opacity per surface (~0.05 over saturated gradients, up to ~0.18 over flat color).
-4. **Halftone bloom** — `.fx-halftone-bloom` as a positioned child to draw the eye to the heading or CTA. Override `--fx-bloom-mask` to move the focal point if needed.
+4. **Halftone bloom or WebGL halftone shader** — for an atmospheric focal moment, `.fx-halftone-bloom` as a positioned child (override `--fx-bloom-mask` to move the focal point). For the brand's animated halftone, mount the shared shader: `<canvas data-halftone-src="path/to/image.avif">` + `HalftoneShader.attach(canvas, { source: { type: 'image', src }, mode: 'overlay', front: '#tint' })` from [`shared/halftone-shader.js`](./shared/halftone-shader.js). Never re-implement the shader.
 5. **Paper grain** — `.fx-grain--warm` as a positioned child (warm tint pairs with dark/saturated surfaces).
 6. **Content** — JetBrains Mono eyebrow above, **Poppins H3** (section header), optional Cormorant italic H2 above or beside it for an editorial moment, Poppins body, `.btn .btn--filled` CTA.
 
-Don't re-derive the gradient stops, dither parameters, or grain SVG. The kit *is* those values.
+Don't re-derive the gradient stops, dither parameters, halftone-shader preset, or grain SVG. The kit *is* those values.
 
-If the request is for a "highlight section" without imagery, drop layer 3 — that's the **Spotlight signature** instead.
+If the request is for a "highlight section" without imagery, drop layer 3 — that's the **Spotlight signature** instead. Mirror `testimonial-card` (homepage) for that pattern.
 
 ### "I need a new button"
 
@@ -175,17 +169,17 @@ Default to `.btn .btn--filled` — teal rectangle, white text, four corner ticks
 | Where it sits | Variant | Notes |
 |---|---|---|
 | Primary CTA on any light surface | `.btn .btn--filled` | Default. Always include the four `<span class="tk tl/tr/br/bl">` corner ticks. Reserve 24px clearance around it (the ticks animate outward on hover). |
-| Over a photo / dark surface (e.g. nav over hero, ICP carousel CTA) | `.btn .btn--frosted` | Frosted glass + grain. Used on the carousel CTAs and the nav button over the hero video — anywhere the background is dark or media. |
-| Secondary action on a light/paper surface | `.btn .btn--white` | Azure outline + text on white fill, hover swaps to filled azure. |
-| Inside a card or form | `.btn .btn--filled` without `.tk` corner spans | The in-card variant — same azure fill, white text, mono uppercase, square corners, just no ticks. The demo-form (`shared/components/demo-form/`) ships this as Tailwind utilities (the form auto-loads Tailwind into hosts that may not include `button.css`); the visual recipe matches `.btn--filled` exactly. |
+| Over a photo / dark surface (e.g. nav over hero) | `.btn .btn--frosted` | Frosted glass + cream tint. Used on the nav button when the bar floats over the hero video — anywhere the background is dark or media. |
+| Secondary action on a light/paper surface | `.btn .btn--white` | Teal outline + text on white fill, hover swaps to filled teal. Used by the homepage team-section "Learn more" CTA and the `product-features-primary` per-row CTA. |
+| Inside a card or form | `.btn .btn--filled` without `.tk` corner spans | The in-card variant — same teal fill, white text, mono uppercase, square corners, just no ticks. The demo-form (`shared/components/demo-form/`) ships this recipe as plain CSS (`.demo-form__submit`) so the form is self-contained; the visual recipe matches `.btn--filled` exactly. |
 
 Never invent a new button silhouette. If a request implies one, push back and ask which existing variant fits.
 
 ### "Add a testimonial / customer quote"
 
-A testimonial is most often the **Spotlight signature** — gradient + grain + halftone bloom — when it's text-only. If the testimonial has a supporting project photo from the customer, upgrade it to **Editorial** (add the dithered photo layer). Either way, it's the same vocabulary as the carousel; pick the signature based on whether you have imagery.
+A testimonial is most often the **Spotlight signature** — gradient + grain + (optional) halftone bloom — when it's text-only. If the testimonial has a supporting project photo from the customer, upgrade it to **Editorial** (add the dithered photo layer). Either way, it's the same vocabulary as the brand's full effect stack; pick the signature based on whether you have imagery.
 
-Mirror `.testimonial-section` in `index.html`. The recipe:
+Mount the live `testimonial-card` component (`shared/components/testimonial-card/`); don't hand-build. It already implements the recipe below — three modes (image, logo, name-only) via `data-image` / `data-logo` / neither. The recipe is documented here for understanding the visual:
 
 **Card host** — `position: relative; isolation: isolate; overflow: hidden;` with rounded corners (~14px).
 
@@ -268,24 +262,25 @@ Feature highlights are a **family** of patterns. Pick the variation by density (
 
 Two are already built; four are **proposed patterns** the system supports but no live reference exists yet — when one of these is requested, build it from the recipe and update the reference table.
 
-#### Variation 1 — Strip (4-up icons) *— exists*
+#### Variation 1 — Compact card grid (4-up, 2×2) *— exists*
 
-**Use when:** the user wants a *scannable* summary of 3–4 short features in a single row. Dense, fast to read, low visual weight.
+**Use when:** the user wants a *scannable* summary of 3–4 features in a 2×2 grid. Dense, fits in one viewport, low visual weight.
 
-- Reuse the `feature-highlights` component (`shared/components/feature-highlights/`) — don't hand-build.
-- Each feature: small icon + H3 in Poppins + 1–2 line body. No imagery.
-- Surface: `.fx-grad-ice-cream-beige` + `.fx-grain--ink`. **Quiet signature.**
-- Animation *(intended state — not yet wired into the existing component; Phase 4 target)*: subtle staggered fade-in + 24px slide-up on enter (~600ms ease-out, GSAP ScrollTrigger), one stagger step ~80ms apart. The current `feature-highlights` component renders items statically with no entrance animation; matching the brand baseline (see "Animation rules" below) is queued for the cleanup pass.
+- Mount the `product-features-cards` component (`shared/components/product-features-cards/`) with `data-cols="2"` — don't hand-build. The homepage core capabilities are the live mirror.
+- Each card: bold-body title + Small-role body + flat 3:1 cropped image strip (or hatch placeholder). Drop-shadow card on cream surface.
+- Surface: section is transparent — host page provides the warm-paper backdrop (`.fx-grad-sky-blue-ice` on the homepage). **Quiet signature** with a frosted-card layer.
+- Animation: staggered 24px slide-up + fade-in on enter (~600ms ease-out, GSAP ScrollTrigger, 80ms stagger). Already wired into the component.
 
-> **Don't widen to a 5+ card strip.** The brand reads card families as 3 or 4, max. If more features are requested, propose a stacked or alternating variation instead.
+> **Don't widen to a 5+ card grid.** The brand reads card families as 3 or 4, max. If more features are requested, propose a stacked or alternating variation instead.
 
-#### Variation 2 — Cards (3-up with photo) *— exists*
+#### Variation 2 — Breathing card row (3-up with photo) *— exists*
 
 **Use when:** features need editorial weight backed by imagery — solution pillars, product capabilities with screenshots, value props with photos.
 
-- Mirror `.ty-card` (the typology cards) in `index.html`. See "Add typology cards" recipe below for the full layer recipe.
-- Each card: photo top + frosted-glass caption with H4 + body. **Quiet signature** with a frosted caption layer.
-- Animation *(intended state — Phase 4 target)*: same staggered fade-in + slide-up as the strip; no per-card hover animations (the photo and caption are already doing the work). The live typology cards currently render without entrance animation.
+- Mount the `product-features-cards` component with `data-cols="3"` and (optionally) `data-heading="..."` for a centered Cormorant H2 above the grid. The Solutions "And the rest comes built-in." beat is the live mirror.
+- Each card: bold-body title + full Body register copy + natural-aspect image well (or hatch placeholder). Flat cream card, no shadow, full section padding.
+- Surface: section is transparent — host page provides the surface (white on Solutions). **Quiet signature.**
+- Animation: same staggered fade-in + slide-up as the compact preset. No per-card hover animations (the photo and copy are already doing the work).
 
 #### Variation 3 — Stacked rows *— proposed, no mirror yet*
 
@@ -346,7 +341,7 @@ When a non-technical user says "add a feature blurb" or "add a quick description
 
 ---
 
-#### Animation rules (for all feature-highlights variations)
+#### Animation rules (for all feature-highlight variations)
 
 The brand's motion vocabulary is *quiet, deliberate, scroll-driven*. Don't add hover-bounce, micro-interactions, or auto-playing carousels.
 
@@ -362,10 +357,10 @@ The brand's motion vocabulary is *quiet, deliberate, scroll-driven*. Don't add h
 
 | User says… | Variation | Signature | Status |
 |---|---|---|---|
-| "Quick scannable feature row," "summary of features" | 1. Strip | Quiet | ✓ exists |
-| "Solution pillars with photos," "feature cards with imagery" | 2. Cards | Quiet + frosted caption | ✓ exists |
+| "Quick scannable feature grid," "summary of features" | 1. Compact 2×2 | Quiet | ✓ `product-features-cards` `data-cols="2"` |
+| "Solution pillars with photos," "feature cards with imagery" | 2. Breathing 3-up | Quiet | ✓ `product-features-cards` `data-cols="3"` |
 | "Feature deep-dives," "more space per feature" | 3. Stacked rows | Quiet | proposed — build from recipe |
-| "Product spotlight rhythm," "alternating sections," "feature pages with motion" | 4. Alternating blurb + highlight | Alternates Quiet ↔ Imagery | proposed — build from recipe |
+| "Product spotlight rhythm," "alternating sections," "feature pages with motion" | 4. Alternating blurb + highlight | Alternates Quiet ↔ Imagery | ✓ `product-features-primary` (Solutions deep-dive) |
 | "Big flagship feature," "hero-after-hero" | 5. Full-screen single | Editorial | proposed — build from recipe |
 | "Two features side-by-side," "compare these two things" | 6. 2-up split | Quiet ↔ Quiet (text-only) or Quiet ↔ Imagery (with photos) | proposed — build from recipe |
 
@@ -396,7 +391,7 @@ This is the **Quiet signature**. A two-column layout that pairs a short label se
 
 ### "Add a final CTA before the footer" / "Add a closing call-to-action"
 
-The brand's go-to "and now do this" moment. Mirror `.cta` in `index.html`.
+The brand's go-to "and now do this" moment. **No live mirror today** — the homepage retired its `.cta` strip when the wave-gradient footer became the page's visual closer. When this pattern is requested for a new page, build it from the recipe below:
 
 **Layout:** `display: flex; align-items: center; justify-content: space-between; gap: 24px;` — italic Cormorant H3 on the left, `.btn .btn--filled` on the right. Stack to column at ≤540px.
 
@@ -408,7 +403,7 @@ The brand's go-to "and now do this" moment. Mirror `.cta` in `index.html`.
 
 ### "Add an editorial closer" / "Add a closing italic line at the end of a section"
 
-A small but recognizable brand pattern: a single italic Cormorant line at the bottom of a section, centered, in `--teal`. Used as a one-line sign-off after a list of cards or a section's main content. Mirror `.typology .closer` in `index.html` ("More than tools — a single source of truth.").
+A small but recognizable brand pattern: a single italic Cormorant line at the bottom of a section, centered, in `--teal`. Used as a one-line sign-off after a list of cards or a section's main content. **No live mirror today** (the homepage's typology closer was retired with the typology-cards section). When this pattern is requested, build it from the recipe below:
 
 **Recipe:** **H2** styling (Cormorant Garamond italic, weight 500, `--fs-h2`, `--lh-h2`, `--ls-display`), with two overrides specific to this pattern: `color: var(--teal)` (the editorial accent color, not `--ink`) and `text-align: center`, max ~60ch, `margin: clamp(56px, 7vw, 88px) auto 0` to give it air above. The closer is the canonical "H2 used as a centered editorial sentence" — see the H2 alignment rule.
 
@@ -416,7 +411,7 @@ This is one of the **rare exceptions to "no centered copy"** (see Part III) — 
 
 ### "Add typology cards" / "Add a 3-up editorial card grid with photos"
 
-Three cards in a row, each with a photo on top and a frosted-glass caption below. Mirror `.ty-card` in `index.html`.
+Three cards in a row, each with a photo on top and a frosted-glass caption below. **No live mirror today** — the homepage's `.ty-card` block was retired, and the live 3-up card pattern is now `product-features-cards` with `data-cols="3"` (no frosted-caption layer; image + body in a flat cream card). When the *frosted-caption* variant is requested specifically, build it from the recipe below:
 
 **Card host:** `display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; isolation: isolate; background: var(--cream); box-shadow: 0 1px 0 rgba(11,26,43,.06), 0 18px 40px -22px rgba(11,26,43,.22);`
 
@@ -493,7 +488,7 @@ This is the small inline-form pattern — distinct from the demo-form's full car
 
 **Button:** override clearance — `--btn-clearance: 0; margin: 18px 0 0 9px;` — to inset the corner-tick column with the input/heading edge, with 18px gap so the hover ticks clear the input.
 
-**Required label (a11y):** add `<label for="newsletter-email" class="sr-only">Email address</label>` before the input. The current `index.html:542` input is missing this — Phase 6 cleanup target.
+**Required label (a11y):** the live form in `shared/components/site-footer/index.js` already ships `<label for="newsletter-email" class="sr-only">Email address</label>` before the input. Any new inline-newsletter pattern must include the same `<label for>` (visible or `sr-only`).
 
 **Status message:** `aria-live="polite"` for screen readers; placeholder for "Thanks — we'll be in touch."
 
@@ -503,7 +498,7 @@ The site already has one big pinned-scroll product moment — the **product-feat
 
 **Use sparingly — one per page, max.** Pinned scrolls dominate the page rhythm; two on one page exhausts the reader.
 
-**Don't restyle without testing the sticky-nav interaction.** There's a documented historical conflict: the sticky nav's `top:0` competes with the product-features-animation's pinned `top:0`, and ScrollTrigger's start calculation can land in the wrong place. See the memory note "sticky-nav-product-features-animation-conflict" (filename retained as `sticky-nav-stack-animation-conflict` for history) — Phase 1 + Phase 2 in `PLAN.md` are the two cleanup phases for this. If a request asks for the product-features-animation on a new page or with a sticky nav above it, raise the conflict and reach for the `--nav-height` token to offset ScrollTrigger.
+**Don't restyle without testing the sticky-nav interaction.** There's a documented historical conflict: the sticky nav's `top:0` competes with the product-features-animation's pinned `top:0`, and ScrollTrigger's start calculation can land in the wrong place. See the memory note "sticky-nav-product-features-animation-conflict" (filename retained as `sticky-nav-stack-animation-conflict` for history). If a request asks for the product-features-animation on a new page or with a sticky nav above it, raise the conflict and reach for the `--nav-height` token to offset ScrollTrigger.
 
 **To use:** drop in `<div data-product-features-animation></div>` on the page, plus the GSAP + ScrollTrigger CDN scripts and the component's CSS/JS. The component is self-contained — don't try to integrate page-level styles into it.
 
@@ -561,7 +556,7 @@ Type sizes come from the scale tokens (`--fs-h1` … `--fs-small`). Don't hand-a
 
 ### "Add navigation / change the nav"
 
-Use the `data-site-nav` component (`shared/components/site-nav/`). Don't hand-build nav markup on a page — the component owns layout, dropdowns, and (after Phase 1) sticky behavior.
+Use the `data-site-nav` component (`shared/components/site-nav/`). Don't hand-build nav markup on a page — the component owns layout, the mobile sheet, and the sticky/frosted scrolled state. Set `data-mode="solid"` on the mount when the page has no hero behind the nav (e.g. `solutions.html`, `about.html`, `demo.html`).
 
 ---
 
@@ -571,7 +566,7 @@ When implementing, these are the canonical specs.
 
 ### Type scale
 
-Six roles. Hierarchy comes from **type** (family / size / weight / italic). The H1 + H2 sizes are anchored to the ICP carousel — H1 mirrors `.icp-carousel__title-slide` (hero/page-defining), H2 mirrors `.icp-carousel__lead` (section header). H3 is the sub-header role: same family as H1 but smaller than H2.
+Six roles. Hierarchy comes from **type** (family / size / weight / italic). H1 = page-defining hero/section; H2 = editorial moments + closers; H3 = utility section header. The size tokens (`--fs-h1`, `--fs-h2`, `--fs-h3`) are clamp-based and live in `shared/tokens.css`.
 
 | Role | Family | Style | Size token | Line-height | Letter-spacing | Alignment | Color |
 |---|---|---|---|---|---|---|---|
@@ -697,7 +692,7 @@ Every `.btn` reserves 24px clearance around itself for the hover-state ticks. Tw
 | `--gutter` | Page side-padding (clamp 20–56px) |
 | `--section-y` | Default vertical section padding |
 | `--section-y-tight` | Condensed sections — intros, stats |
-| `--nav-height` | Reserved offset for sticky nav (Phase 1) |
+| `--nav-height` | Sticky-nav offset (72px). Pages that mount `[data-site-nav]` should pad their first section by `calc(var(--nav-height) + breathing-room)` so content clears the floating bar. |
 
 Standard section pattern: `<section style="padding: var(--section-y) 0;"><div class="wrap"> … </div></section>` where `.wrap` is `max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter);`.
 
@@ -734,37 +729,33 @@ When in doubt, mirror these working examples:
 
 | Request shape | Mirror |
 |---|---|
-| Branded section with full effect stack | `shared/components/icp-carousel/` |
-| Editorial card with photo + caption (typology cards) | `.ty-card` in `index.html` |
-| Frosted-glass caption over media | `.ty-card .meta` in `index.html` |
-| Customer testimonial / quote card | `.testimonial-section` in `index.html` |
-| Hero with video | `<header class="hero">` in `index.html` |
-| Stats / proof strip | `.stats` in `index.html` |
-| Editorial closer (italic teal sign-off line) | `.typology .closer` in `index.html` |
-| Final CTA before footer | `.cta` in `index.html` |
-| Paper-backed section | `[data-team-section][data-theme="paper"]` (component-owned paper surface; no separate wrapper) |
-| Footer (light/paper) | `footer.site` in `index.html` |
-| Footer (dark) | `footer.site` in `demo.html` |
-| Inline newsletter signup | `footer.site .newsletter` in `index.html` |
-| Demo / contact form (full card) | `shared/components/demo-form/` |
+| Branded section with full effect stack (Editorial signature) | `shared/components/product-features-primary/` (Solutions) — gradient strip + dithered halftone PNG + WebGL halftone shader + grain |
+| Customer testimonial / quote card (Spotlight signature) | `shared/components/testimonial-card/` (homepage) |
+| Hero with video | `<section class="hero">` in `index.html` (mounts `[data-halftone-video]`) |
+| Hero on paper (no video) | `<section class="page-hero">` in `solutions.html` and `about.html` |
+| Paper-backed section | `[data-team-section][data-theme="paper"]` — component-owned paper surface; no separate wrapper |
+| Single canonical footer (wave-gradient over beige paper) | `shared/components/site-footer/` (every page) |
+| Inline newsletter signup | `shared/components/site-footer/index.js` (the right column of the top row) |
+| Demo / contact form (full card) | `shared/components/demo-form/` (plain CSS, no Tailwind) |
 | Team / about block | `shared/components/team-section/` |
-| Feature highlights row | `shared/components/feature-highlights/` |
-| Pinned-scroll product feature | `shared/components/product-features-animation/` |
+| Compact 2×2 feature grid (homepage core capabilities) | `shared/components/product-features-cards/` with `data-cols="2"` |
+| Breathing 3-up feature row (Solutions "rest comes built-in") | `shared/components/product-features-cards/` with `data-cols="3"` |
+| Pinned-scroll product feature | `shared/components/product-features-animation/` (homepage; one per page max) |
+| Editorial card with photo + frosted caption (typology cards) | No live mirror — recipe in Part I |
+| Frosted-glass caption over media | No live mirror — recipe in Part I |
+| Stats / proof strip | No live mirror — recipe in Part I |
+| Editorial closer (italic teal sign-off line) | No live mirror — recipe in Part I |
+| Final CTA before footer | No live mirror — recipe in Part I |
 
 ---
 
 ## Known drift to clean up later
 
-The big drift list (homepage `:root` token redeclarations, Phase-13 dead CSS, `.paper-zone` + `.testimonial` inlined recipes, paper-warm canonicalization, `--muted` / `--line-soft` removal, `.lead` consolidation) was cleared in the 2026-05-06 pre-launch cleanup PR. Open follow-ups below.
+The big drift list (homepage `:root` token redeclarations, dead CSS sweeps, `.paper-zone` + `.testimonial` inlined recipes, paper-warm canonicalization, `--muted` / `--line-soft` removal, `.lead` consolidation, ICP-carousel removal, shader extraction, F2 a11y, F3 mobile polish, F4 token-only sweep, F5 authoring docs) is shipped. The current open follow-ups live in [`REVISIONS.md`](./REVISIONS.md) — pull from there, not from here. Two follow-ups specifically called out in this guide for context:
 
-**Token / type:**
-- ICP carousel still inlines its dither mask and grain SVG. Lift each to the kit utilities (`.fx-dither.fx-dither--photo`, `.fx-grain--warm`). Don't change visual values; if the kit's defaults differ from the carousel, fix the kit. (Panel gradients are already canonical-token-driven post-Phase-2.) **(F1.5 component-library audit territory.)**
-- ~~The four shader implementations (`halftone-video`, `icp-carousel`, `product-features-primary`, `features-editorial`) are not yet a shared primitive.~~ **Resolved (PR #45).** Single source of truth lives at [`shared/halftone-shader.js`](./shared/halftone-shader.js): WebGL2 hex-grid halftone with the canonical Paper Hero-Teal preset (Cover, Hex, Inverted Off, 1%/120%/40%, #2C6F75, 20% grain) baked in as defaults. Both consumers (`halftone-video`, `product-features-primary`) call `HalftoneShader.attach(canvas, options)` with their per-instance overrides (front color, source type video/image, mode composite/overlay). Adding a new halftone surface = mount the shared primitive with the right options; never re-implement the shader.
-
-**Other:**
-- Newsletter input is missing a `<label for>`. **(F2 a11y PR.)**
-- `.page-hero` is duplicated verbatim across `solutions.html` and `about.html` (same min-height, padding, gradient, layout — only the H1 max-width differs). Extract to a shared `data-page-hero` component or a single `.page-hero` rule in a shared stylesheet so adding a new paper-hero page is one mount, not a copy. **(F1.5.)**
+- **`.page-hero` duplication** — the rule is repeated verbatim across `solutions.html` and `about.html` (same min-height, padding, gradient, layout; only H1 max-width differs). When the next paper-hero page is added, extract to a shared `data-page-hero` component or a single `.page-hero` rule in a shared stylesheet rather than copy-pasting a third time.
+- **Halftone shader is canonical** — `shared/halftone-shader.js` is the single source of truth for the brand's WebGL halftone effect. Both consumers (`halftone-video` and `product-features-primary`) call `HalftoneShader.attach(canvas, options)`. Adding a new halftone surface = mount the shared primitive with the right options; never re-implement the shader.
 
 ---
 
-*Last updated 2026-05-06.*
+*Last updated 2026-05-09 (surgical pass — broken refs fixed; recipes preserved).*
