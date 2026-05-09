@@ -1,9 +1,7 @@
-/* Renoverse — Demo request form (Tailwind edition).
+/* Renoverse — Demo request form.
    Mounts a two-column "Get a demo" form into every [data-demo-form]
-   element on the page. Built with Tailwind utility classes — the
-   host page must load Tailwind (Play CDN or a build) for the
-   utilities to resolve. The component auto-injects the Play CDN
-   if it doesn't detect Tailwind on the page, so it stays drop-in.
+   element on the page. Self-contained — markup uses BEM-scoped class
+   names defined in index.css; no Tailwind dependency.
 
    Accessibility:
      - Every input has a real <label for>.
@@ -56,67 +54,10 @@
   const ITI_JS    = `https://cdn.jsdelivr.net/npm/intl-tel-input@${ITI_VERSION}/build/js/intlTelInput.min.js`;
   const ITI_UTILS = `https://cdn.jsdelivr.net/npm/intl-tel-input@${ITI_VERSION}/build/js/utils.js`;
 
-  // Tailwind Play CDN with the official Forms plugin + the Renoverse
-  // theme tokens mapped onto Tailwind's color palette. Auto-injected
-  // if the host page hasn't already loaded Tailwind.
-  const TW_CDN = 'https://cdn.tailwindcss.com?plugins=forms';
-  const TW_CONFIG = {
-    theme: {
-      extend: {
-        colors: {
-          ink:           '#0a0a0a',
-          'ink-soft':    '#3a3a3a',
-          beige:         '#FAFAF7',
-          white:         '#FFFFFF',
-          cream:         '#F2EBD8',
-          ice:           '#E5F4F1',
-          'sky-blue':    '#7FE3CB',
-          aqua:          '#5EC9B7',
-          teal:          '#2D6F75',
-          azure:         '#5D6FB8',
-          'oxford-blue': '#022E41',
-          'dark-oxford-blue': '#0B1A2B',
-          'cool-blue':   '#5BA7C9',
-          line:          'rgba(0,0,0,.10)',
-        },
-        fontFamily: {
-          sans: ['Poppins', 'system-ui', 'sans-serif'],
-        },
-        boxShadow: {
-          card: '0 30px 60px -30px rgba(11,26,43,.18), 0 8px 20px -10px rgba(11,26,43,.08)',
-        },
-      },
-    },
-  };
-
   // ---------- Icons ----------
-  const CHECK = `<svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
-  const CHECK_LG = `<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
-  const CHEVRON = `<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 text-ink" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`;
-
-  // ---------- Tailwind class building blocks ----------
-  // Centralized so input/select look identical and so error styling
-  // is a single aria-[invalid=true] modifier per element.
-  const INPUT_CLS = [
-    'block w-full rounded-lg border-0 bg-white px-3.5 py-2.5 text-[15px] text-ink',
-    'shadow-sm ring-1 ring-inset ring-line',
-    'placeholder:text-ink/35',
-    'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal',
-    'aria-[invalid=true]:ring-rose-500 aria-[invalid=true]:focus:ring-rose-500',
-    'transition-shadow',
-  ].join(' ');
-
-  const SELECT_CLS = [
-    'block w-full rounded-lg border-0 bg-white py-2.5 pl-3.5 pr-9 text-[15px] text-ink',
-    'shadow-sm ring-1 ring-inset ring-line',
-    'focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal',
-    'aria-[invalid=true]:ring-rose-500 aria-[invalid=true]:focus:ring-rose-500',
-    'transition-shadow appearance-none cursor-pointer',
-  ].join(' ');
-
-  const LABEL_CLS = 'block text-sm font-medium text-ink';
-  const HINT_CLS  = 'mt-1.5 text-xs leading-snug text-ink-soft data-[error=true]:text-rose-600';
-  const FIELD_CLS = 'min-w-0';
+  const CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+  const CHECK_LG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+  const CHEVRON = `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 7.22a.75.75 0 011.06 0L10 10.94l3.72-3.72a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.22 8.28a.75.75 0 010-1.06z" clip-rule="evenodd"/></svg>`;
 
   // ---------- Loaders ----------
   function ensureFonts() {
@@ -126,29 +67,6 @@
     link.rel = 'stylesheet';
     link.href = HREF;
     document.head.appendChild(link);
-  }
-
-  function ensureTailwind() {
-    if (window.tailwind) {
-      window.tailwind.config = window.tailwind.config || {};
-      // Merge our theme on top of any existing host config.
-      const ext = (window.tailwind.config.theme && window.tailwind.config.theme.extend) || {};
-      window.tailwind.config.theme = Object.assign({}, window.tailwind.config.theme, {
-        extend: Object.assign({}, ext, TW_CONFIG.theme.extend, {
-          colors:     Object.assign({}, ext.colors,     TW_CONFIG.theme.extend.colors),
-          fontFamily: Object.assign({}, ext.fontFamily, TW_CONFIG.theme.extend.fontFamily),
-          boxShadow:  Object.assign({}, ext.boxShadow,  TW_CONFIG.theme.extend.boxShadow),
-        }),
-      });
-      return;
-    }
-    if (document.querySelector('script[src^="https://cdn.tailwindcss.com"]')) return;
-    const cfg = document.createElement('script');
-    cfg.textContent = `window.tailwind = window.tailwind || {}; window.tailwind.config = ${JSON.stringify(TW_CONFIG)};`;
-    document.head.appendChild(cfg);
-    const s = document.createElement('script');
-    s.src = TW_CDN;
-    document.head.appendChild(s);
   }
 
   function ensureItiCss() {
@@ -176,55 +94,57 @@
 
   // ---------- Field builders ----------
   function reqMark() {
-    return `<span class="text-teal" aria-hidden="true">*</span>`;
+    return `<span class="demo-form__req" aria-hidden="true">*</span>`;
+  }
+
+  function fieldClass(span) {
+    return span === 2
+      ? 'demo-form__field demo-form__field--span2'
+      : 'demo-form__field';
   }
 
   function field({ name, label, type = 'text', required = false, autocomplete, placeholder = '', span = 1, inputmode, pattern, maxLength }) {
     const id = `df-${name}`;
     const hintId = `${id}-hint`;
-    const colSpan = span === 2 ? 'sm:col-span-2' : 'sm:col-span-1';
     return `
-      <div class="${FIELD_CLS} col-span-2 ${colSpan}" data-label="${label}">
-        <label for="${id}" class="${LABEL_CLS}">${label}${required ? ' ' + reqMark() : ''}</label>
-        <div class="mt-1.5">
-          <input id="${id}" name="${name}" type="${type}"
-                 ${required ? 'required aria-required="true"' : ''}
-                 aria-invalid="false"
-                 aria-describedby="${hintId}"
-                 ${autocomplete ? `autocomplete="${autocomplete}"` : ''}
-                 ${inputmode ? `inputmode="${inputmode}"` : ''}
-                 ${pattern ? `pattern="${pattern}"` : ''}
-                 ${maxLength ? `maxlength="${maxLength}"` : ''}
-                 ${placeholder ? `placeholder="${placeholder}"` : ''}
-                 class="${INPUT_CLS}" />
-        </div>
-        <p id="${hintId}" class="${HINT_CLS}" hidden aria-live="polite"></p>
+      <div class="${fieldClass(span)}" data-label="${label}">
+        <label for="${id}" class="demo-form__label">${label}${required ? ' ' + reqMark() : ''}</label>
+        <input id="${id}" name="${name}" type="${type}"
+               ${required ? 'required aria-required="true"' : ''}
+               aria-invalid="false"
+               aria-describedby="${hintId}"
+               ${autocomplete ? `autocomplete="${autocomplete}"` : ''}
+               ${inputmode ? `inputmode="${inputmode}"` : ''}
+               ${pattern ? `pattern="${pattern}"` : ''}
+               ${maxLength ? `maxlength="${maxLength}"` : ''}
+               ${placeholder ? `placeholder="${placeholder}"` : ''}
+               class="demo-form__input" />
+        <p id="${hintId}" class="demo-form__hint" hidden aria-live="polite"></p>
       </div>`;
   }
 
   function selectField({ name, label, options, required = false, span = 1, placeholder = 'Select…' }) {
     const id = `df-${name}`;
     const hintId = `${id}-hint`;
-    const colSpan = span === 2 ? 'sm:col-span-2' : 'sm:col-span-1';
     const opts = options.map(o => {
       const [v, l] = Array.isArray(o) ? o : [o, o];
       return `<option value="${v}">${l}</option>`;
     }).join('');
     return `
-      <div class="${FIELD_CLS} col-span-2 ${colSpan}" data-label="${label}">
-        <label for="${id}" class="${LABEL_CLS}">${label}${required ? ' ' + reqMark() : ''}</label>
-        <div class="relative mt-1.5">
+      <div class="${fieldClass(span)}" data-label="${label}">
+        <label for="${id}" class="demo-form__label">${label}${required ? ' ' + reqMark() : ''}</label>
+        <div class="demo-form__select-wrap">
           <select id="${id}" name="${name}"
                   ${required ? 'required aria-required="true"' : ''}
                   aria-invalid="false"
                   aria-describedby="${hintId}"
-                  class="${SELECT_CLS}">
+                  class="demo-form__select">
             <option value="" disabled selected>${placeholder}</option>
             ${opts}
           </select>
-          <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center">${CHEVRON}</span>
+          <span class="demo-form__select-chevron">${CHEVRON}</span>
         </div>
-        <p id="${hintId}" class="${HINT_CLS}" hidden aria-live="polite"></p>
+        <p id="${hintId}" class="demo-form__hint" hidden aria-live="polite"></p>
       </div>`;
   }
 
@@ -246,19 +166,17 @@
     const id = 'df-phone';
     const hintId = `${id}-hint`;
     return `
-      <div class="${FIELD_CLS} col-span-2" data-label="Phone number">
-        <label for="${id}" class="${LABEL_CLS}">Phone number</label>
-        <div class="mt-1.5">
-          <input id="${id}" name="phone" type="tel"
-                 aria-invalid="false"
-                 aria-describedby="${hintId}"
-                 autocomplete="tel"
-                 inputmode="tel"
-                 maxlength="20"
-                 placeholder="(555) 555-1234"
-                 class="${INPUT_CLS}" />
-        </div>
-        <p id="${hintId}" class="${HINT_CLS}" hidden aria-live="polite"></p>
+      <div class="demo-form__field demo-form__field--full" data-label="Phone number">
+        <label for="${id}" class="demo-form__label">Phone number</label>
+        <input id="${id}" name="phone" type="tel"
+               aria-invalid="false"
+               aria-describedby="${hintId}"
+               autocomplete="tel"
+               inputmode="tel"
+               maxlength="20"
+               placeholder="(555) 555-1234"
+               class="demo-form__input" />
+        <p id="${hintId}" class="demo-form__hint" hidden aria-live="polite"></p>
       </div>`;
   }
 
@@ -296,67 +214,60 @@
     ].join('');
 
     return `
-      <div class="demo-form__bg pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <div class="demo-form__bg" aria-hidden="true">
         <div class="demo-form__bg-halftone"></div>
         <div class="demo-form__bg-grain"></div>
         <div class="demo-form__bg-glow demo-form__bg-glow--a"></div>
         <div class="demo-form__bg-glow demo-form__bg-glow--b"></div>
       </div>
 
-      <div class="relative mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
-        <aside class="space-y-5 lg:col-span-5 lg:sticky lg:top-24">
-          <p class="uppercase tracking-[0.32em] text-teal" style="font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:clamp(13px,1vw,15px);">${eyebrow}</p>
-          <h1 class="text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(44px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;">${title}</h1>
-          <p class="max-w-[46ch] text-base leading-relaxed text-ink-soft">${lead}</p>
-          <ul role="list" class="mt-2 space-y-3.5">
+      <div class="demo-form__layout">
+        <aside class="demo-form__aside">
+          <p class="demo-form__eyebrow">${eyebrow}</p>
+          <h1 class="demo-form__title">${title}</h1>
+          <p class="demo-form__lead">${lead}</p>
+          <ul role="list" class="demo-form__checklist">
             ${[
               '30-minute walk-through, tailored to your stack.',
               'Bring a real drawing — we\'ll mark it up live.',
               'Pricing &amp; rollout plan in your inbox after.',
             ].map(t => `
-              <li class="flex items-center gap-3 text-sm leading-snug text-ink">
-                <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-teal text-white">${CHECK}</span>
+              <li class="demo-form__checklist-item">
+                <span class="demo-form__check">${CHECK}</span>
                 <span>${t}</span>
               </li>`).join('')}
           </ul>
         </aside>
 
-        <section class="relative lg:col-span-7" aria-label="Demo request form">
-          <div class="rounded-3xl bg-white p-6 ring-1 ring-line shadow-card sm:p-10">
-            <div data-form-notice
-                 role="alert"
-                 hidden
-                 class="mb-2 flex items-start gap-3 rounded-xl bg-rose-50 p-3.5 text-sm text-rose-700 ring-1 ring-inset ring-rose-200">
-              <svg viewBox="0 0 20 20" fill="currentColor" class="mt-0.5 h-5 w-5 flex-none text-rose-500" aria-hidden="true"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-8-3.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V7a.75.75 0 01.75-.75zM10 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        <section class="demo-form__form-section" aria-label="Demo request form">
+          <div class="demo-form__card">
+            <div data-form-notice role="alert" hidden class="demo-form__notice">
+              <svg class="demo-form__notice-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-8-3.75a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0V7a.75.75 0 01.75-.75zM10 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
               <span data-notice-text>Please fix the highlighted fields.</span>
             </div>
-            <form class="grid gap-7" novalidate>
-              <fieldset class="contents">
+            <form class="demo-form__form" novalidate>
+              <fieldset style="display:contents;">
                 <legend class="sr-only">About you</legend>
-                <div class="grid grid-cols-2 gap-x-4 gap-y-4">${fields}</div>
+                <div class="demo-form__field-grid">${fields}</div>
               </fieldset>
 
-              <fieldset class="contents">
-                <legend class="text-[11px] font-medium uppercase tracking-[0.32em] text-teal">Firm address</legend>
-                <div class="-mt-3 grid grid-cols-2 gap-x-4 gap-y-4">${addressFields}</div>
+              <fieldset style="display:contents;">
+                <legend class="demo-form__legend">Firm address</legend>
+                <div class="demo-form__field-grid demo-form__field-grid--inset">${addressFields}</div>
               </fieldset>
 
-              <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
-                <button type="submit"
-                        class="inline-flex items-center justify-center border border-teal bg-teal px-[22px] py-[9px] text-[12px] font-medium uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-white hover:text-teal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal/40"
-                        style="font-family:'JetBrains Mono',ui-monospace,monospace;">
-                  ${cta}
-                </button>
-                <p class="ml-auto max-w-[260px] text-right text-xs text-ink-soft">
-                  By submitting, you agree to our <a href="#" class="text-teal underline underline-offset-2">privacy policy</a>.
+              <div class="demo-form__form-footer">
+                <button type="submit" class="demo-form__submit">${cta}</button>
+                <p class="demo-form__privacy">
+                  By submitting, you agree to our <a href="#">privacy policy</a>.
                 </p>
               </div>
             </form>
 
-            <div class="grid justify-items-start gap-3 px-1 py-2" role="status" aria-live="polite" data-success hidden>
-              <span class="inline-grid h-11 w-11 place-items-center rounded-full bg-teal text-white">${CHECK_LG}</span>
-              <h2 class="text-[clamp(22px,2.2vw,30px)] text-ink" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;line-height:1.1;letter-spacing:-.005em;">Thanks — we'll be in touch.</h2>
-              <p class="max-w-[48ch] text-[15px] leading-relaxed text-ink-soft">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
+            <div class="demo-form__success" role="status" aria-live="polite" data-success hidden>
+              <span class="demo-form__success-check">${CHECK_LG}</span>
+              <h2 class="demo-form__success-title">Thanks — we'll be in touch.</h2>
+              <p class="demo-form__success-body">A Renoverse partner will reach out within one business day to schedule your walk-through.</p>
             </div>
           </div>
         </section>
@@ -596,7 +507,6 @@
 
   function init() {
     ensureFonts();
-    ensureTailwind();
     document.querySelectorAll(MOUNT).forEach(mount);
   }
 
