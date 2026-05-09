@@ -74,7 +74,7 @@
 .product-features-cards-2x2__card-image {
   position: relative;
   aspect-ratio: 3 / 1;
-  background: #fff;
+  background: var(--white);
   overflow: hidden;
 }
 

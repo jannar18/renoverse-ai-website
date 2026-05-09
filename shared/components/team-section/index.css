@@ -151,7 +151,7 @@
   flex-shrink: 0;
 }
 
-.team-section__cta-arrow svg { width: 12px; height: 12px; stroke: #fff; }
+.team-section__cta-arrow svg { width: 12px; height: 12px; stroke: var(--white); }
 
 /* Names — Body with 600 weight emphasis. */
 .team-section__names {

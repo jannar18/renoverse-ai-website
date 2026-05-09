@@ -102,11 +102,10 @@ Confirmed issues (from `notes/team-review-main-20260506-123533.md` + `notes/CR-R
 
 ### F4 — Style finalization
 
-- `STYLE_GUIDE.md` updated for any drift introduced in Round 3 / F2 / F3.
-- Type-scale clamps confirmed across all four pages.
-- Token-only check: no hex/rgb anywhere outside `tokens.css` (allowable exception: opaque overlays inside a single component).
-- Add missing tokens for anything that had to be inlined.
-- **Reconcile the "Add a footer" section.** Still describes the pre-PR-#21 light/dark footer variants ("ink text" or "white text on `#0a0a0a`"); live footer is the wave-gradient variant with `--oxford-blue` text (post PR #26). Rewrite that section to document the current footer.
+- [x] **`STYLE_GUIDE.md` "Add a footer" section reconciled.** (PR #46) Old text described retired light/dark variants ("ink text" or "white text on `#0a0a0a`"); rewritten to document the actual single canonical footer — wave-gradient WebGL shader on `var(--beige)` paper backdrop with `var(--oxford-blue)` text site-wide, bottom-anchored 100vh stack, three-row content composition (newsletter / utility / brand). Explicit "don't reintroduce variants" guidance added.
+- [x] **Token-only sweep across components.** (PR #46) Replaced literal `#fff`/`#FFFFFF` → `var(--white)` and `#222` → `var(--ink)` in `site-nav`, `site-footer`, `team-section`, `product-features-primary`, `product-features-cards-2x2`, `product-features-card-3x1`, `testimonial-card`. Fixed wrong scoped fallback hexes (`var(--ink, #0B1A2B)` → `var(--ink, #0a0a0a)` matching the actual token value; the stale `#0B1A2B` fallback was `--dark-oxford-blue`'s hex, not `--ink`'s — left over from before the brand-Phase-1 token rename) in `site-nav` and `demo-form`. Replaced literal `#5EC9B7` (in dropdown hover) → `var(--aqua)`. Sanctioned exceptions retained: rgba overlays for frosted glass / box-shadows / mask blacks, `#ece7e1` placeholder stripe textures, and the entire `product-features-animation` mock-UI palette (Excel green `#107c41`, AutoCAD dark `#2b2b2f`, etc. — these are intentionally faking real software UIs, not brand surfaces).
+- [x] **Type-scale clamp audit.** (PR #46) Walked every component CSS + page CSS for `font-size` literals. All real headings/body copy use `--fs-h1` / `--fs-h2` / `--fs-h3` / `--fs-eyebrow` / `--fs-body` / `--fs-small` from `tokens.css`. Remaining inlined `font-size` values are scoped exceptions: `demo-form` 14px form-field text (Tailwind-driven form sizing; no `--fs-form` token added since it's a single use site), `product-features-card-3x1` 10px placeholder tag, and the `product-features-animation` mock-UI scale (7–13px deliberately small to read as miniature app chrome).
+- [x] **Missing tokens audit.** (PR #46) No new tokens needed. All non-token color drift was either (a) replaceable with an existing token, or (b) a sanctioned single-component exception. The token list in `tokens.css` covers the brand surface area without gaps.
 
 ### F5 — Authoring docs (audience: non-technical teammates pasting into Claude.ai)
 

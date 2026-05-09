@@ -467,12 +467,21 @@ This is the **paper-zone** architectural pattern: a single host that wraps two o
 
 ### "Add a footer" / "Add the page footer"
 
-Two variants exist; pick by what the page's last content section is:
+There is **one** footer site-wide: the shared `site-footer` component (`shared/components/site-footer/`), mounted on every page via `<footer class="site-footer" data-site-footer></footer>`. The dark `#0a0a0a` and light "transparent + ink" variants from earlier iterations were retired in PR #21; the wave-gradient footer is now the single canonical footer.
 
-- **Light footer** (transparent background, ink text) — when the last section is on a paper / cream / light surface. Two-column layout: brand block (logo, tagline, socials, legal links, copyright) on the left; newsletter inline form on the right. Border-top hairline at `var(--line)`. (No live mirror — the current site uses the dark footer everywhere.)
-- **Dark footer** (`#0a0a0a` background, white text) — current default across all four pages. Mirror `footer.site` in `index.html` / `demo.html`. Four-column layout: brand left, then three columns of links.
+**Surface.** Plain `var(--beige)` paper backdrop with a full-viewport WebGL wave-gradient shader (Paper's `Wave` component, brand trio: lavender / mint / cream) layered on top, plus a `.fx-grain--ink` paper-grain overlay. Bottom-anchored `min-height: 100vh` (collapses to content-driven height at the 820px breakpoint) so the wave has the upper viewport to breathe and the copy stack sits at the bottom of the screen.
 
-Don't mix the two on the same page. The footer is always paired with the last section's color temperature.
+**Text color.** `var(--oxford-blue)` (`#022E41`) for everything — newsletter labels, legal links, social icons, copyright. The dark navy meets WCAG AA against the lavender / mint / cream wave (≥ 4.5:1) at every frame; do not swap to `--ink` or `--white` per-element.
+
+**Stack, top → bottom (anchored to bottom of footer):**
+1. **`site-footer__newsletter`** — inline form, right-aligned. Mono uppercase eyebrow ("Stay in the loop" or similar), single-line `<input type="email">` (semi-transparent white bg, oxford-blue placeholder), and a circular `.btn--white`-style arrow puck submit (white fill + `--aqua` stroke at rest, `--aqua` fill + white stroke on hover). `aria-required="true"` on the input + `aria-describedby` for the status message.
+2. **`site-footer__utility`** — hairline divider (`var(--line)`) above a row containing social icons (left) and legal links + copyright (right). All links underline-on-hover; focus-visible ring uses `var(--aqua)`.
+3. **`site-footer__brand`** — large Renoverse wordmark grounded at the bottom-left. Width-driven sizing (height auto) so the logo never deforms on resize — this is the fix that landed in PR #26 alongside the contrast pass.
+
+**Don't:**
+- Don't reintroduce the old dark `#0a0a0a` footer or the light "transparent + ink" variant. There's one footer; pages don't pick between variants.
+- Don't change the text color from `var(--oxford-blue)` per page. The wave gradient is the same on every page; the contrast budget assumes `--oxford-blue`.
+- Don't add page-level CSS targeting `.site-footer`. All footer styling lives in the component.
 
 ### "Add a newsletter signup" / "Add an inline email signup"
 

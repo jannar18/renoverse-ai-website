@@ -97,7 +97,7 @@
    well stays exactly tall enough for the full mockup. */
 .product-features-card-3x1__card-image {
   position: relative;
-  background: #fff;
+  background: var(--white);
   flex-shrink: 0;
 }
 
