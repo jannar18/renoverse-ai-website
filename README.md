@@ -6,7 +6,9 @@ Static marketing site for Renoverse AI. Plain HTML/CSS/JS, no build step.
 
 ## Where to start
 
-- **Editing site copy or swapping assets?** → [`EDITING.md`](./EDITING.md). Recipe book for non-technical teammates pasting into Claude.ai.
+- **First-time setup for a non-technical teammate?** → [`HANDOFF.md`](./HANDOFF.md). Step-by-step guide for the founder (or anyone non-technical) to install Claude Desktop, get repo access, and ship their first edit. Walks through the whole loop end-to-end with screenshots.
+- **Already set up, just need to find which file holds which copy?** → [`EDITING.md`](./EDITING.md). Sitemap of every page → section → file, plus prompt patterns for common edit shapes.
+- **Pre-launch: moving the site from staging to a real domain?** → [`LAUNCH.md`](./LAUNCH.md). Decisions to lock, cutover runbook, post-launch checklist. One-time read; archive after launch.
 - **Working in the code (developer or AI agent)?** → [`AGENTS.md`](./AGENTS.md). Session protocol, house rules, sync discipline.
 - **Looking up brand tokens / type / signatures?** → [`DESIGN.md`](./DESIGN.md). Color tokens, type scale, gradients, button variants, section signatures, common requests, do's and don'ts.
 - **Want the active priority list / open follow-ups?** → [`REVISIONS.md`](./REVISIONS.md). What's shipped and what's next.
