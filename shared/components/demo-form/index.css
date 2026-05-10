@@ -29,7 +29,7 @@
 
   /* Error colors — kept local; not part of the brand palette. The form's
      invalid/notice states need a recognizable red, but the palette is
-     closed (per STYLE_GUIDE Part III) so these are scoped to the form. */
+     closed (per DESIGN.md § Do's and Don'ts) so these are scoped to the form. */
   --df-error: #f43f5e;        /* rose-500 — invalid ring */
   --df-error-text: #e11d48;   /* rose-600 — hint text */
   --df-error-fg: #be123c;     /* rose-700 — notice text */
@@ -410,7 +410,7 @@
 }
 
 /* In-card .btn--filled visual recipe — teal rect, white text, mono
-   uppercase, no corner ticks. Per STYLE_GUIDE Part II "in-card
+   uppercase, no corner ticks. Per DESIGN.md § Components "in-card
    variant" the form button matches .btn--filled exactly. Hover swaps
    to white fill + teal text. Focus-visible adds a 4px teal/40 ring. */
 .demo-form__submit {

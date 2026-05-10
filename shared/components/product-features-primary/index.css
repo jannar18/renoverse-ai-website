@@ -1,5 +1,5 @@
 /* Renoverse — Product Feature (primary).
-   Hybrid of STYLE_GUIDE Variation 4 (alternating blurb + product highlight)
+   Hybrid of DESIGN.md feature-section Variation 4 (alternating blurb + product highlight)
    and Variation 6 (2-up split): each row is split horizontally — text sits
    on the white half, the image side has a dark-teal gradient panel that
    bleeds to the viewport edge. Side flips per row for rhythm.
@@ -131,8 +131,8 @@
 }
 
 /* H2 role — Cormorant Garamond italic 500, --fs-h2. Editorial moment per
-   STYLE_GUIDE: each row is a page-section moment (full 100vh), so H2 voice
-   reads as the right register here over Poppins H3. */
+   DESIGN.md § Typography: each row is a page-section moment (full 100vh),
+   so H2 voice reads as the right register here over Poppins H3. */
 .product-features-primary__title {
   font-family: var(--font-serif);
   font-style: italic;

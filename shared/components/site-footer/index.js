@@ -60,7 +60,7 @@ function FooterShader() {
       noise: 0.35,
       shape: "wave",
       /* Sanctioned palette exception per AGENTS.md house rule "Tokens
-         only" / STYLE_GUIDE Part III "Palette is closed."
+         only" / DESIGN.md § Do's and Don'ts "Palette is closed."
          The wave shader takes a triadic input that doesn't map to the
          brand ramp — it needs a *contrasting* lavender/mint/cream triad
          to read as one decorative gradient closer (the brand's own ink

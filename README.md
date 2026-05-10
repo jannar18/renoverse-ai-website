@@ -8,7 +8,7 @@ Static marketing site for Renoverse AI. Plain HTML/CSS/JS, no build step.
 
 - **Editing site copy or swapping assets?** → [`EDITING.md`](./EDITING.md). Recipe book for non-technical teammates pasting into Claude.ai.
 - **Working in the code (developer or AI agent)?** → [`AGENTS.md`](./AGENTS.md). Session protocol, house rules, sync discipline.
-- **Looking up brand tokens / type / signatures?** → [`STYLE_GUIDE.md`](./STYLE_GUIDE.md). Color tokens, type scale, gradients, button variants, section signatures.
+- **Looking up brand tokens / type / signatures?** → [`DESIGN.md`](./DESIGN.md). Color tokens, type scale, gradients, button variants, section signatures, common requests, do's and don'ts.
 - **Want the active priority list / open follow-ups?** → [`REVISIONS.md`](./REVISIONS.md). What's shipped and what's next.
 
 ## Run locally
@@ -53,4 +53,4 @@ Each component is self-contained: `index.css`, `index.js`, and (for most) `READM
 
 ## Brand system
 
-Locked. Type: Poppins (sans) + Cormorant Garamond italic (editorial headings). Colors and gradients live in `shared/tokens.css` — never hand-paste hex values.
+Locked. Type: Poppins (sans) + Cormorant Garamond italic (editorial headings). The canonical brand system lives in [`DESIGN.md`](./DESIGN.md); `shared/tokens.css` is the regenerated runtime mirror — edit `DESIGN.md` first and propagate per its mapping rules. Never hand-paste hex values.

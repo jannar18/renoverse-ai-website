@@ -1,6 +1,10 @@
 /* Renoverse design tokens — shared across all pages and components.
-   Source of truth: ../STYLE_GUIDE.md (Phase 0). Anything hard-coded outside
-   this file is a drift bug — fix it by adding the token here first. */
+   GENERATED MIRROR. Source of truth: ../DESIGN.md (YAML frontmatter).
+   This file is regenerated in-context by the editing agent per the
+   mapping rules in DESIGN.md § Maintenance. Edits to DESIGN.md tokens
+   MUST be propagated here in the same session. Anything hard-coded
+   outside this file is a drift bug — fix it by adding the token to
+   DESIGN.md first, then propagating. */
 
 :root {
   /* ---------- brand color ----------
