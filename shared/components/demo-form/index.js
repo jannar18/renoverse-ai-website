@@ -259,7 +259,7 @@
               <div class="demo-form__form-footer">
                 <button type="submit" class="demo-form__submit">${cta}</button>
                 <p class="demo-form__privacy">
-                  By submitting, you agree to our <a href="#">privacy policy</a>.
+                  By submitting, you agree to our <a href="assets/legal/privacy-policy.pdf" target="_blank" rel="noopener">privacy policy</a>.
                 </p>
               </div>
             </form>
