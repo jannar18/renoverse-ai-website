@@ -3,7 +3,7 @@
 **Read this first every session.** This is the live priority list for the Renoverse marketing site. Items at the top are the active priority; older phase work sits below.
 
 References every session must respect:
-- **`STYLE_GUIDE.md`** — colors, fonts, gradients, typography, button recipes, alignment rules. All styling decisions trace back here.
+- **`DESIGN.md`** — the canonical design system: colors, fonts, gradients, typography, button recipes, alignment rules, section signatures, common requests, do's and don'ts. All styling decisions trace back here.
 - **`shared/components/`** — the component library. Every component ships `index.css` + `index.js` + `README.md` + `test.html` and mounts via `data-*` hooks.
 - **`AGENTS.md`** — session start/end protocol. Read it.
 

@@ -2,7 +2,7 @@
 
 A guide for non-technical teammates updating site copy with help from [Claude.ai](https://claude.ai). No engineering background needed.
 
-For developers and AI agents working in the repo, see [`AGENTS.md`](./AGENTS.md) and [`STYLE_GUIDE.md`](./STYLE_GUIDE.md).
+For developers and AI agents working in the repo, see [`AGENTS.md`](./AGENTS.md) and [`DESIGN.md`](./DESIGN.md).
 
 ---
 

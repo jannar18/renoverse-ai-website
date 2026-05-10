@@ -2,7 +2,7 @@
    Mounts an N-row alternating product-feature section into every
    [data-product-features-primary] on the page.
 
-   Hybrid of STYLE_GUIDE Variation 4 (alternating blurb + product highlight)
+   Hybrid of DESIGN.md feature-section Variation 4 (alternating blurb + product highlight)
    and Variation 6 (2-up split): each row is split horizontally — text on
    white, image side on a dark-teal gradient panel that bleeds to the
    viewport edge. Side alternates per row to drive the rhythm.
