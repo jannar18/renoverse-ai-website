@@ -1,6 +1,8 @@
 # Editing the Renoverse site
 
-A guide for non-technical teammates updating site copy with help from [Claude.ai](https://claude.ai). No engineering background needed.
+The sitemap and recipe reference for content edits. Use this when you know the workflow and just need to find which file holds which copy.
+
+**First time editing the site?** Start with [`HANDOFF.md`](./HANDOFF.md) — it walks you through installing Claude Desktop, getting repo access, and shipping your first edit end-to-end. Come back here once you're set up.
 
 For developers and AI agents working in the repo, see [`AGENTS.md`](./AGENTS.md) and [`DESIGN.md`](./DESIGN.md).
 
